@@ -1,0 +1,652 @@
+@import 'libs/normalize';
+@import 'fonts';
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /*background: radial-gradient(closest-side at 0% 0%, #5FC4EE98, #22283500);*/
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+* {
+  box-sizing: border-box;
+}
+
+.container {
+    display: block;
+    position: absolute;
+    /*padding: 0;*/
+    /*margin: 0;*/
+    width: 100vw;
+    height: 100%;
+    background-color: #000000;
+}
+
+.main {
+  display: block;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: transparent radial-gradient(ellipse farthest-side at 0% -10%, rgba(95, 196, 238, 0.7) 0%, rgba(34, 40, 53, 0) 100%) 0 0 no-repeat padding-box;
+}
+/* ------------------------ WRAP --------------------------------*/
+.wrapblock {
+  display: block;
+  position: relative;
+  width: 1264px;  /*66vw*/
+  height: 802px; /*74vh */
+  border-radius: 20px;
+  background: #141f34;
+  margin: 139px auto; /* 13vh*/
+}
+.wrapper {
+  display: flex;
+  width: 1264px;  /*66vw*/
+  height: 802px; /*74vh */
+  justify-content: space-around;
+  .wrapper_staticBlock {
+    display: block;
+    width: 50%;
+    height: 100%;
+    .wrapper__logoBlock{
+      display: block;
+      width: 323px;
+      height: 107.05px;
+      margin: 84.9px auto 48px;
+      .wrapper__logo {
+        display: block;
+        width: 320px; /*16vw*/
+      }
+      .wrapper__logoText {
+        font-family: 'ToucheW03-Regular', san-serif;
+        font-weight: normal;
+        font-size: 19px; /*15px 0.9rem*/
+        line-height: 22.8px; /* 15px*/
+        text-align: center;
+        color: #e4c044;
+        margin-top: 10px;
+      }
+    }
+    .wrapper__picBlock {
+      display: block;
+      width: 698px;
+
+      .wrapper__picture {
+        display: block;
+        width: 600px; /*  370px 29vw*/
+        margin: 0 auto;
+      }
+      .wrapper__shadowPic {
+        display: block;
+        position: relative;
+        width: 100%; /* 29vw*/
+        opacity: 0.09;
+        background: transparent;
+        margin: -15px auto 0;
+      }
+    }
+  }
+  .wrapper_dynamicBlock {
+    display: block;
+    width: 50%;
+    height: 100%;
+  }
+}
+/* -----------------------BUTTON---------------------------------*/
+.btn {
+  padding: 16px 48px 16px 48px;
+  border-radius: 10px;
+  background: #5fc4ee; /* 95, 196, 238*/
+  outline: none;
+  /*border: 1px solid rgb(250,172,17)*/
+  border-color: transparent;
+  &:active {
+    border-color: rgba(0, 0, 0, .3);
+    box-shadow: 0 0 40px rgba(0, 0, 0, .2) inset;
+  }
+  .contTxt {
+    font-family: 'ToucheW03-Bold', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #fff;
+  }
+}
+/* ------------------------- INPUT --------------------------*/
+.inputCont {
+  display: block;
+  width: 100%;
+  height: 76px;
+
+  .inputBlock {
+    display: block;
+    width: 454px;
+    height: 52px;
+    border: 0px solid;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1); /*0.1*/
+    outline: none;
+    font-family: ToucheW03-Regular, sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 17px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.5;
+    padding: 17px 16px 15px 16px;
+    margin: 0 auto 24px;
+    //margin-bottom: 24px;
+
+    &:focus {
+      border: 2px solid rgba(255, 255, 255, 0.5); /*0.5*/
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+  }
+  .showPassword {
+    display: inline-block;
+    position: relative;
+    top: -58px;
+    right: -413px;
+    width: 24.59px;
+    height: 16.07px;
+    font-size: 0;
+
+    img {
+      width: 100%;
+      //height: 16.07px;
+      background: transparent;
+      opacity: 1;
+
+    }
+  }
+}
+/* -------------------------- LOGIN -----------------------*/
+.login__block {
+  display: block;
+  width: 454px;
+  height: 473px;
+  margin: 96px auto 0;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto 64px;
+  }
+  .form {
+    display: block;
+    width: 100%;
+    height: 152px;
+  }
+  .form-act {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    .forgot-pass {
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 17px;
+      text-align: left;
+      color: #fff;
+    }
+  }
+  .devide-block {
+    display: block;
+    width: 454px;
+    height: 20px;
+    margin-top: 48px;
+
+    .devide-line {
+      display: inline-block;
+      width: 193px;
+      height: 1px;
+      background: #fff;
+      opacity: 0.2;
+      margin: 8px 0;
+    }
+    .devide-text {
+      display: inline-block;
+      width: 68px;
+      height: 20px;
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #fff;
+      opacity: 0.5;
+      margin: auto 0;
+    }
+  }
+  .social-signin {
+    display: flex;
+    justify-content: space-between;
+    width: 116px;
+    height: 42px;
+    margin: 32px auto 0;
+
+    .signin-facebook,
+    .signin-google {
+      width: 42px;
+      height: 42px;
+    }
+  }
+  .login-signup {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #5fc4ee;
+    margin-top: 160px;
+    margin-bottom: 64px;
+  }
+}
+/* -------------------------- Sign Up --------------------------*/
+.signup-block {
+  display: block;
+  width: 454px;
+  margin: 96px auto 0px;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto 64px;
+  }
+  .form-signup {
+    display: block;
+    //display: flex;
+    //flex-direction: column;
+    width: 100%;
+    height: 228px;
+    font-size: 0px;
+  }
+  .form-act {
+    display: block;
+    height: 52px;
+    //width: 142px;
+    margin-left: 297px;
+    margin-top: 24px;
+  }
+  .devide_block {
+    display: block;
+    width: 454px;
+    height: 20px;
+    margin-top: 48px;
+
+    .devide_line {
+      display: inline-block;
+      width: 193px;
+      height: 1px;
+      background: #fff;
+      opacity: 0.2;
+      margin: 8px 0px;
+    }
+    .devide_text {
+      display: inline-block;
+      width: 68px;
+      height: 20px;
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #fff;
+      opacity: 0.5;
+      margin: auto 0;
+    }
+  }
+  .social-signin {
+    display: flex;
+    justify-content: space-between;
+    width: 116px;
+    height: 42px;
+    margin: 32px auto 0px;
+
+    .signin-facebook {
+      width: 42px;
+      height: 42px;
+    }
+    .signin-google {
+      width: 42px;
+      height: 42px;
+    }
+  }
+  .to-login {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #5fc4ee;
+    margin-top: 73px;
+    margin-bottom: 64px;
+  }
+}
+/* ----------------------- SOCIAL SIGNIN FB ----------------------*/
+.social_sign-block {
+  display: block;
+  width: 454px;
+  margin: 96px auto 0px;
+
+  .signin-facebook {
+    display: block;
+    margin: 0 auto 18px;
+    width: 75px;
+    height: 75px;
+  }
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto 64px;
+  }
+  .signup-form {
+    display: block;
+    width: 100%;
+    height: 152px;
+  }
+  .form-act {
+    display: block;
+    //width: 142px;
+    margin-left: 297px;
+    margin-top: 24px;
+  }
+  .to-login {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #5fc4ee;
+    margin-top: 217px;
+    margin-bottom: 64px;
+  }
+}
+/* --------------------SOCIAL SIGNIN G ---------------------*/
+.social_sign-block {
+  display: block;
+  width: 454px;
+  margin: 96px auto 0;
+
+  .signin-google {
+    display: block;
+    margin: 0 auto 18px;
+    width: 75px;
+    height: 75px;
+  }
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto 64px;
+  }
+  .signup-form {
+    display: block;
+    width: 100%;
+    height: 152px;
+  }
+  .form-act {
+    display: block;
+    //width: 142px;
+    margin-left: 297px;
+    margin-top: 24px;
+  }
+  .to-login {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #5fc4ee;
+    margin-top: 217px;
+    margin-bottom: 64px;
+  }
+}
+/* -------------------------- Recovery Password --------------------*/
+.recovery_block {
+  display: block;
+  width: 454px;
+  //height: 473px;
+  margin: 96px auto 0;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .text-block {
+    display: block;
+    width: 370px;
+    height: 44px;
+    margin: 12px auto 64px;
+
+    .text {
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      color: #fff;
+      opacity: 0.5;
+    }
+  }
+  .recovery-form {
+    display: block;
+    width: 100%;
+  }
+  .form-act {
+    display: block;
+    //width: 142px;
+    margin-left: 304px;
+    margin-top: 24px;
+  }
+  .to-login {
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    color: #5fc4ee;
+    margin-top: 311px;
+  }
+}
+/* ---------------------- ACCOUNT CONFIRMATION ----------------------*/
+.confirm_block {
+  display: block;
+  width: 454px;
+  margin: 215px auto 0;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .text_block {
+    display: block;
+    margin: 25px auto 64px;
+
+    .text {
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: justify;
+      color: #fff;
+      opacity: 0.5;
+
+      .conf_email {
+        color: #1ea7fd;
+      }
+    }
+  }
+  .btn_confirm {
+    display: block;
+    width: 142px;
+    margin: 24px auto 0px;
+  }
+}
+/* ------------------------ ACCOUNT VERIFICATION -------------------- */
+.verif_block {
+  display: block;
+  width: 454px;
+  margin: 215px auto 0px;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .text_block {
+    display: block;
+    margin: 25px auto 64px;
+
+    .text {
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: justify;
+      color: #fff;
+      opacity: 0.5;
+    }
+  }
+  .verif_form {
+    display: block;
+    width: 100%;
+  }
+  .verif_btn {
+    display: block;
+    width: 142px;
+    margin: 24px auto 0px;
+    outline: none;
+  }
+}
+/* ---------------------------- LOGOUT --------------------------------*/
+
+.logout_block {
+  display: block;
+  width: 454px;
+  margin: 280px auto 0px;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .text_block {
+    display: block;
+    width: 100%;
+    height: 32px;
+    margin: 12px auto 45px;
+  }
+  .text_content {
+    font-family: ToucheW03-Regular, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    opacity: 0.5;
+  }
+  .login_btn {
+    display: block;
+    width: 142px;
+    margin: 0 auto;
+  }
+  .devide_block {
+    display: block;
+    width: 454px;
+    height: 20px;
+    margin-top: 48px;
+
+    .devide_line {
+      display: inline-block;
+      width: 193px;
+      height: 1px;
+      background: #fff;
+      opacity: 0.2;
+      margin: 8px 0px;
+    }
+    .devide_text {
+      display: inline-block;
+      width: 68px;
+      height: 20px;
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #fff;
+      opacity: 0.5;
+      margin: auto 0;
+    }
+  }
+  .social-signin {
+    display: flex;
+    justify-content: space-between;
+    width: 116px;
+    height: 42px;
+    margin: 32px auto 0;
+
+    .signin-facebook,
+    .signin-google{
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,96 @@
+.wrapblock {
+    display: block;
+    position: relative;
+    width: 1264px;  /*66vw*/
+    height: 802px; /*74vh */
+    border-radius: 20px;
+    background: #141f34;
+    margin: 139px auto; /* 13vh*/
+}
+.wrapper {
+    display: flex;
+    width: 1264px;  /*66vw*/
+    height: 802px; /*74vh */
+    justify-content: space-around;
+    .staticBlock {
+        display: block;
+        width: 50%;
+        height: 100%;
+        .logoBlock{
+            display: block;
+            width: 323px;
+            height: 107.05px;
+            //margin-top: 84.9px;
+            //margin-bottom: 48px;
+            margin: 84.9px auto 48px;
+            .logo {
+                display: block;
+                width: 320px; /*16vw*/
+
+                //margin: 8vh auto 0;
+            }
+            .logoText {
+                font-family: 'ToucheW03-Regular', san-serif;
+                font-weight: normal;
+                font-size: 19px; /*15px 0.9rem*/
+                line-height: 22.8px; /* 15px*/
+                text-align: center;
+                color: #e4c044;
+                margin-top: 10px;
+                //margin: 1vh 0 2vh 0;
+                //@media screen and (max-width: 1600px) {
+                //    font-size: 14px;
+                //    line-height: 14px;
+                //    margin: 1.5vh 0 3vh 0;
+                //}
+                //@media screen and (max-width: 1280px) {
+                //    font-size: 14px;
+                //    line-height: 14px;
+                //    margin: 10px 0 27px 0;
+                //}
+                //@media screen and (max-width: 1200px) {
+                //    font-size: 14px;
+                //    line-height: 14px;
+                //    margin: 1vh 0 2vh 0;
+                //}
+
+            }
+        }
+        .picBlock {
+            display: block;
+            width: 698px;
+
+            .picture {
+                display: block;
+                width: 600px; /*  370px 29vw*/
+                margin: 0 auto;
+                z-index: 200;
+                //@media screen and (max-width: 1600px) {
+                //    width: 490px;
+                //}
+                //@media screen and (max-width: 1280px) {
+                //    width: 370px;
+                //}
+            }
+            .shadowPic {
+                display: block;
+                position: relative;
+                width: 100%; /* 29vw*/
+                opacity: 0.09;
+                background: transparent;
+                margin: -15px auto 0;
+                z-index: 100;
+                //@media screen and (max-width: 1600px) {
+                //    width: 490px;
+                //}
+            }
+        }
+    }
+    .dynamicBlock {
+        display: block;
+        width: 50%;
+        height: 100%;
+    }
+}
+
+
