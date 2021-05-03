@@ -11,7 +11,7 @@ const AccountVerif = () => {
 
             <div className="text_block">
                 <p className="text">Please enter your mobile phone number below,
-                so we can send you a verification code</p>
+                so we can send you a verification code.</p>
                 <p className="text">Verification only takes a few minutes, helps secure your account.</p>
             </div>
 

@@ -10,21 +10,21 @@ const SignUp = () => {
         <div className="signup-block">
             <h1 className="title">Sign Up</h1>
 
-            <form action="#" className="form-signup">
+            <form action="#" className="signup__form">
                 <TemplateInput type="text" placeholder="Your Email Address" />
                 <TemplateInput type="password" placeholder="Choose a password" />
                 <TemplateInput type="password" placeholder="Repeat password" />
             </form>
-            <div className="form-act">
+            <div className="signup__form-act">
                 <Button>
                     Sign Up
                 </Button>
             </div>
 
-            <div className="devide_block">
-                <div className="devide_line"></div>
-                <div className="devide_text">Or</div>
-                <div className="devide_line"></div>
+            <div className="devide-block">
+                <div className="devide-line"></div>
+                <div className="devide-text">Or</div>
+                <div className="devide-line"></div>
             </div>
 
             <div className="social-signin">

@@ -19,17 +19,17 @@ const Logout = () => {
                 </Button>
             </div>
 
-            <div className="devide_block">
-                <div className="devide_line"></div>
-                <div className="devide_text">Or</div>
-                <div className="devide_line"></div>
+            <div className="devide-block">
+                <div className="devide-line"></div>
+                <div className="devide-text">Or</div>
+                <div className="devide-line"></div>
             </div>
 
             <div className="social-signin">
-                <Link href="/social-signin">
+                <Link href="/social-signin-fb">
                     <a><img className="signin-facebook" src={require('../../public/assets/facebook.svg')} alt=""/></a>
                 </Link>
-                <Link href="/social-signin">
+                <Link href="/social-signin-g">
                     <a><img className="signin-google" src={require('../../public/assets/google.svg')} alt=""/></a>
                 </Link>
             </div>

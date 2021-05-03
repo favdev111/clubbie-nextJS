@@ -1,0 +1,349 @@
+/* ---------------------------- LOGOUT --------------------------------*/
+.logout_block {
+  display: block;
+  width: 454px;
+  margin: 260px auto 0px;
+
+  .title {
+    font-family: ToucheW03-Bold, sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .text_block {
+    display: block;
+    width: 100%;
+    height: 32px;
+    margin: 12px auto 45px;
+  }
+  .text_content {
+    font-family: ToucheW03-Regular, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    opacity: 0.5;
+  }
+  .login_btn {
+    display: flex;
+    justify-content: center;
+    width: 142px;
+    margin: 0 auto;
+  }
+  .devide-block {
+    display: flex;
+    justify-content: space-between;
+    width: 454px;
+    height: 20px;
+    margin-top: 48px;
+    .devide-line {
+      display: inline-block;
+      width: 193px;
+      height: 1px;
+      background: #fff;
+      opacity: 0.2;
+      margin: 8px 0;
+    }
+    .devide-text {
+      display: inline-block;
+      width: 68px;
+      height: 20px;
+      font-family: ToucheW03-Regular, sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #fff;
+      opacity: 0.5;
+      margin: auto 0;
+    }
+  }
+  .social-signin {
+    display: flex;
+    justify-content: space-between;
+    width: 116px;
+    height: 42px;
+    margin: 32px auto 0;
+
+    .signin-facebook,
+    .signin-google{
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .logout_block {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    .title {
+      font-size: 38px;
+      line-height: 45px;
+      margin: 0 auto 5px;
+    }
+    .text_block {
+      width: 100%;
+      padding: 0 15px;
+    }
+    .login_btn {
+      height: 71px;
+      margin: 0 auto;
+      width: 180px;
+    }
+    .devide-block {
+      width: 80%;
+      padding: 0 15px;
+      margin: 20px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 1.3rem;
+        line-height: 1rem;
+      }
+    }
+    .social-signin {
+      width: 130px;
+      height: 50px;
+      margin: 22px auto 0;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .logout_block {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    .title {
+      font-size: 38px;
+      line-height: 45px;
+      margin: 0 auto 5px;
+    }
+    .text_block {
+      width: 100%;
+      padding: 0 15px;
+    }
+    .login_btn {
+      height: 71px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .devide-block {
+      width: 80%;
+      padding: 0 15px;
+      margin: 20px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 1.3rem;
+        line-height: 1rem;
+      }
+    }
+    .social-signin {
+      width: 130px;
+      height: 50px;
+      margin: 50px auto 20px;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+/* Medium devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+/* Large devices (laptops and desktops, 1280px x 720px and up) */
+@media only screen and (min-width: 1200px) {
+  .logout_block {
+    width: 80%;
+    padding: 0;
+    margin: 150px auto 0px;
+    .title {
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0 auto 32px;
+    }
+    .text_block {
+      width: 85%;
+      padding: 0 15px;
+      margin: 12px auto 45px;
+    }
+    .login_btn {
+      height: 53px;
+      margin: 0 auto;
+    }
+    .devide-block {
+      width: 100%;
+      padding: 0 15px;
+      margin: 30px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+    .social-signin {
+      width: 116px;
+      height: 42px;
+      margin: 32px auto 0;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}
+/* Large devices (large laptops and desktops, 1366px x 768px(height) and up) */
+@media only screen and (min-width: 1366px) {
+  .logout_block {
+    width: 80%;
+    padding: 0;
+    margin: 150px auto 0px;
+    .title {
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0 auto 32px;
+    }
+    .text_block {
+      width: 85%;
+      padding: 0 15px;
+      margin: 12px auto 45px;
+    }
+    .login_btn {
+      height: 53px;
+      margin: 0 auto;
+    }
+    .devide-block {
+      width: 100%;
+      padding: 0 15px;
+      margin: 30px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+    .social-signin {
+      width: 116px;
+      height: 42px;
+      margin: 32px auto 0;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}
+/* Extra large devices (large laptops and desktops, 1440px x 900px(height) and up) */
+@media only screen and (min-width: 1440px) {
+  .logout_block {
+    width: 80%;
+    padding: 0;
+    margin: 230px auto 0px;
+    .title {
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0 auto 32px;
+    }
+    .text_block {
+      width: 85%;
+      padding: 0 15px;
+      margin: 12px auto 45px;
+    }
+    .login_btn {
+      height: 53px;
+      margin: 0 auto;
+    }
+    .devide-block {
+      width: 100%;
+      padding: 0 15px;
+      margin: 30px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+    .social-signin {
+      width: 116px;
+      height: 42px;
+      margin: 32px auto 0;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}
+/* Extra large devices (large laptops and desktops, 1920px x 1080px(height) and up) */
+@media only screen and (min-width: 1920px) {
+  .logout_block {
+    width: 80%;
+    padding: 0;
+    margin: 260px auto 0px;
+    .title {
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0 auto 32px;
+    }
+    .text_block {
+      width: 85%;
+      padding: 0 15px;
+      margin: 12px auto 45px;
+    }
+    .login_btn {
+      height: 53px;
+      margin: 0 auto;
+    }
+    .devide-block {
+      width: 100%;
+      padding: 0 15px;
+      margin: 30px auto 0;
+      .devide-line {
+        width: 40%;
+      }
+      .devide-text {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+    .social-signin {
+      width: 116px;
+      height: 42px;
+      margin: 32px auto 0;
+      .signin-facebook,
+      .signin-google{
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+}

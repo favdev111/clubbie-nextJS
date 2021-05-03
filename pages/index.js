@@ -12,45 +12,45 @@ export default function Home() {
       </Head>
 
       <main className="main">
-       <ul>
+       <ul  className="list-page">
          <li>
             <Link href="/login">
-              <a>Login Page</a>
+              <a className="list-page__item">Login Page</a>
             </Link>
          </li>
          <li>
             <Link href="/sign-up">
-              <a>Sign Up Page</a>
+              <a className="list-page__item">Sign Up Page</a>
             </Link>
          </li>
          <li>
             <Link href="/social-signin-fb">
-              <a>Social Media Signin via Facebook</a>
+              <a className="list-page__item">Social Media Signin via Facebook</a>
             </Link>
          </li>
          <li>
             <Link href="/social-signin-g">
-              <a>Social Media Signin via Google</a>
+              <a className="list-page__item">Social Media Signin via Google</a>
             </Link>
          </li>
          <li>
             <Link href="/recovery-pass">
-              <a>Recovery Password Page</a>
+              <a className="list-page__item">Recovery Password Page</a>
             </Link>
          </li>
          <li>
             <Link href="/logout">
-              <a>Logout Page</a>
+              <a className="list-page__item">Logout Page</a>
             </Link>
          </li>
          <li>
              <Link href="/account-confirmation">
-                 <a>New Account Confirmation Page</a>
+                 <a className="list-page__item">New Account Confirmation Page</a>
              </Link>
          </li>
          <li>
              <Link href="/account-verification">
-                 <a>Account Verification Page</a>
+                 <a className="list-page__item">Account Verification Page</a>
              </Link>
          </li>
 

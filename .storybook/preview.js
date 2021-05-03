@@ -31,15 +31,15 @@ export const parameters = {
                 laptop: {
                     name: 'Laptop',
                     styles: {
-                        width: '1024px',
-                        height: '768px',
+                        width: '1280px',
+                        height: '720px',
                     },
                 },
                 desktop: {
                     name: 'Desktop',
                     styles: {
                         width: '1440px',
-                        height: '1024px',
+                        height: '900px',
                     },
                 },
             },

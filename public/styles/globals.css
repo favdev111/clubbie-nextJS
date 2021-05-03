@@ -30,12 +30,12 @@ div .container {
   background: transparent radial-gradient(ellipse farthest-side at 0% -10%, rgba(95, 196, 238, 0.7) 0%, rgba(34, 40, 53, 0) 100%) 0 0 no-repeat padding-box;
 }
 @font-face {font-family: "Touche W03 Regular";
-  src: url("/fonts/89d8fba73b6d10c300478fad02d4871d.eot"); /* IE9*/
-  src: url("/fonts/89d8fba73b6d10c300478fad02d4871d.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-  url("/fonts/89d8fba73b6d10c300478fad02d4871d.woff2") format("woff2"), /* chrome、firefox */
-  url("/fonts/89d8fba73b6d10c300478fad02d4871d.woff") format("woff"), /* chrome、firefox */
-  url("/fonts/89d8fba73b6d10c300478fad02d4871d.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url("/fonts/89d8fba73b6d10c300478fad02d4871d.svg#Touche W03 Regular") format("svg"); /* iOS 4.1- */
+  src: url("/public/styles/fonts/Touche W03 Regular.eot"); /* IE9*/
+  src: url("/public/styles/fonts/Touche W03 Regular.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("/public/styles/fonts/Touche W03 Regular.woff2") format("woff2"), /* chrome、firefox */
+  url("/public/styles/fonts/Touche W03 Regular.woff") format("woff"), /* chrome、firefox */
+  url("/public/styles/fonts/Touche W03 Regular.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("/public/styles/fonts/Touche W03 Regular.svg#Touche W03 Regular") format("svg"); /* iOS 4.1- */
 }
 @font-face {font-family: "Touche W03 Bold";
   src: url("/fonts/6ff35b8857ed1d3bf6a3cc93164ff962.eot"); /* IE9*/

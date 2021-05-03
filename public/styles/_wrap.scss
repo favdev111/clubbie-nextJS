@@ -1,0 +1,415 @@
+/* ------------------------ WRAP --------------------------------*/
+.wrapblock {
+  display: block;
+  position: relative;
+  width: 1264px;
+  height: 802px;
+  border-radius: 20px;
+  background: #141f34;
+  margin: 139px auto;
+}
+.wrapper {
+  position: absolute;
+  display: flex;
+  width: 1264px;
+  height: 802px;
+  justify-content: space-around;
+  &_static {
+    display: block;
+    position: relative;
+    top: 0;
+    width: 50%;
+    //height: 100%;
+    &__logoBlock {
+      display: block;
+      width: 323px;
+      height: 107px;
+      margin: 85px auto 48px;
+      &-logo {
+        display: block;
+        width: 320px;
+      }
+      &-logoText {
+        font-family: 'Touche W03 Regular', 'Arial', serif;
+        font-size: 19px;
+        line-height: 23px;
+        text-align: center;
+        color: #e4c044;
+        margin-top: 10px;
+      }
+    }
+    &__picBlock {
+      display: block;
+      width: 698px;
+      &-picture {
+        display: block;
+        width: 600px;
+        margin: 0 auto;
+      }
+      &-shadowPic {
+        display: block;
+        position: relative;
+        width: 100%;
+        opacity: 0.09;
+        background: transparent;
+        margin: -15px auto 0;
+      }
+    }
+  }
+  &_dynamic {
+    display: block;
+    width: 50%;
+    //height: 100%;
+  }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .wrapblock {
+    width: 100%;
+    margin: 30px auto;
+    height: 700px;
+  }
+  .wrapper {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    &_static {
+      width: 100%;
+      &__logoBlock {
+        width: 250px;
+        height: 69px;
+        margin: 25px auto 0;
+        &-logo {
+          width: 200px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 14px;
+          line-height: 18px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        display: none;
+        width: 175px;
+        margin: 0 auto;
+        height: 150px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -4px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 100%;
+    }
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .wrapblock {
+    width: 100%;
+    margin: 30px auto;
+    height: fit-content;
+  }
+  .wrapper {
+    position: relative;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    &_static {
+      width: 100%;
+      &__logoBlock {
+        width: 250px;
+        height: 65px;
+        margin: 35px auto 0;
+        &-logo {
+          width: 200px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 12px;
+          line-height: 14px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 250px;
+        margin: 0 auto;
+        height: 200px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -7px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 100%;
+    }
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .wrapblock {
+    width: 100%;
+    margin: 50px auto;
+    height: fit-content;
+  }
+  .wrapper {
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    &_static {
+      width: 100%;
+      &__logoBlock {
+        width: 300px;
+        height: 100px;
+        margin: 35px auto 0;
+        &-logo {
+          width: 275px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 16px;
+          line-height: 20px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 350px;
+        margin: 0 auto;
+        height: 280px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -7px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 100%;
+    }
+  }
+}
+/* Medium devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .wrapblock {
+    width: 80%;
+    margin: 50px auto;
+    height: fit-content;
+  }
+  .wrapper {
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    &_static {
+      width: 100%;
+      &__logoBlock {
+        width: 320px;
+        height: 100px;
+        margin: 35px auto 0;
+        &-logo {
+          width: 300px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 18px;
+          line-height: 21px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 400px;
+        margin: 0 auto;
+        height: 316px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -10px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 100%;
+    }
+  }
+}
+/* Large devices (laptops and desktops, 1200px x 720px and up) */
+@media only screen and (min-width: 1200px) {
+  .wrapblock {
+    width: 1000px;
+    height: 600px;
+    margin: 50px auto;
+  }
+  .wrapper {
+    width: 100%;
+    height: 600px;
+    flex-direction: row;
+    &_static {
+      width: 50%;
+      &__logoBlock {
+        width: 320px;
+        height: 100px;
+        margin: 35px auto 0;
+        &-logo {
+          width: 300px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 18px;
+          line-height: 21px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 400px;
+        margin: 75px auto 0;
+        height: 316px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -10px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 50%;
+    }
+  }
+}
+/* Large devices (large laptops and desktops, 1366px x 768px(height) and up) */
+@media only screen and (min-width: 1366px) {
+  .wrapblock {
+    width: 1100px;
+    height: 650px;
+    margin: 58px auto 0;
+  }
+  .wrapper {
+    width: 100%;
+    height: 650px;
+    flex-direction: row;
+    &_static {
+      width: 50%;
+      &__logoBlock {
+        width: 320px;
+        height: 100px;
+        margin: 35px auto 0;
+        &-logo {
+          width: 300px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 18px;
+          line-height: 21px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 500px;
+        margin: 60px auto 0;
+        height: 356px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -11px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 50%;
+    }
+  }
+}
+/* Extra large devices (large laptops and desktops, 1440px x 900px(height) and up) */
+@media only screen and (min-width: 1440px) {
+  .wrapblock {
+    width: 1100px;
+    height: 750px;
+    margin: 75px auto;
+  }
+  .wrapper {
+    width: 100%;
+    flex-direction: row;
+    &_static {
+      width: 50%;
+      &__logoBlock {
+        width: 320px;
+        height: 100px;
+        margin: 70px auto 0;
+        &-logo {
+          width: 300px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 18px;
+          line-height: 21px;
+          margin-top: 5px;
+        }
+      }
+      &__picBlock {
+        width: 500px;
+        margin: 90px auto 0;
+        height: 357px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -10px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 50%;
+    }
+  }
+}
+/* Extra large devices (large laptops and desktops, 1920px x 1080px(height) and up) */
+@media only screen and (min-width: 1920px) {
+  .wrapblock {
+    width: 1264px;
+    height: 802px;
+    margin: 139px auto;
+  }
+  .wrapper {
+    width: 100%;
+    &_static {
+      width: 50%;
+      &__logoBlock {
+        width: 323px;
+        height: 107px;
+        margin: 85px auto 48px;
+        &-logo {
+          width: 320px;
+          margin: 0 auto;
+        }
+        &-logoText {
+          font-size: 19px;
+          line-height: 23px;
+          margin-top: 10px;
+        }
+      }
+      &__picBlock {
+        width: 600px;
+        margin: 0 auto;
+        height: 357px;
+        &-picture {
+          width: 100%;
+        }
+        &-shadowPic {
+          margin: -15px auto 0;
+        }
+      }
+    }
+    &_dynamic {
+      width: 50%;
+    }
+  }
+}

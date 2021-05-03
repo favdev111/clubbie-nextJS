@@ -6,19 +6,25 @@ const Wrap = ({children}) => {
     return(
         <div className="wrapblock">
             <div className="wrapper">
-                <div className="wrapper_staticBlock">
-                    <div className="wrapper__logoBlock">
-                        <img className="wrapper__logo" src={require('../../public/assets/logo.png')} alt="logo"/>
-                        <p className="wrapper__logoText">Raising the bar for amateur sport</p>
+                <div className="wrapper_static">
+                    <div className="wrapper_static__logoBlock">
+                        <img className="wrapper_static__logoBlock-logo" src={require('../../public/assets/logo.png')} alt="logo"/>
+                        <p className="wrapper_static__logoBlock-logoText">Raising the bar for amateur sport</p>
                     </div>
 
-                    <div className="wrapper__picBlock">
-                        <img className="wrapper__picture" src={require('../../public/assets/sportmen.png')} alt="sportsmen"/>
-                        <img className="wrapper__shadowPic" src={require('../../public/assets/shadow.svg')} alt="shadow"/>
+                    <div className="wrapper_static__picBlock">
+                        <img
+                            className="wrapper_static__picBlock-picture"
+                            src={require('../../public/assets/sportmen.png')}
+                            alt="sportsmen"/>
+                        <img
+                            className="wrapper_static__picBlock-shadowPic"
+                            src={require('../../public/assets/shadow.svg')}
+                            alt="shadow"/>
                     </div>
 
                 </div>
-                <div className="wrapper_dynamicBlock">
+                <div className="wrapper_dynamic">
                     {children}
                 </div>
 
