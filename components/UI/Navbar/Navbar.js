@@ -8,9 +8,9 @@ function Navbar() {
       <Logo />
       <ul className="navbar__list">
         {["Home", "Teamhub"].map((nav, index) => (
-          <li key={`${nav}index`} className="navbar__item">
+          <li key={`${nav}index`} className="navbar__list-item">
             <Link href="./">
-              <div className="navbar__link">{nav}</div>
+              <div className="navbar__list-item__link">{nav}</div>
             </Link>
           </li>
         ))}

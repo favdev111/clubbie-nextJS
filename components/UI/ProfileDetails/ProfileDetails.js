@@ -1,15 +1,31 @@
 import React from "react";
 
-function ProfileDetails() {
+function ProfileDetails({data}) {
   return (
     <div>
       <div>
-        <p>Bio</p>
-        <p> Lorem ipsum dolor</p>
+        Bio
+        <p> {data.bio} </p>
       </div>
       <div>
-        <p></p>
-        <p></p>
+        Email
+        <p> {data.email}</p>
+      </div>
+      <div>
+        Telephone
+        <p> {data.telephone}</p>
+      </div>
+      <div>
+        City
+        <p> {data.city}</p>
+      </div>
+      <div>
+        Country
+        <p> {data.country}</p>
+      </div>
+      <div>
+        Post code
+        <p> {data.postCode}</p>
       </div>
     </div>
   );
