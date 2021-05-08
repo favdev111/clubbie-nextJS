@@ -1,0 +1,11 @@
+.notifications {
+  display: flex;
+  align-items: center;
+  .notificiation__item {
+    margin-right: 16px;
+    padding: 10px;
+    background-color: #192745;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+}
