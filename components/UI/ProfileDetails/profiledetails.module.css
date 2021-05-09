@@ -1,0 +1,33 @@
+.profilePlayerBodyContent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 48px;
+}
+.profilePlayerBodyContent .profilePlayerBodyContentItem {
+  padding-top: 32px;
+}
+.profilePlayerBodyContent .profilePlayerBodyContentItem p {
+  color: white;
+  padding-top: 16px;
+}
+
+.span-1 {
+  grid-column: span 1 / span 1;
+}
+
+.span-3 {
+  grid-column: span 3 / span 3;
+}
+
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .span-1 {
+    grid-column: span 3 / span 3;
+  }
+
+  .span-3 {
+    grid-column: span 3 / span 3;
+  }
+}

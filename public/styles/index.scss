@@ -9,6 +9,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   /*background: radial-gradient(closest-side at 0% 0%, #5FC4EE98, #22283500);*/
 }
+#__next {
+  width: 100vw;
+  overflow-x: hidden;
+}
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
 body {
   background-color: #000000;
 }
@@ -74,4 +85,8 @@ a {
 @import "profile-details";
 @import "oval-button";
 @import "forward-button";
-
+@import "connected-banks";
+@import "bank-card";
+@import "teamhub";
+@import "teamhub-card";
+@import "join";

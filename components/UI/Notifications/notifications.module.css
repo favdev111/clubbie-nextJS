@@ -1,0 +1,19 @@
+.notifications {
+  display: flex;
+  align-items: center;
+}
+.notifications .notificiationItem {
+  margin-right: 16px;
+  padding: 10px;
+  background-color: #192745;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .notifications {
+    display: flex;
+    float: right;
+    padding-right: 10px;
+  }
+}

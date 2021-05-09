@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header/Header";
 import ProfileSelf from "../components/ProfileSelf/ProfileSelf";
 
-function WorkScreen() {
+function ProfilePage() {
   return (
     <div className="container">
       <Header />
@@ -11,4 +11,4 @@ function WorkScreen() {
   );
 }
 
-export default WorkScreen;
+export default ProfilePage;

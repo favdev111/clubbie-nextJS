@@ -25,3 +25,19 @@
     }
   }
 }
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .navbar {
+    .navbar__list {
+      margin-left: 12px;
+    }
+    .navbar__list-item .navbar__list-item__link {
+      margin-right: 12px;
+    }
+  }
+}
+@media (max-width: 640px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+}

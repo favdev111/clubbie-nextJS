@@ -1,0 +1,29 @@
+.bank-card {
+  background: #ffffff0d 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 14px;
+
+  display: flex;
+  justify-content: space-between;
+  .bank-card__inner {
+    .bank-card-no {
+      color: white;
+    }
+    .bank-card__exp {
+      color: rgb(255, 255, 255, 0.5);
+      display: flex;
+      padding-top: 16px;
+      padding-bottom: 12px;
+      p {
+        padding-left: 2px;
+        color: white;
+      }
+    }
+  }
+  .bank-card__default {
+    p {
+      color: rgb(255, 255, 255, 0.5);
+    }
+  }
+}

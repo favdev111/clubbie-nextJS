@@ -1,0 +1,54 @@
+.connectedbanks {
+  max-width: 940px;
+  padding-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.connectedbanks .connectedbanksTitle h1 {
+  font-size: 32px;
+  color: white;
+  font-family: "Touche W03 Bold", "Arial", sans-serif;
+  margin-bottom: 48px;
+}
+.connectedbanks .connectedbanksBody {
+  background: #141f34 0% 0% no-repeat padding-box;
+  width: 100%;
+  border-radius: 15px;
+  padding: 32px;
+}
+.connectedbanks .connectedbanksBody .connectedbanksBodyInner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.connectedbanks .connectedbanksButton {
+  display: flex;
+  padding-top: 224px;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 900px) and (min-width: 640px) {
+  .connectedbanks {
+    padding: 50px 20px 0 20px;
+  }
+  .connectedbanks .connectedbanksTitle h1 {
+    margin-left: 30px;
+  }
+  .connectedbanks .connectedbanksBody .connectedbanksBodyInner {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .connectedbanks .connectedbanksButton {
+    padding-top: 50px;
+  }
+}
+@media (max-width: 640px) {
+  .connectedbanks {
+    padding: 80px 20px 0 20px;
+  }
+  .connectedbanks .connectedbanksBody .connectedbanksBodyInner {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .connectedbanks .connectedbanksButton {
+    padding-top: 50px;
+  }
+}

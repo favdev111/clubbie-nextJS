@@ -1,0 +1,177 @@
+.profile {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+  padding-top: 50px;
+}
+.profile .profileTitle {
+  font-size: 32px;
+  color: white;
+  font-family: "Touche W03 Bold", "Arial", sans-serif;
+  margin-bottom: 48px;
+}
+.profile .profilePlayer {
+  background: #141f34 0% 0% no-repeat padding-box;
+  width: 100%;
+  border-radius: 15px;
+  padding: 32px;
+}
+.profile .profilePlayer .profilePlayerHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
+  height: 124px;
+  width: 124px;
+}
+.profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerLeft {
+  display: flex;
+}
+.profile
+  .profilePlayer
+  .profilePlayerHeader
+  .profilePlayerHeaderInnerLeft
+  .profileInfo {
+  display: block;
+  padding-left: 16px;
+}
+.profile
+  .profilePlayer
+  .profilePlayerHeader
+  .profilePlayerHeaderInnerLeft
+  .profileInfo
+  h2 {
+  color: white;
+  font-size: 24px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-family: "Touche W03 Bold", "Arial", sans-serif;
+}
+.profile
+  .profilePlayer
+  .profilePlayerHeader
+  .profilePlayerHeaderInnerLeft
+  .profileInfo
+  h6 {
+  color: white;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+}
+.profile
+  .profilePlayer
+  .profilePlayerHeader
+  .profilePlayerHeaderInnerLeft
+  .profileInfo
+  img {
+  padding-right: 16px;
+}
+.profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+  display: flex;
+  align-items: center;
+}
+.profile .profilePlayer .profilePlayerBody {
+  margin-top: 16px;
+}
+.profile .profileButtons {
+  margin-top: 48px;
+  display: flex;
+}
+.profile .profileButtons img {
+  color: white;
+}
+.profile .profileButtons .active {
+  background-color: #5fc4ee;
+}
+.profile .profileButtons .passive {
+  opacity: 0.5;
+}
+.profile .profileButtons .passive:hover {
+  background-color: #5fc4ee;
+  opacity: 1;
+}
+.profile .profileButtons button {
+  margin-right: 15px;
+}
+.profile .profilePhotos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.profile .profilePhotos .profilePhotosItem {
+  margin-top: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.profile .profilePhotos .profilePhotosItem:hover .profilePhotosOptions {
+  display: flex;
+}
+.profile .profile__photos .profilePhotosItem .profilePhotosOptions {
+  display: none;
+  align-items: center;
+  position: absolute;
+}
+.profile .profile__photos .profilePhotosItem .profilePhotosOptions img {
+  margin-right: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 99px;
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+}
+.profile .profile__photos .profilePhotosItem .profilePhotosOptions img:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 900px) and (min-width: 640px) {
+  .navbar .navbarList {
+    margin-left: 12px;
+  }
+  .navbar .navbarListItem .navbarListItemLink {
+    margin-right: 12px;
+  }
+
+  .profile .profileTitle {
+    padding-left: 30px;
+  }
+
+  .profile .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .profile .profileButtons {
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 640px) {
+  .profile .profileTitle {
+    padding-left: 10px;
+  }
+
+  .profile .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .profile .profilePlayer .profilePlayerHeader {
+    justify-content: start;
+    display: block;
+  }
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
+    width: 96px;
+    height: 96px;
+  }
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+  }
+
+  .profile .profileButtons {
+    display: grid;
+    gap: 0.5rem;
+  }
+}
