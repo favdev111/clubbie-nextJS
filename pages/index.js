@@ -75,7 +75,7 @@ export default function Home() {
             </Link>
           </li>
           <li>
-            <Link href="/teamhub">
+            <Link href="/teamhub-initial">
               <a className="list-page__item">Teamhub</a>
             </Link>
           </li>
