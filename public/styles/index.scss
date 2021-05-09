@@ -47,14 +47,15 @@ a {
 
 .main {
   display: block;
-  position: absolute;
-  width: 100vw;
-  //height: 100vh;
 }
 .list-page {
+  position: absolute;
+  top: -200px;
+  left: 35%;
   width: 500px;
-  height: 250px;
+  height: 450px;
   border: 1px solid #858585;
+  color: rgb(255, 255, 255, 0.6);
   border-radius: 15px;
   margin: 20% auto 0;
   text-align: center;
