@@ -1,0 +1,41 @@
+.navbar {
+  display: flex;
+  align-items: center;
+}
+.navbar .navbarList {
+  display: flex;
+  margin-left: 96px;
+}
+.navbar .navbarListItem .navbarListItemLink {
+  cursor: pointer;
+  margin-right: 64px;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  font-size: 16px;
+  padding: 0 5px 0 5px;
+  color: white;
+  border-bottom: 4px solid transparent;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+.navbar .navbarListItem .navbarListItemLink:hover {
+  color: #e7ba19;
+  border-bottom-width: 4px;
+  border-color: #e7ba19;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .navbar .navbarList {
+    margin-left: 12px;
+  }
+  .navbar .navbarListItem .navbarListItemLink {
+    margin-right: 12px;
+  }
+}
+@media (max-width: 640px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,61 @@
+.teamhub-card {
+  display: flex;
+  width: 454px;
+  background: #141f34 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  padding: 16px;
+  min-height: 155px;
+  margin-bottom: 30px;
+  position: relative;
+  padding: 32px;
+  grid-column: span 4 / span 4;
+
+  .teamhub-card__button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+  }
+  .teamhub-card__info {
+    margin-left: 22px;
+    margin-right: 29px;
+    h3 {
+      color: #e7ba19;
+      font-size: 18px;
+      font-family: "Touche W03 Bold", "Arial";
+    }
+    p {
+      color: rgb(255, 255, 255, 0.5);
+      font-family: "Touche W03 Regular", "Arial";
+      font-size: 16px;
+      padding-top: 11px;
+    }
+  }
+}
+.last {
+  grid-column-start: 3;
+}
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .last {
+    grid-column-start: 1;
+  }
+}
+
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .teamhub-card {
+    grid-column: span 1 / span 1;
+    max-width: 320px;
+    height: unset;
+    display: block;
+    .teamhub-card__info {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+  }
+  .last {
+    grid-column-start: 1;
+  }
+}

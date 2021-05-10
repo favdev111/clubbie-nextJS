@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  align-items: center;
+
+  .navbar__list {
+    display: flex;
+    margin-left: 96px;
+  }
+  .navbar__list-item .navbar__list-item__link {
+    cursor: pointer;
+    margin-right: 64px;
+    font-family: "Touche W03 Regular", "Arial", sans-serif;
+    font-size: 16px;
+    padding: 0 5px 0 5px;
+    color: white;
+    border-bottom: 4px solid transparent;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    &:hover {
+      color: #e7ba19;
+      border-bottom-width: 4px;
+      border-color: #e7ba19;
+      font-weight: 600;
+    }
+  }
+}
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .navbar {
+    .navbar__list {
+      margin-left: 12px;
+    }
+    .navbar__list-item .navbar__list-item__link {
+      margin-right: 12px;
+    }
+  }
+}
+@media (max-width: 640px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,125 @@
+.join {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+  padding-top: 50px;
+}
+.join .joinHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.join .joinHeader .skip {
+  border: none;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  cursor: pointer;
+}
+.join .joinHeader .skip:hover {
+  color: white;
+}
+.join .joinHeader .joinHeaderInner {
+  display: flex;
+  height: max-content;
+  align-items: center;
+  position: relative;
+}
+.join .joinHeader .joinHeaderInner .joinHeaderCurrent {
+  display: flex;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  color: white;
+  align-items: center;
+}
+.join .joinHeader .joinHeaderInner .joinHeaderCurrent img {
+  margin-left: 16px;
+  margin-right: 6px;
+}
+.join .joinHeader .joinHeaderInner button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: -26px;
+}
+.join .joinHeader .joinHeaderInner h1 {
+  font-size: 32px;
+  color: white;
+  font-family: "Touche W03 Bold", "Arial", sans-serif;
+  display: flex;
+}
+.join .joinSearchbox {
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 50px;
+  position: relative;
+  color: white;
+}
+.join .joinSearchbox img {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 21px;
+  height: 21px;
+}
+.join .joinSearchbox input {
+  width: 100%;
+  height: 52px;
+  border-radius: 10px;
+  background: #ffffff0d 0% 0% no-repeat padding-box;
+  border: none;
+  font-size: 16px;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 44px;
+  position: relative;
+}
+.join .joinSearchbox input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+.join .joinListContent {
+  height: 500px;
+  overflow-y: scroll;
+}
+.join .joinListContent::-webkit-scrollbar-track {
+  padding: 1px 0;
+  background-color: transparent;
+}
+.join .joinListContent:-webkit-scrollbar {
+  width: 1px !important;
+}
+.join .joinListContent::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #5fc4ee;
+  border: none;
+}
+.join .joinListContent .joinListItem {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: white;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+}
+.join .joinListContent .joinListItem img {
+  margin-right: 6px;
+  height: 24px;
+  width: 24px;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .join {
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .join {
+    margin-top: 30px;
+    padding: 30px;
+  }
+  .join .joinHeaderInner .joinHeaderCurrent {
+    padding: 10px;
+  }
+}
