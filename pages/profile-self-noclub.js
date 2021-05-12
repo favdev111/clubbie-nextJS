@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header/Header";
+import Header from "../components/Header/index";
 import ProfileSelf from "../components/ProfileSelf/ProfileSelf";
 
 function ProfilePageNoclub() {

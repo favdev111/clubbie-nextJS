@@ -1,23 +1,15 @@
 ﻿{
-    "plugins": [
-      ["module-resolver", {
-        "root": ["./components"],
+  "presets": [["next/babel", {}]],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
         "alias": {
-          "accountConfirm": "./accountConfirm",
-          "accountVerif": "./accountVerif",
-          "connectedBanks": "./connectedBanks",
-          "header": "./header",
-          "join": "./join",
-          "login": "./login",
-          "logout": "./logout",
-          "profileSelf": "./profileSelf.module.scss",
-          "recoverPass": "./recoverPass",
-          "signUp": "./signUp",
-          "socialSigningFB": "./socialSigningFB",
-          "socialSigningGoogle": "./socialSigningGoogle",
-          "teamhub": "./teamhub",
-          "wrap": "./wrap"
+          "@c": "./components",
+          "@p": "./public"
         }
-      }]
+      }
     ]
-  }
+  ]
+}
