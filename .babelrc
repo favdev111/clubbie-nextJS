@@ -1,0 +1,23 @@
+﻿{
+    "plugins": [
+      ["module-resolver", {
+        "root": ["./components"],
+        "alias": {
+          "accountConfirm": "./accountConfirm",
+          "accountVerif": "./accountVerif",
+          "connectedBanks": "./connectedBanks",
+          "header": "./header",
+          "join": "./join",
+          "login": "./login",
+          "logout": "./logout",
+          "profileSelf": "./profileSelf.module.scss",
+          "recoverPass": "./recoverPass",
+          "signUp": "./signUp",
+          "socialSigningFB": "./socialSigningFB",
+          "socialSigningGoogle": "./socialSigningGoogle",
+          "teamhub": "./teamhub",
+          "wrap": "./wrap"
+        }
+      }]
+    ]
+  }
