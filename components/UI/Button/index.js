@@ -1,12 +1,12 @@
 import React from "react";
-// import styles from './button.module.scss'
+import styles from './button.module.scss'
 
 const Button = (props) => {
     const {variant = 'login', children} = props;
     return(
         <>
-            <button className="btn">
-                <span className="contTxt">{children}</span>
+            <button className={styles.btn}>
+                <span className={styles.contTxt}>{children}</span>
             </button>
         </>
     )

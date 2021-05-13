@@ -1,9 +1,9 @@
 import React from "react";
-import Avatar from "../UI/Avatar/Avatar";
+import Avatar from "../UI/Avatar/index";
 import OvalButton from "../UI/OvalButton/OvalButton";
-import ProfileInfo from "../UI/ProfileInfo/ProfileInfo";
-import ProfileDetails from "../UI/ProfileDetails/ProfileDetails";
-import ForwardButton from "../UI/ForwardButton/ForwardButton";
+import ProfileInfo from "../UI/ProfileInfo";
+import ProfileDetails from "../UI/ProfileDetails";
+import ForwardButton from "../UI/ForwardButton";
 
 import styles from "./profileself.module.scss";
 
@@ -12,7 +12,7 @@ function ProfileSelf({ join, isPublic }) {
   const person = {
     name: "Roger Steward",
     role: "Footballer",
-    email: "roger@gmail.com",
+    email: "roger@gmail.com",    
     telephone: "+44 7500 555 555",
     city: "Statford-Upon-Avon",
     country: "United Kingdom",
@@ -64,12 +64,12 @@ function ProfileSelf({ join, isPublic }) {
           <img src="assets/photo2.png" />
           <div className={styles.profilePhotosOptions}>
             <img src="assets/edit-photo.svg" />
-            <img src={require("../../public/assets/thrash.svg")} />
+            <img src="/assets/thrash.svg"/>
           </div>
         </div>
         <div className={styles.profilePhotosItem}>
           <img src="/assets/photo3.png" />
-          <div className="profile__photos__options">
+          <div className={styles.profilePhotosOptions}>
             <img src="/assets/edit-photo.svg" />
             <img src="/assets/thrash.svg" />
           </div>

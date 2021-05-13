@@ -1,13 +1,14 @@
 import React from "react";
 import cn from "classnames";
+import styles from "./ovalbutton.module.scss"
 
 function OvalButton({ children, appearence, status, isPublic, theme }) {
   return (
     <button
       className={cn(
-        "oval__button",
+        styles.ovalButton,
         appearence !== "edit" && "secondary",
-        theme === "bank" && "button-bank",
+        theme === "bank" && styles.buttonBank,
         status === "active" && "active",
         status !== "active" && "passive"
       )}
@@ -16,20 +17,19 @@ function OvalButton({ children, appearence, status, isPublic, theme }) {
         <img
           src={
             isPublic
-              ? require("../../../public/assets/send.png")
-              : require("../../../public/assets/edit.svg")
+              ? "/assets/send.png"
+              : "/assets/edit.svg"
           }
         />
       )}
-
       {appearence === "uploaded" && (
-        <img src={require("../../../public/assets/upload.svg")} />
+        <img src="/assets/upload.svg" />
       )}
       {appearence === "tagged" && (
-        <img src={require("../../../public/assets/tag.svg")} />
+        <img src="/assets/tag.svg" />
       )}
       {appearence === "reposts" && (
-        <img src={require("../../../public/assets/repost.svg")} />
+        <img src="/assets/repost.svg" />
       )}
       {children}
     </button>

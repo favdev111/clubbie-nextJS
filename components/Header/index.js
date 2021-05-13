@@ -1,11 +1,12 @@
 import React from "react";
+import Navbar from "../UI/Navbar";
+import Notifications from "../UI/Notifications";
+import styles from './header.module.scss';
 
-import Navbar from "../UI/Navbar/Navbar";
-import Notifications from "../UI/Notifications/Notifications";
 
 function Header() {
   return (
-    <div className="header">
+    <div className={styles.header}>
       <Navbar />
       <Notifications />
     </div>

@@ -1,16 +1,18 @@
 import React from "react";
 import Link from "next/link";
-import Logo from "../Logo/Logo";
+import Logo from "../Logo";
+import styles from "./navbar.module.scss"
+
 
 function Navbar() {
   return (
-    <div className="navbar">
+    <div className={styles.navbar}>
       <Logo />
-      <ul className="navbar__list">
+      <ul className={styles.navbarList}>
         {["Home", "Teamhub"].map((nav, index) => (
-          <li key={`${nav}index`} className="navbar__list-item">
+          <li key={`${nav}index`} className={styles.navbarListItem}>
             <Link href="./">
-              <div className="navbar__list-item__link">{nav}</div>
+              <div className={styles.navbarListItemLink}>{nav}</div>
             </Link>
           </li>
         ))}
