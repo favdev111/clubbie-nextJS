@@ -5,7 +5,7 @@ function Avatar({ src }) {
     <>
       <img
         className="profile__player__header__avatar"
-        src={require("../../../public/assets/profile-avatar.png")}
+        src="/assets/profile-avatar.png"
       />
     </>
   );

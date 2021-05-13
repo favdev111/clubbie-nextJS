@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-// import styles from './input.module.scss'
-// import styles from './input.module.css'
+import styles from './input.module.scss'
 
 const TemplateInput = ({type, placeholder}) => {
     const [typeInput, setTypeInput] = useState(type);
@@ -14,12 +13,12 @@ const TemplateInput = ({type, placeholder}) => {
     }
 
     return(
-        <div className="inputCont">
-            <input className="inputBlock" type={typeInput} placeholder={placeholder} />
+        <div className={styles.inputCont}>
+            <input className={styles.inputBlock} type={typeInput} placeholder={placeholder} />
             {
                 type === 'password'
-                ? <a href="#" onClick={showPasswordHandler} className="showPassword">
-                        <img className="passImg" src={require('../../../public/assets/eye.svg')} alt="show password"/>
+                ? <a href="#" onClick={showPasswordHandler} className={styles.showPassword}>
+                        <img src="/assets/eye.svg" alt="show password"/>
                   </a>
                 : null
             }

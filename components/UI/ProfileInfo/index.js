@@ -1,5 +1,5 @@
 import React from "react";
-import ForwardButton from "../ForwardButton/ForwardButton";
+import ForwardButton from "../ForwardButton";
 
 function ProfileInfo({ footballerName, role, join }) {
   return (
@@ -10,8 +10,8 @@ function ProfileInfo({ footballerName, role, join }) {
         <ForwardButton appearence="join"> Join a club </ForwardButton>
       ) : (
         <div>
-          <img src={require(`../../../public/assets/team2.png`)} />
-          <img src={require(`../../../public/assets/team1.png`)} />
+          <img src="/assets/team2.png" />
+          <img src="/assets/team1.png" />
         </div>
       )}
     </div>

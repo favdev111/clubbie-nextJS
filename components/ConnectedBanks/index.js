@@ -1,6 +1,7 @@
 import React from "react";
-import BankCard from "../UI/BankCard/BankCard";
+import BankCard from "../UI/BankCard";
 import OvalButton from "../UI/OvalButton/OvalButton";
+import styles from './connectedbanks.module.scss';
 
 function ConnectedBanks() {
   const data = [
@@ -18,17 +19,17 @@ function ConnectedBanks() {
     },
   ];
   return (
-    <div className="connected-banks">
-      <div className="connected-banks__title">
+    <div className={styles.connectedbanks}>
+      <div className={styles.connectedbanksTitle}>
         <h1> Connected Bank Accounts</h1>
       </div>
-      <div className="connected-banks__body">
-        <div className="connected-banks__body__inner">
+      <div className={styles.connectedbanksBody}>
+        <div className={styles.connectedbanksBodyInner}>
           {data.map((card) => (
             <BankCard data={card} />
           ))}
         </div>
-        <div className="connected-banks__button">
+        <div className={styles.connectedbanksButton}>
           <OvalButton theme="bank">Add New</OvalButton>
         </div>
       </div>
