@@ -25,8 +25,8 @@ function ConnectedBanks() {
       </div>
       <div className={styles.connectedbanksBody}>
         <div className={styles.connectedbanksBodyInner}>
-          {data.map((card) => (
-            <BankCard data={card} />
+          {data.map((card,index) => (
+            <BankCard key={"bankcard" + index} data={card} />
           ))}
         </div>
         <div className={styles.connectedbanksButton}>

@@ -6,9 +6,9 @@ function BankCard({ data }) {
   return (
     <div className={styles.bankcard}>
       <div className={styles.bankcardInner}>
-        <p className={styles.bankcardNo}>**** **** **** 6574</p>
+        <p className={styles.bankcardNo}>{data.card}</p>
         <div className={styles.bankcardExp}>
-          EXP<p>10/12</p>
+          EXP<p>{data.exp}</p>
         </div>
         <img src="/assets/mastercard.svg" />
       </div>
