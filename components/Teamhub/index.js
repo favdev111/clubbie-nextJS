@@ -20,7 +20,7 @@ function Teamhub() {
   return (
     <div className={styles.teamhub}>
       <h1 className={styles.teamhubTitle}>Teamhub</h1>
-      <p classname="teamhub__desc">
+      <p className="teamhub__desc">
         You are currently a registered user – you’re just here to enjoy the
         amazing amateur sports content on Clubbie!
       </p>
