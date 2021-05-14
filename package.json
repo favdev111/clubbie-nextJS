@@ -17,7 +17,8 @@
     "prettier": "^2.3.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.32.12"
+    "sass": "^1.32.13",
+    "storybook-css-modules-preset": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -25,10 +26,13 @@
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
+    "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.2.9",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "^4.1.0",
-    "sass-loader": "10.1.1",
+    "css-loader": "^5.2.4",
+    "sass-loader": "^11.1.1",
+    "style-loader": "^2.0.0",
     "webpack": "^5.37.0",
     "webpack-cli": "^4.7.0"
   }
