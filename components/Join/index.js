@@ -19,7 +19,7 @@ function Join({ title, data, current }) {
           )}
         </div>
 
-        <button className={styles.button}> Skip </button>
+        <button className={styles.skip}> Skip </button>
       </div>
       <div className={styles.joinSearchbox}>
         <img src="/assets/search.svg" />

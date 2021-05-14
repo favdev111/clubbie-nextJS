@@ -14,20 +14,20 @@
   }
 }
 
-.span-1 {
+.span1 {
   grid-column: span 1 / span 1;
 }
 
-.span-3 {
+.span3 {
   grid-column: span 3 / span 3;
 }
 
 @media screen and (max-width: 760px) and (min-width: 360px) {
-  .span-1 {
+  .span1 {
     grid-column: span 3 / span 3;
   }
 
-  .span-3 {
+  .span3 {
     grid-column: span 3 / span 3;
   }
 }

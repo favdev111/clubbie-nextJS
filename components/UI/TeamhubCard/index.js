@@ -4,7 +4,7 @@ import styles from "./teamhubcard.module.scss"
 
 function TeamhubCard({ data, type, last }) {
   return (
-    <div className={cn(styles.TeamhubCard, last && styles.last)}>
+    <div className={cn(styles.teamhubCard, last && styles.last)}>
     
       {type === "club" && (
         <img src="/assets/teamhub.png" />
