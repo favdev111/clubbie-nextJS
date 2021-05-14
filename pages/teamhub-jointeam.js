@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header/index";
-import Join from "../components/Join/index";
+import Header from "@c/Header/index";
+import Join from "@c/Join/index";
 
 function TeamhubJoinTeamPage() {
   const teams = [

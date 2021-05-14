@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "../components/Wrap/index";
-import AccountConfirm from "../components/AccountConfirm/index";
+import Wrap from "@c/Wrap/index";
+import AccountConfirm from "@c/AccountConfirm/index";
 
 
 const AccountConfirmPage = () => {

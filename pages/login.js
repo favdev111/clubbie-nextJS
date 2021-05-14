@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "../components/Wrap/index";
-import Login from "../components/Login/index";
+import Wrap from "@c/Wrap/index";
+import Login from "@c/Login/index";
 
 
 const LoginPage = () => {

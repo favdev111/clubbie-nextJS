@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "../components/Wrap/index";
-import AccountVerif from "../components/AccountVerif/index";
+import Wrap from "@c/Wrap/index";
+import AccountVerif from "@c/AccountVerif/index";
 
 
 const AccountVerifPage = () => {

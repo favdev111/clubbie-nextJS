@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "../components/Wrap/index";
-import SignUp from "../components/SignUp/index";
+import Wrap from "@c/Wrap/index";
+import SignUp from "@c/SignUp/index";
 
 
 const SignUpPage = () => {
