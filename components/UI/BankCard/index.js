@@ -1,6 +1,6 @@
 import React from "react";
 import ForwardButton from "../ForwardButton";
-import styles from "./bankcard.module.scss"
+import styles from "./bankcard.module.css";
 
 function BankCard({ data }) {
   return (

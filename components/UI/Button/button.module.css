@@ -1,0 +1,15 @@
+.btn {
+  padding: 16px 48px 16px 48px;
+  border-radius: 10px;
+  background: #5fc4ee;
+  outline: none;
+}
+
+.contTxt {
+  font-family: "ToucheW03-Bold", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 17px;
+  text-align: center;
+  color: #fff;
+}

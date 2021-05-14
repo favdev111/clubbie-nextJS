@@ -1,6 +1,6 @@
 import React from "react";
 import TeamhubCard from "../UI/TeamhubCard";
-import styles from './teamhub.module.scss'
+import styles from "./teamhub.module.css";
 
 function Teamhub() {
   const clubOfficial = {

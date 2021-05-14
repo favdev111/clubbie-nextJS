@@ -1,7 +1,6 @@
 import React from "react";
 import ForwardButton from "../ForwardButton";
-import styles from "./profile-info.module.scss"
-
+import styles from "./profile-info.module.css";
 
 function ProfileInfo({ footballerName, role, join }) {
   return (

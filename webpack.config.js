@@ -2,12 +2,12 @@
   plugins: [],
   module: {
     rules: [
-      { loader: 'sass-loader' },
+      { loader: "sass-loader" },
       {
-        loader: 'css-loader',
+        loader: "css-loader",
         options: {
-          modules: true
-        }
+          modules: true,
+        },
       },
 
       // BABEL

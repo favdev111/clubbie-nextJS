@@ -1,0 +1,19 @@
+.forwardButton {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: #5fc4ee;
+  font-family: "Touche W03 Bold", "Arial", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+.forwardButton img {
+  padding-left: 6px;
+}
+.forwardButton:hover {
+  text-decoration: underline;
+}
+.bank {
+  font-size: 14px;
+}

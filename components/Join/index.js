@@ -1,6 +1,5 @@
 import React from "react";
-import styles from './join.module.scss';
-
+import styles from "./join.module.css";
 
 function Join({ title, data, current }) {
   return (
@@ -29,10 +28,10 @@ function Join({ title, data, current }) {
       <div className={styles.joinListContent}>
         <ul className="join__list">
           {data &&
-            data.map((i) => (
-              <li className={styles.joinListItem}>
+            data.map((teams, index) => (
+              <li key={teams + index} className={styles.joinListItem}>
                 <img src="/assets/team1.png" />
-                {i.name}
+                {teams.name}
               </li>
             ))}
         </ul>

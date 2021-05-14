@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Logo from "../Logo";
-import styles from "./navbar.module.scss"
-
+import styles from "./navbar.module.css";
 
 function Navbar() {
   return (

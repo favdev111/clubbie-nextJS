@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./profiledetails.module.scss"
-import cn from "classnames"
+import styles from "./profiledetails.module.css";
+import cn from "classnames";
 
 function ProfileDetails({ data, isPublic }) {
   return !isPublic ? (

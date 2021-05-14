@@ -5,14 +5,14 @@ import ProfileInfo from "../UI/ProfileInfo";
 import ProfileDetails from "../UI/ProfileDetails";
 import ForwardButton from "../UI/ForwardButton";
 
-import styles from "./profileself.module.scss";
+import styles from "./profileself.module.css";
 
 function ProfileSelf({ join, isPublic }) {
   // I assume that is a JSON data
   const person = {
     name: "Roger Steward",
     role: "Footballer",
-    email: "roger@gmail.com",    
+    email: "roger@gmail.com",
     telephone: "+44 7500 555 555",
     city: "Statford-Upon-Avon",
     country: "United Kingdom",
@@ -64,7 +64,7 @@ function ProfileSelf({ join, isPublic }) {
           <img src="assets/photo2.png" />
           <div className={styles.profilePhotosOptions}>
             <img src="assets/edit-photo.svg" />
-            <img src="/assets/thrash.svg"/>
+            <img src="/assets/thrash.svg" />
           </div>
         </div>
         <div className={styles.profilePhotosItem}>
@@ -75,9 +75,9 @@ function ProfileSelf({ join, isPublic }) {
           </div>
         </div>
         <div className={styles.profilePhotosItem}>
-          <img src="assets/photo2.png" />
+          <img src="/assets/photo2.png" />
           <div className={styles.profilePhotosOptions}>
-            <img src="assets/edit-photo.svg" />
+            <img src="/assets/edit-photo.svg" />
             <img src="/assets/thrash.svg" />
           </div>
         </div>

@@ -1,8 +1,7 @@
 import React from "react";
 import Navbar from "../UI/Navbar";
 import Notifications from "../UI/Notifications";
-import styles from './header.module.scss';
-
+import styles from "./header.module.css";
 
 function Header() {
   return (
