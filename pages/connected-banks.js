@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@c/Header/index";
-import ConnectedBanks from "@c/ConnectedBanks/index";
+import Header from "@c/Header/";
+import ConnectedBanks from "@c/ConnectedBanks/";
 
 function ConnectedBanksPage() {
   return (

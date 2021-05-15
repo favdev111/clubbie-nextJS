@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@c/Header/index";
-import Teamhub from "@c/Teamhub/index";
+import Header from "@c/Header/";
+import Teamhub from "@c/Teamhub/";
 
 function TeamhubPage() {
   return (
