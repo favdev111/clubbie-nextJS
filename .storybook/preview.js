@@ -3,6 +3,13 @@ import "../public/styles/index.css";
 export const parameters = {
   layout: "fullscreen",
   actions: { argTypesRegex: "^on[A-Z].*" },
+  backgrounds: {
+    values: [
+      { name: "white", value: "#fff" },
+      { name: "black", value: "#000" },
+      { name: "blue", value: "#5fc4eeb3" },
+    ],
+  },
   viewport: {
     viewports: {
       mobile: {
