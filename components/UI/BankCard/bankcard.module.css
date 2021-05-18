@@ -10,7 +10,7 @@
   color: white;
 }
 .bankcard .bankcardInner .bankcardExp {
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   display: flex;
   padding-top: 16px;
   padding-bottom: 12px;
@@ -20,5 +20,5 @@
   color: white;
 }
 .bankcard .bankcardDefault p {
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
 }

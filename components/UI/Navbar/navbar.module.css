@@ -24,7 +24,6 @@
   border-color: #e7ba19;
   font-weight: 600;
 }
-
 @media screen and (max-width: 760px) and (min-width: 360px) {
   .navbar .navbarList {
     margin-left: 12px;

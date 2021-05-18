@@ -1,12 +1,12 @@
-const withImages = require('next-images');
-// const withFonts = require('next-fonts');
-module.exports = withImages();
+const config = {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.node = {
+        fs: "empty",
+      };
+    }
+    return config;
+  },
+};
 
-// module.exports = withFonts(withImages({
-//         enableSvg: true,
-//         webpack(config, options) {
-//             return config;
-//         }
-//     }
-// ));
-
+module.exports = config;

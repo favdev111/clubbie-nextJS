@@ -1,84 +1,45 @@
-
-import '../public/styles/index.scss';
-
-import * as nextImage from 'next/image'
-
-Object.defineProperty(nextImage, 'default', {
-    configurable: true,
-    value: props => <img {...props} />
-});
-
+import "../public/styles/index.css";
 
 export const parameters = {
-        layout: 'fullscreen',
-        actions: { argTypesRegex: '^on[A-Z].*' },
-        viewport: {
-            viewports: {
-                mobile: {
-                    name: 'iPhone X',
-                    styles: {
-                        width: '375px',
-                        height: '812px',
-                    },
-                },
-                tablet: {
-                    name: 'iPad',
-                    styles: {
-                        width: '768px',
-                        height: '1024px',
-                    },
-                },
-                laptop: {
-                    name: 'Laptop',
-                    styles: {
-                        width: '1280px',
-                        height: '720px',
-                    },
-                },
-                desktop: {
-                    name: 'Desktop',
-                    styles: {
-                        width: '1440px',
-                        height: '900px',
-                    },
-                },
-            },
+  layout: "fullscreen",
+  actions: { argTypesRegex: "^on[A-Z].*" },
+  backgrounds: {
+    values: [
+      { name: "white", value: "#fff" },
+      { name: "black", value: "#000" },
+      { name: "blue", value: "#5fc4eeb3" },
+    ],
+  },
+  viewport: {
+    viewports: {
+      mobile: {
+        name: "iPhone X",
+        styles: {
+          width: "375px",
+          height: "812px",
         },
-    }
-
-// Replace next/image for Storybook
-    Object.defineProperty(nextImage, 'default', {
-        configurable: true,
-        value: (props) => {
-            const { width, height } = props
-            const ratio = (height / width) * 100
-            return (
-                <div
-                    style={{
-                        paddingBottom: `${ratio}%`,
-                        position: 'relative',
-                    }}>
-                    <img
-                        style={{
-                            objectFit: 'cover',
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                        {...props}
-                    />
-                </div>
-            )
+      },
+      tablet: {
+        name: "iPad",
+        styles: {
+          width: "768px",
+          height: "1024px",
         },
-})
-
-
-// export const parameters = {
-//   actions: { argTypesRegex: "^on[A-Z].*" },
-//   controls: {
-//     matchers: {
-//       color: /(background|color)$/i,
-//       date: /Date$/,
-//     },
-//   },
-// }
+      },
+      laptop: {
+        name: "Laptop",
+        styles: {
+          width: "1280px",
+          height: "720px",
+        },
+      },
+      desktop: {
+        name: "Desktop",
+        styles: {
+          width: "1440px",
+          height: "900px",
+        },
+      },
+    },
+  },
+};

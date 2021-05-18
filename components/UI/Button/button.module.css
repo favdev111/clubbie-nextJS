@@ -1,27 +1,16 @@
 .btn {
-    /*width: 142px;*/
-    /*height: 52px;*/
+  padding: 16px 48px 16px 48px;
+  border-radius: 10px;
+  background: #5fc4ee;
+  outline: none;
+  border: none;
+}
 
-    padding: 16px 48px 16px 48px;
-    border-radius: 10px;
-    background: #5fc4ee; /* 95, 196, 238*/
-    outline: none;
-    /*border: 1px solid rgb(250,172,17)*/
-    border-color: transparent;
-}
-.btn:active {
-    /*padding: calc(.25em + 1px) .5em calc(.25em - 1px);*/
-    /*border-color: rgba(177,159,0,1);*/
-    /*box-shadow: inset 0 -1px 1px rgba(0,0,0,.1), inset 0 1px 2px rgba(0,0,0,.3), inset 0 0 0 60px rgba(255,255,0,.45);*/
-    border-color: rgba(0, 0, 0, .3);
-    box-shadow: 0 0 40px rgba(0, 0, 0, .2) inset;
-}
 .contTxt {
-    font-family: 'ToucheW03-Bold', sans-serif;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 17px;
-    text-align: center;
-    color: #fff;
-    width: 100%;
+  font-family: "ToucheW03-Bold", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 17px;
+  text-align: center;
+  color: #fff;
 }

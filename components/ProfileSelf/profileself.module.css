@@ -109,12 +109,12 @@
 .profile .profilePhotos .profilePhotosItem:hover .profilePhotosOptions {
   display: flex;
 }
-.profile .profile__photos .profilePhotosItem .profilePhotosOptions {
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions {
   display: none;
   align-items: center;
   position: absolute;
 }
-.profile .profile__photos .profilePhotosItem .profilePhotosOptions img {
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions img {
   margin-right: 16px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 99px;
@@ -122,7 +122,7 @@
   width: 64px;
   height: 64px;
 }
-.profile .profile__photos .profilePhotosItem .profilePhotosOptions img:hover {
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header/Header";
-import ProfileSelf from "../components/ProfileSelf/ProfileSelf";
+import Header from "@c/Header/";
+import ProfileSelf from "@c/ProfileSelf/";
 
 function ProfilePagePublic() {
   return (

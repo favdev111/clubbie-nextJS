@@ -1,20 +1,7 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  stories: [
-    "../storiesComponents/**/*.stories.mdx",
-    "../storiesComponents/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ],
-  webpackFinal: async config => {
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
-    });
-
-    return config;
-  }
-}
+  stories: ["../stories/**/*.stories.js", "../stories/**/*.stories.tsx"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  presets: [path.resolve(__dirname, "./next-preset.js")],
+};
