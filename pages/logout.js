@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import Logout from "@c/Logout/";
+import Wrap from "@layout/account-wrapper/";
+import Logout from "@page/logout/";
 
 const LogoutPage = () => {
   return (

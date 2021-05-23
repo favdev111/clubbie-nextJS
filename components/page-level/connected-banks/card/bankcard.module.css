@@ -1,0 +1,17 @@
+.bankcard {
+  background: #ffffff0d 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: var(--fs-small);
+  display: flex;
+  justify-content: space-between;
+}
+
+.bankcardExp {
+  display: flex;
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+.bankcardExp p {
+  padding-left: 2px;
+}

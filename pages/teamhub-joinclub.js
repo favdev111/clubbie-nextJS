@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@c/Header/";
-import Join from "@c/Join/";
+import Header from "@layout/header/";
+import Join from "@page/join/";
 
 function TeamhubJoinClubPage() {
   const teams = [

@@ -1,0 +1,34 @@
+.logoutBlock {
+  display: block;
+  width: var(--container-md);
+  margin: var(--space-95) auto 0px;
+}
+.title {
+  text-align: center;
+  margin: 0 auto var(--space-64);
+}
+.textBlock {
+  margin: 24px auto 55px;
+}
+
+.btnLogin {
+  display: block;
+  width: 142px;
+  margin: 0 auto;
+}
+.devideBlock {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-48);
+}
+
+.text {
+  padding: 0px 24px 0px 24px;
+  color: var(--c-white-50);
+}
+.socialLogin {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: var(--space-32) auto 0px;
+}

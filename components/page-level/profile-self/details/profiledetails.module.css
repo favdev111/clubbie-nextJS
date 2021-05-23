@@ -1,0 +1,28 @@
+.profilePlayerBodyContent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 48px;
+}
+.profilePlayerBodyContentItem {
+  padding-top: 32px;
+  color: var(--c-white-50);
+}
+
+.profilePlayerBodyContentItem p {
+  padding-top: 16px;
+  color: var(--c-white);
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span3 {
+  grid-column: span 3 / span 3;
+}
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .span1 {
+    grid-column: span 3 / span 3;
+  }
+  .span3 {
+    grid-column: span 3 / span 3;
+  }
+}

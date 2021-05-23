@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import SignUp from "@c/SignUp/";
+import Wrap from "@layout/account-wrapper/";
+import SignUp from "@page/sign-up";
 
 const SignUpPage = () => {
   return (
@@ -18,5 +18,4 @@ const SignUpPage = () => {
     </div>
   );
 };
-
 export default SignUpPage;

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import Login from "@c/Login/";
+import Wrap from "@layout/account-wrapper/";
+import Login from "@page/login/";
 
 const LoginPage = () => {
   return (

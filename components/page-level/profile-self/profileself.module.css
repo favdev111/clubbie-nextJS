@@ -1,0 +1,124 @@
+.profile {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+  padding-top: 50px;
+}
+.profileTitle {
+  margin-bottom: 48px;
+}
+.profilePlayer {
+  background: #141f34 0% 0% no-repeat padding-box;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
+}
+.profilePlayerHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.profilePlayerHeaderAvatar {
+  height: 124px;
+  width: 124px;
+}
+.profilePlayerHeaderInnerLeft {
+  display: flex;
+}
+
+.profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+  display: flex;
+  align-items: center;
+}
+.profile .profilePlayer .profilePlayerBody {
+  margin-top: 16px;
+}
+.profile .profileButtons {
+  margin-top: 48px;
+  display: flex;
+}
+
+.profile .profileButtons button {
+  margin-right: 15px;
+}
+
+.profile .profilePhotos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.profile .profilePhotos .profilePhotosItem {
+  margin-top: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.profile .profilePhotos .profilePhotosItem:hover .profilePhotosOptions {
+  display: flex;
+}
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions {
+  display: none;
+  align-items: center;
+  position: absolute;
+}
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions img {
+  margin-right: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 99px;
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+}
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 900px) and (min-width: 640px) {
+  .navbar .navbarList {
+    margin-left: 12px;
+  }
+  .navbar .navbarListItem .navbarListItemLink {
+    margin-right: 12px;
+  }
+
+  .profile .profileTitle {
+    padding-left: 30px;
+  }
+
+  .profile .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .profile .profileButtons {
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 640px) {
+  .profile .profileTitle {
+    padding-left: 10px;
+  }
+
+  .profile .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .profile .profilePlayer .profilePlayerHeader {
+    justify-content: start;
+    display: block;
+  }
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
+    width: 96px;
+    height: 96px;
+  }
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+  }
+
+  .profile .profileButtons {
+    display: grid;
+    gap: 0.5rem;
+  }
+}

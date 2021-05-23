@@ -1,11 +1,8 @@
 import Head from "next/head";
 import React from "react";
 
-import Wrap from "@c/Wrap/";
-// import Wrap from "../components/Wrap/Wrap";
-
-import RecoverPass from "@c/RecoverPass/";
-//import RecoverPass from "../components/RecoverPass/RecoverPass";
+import Wrap from "@layout/account-wrapper/";
+import RecoverPass from "@page/recover-pass/";
 
 const RecoverPassPage = () => {
   return (

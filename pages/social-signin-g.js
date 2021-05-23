@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import SocialSigninG from "@c/SocialSigningGoogle/";
+import Wrap from "@layout/account-wrapper/";
+import SocialSigninG from "@page/social-signing-google/";
 
 const SocialSigninGpage = () => {
   return (

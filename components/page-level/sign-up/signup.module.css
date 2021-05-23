@@ -1,0 +1,45 @@
+.signupBlock {
+  display: block;
+  width: var(--container-md);
+  margin: var(--space-95) auto 0px;
+}
+.title {
+  text-align: center;
+  margin: 0 auto var(--space-64);
+}
+.formSignup {
+  display: block;
+  width: 100%;
+  height: 228px;
+  font-size: 0px;
+}
+
+.formAct {
+  display: block;
+  height: 52px;
+  margin-left: 297px;
+  margin-top: 24px;
+}
+
+/* Component */
+.devideBlock {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-48);
+}
+.text {
+  padding: 0px 24px 0px 24px;
+  color: var(--c-white-50);
+}
+.socialSignin {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: var(--space-32) auto 0px;
+}
+
+.signUp {
+  display: flex;
+  justify-content: center;
+  padding-top: 72px;
+}

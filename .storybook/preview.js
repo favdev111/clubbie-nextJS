@@ -1,4 +1,4 @@
-import "../public/styles/index.css";
+import "../styles/app.css";
 
 export const parameters = {
   layout: "fullscreen",

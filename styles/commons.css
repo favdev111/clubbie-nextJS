@@ -1,0 +1,41 @@
+/* Text */
+
+.opacity-50 {
+  color: var(--c-white-50);
+}
+.text-center {
+  text-align: center;
+}
+
+/* Sign Up Page */
+
+.signUp {
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-turk) !important;
+  margin-bottom: var(--space-32);
+}
+.line {
+  width: var(--space-192);
+  height: var(--space-1);
+  background: var(--c-white-20);
+}
+.signupContent {
+  display: block;
+  text-align: center;
+  margin-top: 160px;
+  margin-bottom: var(--space-32);
+}
+
+/* Oval Button  */
+
+.active {
+  background-color: #5fc4ee !important;
+}
+.passive {
+  opacity: 0.6;
+}
+.passive:hover {
+  background-color: #5fc4ee;
+  opacity: 1;
+}

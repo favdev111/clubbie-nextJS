@@ -1,0 +1,16 @@
+.profileInfo {
+  display: block;
+  padding-left: 16px;
+}
+.profileInfo h2 {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.profileInfo h6 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.profileInfo img {
+  padding-right: 16px;
+}

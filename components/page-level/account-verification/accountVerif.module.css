@@ -1,0 +1,25 @@
+.verifBlock {
+  display: block;
+  width: var(--container-md);
+  margin: var(--space-95) auto 0px;
+}
+.title {
+  text-align: center;
+  margin: 0 auto var(--space-64);
+}
+
+.textBlock {
+  display: block;
+  margin: 25px auto 64px;
+}
+
+.formVerif {
+  display: block;
+  width: 100%;
+}
+.btnVerif {
+  display: block;
+  width: 142px;
+  margin: 24px auto 0px;
+  outline: none;
+}

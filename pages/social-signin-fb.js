@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import SocialSigninFB from "@c/SocialSigninFB/";
+import Wrap from "@layout/account-wrapper/";
+import SocialSigninFB from "@page/social-signing-facebook";
 
 const SocialSigninFBpage = () => {
   return (

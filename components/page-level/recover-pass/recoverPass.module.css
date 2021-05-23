@@ -1,0 +1,28 @@
+.recoverBlock {
+  display: block;
+  width: var(--container-md);
+  margin: var(--space-95) auto 0px;
+}
+.title {
+  text-align: center;
+}
+.textBlock {
+  display: block;
+  width: 370px;
+  height: 44px;
+  margin: 12px auto 64px;
+}
+
+.formRecover {
+  display: block;
+  width: 100%;
+}
+.formSubmit {
+  display: block;
+  margin-left: 304px;
+  margin-top: 24px;
+}
+.toLogin {
+  text-align: center;
+  margin-top: 311px;
+}
