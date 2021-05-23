@@ -1,0 +1,321 @@
+.form451upCenter,
+.form451midLeft, .form451midMidL, .form451midMidR, .form451midRight, .form451midCenter,
+.form451botLeft, .form451botMidL, .form451botMidR, .form451botRight,
+.form451goalkeep {
+    width: 50px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+.form451upCenter {
+    top: -5px;
+    left: 250px;
+}
+.form451midLeft {
+    top: 50px;
+    left: 100px;
+}
+.form451midMidL {
+    top: 80px;
+    left: 175px;
+}
+.form451midMidR {
+    top: 80px;
+    right: 175px;
+}
+.form451midRight {
+    top: 50px;
+    right: 100px;
+}
+.form451midCenter {
+    top: 115px;
+    left: 250px;
+    z-index: 500;
+}
+.form451botLeft {
+    top: 90px;
+    left: 50px;
+}
+.form451botMidL {
+    top: 105px;
+    left: 110px;
+}
+.form451botMidR {
+    top: 105px;
+    right: 110px;
+}
+.form451botRight {
+    top: 90px;
+    right: 50px;
+}
+.form451goalkeep {
+    top: 150px;
+    left: 160px;
+}
+@media only screen and (max-width: 600px) {
+    .form451upCenter,
+    .form451midLeft, .form451midMidL, .form451midMidR, .form451midRight, .form451midCenter,
+    .form451botLeft, .form451botMidL, .form451botMidR, .form451botRight,
+    .form451goalkeep {
+        width: 50px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+    }
+    .form451upCenter {
+        top: -10px;
+        left: 160px;
+    }
+    .form451midLeft {
+        top: 30px;
+        left: 70px;
+    }
+    .form451midMidL {
+        top: 50px;
+        left: 118px;
+    }
+    .form451midMidR {
+        top: 50px;
+        right: 118px;
+    }
+    .form451midRight {
+        top: 30px;
+        right: 70px;
+    }
+    .form451midCenter {
+        top: 70px;
+        left: 160px;
+        z-index: 500;
+    }
+    .form451botLeft{
+        top: 90px;
+        left: 50px;
+    }
+    .form451botMidL {
+        top: 105px;
+        left: 110px;
+    }
+    .form451botMidR {
+        top: 105px;
+        right: 110px;
+    }
+    .form451botRight {
+        top: 90px;
+        right: 50px;
+    }
+    .form451goalkeep {
+        top: 150px;
+        left: 160px;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .form451upCenter,
+    .form451midLeft, .form451midMidL, .form451midMidR, .form451midRight, .form451midCenter,
+    .form451botLeft, .form451botMidL, .form451botMidR, .form451botRight,
+    .form451goalkeep {
+        width: 100px;
+        display: block;
+    }
+    .form451upCenter {
+        top: -5px;
+        left: 250px;
+    }
+    .form451midLeft {
+        top: 50px;
+        left: 100px;
+    }
+    .form451midMidL {
+        top: 80px;
+        left: 175px;
+    }
+    .form451midMidR {
+        top: 80px;
+        right: 175px;
+    }
+    .form451midRight {
+        top: 50px;
+        right: 100px;
+    }
+    .form451midCenter {
+        top: 115px;
+        left: 250px;
+        z-index: 500;
+    }
+    .form451botLeft{
+        top: 165px;
+        left: 55px;
+    }
+    .form451botMidL {
+        top: 200px;
+        left: 140px;
+    }
+    .form451botMidR {
+        top: 200px;
+        right: 140px;
+    }
+    .form451botRight {
+        top: 165px;
+        right: 55px;
+    }
+    .form451goalkeep {
+        top: 240px;
+        left: 250px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .form451upCenter,
+    .form451midLeft, .form451midMidL, .form451midMidR, .form451midRight, .form451midCenter,
+    .form451botLeft, .form451botMidL, .form451botMidR, .form451botRight,
+    .form451goalkeep {
+        width: 100px;
+        display: block;
+        position: absolute;
+    }
+    .form451upCenter {
+        top: 15px;
+        left: 350px;
+    }
+    .form451midLeft {
+        top: 120px;
+        left: 145px;
+    }
+    .form451midMidL {
+        top: 160px;
+        left: 250px;
+    }
+    .form451midMidR {
+        top: 160px;
+        right: 250px;
+    }
+    .form451midRight {
+        top: 120px;
+        right: 145px;
+    }
+    .form451midCenter {
+        top: 200px;
+        left: 350px;
+    }
+    .form451botLeft{
+        top: 260px;
+        left: 95px;
+    }
+    .form451botMidL {
+        top: 300px;
+        left: 220px;
+    }
+    .form451botMidR {
+        top: 300px;
+        right: 220px;
+    }
+    .form451botRight {
+        top: 260px;
+        right: 95px;
+    }
+    .form451goalkeep {
+        top: 340px;
+        left: 350px;
+    }
+}
+@media only screen and (min-width: 1440px) {
+    .form451upCenter {
+        top: 15px;
+        left: 350px;
+    }
+    .form451midLeft {
+        top: 120px;
+        left: 145px;
+    }
+    .form451midMidL {
+        top: 160px;
+        left: 250px;
+    }
+    .form451midMidR {
+        top: 160px;
+        right: 250px;
+    }
+    .form451midRight {
+        top: 120px;
+        right: 145px;
+    }
+    .form451midCenter {
+        top: 200px;
+        left: 350px;
+    }
+    .form451botLeft{
+        top: 260px;
+        left: 95px;
+    }
+    .form451botMidL {
+        top: 300px;
+        left: 220px;
+    }
+    .form451botMidR {
+        top: 300px;
+        right: 220px;
+    }
+    .form451botRight {
+        top: 260px;
+        right: 95px;
+    }
+    .form451goalkeep {
+        top: 340px;
+        left: 350px;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .form451upCenter,
+    .form451midLeft, .form451midMidL, .form451midMidR, .form451midRight, .form451midCenter,
+    .form451botLeft, .form451botMidL, .form451botMidR, .form451botRight,
+    .form451goalkeep {
+        width: 250px;
+    }
+    .form451upCenter {
+        top: 45px;
+        left: 344px;
+    }
+    .form451midLeft {
+        top: 135px;
+        left: 105px;
+    }
+    .form451midMidL {
+        top: 195px;
+        left: 225px;
+    }
+    .form451midMidR {
+        top: 195px;
+        right: 225px;
+    }
+    .form451midRight {
+        top: 135px;
+        right: 105px;
+    }
+    .form451midCenter {
+        top: 254px;
+        left: 344px;
+    }
+    .form451botLeft{
+        top: 330px;
+        left: 35px;
+    }
+    .form451botMidL {
+        top: 375px;
+        left: 185px;
+    }
+    .form451botMidR {
+        top: 375px;
+        right: 185px;
+    }
+    .form451botRight {
+        top: 330px;
+        right: 35px;
+    }
+    .form451goalkeep {
+        top: 414px;
+        left: 344px;
+    }
+}
+
