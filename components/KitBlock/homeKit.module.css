@@ -1,0 +1,127 @@
+.homeKit {
+    display: block;
+    padding: 34px 32px;
+    width: 454px;
+    height: 198px;
+    border-radius: 15px;
+    background: rgba(20, 31, 52, 0.4);
+    cursor: pointer;
+}
+.homeKit:hover {
+    border: 3px solid #5fc4ee;
+    padding: 31px 29px;
+    background: rgba(20, 31, 52, 0.4);
+}
+.homeKitTitle {
+    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: left;
+    color: #fff;
+}
+.homeKitItem {
+    display: block;
+    margin-top: 36px;
+}
+.homeKitItemHome, .homeKitItemGoalkeeper {
+    display: flex;
+    justify-content: space-between;
+}
+.homeKitItemHome {
+    margin-bottom: 27px;
+    z-index: 600;
+}
+.homeKitItemHColor {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: #e7ba19;
+    border-radius: 50%;
+}
+.homeKitItemGKColor {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: #ff000b;
+    border-radius: 50%;
+}
+.homeKitItemText {
+    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: left;
+    color: #fff;
+}
+.activeKit {
+    border: 3px solid #5fc4ee;
+    padding: 31px 29px;
+    background: rgba(37, 64, 115, 0.4);
+}
+@media only screen and (max-width: 600px) {
+    .homeKit {
+        width: 300px;
+        margin-bottom: 20px;
+        padding: 22px 20px;
+        height: 170px;
+    }
+    .homeKit:hover {
+        border: 3px solid #5fc4ee;
+        padding: 19px 17px;
+        background: rgba(20, 31, 52, 0.4);
+    }
+    .homeKitItem {
+        margin-top: 18px;
+    }
+    .homeKitItemHome {
+        margin-bottom: 18px;
+    }
+    .activeKit {
+        border: 3px solid #5fc4ee;
+        padding: 19px 17px;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .homeKit {
+        width: 300px;
+        margin-bottom: 20px;
+        padding: 22px 20px;
+        height: 170px;
+    }
+    .homeKit:hover {
+        padding: 19px 17px;
+        border: 3px solid #5fc4ee;
+        background: rgba(20, 31, 52, 0.4);
+    }
+    .homeKitItem {
+        margin-top: 18px;
+    }
+    .homeKitItemHome {
+        margin-bottom: 18px;
+    }
+    .activeKit {
+        border: 3px solid #5fc4ee;
+        padding: 19px 17px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .homeKit {
+        width: 380px;
+        padding: 22px 20px;
+    }
+    .homeKit:hover {
+        padding: 19px 17px;
+        border: 3px solid #5fc4ee;
+        background: rgba(20, 31, 52, 0.4);
+    }
+    .homeKitItem {
+        margin-top: 18px;
+    }
+    .homeKitItemHome {
+        margin-bottom: 18px;
+    }
+    .activeKit {
+        border: 3px solid #5fc4ee;
+        padding: 19px 17px;
+    }
+}
+

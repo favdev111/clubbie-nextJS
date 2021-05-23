@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./button.module.css";
 
 const Button = (props) => {
-  const { variant = "login", children } = props;
+  const { variant = "login", children, clickHandler } = props;
   return (
     <>
-      <button className={styles.btn}>
+      <button onClick={clickHandler} className={styles.btn}>
         <span className={styles.contTxt}>{children}</span>
       </button>
     </>
