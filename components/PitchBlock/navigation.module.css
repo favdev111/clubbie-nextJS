@@ -1,0 +1,79 @@
+.navBottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 940px;
+    margin: 48px auto 0;
+}
+.navBottomLink {
+    font-family: 'Touche W03 Regular', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 17px;
+    color: #fff;
+    opacity: 0.5;
+}
+.navBottomLink:hover {
+    color: #5fc4ee;
+    opacity: 1;
+}
+.navBottomBtn {
+    display: block;
+    width: 134px;
+    margin-left: 24px;
+}
+@media only screen and (max-width: 600px) {
+    .navBottom {
+        justify-content: space-between;
+        width: 300px;
+    }
+    .navBottomLink {
+        font-size: 16px;
+        line-height: 20px;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .navBottom {
+        justify-content: space-between;
+        width: 300px;
+    }
+    .navBottomLink {
+        font-size: 16px;
+        line-height: 20px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .navBottom {
+        width: 800px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 48px auto 0;
+    }
+    .navBottomLink {
+        font-family: 'Touche W03 Regular', 'Arial', sans-serif;
+        font-size: 16px;
+        line-height: 17px;
+        color: #fff;
+        opacity: 0.5;
+    }
+    .navBottomLink:hover {
+        color: #5fc4ee;
+        opacity: 1;
+    }
+    .navBottomBtn {
+        display: block;
+        width: 134px;
+        margin-left: 24px;
+    }
+}
+@media only screen and (min-width: 1440px) {
+    .navBottom {
+        width: 800px;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .navBottom {
+        width: 940px;
+    }
+}
+

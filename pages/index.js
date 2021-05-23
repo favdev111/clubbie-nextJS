@@ -89,6 +89,11 @@ export default function Home() {
               <a className="list-page__item">Teamhub Join Team</a>
             </Link>
           </li>
+          <li>
+            <Link href="/pitch">
+              <a className="list-page__item">Pitch</a>
+            </Link>
+          </li>
         </ul>
       </main>
     </div>
