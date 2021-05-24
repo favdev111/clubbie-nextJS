@@ -39,3 +39,23 @@
   background-color: #5fc4ee;
   opacity: 1;
 }
+
+/* 404 */
+
+.notFound {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back {
+  margin-left: 30px;
+  padding: 15px;
+  border: 2px solid white;
+  border-radius: var(--radius-xl);
+  background-color: var(--c-primary);
+  transition: 300ms;
+}
+.back:hover {
+  background-color: var(--c-turk);
+}
