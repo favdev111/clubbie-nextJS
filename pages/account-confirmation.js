@@ -1,21 +1,20 @@
-import Head from "next/head";
+import Layout from "@layout";
+import Seo from "@layout/seo";
+
 import React from "react";
 import Wrap from "@layout/account-wrapper/";
 import AccountConfirm from "@page/account-confirm/";
 
 const AccountConfirmPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Account Confirmation" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <AccountConfirm />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

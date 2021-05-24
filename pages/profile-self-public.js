@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "@layout/header/";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import ProfileSelf from "@page/profile-self/";
 
 function ProfilePagePublic({ person }) {
   return (
-    <div className="container">
-      <Header />
+    <Layout>
+      <Seo title="Profile Self Public" desc="Lorem ipsum dolor sit amet" />
       <ProfileSelf person={person} isPublic />
-    </div>
+    </Layout>
   );
 }
 

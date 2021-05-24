@@ -1,16 +1,17 @@
 import React from "react";
+import Seo from "./seo";
+import Header from "./header";
 
-function Layout({ showFooter, showHeader }) {
+function Layout({ children, showFooter, hideHeader }) {
   return (
     <div>
-      {/* Head */}
-      <Head />
+      <Seo />
       {/* Body */}
-      {showHeader && <Header />}
+      {!hideHeader && <Header />}
 
       {children}
 
-      {showFooter && <Footer />}
+      {/*       {showFooter && <Footer />} */}
     </div>
   );
 }

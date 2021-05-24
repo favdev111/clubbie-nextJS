@@ -1,21 +1,19 @@
-import Head from "next/head";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import React from "react";
 import Wrap from "@layout/account-wrapper/";
 import SignUp from "@page/sign-up";
 
 const SignUpPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Profile Self" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <SignUp />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 export default SignUpPage;

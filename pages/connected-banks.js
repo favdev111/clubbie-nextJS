@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "@layout/header/";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import ConnectedBanks from "@page/connected-banks/";
 
 function ConnectedBanksPage({ cardData }) {
   return (
-    <div className="container">
-      <Header />
+    <Layout>
+      <Seo title="Connected Banks" desc="Lorem ipsum dolor sit amet" />
       <ConnectedBanks data={cardData} />
-    </div>
+    </Layout>
   );
 }
 

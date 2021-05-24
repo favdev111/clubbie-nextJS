@@ -1,17 +1,18 @@
 import React from "react";
-import Header from "@layout/header/";
+import Layout from "@layout/";
+import Seo from "@layout/seo";
 import Join from "@page/join/";
 
 function TeamhubJoinTeamPage({ teamData }) {
   return (
-    <div className="container">
-      <Header />
+    <Layout>
+      <Seo title="Join a team" desc="Lorem ipsum dolor sit amet" />
       <Join
         title="Join a Team"
         current={{ name: "Aondimentum", src: "./" }}
         data={teamData}
       />
-    </div>
+    </Layout>
   );
 }
 
