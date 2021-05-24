@@ -18,7 +18,7 @@ import {
   getUnavailPlayers,
   selectActiveKit,
 } from "@redux/actions/pitchActions";
-import Navigation from "./Navigation";
+import Navigation from "./navigation";
 import ColorPlayersModal from "@sub/modal/color-players";
 import PitchCore from "./PitchCore";
 import ColorGoalKModal from "@sub/modal/color-goalkeeper";

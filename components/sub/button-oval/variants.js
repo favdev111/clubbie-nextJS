@@ -1,5 +1,5 @@
 import React from "react";
-import OvalButton from "./OvalButton";
+import OvalButton from "./index";
 
 function Variants() {
   return (

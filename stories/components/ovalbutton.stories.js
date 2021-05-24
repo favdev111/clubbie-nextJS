@@ -1,6 +1,6 @@
 import React from "react";
 
-import Variants from "../../components/UI/OvalButton/variants";
+import Variants from "../../components/sub/button-oval/variants";
 
 export default {
   title: "UI Elements/Oval Button",

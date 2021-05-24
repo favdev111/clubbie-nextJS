@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "../../components/UI/Input/index";
+import Input from "../../components/sub/input/";
 
 export default {
   title: "UI Elements/Input",
