@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "@layout/header";
-import PitchBlock from "@c/PitchBlock";
+import PitchBlock from "@page/pitch/PitchBlock";
 
 const PitchPage = () => {
   return (

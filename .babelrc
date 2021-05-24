@@ -9,7 +9,8 @@
           "@c": "./components",
           "@page": "./components/page-level",
           "@sub": "./components/sub",
-          "@layout": "./components/layout"
+          "@layout": "./components/layout",
+          "@redux": "./redux"
         }
       }
     ]
