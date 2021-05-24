@@ -1,14 +1,19 @@
 import React from "react";
 import styles from "./join.module.css";
+import Link from "next/link";
 
 function Join({ title, data, current }) {
   return (
     <div className={styles.join}>
       <div className={styles.joinHeader}>
         <div className={styles.joinHeaderInner}>
-          <button>
-            <img src="/assets/back.svg" />
-          </button>
+          <Link href="/">
+            <a>
+              <button>
+                <img src="/assets/back.svg" />
+              </button>
+            </a>
+          </Link>
           <h1> {title} </h1>
           {current && (
             <div className={styles.joinHeaderCurrent}>

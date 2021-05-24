@@ -3,21 +3,7 @@ import BankCard from "./card";
 import OvalButton from "@sub/button-oval";
 import styles from "./connectedbanks.module.css";
 
-function ConnectedBanks() {
-  const data = [
-    {
-      id: 0,
-      exp: "10/12",
-      card: "**** **** **** 6574",
-      default: true,
-    },
-    {
-      id: 0,
-      exp: "10/12",
-      card: "**** **** **** 5433",
-      default: false,
-    },
-  ];
+function ConnectedBanks({ data }) {
   return (
     <div className={styles.connectedbanks}>
       <div className={styles.connectedbanksTitle}>

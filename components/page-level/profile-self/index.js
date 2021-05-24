@@ -2,25 +2,14 @@ import React from "react";
 import Avatar from "@sub/avatar";
 import OvalButton from "@sub/button-oval";
 import ForwardButton from "@sub/button-forward";
-
+import Link from "next/link";
 import ProfileInfo from "./info";
 import ProfileDetails from "./details";
 
 import styles from "./profileself.module.css";
 
-function ProfileSelf({ join, isPublic }) {
+function ProfileSelf({ join, isPublic, person }) {
   // Fake data
-  const person = {
-    name: "Roger Steward",
-    role: "Footballer",
-    email: "roger@gmail.com",
-    telephone: "+44 7500 555 555",
-    city: "Statford-Upon-Avon",
-    country: "United Kingdom",
-    postCode: "CV37 4HB",
-    bio:
-      "Etiam convallis elementum sapien, a aliquam turpis aliquam vitae. Praesent sollicitudin felis vel mi facilisis posuere. Nulla ultrices facilisis justo, non varius nisl semper vel.",
-  };
 
   return (
     <div className={styles.profile}>
@@ -43,7 +32,11 @@ function ProfileSelf({ join, isPublic }) {
         </div>
         <div className={styles.profilePlayerBody}>
           <ProfileDetails data={person} isPublic={isPublic} />
-          <ForwardButton> Connected Bank Accounts </ForwardButton>
+          <Link href="/connected-banks">
+            <a>
+              <ForwardButton> Connected Bank Accounts </ForwardButton>
+            </a>
+          </Link>
         </div>
       </div>
       <div className={styles.profileButtons}>
@@ -54,8 +47,7 @@ function ProfileSelf({ join, isPublic }) {
           Tagged
         </OvalButton>
         <OvalButton status="passive" appearence="reposts">
-          {" "}
-          Reposts{" "}
+          Reposts
         </OvalButton>
       </div>
       <div className={styles.profilePhotos}>

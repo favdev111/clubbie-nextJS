@@ -1,10 +1,8 @@
 import React from 'react';
-import Header from "@c/Header";
-import PitchBlock from "@c/PitchBlock";
-
+import Header from "@c/layout/header";
+import PitchBlock from "@page/pitch/PitchBlock";
 
 const PitchPage = () => {
-
     return(
         <div className="container">
             <Header/>
