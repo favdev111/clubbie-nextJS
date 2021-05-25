@@ -1,18 +1,18 @@
-import React from 'react';
-import Header from "@c/Header";
-import PitchBlock from "@c/PitchBlock";
+import React from "react";
+import PitchBlock from "@page/pitch/PitchBlock";
 
+import Layout from "@layout";
+import Seo from "@layout/seo";
 
 const PitchPage = () => {
-
-    return(
-        <div className="container">
-            <Header/>
-            <main>
-               <PitchBlock />
-            </main>
-        </div>
-    )
-}
+  return (
+    <Layout>
+      <Seo title="Profile Self" desc="Lorem ipsum dolor sit amet" />
+      <main>
+        <PitchBlock />
+      </main>
+    </Layout>
+  );
+};
 
 export default PitchPage;

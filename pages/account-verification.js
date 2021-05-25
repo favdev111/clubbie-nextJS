@@ -1,21 +1,20 @@
-import Head from "next/head";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import AccountVerif from "@c/AccountVerif/";
+import Wrap from "@layout/account-wrapper/";
+import AccountVerif from "@page/account-verification/";
+
+import Layout from "@layout";
+import Seo from "@layout/seo";
 
 const AccountVerifPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Account Verification" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <AccountVerif />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

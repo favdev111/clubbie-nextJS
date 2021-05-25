@@ -1,25 +1,21 @@
-import Head from "next/head";
 import React from "react";
 
-import Wrap from "@c/Wrap/";
-// import Wrap from "../components/Wrap/Wrap";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 
-import RecoverPass from "@c/RecoverPass/";
-//import RecoverPass from "../components/RecoverPass/RecoverPass";
+import Wrap from "@layout/account-wrapper/";
+import RecoverPass from "@page/recover-pass/";
 
 const RecoverPassPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Recover pass" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <RecoverPass />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

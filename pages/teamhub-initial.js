@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "@c/Header/";
-import Teamhub from "@c/Teamhub/";
+import Teamhub from "@page/teamhub/";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 
 function TeamhubPage() {
   return (
-    <div className="container">
-      <Header />
+    <Layout>
+      <Seo title="Teamhub" desc="Lorem ipsum dolor sit amet" />
       <Teamhub />
-    </div>
+    </Layout>
   );
 }
 

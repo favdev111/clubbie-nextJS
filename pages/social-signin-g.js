@@ -1,21 +1,19 @@
-import Head from "next/head";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import SocialSigninG from "@c/SocialSigningGoogle/";
+import Wrap from "@layout/account-wrapper/";
+import SocialSigninG from "@page/social-signing-google/";
 
 const SocialSigninGpage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Sign with Google" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <SocialSigninG />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

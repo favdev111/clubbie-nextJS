@@ -1,5 +1,5 @@
 import React from "react";
-import ForwardButton from "../../components/UI/ForwardButton/index";
+import ForwardButton from "../../components/sub/button-forward";
 
 export default {
   title: "UI Elements/Forward Button",

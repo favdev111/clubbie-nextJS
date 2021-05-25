@@ -1,9 +1,25 @@
 import React from "react";
-import Header from "@c/Header/";
-import Join from "@c/Join/";
+import Layout from "@layout/";
+import Seo from "@layout/seo";
+import Join from "@page/join/";
 
-function TeamhubJoinTeamPage() {
-  const teams = [
+function TeamhubJoinTeamPage({ teamData }) {
+  return (
+    <Layout>
+      <Seo title="Join a team" desc="Lorem ipsum dolor sit amet" />
+      <Join
+        title="Join a Team"
+        current={{ name: "Aondimentum", src: "./" }}
+        data={teamData}
+      />
+    </Layout>
+  );
+}
+
+export default TeamhubJoinTeamPage;
+
+export const getStaticProps = async () => {
+  const teamData = [
     { name: "Aondimentum", src: "./" },
     { name: "Aunc curabitur FC", src: "./" },
     { name: "Adipiscing FC", src: "./" },
@@ -23,16 +39,9 @@ function TeamhubJoinTeamPage() {
     { name: "Aunc curabitur FC", src: "./" },
     { name: "Adipiscing FC", src: "./" },
   ];
-  return (
-    <div className="container">
-      <Header />
-      <Join
-        title="Join a Team"
-        current={{ name: "Aondimentum", src: "./" }}
-        data={teams}
-      />
-    </div>
-  );
-}
-
-export default TeamhubJoinTeamPage;
+  return {
+    props: {
+      teamData,
+    },
+  };
+};

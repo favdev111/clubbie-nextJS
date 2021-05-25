@@ -1,0 +1,77 @@
+/* Font Family */
+
+@font-face {
+  font-family: "Touche W03 Regular";
+  src: url("/fonts/Touche W03 Regular.woff2") format("woff2"),
+    url("/fonts/Touche W03 Regular.woff") format("woff");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Touche W03 Bold";
+  src: url("/fonts/Touche W03 Bold.woff2") format("woff2"),
+    url("/fonts/Touche W03 Bold.woff") format("woff");
+  font-style: normal;
+}
+
+/* Variables */
+
+:root {
+  /* Colors */
+
+  --c-primary: #141f34;
+  --c-turk: #5fc4ee;
+  --c-black: rgb(0, 0, 0);
+  --c-white: rgb(255, 255, 255);
+  --c-white-70: rgba(255, 255, 255, 0.7);
+  --c-white-50: rgba(255, 255, 255, 0.5);
+  --c-white-30: rgba(255, 255, 255, 0.3);
+  --c-white-20: rgba(255, 255, 255, 0.2);
+  --c-white-10: rgba(255, 255, 255, 0.1);
+  --c-white-05: rgba(255, 255, 255, 0.05);
+  --c-red: #c41d24;
+  --c-yellow: #e7ba19;
+
+  /* Font Sizes */
+  --fs-h1: 32px;
+  --fs-h2: 24px;
+  --fs-h3: 18px;
+  --fs-base: 16px;
+  --fs-small: 14px;
+
+  /* Spaces */
+  --space-1: 1px;
+  --space-3: 3px;
+  --space-6: 6px;
+  --space-12: 12px;
+  --space-18: 18px;
+  --space-22: 22px;
+  --space-24: 24px;
+  --space-30: 30px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-95: 95px;
+  --space-192: 192px;
+
+  /* Border With */
+  --border-4: 4px;
+  --border-5: 5px;
+  --border-6: 6px;
+
+  /* Container With */
+  --container-lg: 940px;
+  --container-md: 454px;
+  --container-sm: 292px;
+
+  /* Border Radius */
+
+  --radius: 4px;
+  --radius-md: 10px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Font Face */
+  --ff-regular: "Touche W03 Regular";
+  --ff-bold: "Touche W03 Bold";
+}

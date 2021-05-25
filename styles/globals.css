@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  font-family: var(--ff-regular);
+  font-size: var(--fs-base);
+  color: var(--c-white);
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  background: rgb(55, 113, 137);
+  background: no-repeat
+    linear-gradient(
+      166deg,
+      rgba(55, 113, 137, 1) 0.1%,
+      rgba(28, 53, 73, 1) 10%,
+      rgba(15, 23, 41, 1) 24%
+    );
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: var(--c-white);
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+#__next {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}

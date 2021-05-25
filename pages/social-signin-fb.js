@@ -1,21 +1,19 @@
-import Head from "next/head";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import SocialSigninFB from "@c/SocialSigninFB/";
+import Wrap from "@layout/account-wrapper/";
+import SocialSigninFB from "@page/social-signing-facebook";
 
 const SocialSigninFBpage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Sign with Facebook" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <SocialSigninFB />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

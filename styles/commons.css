@@ -1,0 +1,61 @@
+/* Text */
+
+.opacity-50 {
+  color: var(--c-white-50);
+}
+.text-center {
+  text-align: center;
+}
+
+/* Sign Up Page */
+
+.signUp {
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-turk) !important;
+  margin-bottom: var(--space-32);
+}
+.line {
+  width: var(--space-192);
+  height: var(--space-1);
+  background: var(--c-white-20);
+}
+.signupContent {
+  display: block;
+  text-align: center;
+  margin-top: 160px;
+  margin-bottom: var(--space-32);
+}
+
+/* Oval Button  */
+
+.active {
+  background-color: #5fc4ee !important;
+}
+.passive {
+  opacity: 0.6;
+}
+.passive:hover {
+  background-color: #5fc4ee;
+  opacity: 1;
+}
+
+/* 404 */
+
+.notFound {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back {
+  margin-left: 30px;
+  padding: 15px;
+  border: 2px solid white;
+  border-radius: var(--radius-xl);
+  background-color: var(--c-primary);
+  transition: 300ms;
+}
+.back:hover {
+  background-color: var(--c-turk);
+}

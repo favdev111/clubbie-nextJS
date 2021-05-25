@@ -1,21 +1,19 @@
-import Head from "next/head";
+import Layout from "@layout";
+import Seo from "@layout/seo";
 import React from "react";
-import Wrap from "@c/Wrap/";
-import Logout from "@c/Logout/";
+import Wrap from "@layout/account-wrapper/";
+import Logout from "@page/logout/";
 
 const LogoutPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Clubbie App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout hideHeader>
+      <Seo title="Clubbie App" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
           <Logout />
         </Wrap>
       </main>
-    </div>
+    </Layout>
   );
 };
 

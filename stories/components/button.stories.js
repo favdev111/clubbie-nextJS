@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/UI/Button/index";
+import Button from "../../components/sub/button";
 
 export default {
   title: "UI Elements/Button",
