@@ -1,0 +1,327 @@
+.availPlayers {
+    display: block;
+    position: absolute;
+    width: 390px;
+    height: 520px;
+    top: 225px;
+    cursor: pointer;
+}
+.availPlayersHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+.availPlayersHeaderText {
+    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: left;
+    color: #fff;
+    margin-right: 7px;
+}
+.availPlayersList {
+    display: flex;
+    width: 394px;
+    height: 250px;
+    justify-content: space-between;
+}
+.availPlayersListItem {
+    display: flex;
+    justify-content: space-between;
+    width: 390px;
+    padding: 2px 4px;
+    margin: 0 0 19px;
+}
+.availPlayersListItem:nth-last-child(2) {
+    opacity: 0.5;
+}
+.availPlayersListItem:last-child {
+    opacity: 0.1;
+}
+.availPlayersListItem:hover,
+.availPlayersListItem:active {
+    border: 2px solid #5fc4ee;
+    border-radius: 5px;
+    background: rgba(20, 31, 52, 0.4);
+    margin: 0 0 19px 0;
+    padding: 0 2px;
+}
+.availPlayersListName, .availPlayersListPos {
+    font-family: 'Touche W03 Regular', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 21px;
+    color: #fff;
+    cursor: pointer;
+}
+.availPlayersListName {
+    text-align: left;
+}
+.availPlayersListPos {
+    text-align: right;
+}
+.pitchImg {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+}
+.pitchImgField {
+    width: 940px;
+    height: 575px;
+}
+.unavailPlayers {
+    display: block;
+    position: absolute;
+    width: 250px;
+    height: 290px;
+    top: 225px;
+    right: 263px;
+}
+.unavailPlayersHeader {
+    display: block;
+    margin-bottom: 22px;
+}
+.unavailPlayersHeaderText {
+    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: left;
+    color: #fff;
+}
+.unavailPlayersList {
+    display: block;
+}
+.unavailPlayersListName {
+    font-family: 'Touche W03 Regular', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 23px;
+}
+.unavailPlayersListName:nth-last-child(2) {
+    opacity: 0.5;
+}
+.unavailPlayersListName:last-child {
+    opacity: 0.1;
+}
+@media only screen and (max-width: 600px) {
+    .availPlayers {
+        position: relative;
+        width: 375px;
+        height: 520px;
+        margin: 0 auto 30px;
+        top: 0;
+    }
+    .availPlayersHeader {
+        margin-bottom: 12px;
+    }
+    .availPlayersHeaderText {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .availPlayersList {
+        width: 375px;
+        height: 400px;
+    }
+    .availPlayersListItem {
+        width: 375px;
+        margin: 0 0 13px;
+    }
+    .availPlayersListName, .availPlayersListPos {
+        font-size: 18px;
+        line-height: 27px;
+    }
+    .availPlayersListItem:hover,
+    .availPlayersListItem:active {
+        margin: 0 0 13px 0;
+    }
+    .pitchImgField {
+        width: 375px;
+        height: 230px;
+    }
+    .unavailPlayers {
+        display: none;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .availPlayers {
+        position: relative;
+        width: 420px;
+        height: 520px;
+        margin: 0 auto 30px;
+        top: 0;
+    }
+    .availPlayersHeader {
+        margin-bottom: 12px;
+    }
+    .availPlayersHeaderText {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .availPlayersList {
+        width: 420px;
+        height: 400px;
+    }
+    .availPlayersListItem {
+        width: 420px;
+        margin: 0 0 13px;
+    }
+    .availPlayersListName, .availPlayersListPos {
+        font-size: 18px;
+        line-height: 27px;
+    }
+    .availPlayersListItem:hover,
+    .availPlayersListItem:active {
+        margin: 0 0 13px 0;
+    }
+    .pitchImgField {
+        width: 600px;
+        height: 367px;
+    }
+    .unavailPlayers {
+        display: none;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .availPlayers {
+        position: relative;
+        width: 390px;
+        height: 380px;
+        margin: 0 auto;
+        top: 0;
+    }
+    .availPlayersHeader {
+        margin-bottom: 10px;
+    }
+    .availPlayersHeaderText {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .availPlayersList {
+        width: 390px;
+        height: 250px;
+    }
+    .availPlayersListItem {
+        width: 390px;
+        margin: 0 0 9px;
+    }
+    .availPlayersListName, .availPlayersListPos {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .availPlayersListItem:hover,
+    .availPlayersListItem:active {
+        margin: 0 0 9px 0;
+    }
+    .pitchImgField {
+        width: 800px;
+        height: 490px;
+    }
+    .unavailPlayers {
+        display: block;
+        width: 200px;
+        top: 305px;
+        right: 170px;
+    }
+    .unavailPlayersHeader {
+        margin-bottom: 12px;
+    }
+    .unavailPlayersHeaderText {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .unavailPlayersListName {
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 13px;
+    }
+}
+@media only screen and (min-width: 1440px) {
+    .availPlayers {
+        position: absolute;
+        top: 170px;
+        width: 340px;
+    }
+    .availPlayersHeaderText {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .availPlayersList {
+        width: 340px;
+        height: 250px;
+    }
+    .availPlayersListItem {
+        width: 340px;
+        margin: 0 0 14px;
+    }
+    .availPlayersListName, .availPlayersListPos {
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .availPlayersListItem:hover,
+    .availPlayersListItem:active {
+        margin: 0 0 14px 0;
+    }
+    .pitchImgField {
+        width: 800px;
+        height: 490px;
+    }
+    .unavailPlayers {
+        width: 200px;
+        top: 170px;
+        right: 170px;
+    }
+    .unavailPlayersHeaderText {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .unavailPlayersListName {
+        font-size: 14px;
+        line-height: 18px;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .availPlayers {
+        top: 225px;
+        width: 390px;
+    }
+    .availPlayersHeaderText {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    .availPlayersList {
+        width: 394px;
+        height: 250px;
+    }
+    .availPlayersListItem {
+        width: 390px;
+        margin: 0 0 19px;
+    }
+    .availPlayersListName, .availPlayersListPos {
+        font-size: 16px;
+        line-height: 21px;
+    }
+    .availPlayersListItem:hover,
+    .availPlayersListItem:active {
+        margin: 0 0 19px 0;
+    }
+    .pitchImgField {
+        width: 940px;
+        height: 575px;
+    }
+    .unavailPlayers {
+        width: 250px;
+        top: 225px;
+        right: 263px;
+    }
+    .unavailPlayersHeaderText {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    .unavailPlayersListName {
+        font-size: 16px;
+        line-height: 21px;
+    }
+}
