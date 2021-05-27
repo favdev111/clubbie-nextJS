@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   signup as makeSignUpReq,
+  login as makeLoginReq,
   verifyAccount as makeVerifyAccountReq,
 } from "../api/auth.api";
 
@@ -8,6 +9,13 @@ export const signup = createAsyncThunk(
   "auth/signup",
   async (credentials, store) => {
     return makeSignUpReq(credentials);
+  }
+);
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async (credentials, store) => {
+    return makeLoginReq(credentials);
   }
 );
 
@@ -25,6 +33,7 @@ export const chatSlice = createSlice({
     user: {},
     tokens: {},
     errors: {
+      loginError: null,
       signupError: null,
       verifyAccError: null,
     },
@@ -41,6 +50,17 @@ export const chatSlice = createSlice({
     },
     [signup.rejected]: (state, { error }) => {
       state.errors.signupError = error.message;
+    },
+    [login.pending]: (state) => {
+      state.errors.loginError = null;
+    },
+    [login.fulfilled]: (state, { payload }) => {
+      state.user = payload.user;
+      state.tokens = payload.tokens;
+      state.errors.loginError = null;
+    },
+    [login.rejected]: (state, { error }) => {
+      state.errors.loginError = error.message;
     },
     [verifyAccount.pending]: (state) => {
       state.errors.verifyAccError = null;
