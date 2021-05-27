@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./input.module.css";
 
-const TemplateInput = ({ type, placeholder }) => {
+const TemplateInput = ({ type, placeholder, name, value, required, onChange }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
     e.preventDefault();
@@ -18,6 +18,10 @@ const TemplateInput = ({ type, placeholder }) => {
         className={styles.inputBlock}
         type={typeInput}
         placeholder={placeholder}
+        name={name}
+        value={value}
+        required={required}
+        onChange={onChange}
       />
       {type === "password" ? (
         <a

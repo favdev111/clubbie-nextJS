@@ -7,7 +7,10 @@ import SignUp from "@page/sign-up";
 const SignUpPage = () => {
   return (
     <Layout hideHeader>
-      <Seo title="Profile Self" desc="Lorem ipsum dolor sit amet" />
+      <Seo
+        title="Clubbie Signup"
+        desc="Clubbie Account Signup - Raising The Bar For Amateur Sports"
+      />
       <main className="main">
         <Wrap>
           <SignUp />
