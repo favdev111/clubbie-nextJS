@@ -1,14 +1,9 @@
-import {applyMiddleware, createStore} from "redux";
-import thunk from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension";
-import rootReducer from "./reducers/rootReducers";
+import { configureStore } from '@reduxjs/toolkit'
+import pitchReducer from './pitch.slice'
 
-const initialState = {};
-const middleware = [thunk];
+export const store = configureStore({
+  reducer: {
+    pitch: pitchReducer
+  }
+})
 
-const store = createStore(
-    rootReducer,
-    initialState,
-    composeWithDevTools(applyMiddleware(...middleware)));
-
-export default store;

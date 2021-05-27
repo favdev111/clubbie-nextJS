@@ -8,7 +8,7 @@ import {
   setCaptainAway433,
   setCaptainAway442,
   setCaptainAway451,
-} from "@redux/actions/pitchActions";
+} from "@redux/pitch.slice";
 
 const Pitch = ({ lineUp, addNameHandler }) => {
   const dispatch = useDispatch();

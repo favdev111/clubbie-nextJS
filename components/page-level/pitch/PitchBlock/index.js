@@ -17,7 +17,7 @@ import {
   getAvailPlayers,
   getUnavailPlayers,
   selectActiveKit,
-} from "@redux/actions/pitchActions";
+} from "@redux/pitch.slice";
 import Navigation from "./navigation";
 import ColorPlayersModal from "@sub/modal/color-players";
 import PitchCore from "./PitchCore";
