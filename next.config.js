@@ -9,6 +9,7 @@ const config = {
   },
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
   },
 };
 
