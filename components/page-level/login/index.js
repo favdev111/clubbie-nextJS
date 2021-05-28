@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "@redux/auth.slice";
 import Alert from "@material-ui/lab/Alert";
 import FacebookLogin from "../../sub/button-facebook-auth/index";
+import GoogleLogin from "../../sub/button-google-auth/index";
 
 const Login = () => {
   // TODO: redirect to home/somewhere after login
@@ -71,15 +72,7 @@ const Login = () => {
 
       <div className={styles.socialSignin}>
         <FacebookLogin />
-        <Link href="/social-signin-g">
-          <a>
-            <img
-              className={styles.iconGoogle}
-              src="/assets/google.svg"
-              alt=""
-            />
-          </a>
-        </Link>
+        <GoogleLogin />
       </div>
 
       <Link href="/sign-up">

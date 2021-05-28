@@ -8,6 +8,7 @@ import { signup } from "@redux/auth.slice";
 import Alert from "@material-ui/lab/Alert";
 import Router from "next/router";
 import FacebookLogin from "../../sub/button-facebook-auth/index";
+import GoogleLogin from "../../sub/button-google-auth/index";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -80,15 +81,7 @@ const SignUp = () => {
 
       <div className={styles.socialSignin}>
         <FacebookLogin />
-        <Link href="/social-signin-g">
-          <a>
-            <img
-              className={styles.iconGoogle}
-              src="/assets/google.svg"
-              alt=""
-            />
-          </a>
-        </Link>
+        <GoogleLogin />
       </div>
 
       <Link href="/login">
