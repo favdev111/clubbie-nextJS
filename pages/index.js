@@ -23,18 +23,6 @@ export default function Home() {
             </Link>
           </li>
           <li>
-            <Link href="/social-signin-fb">
-              <a className="list-page__item">
-                Social Media Signin via Facebook
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/social-signin-g">
-              <a className="list-page__item">Social Media Signin via Google</a>
-            </Link>
-          </li>
-          <li>
             <Link href="/recovery-pass">
               <a className="list-page__item">Recovery Password Page</a>
             </Link>

@@ -1,7 +1,8 @@
 import React from "react";
 import Button from "@sub/button";
-import Link from "next/link";
 import styles from "./logout.module.css";
+import FacebookLogin from "@sub/button-facebook-auth/index";
+import GoogleLogin from "@sub/button-google-auth/index";
 
 const Logout = () => {
   return (
@@ -21,24 +22,8 @@ const Logout = () => {
       </div>
 
       <div className={styles.socialLogin}>
-        <Link href="/social-signin-fb">
-          <a>
-            <img
-              className={styles.iconFacebook}
-              src="/assets/facebook.svg"
-              alt=""
-            />
-          </a>
-        </Link>
-        <Link href="/social-signin-g">
-          <a>
-            <img
-              className={styles.iconGoogle}
-              src="/assets/google.svg"
-              alt=""
-            />
-          </a>
-        </Link>
+        <FacebookLogin />
+        <GoogleLogin />
       </div>
     </div>
   );
