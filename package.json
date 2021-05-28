@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3003",
     "build": "next build",
     "start": "next start",
     "storybook": "start-storybook -s ./public -p 9001",
@@ -20,6 +20,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-facebook-login": "4.1.1",
+    "react-google-login": "5.2.2",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
