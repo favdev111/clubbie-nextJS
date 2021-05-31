@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectFigForNaming,
   setActivePlayer,
-} from "../../../redux/actions/pitchActions";
+} from "@redux/pitch.slice";
 import styles from "./player.module.css";
 
 const Player = ({ figId, name, isCaptain, colorPlayer, setupCaptain }) => {

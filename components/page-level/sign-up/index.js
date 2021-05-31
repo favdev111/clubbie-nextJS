@@ -1,22 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import TemplateInput from "@sub/input";
 import Button from "@sub/button";
 import Link from "next/link";
 import styles from "./signup.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { signup } from "@redux/auth.slice";
+import Alert from "@material-ui/lab/Alert";
+import Router from "next/router";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
+  Object.keys(user).length > 0 && Router.push("/account-confirmation"); // redirect on signup
+
+  const signupError = useSelector((state) => state.auth.errors.signupError);
+  const [error, setError] = useState("");
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value;
+    const passwordConfirm = e.target.passwordConfirm.value;
+    if (!/.+@.+\..+/.test(email)) {
+      setError("Invalid Email Address");
+      return;
+    }
+    if (password !== passwordConfirm) {
+      setError("Paswords Don't Match");
+      return;
+    }
+    setError("");
+    dispatch(
+      signup({
+        email,
+        password,
+      })
+    );
+  };
+
   return (
     <div className={styles.signupBlock}>
       <h1 className={styles.title}>Sign Up</h1>
-
-      <form action="#" className={styles.formSignup}>
-        <TemplateInput type="text" placeholder="Your Email Address" />
-        <TemplateInput type="password" placeholder="Choose a password" />
-        <TemplateInput type="password" placeholder="Repeat password" />
+      <form onSubmit={handleOnSubmit} className={styles.formSignup}>
+        <TemplateInput
+          type="email"
+          placeholder="Your Email Address"
+          name="email"
+          required
+        />
+        <TemplateInput
+          type="password"
+          placeholder="Choose a password"
+          name="password"
+          required
+        />
+        <TemplateInput
+          type="password"
+          placeholder="Repeat password"
+          name="passwordConfirm"
+          required
+        />
+        {(error || signupError) && (
+          <Alert variant="filled" severity="error">
+            {error || signupError}
+          </Alert>
+        )}
+        <div className={styles.formAct}>
+          <Button>Sign Up</Button>
+        </div>
       </form>
-      <div className={styles.formAct}>
-        <Button>Sign Up</Button>
-      </div>
 
       <div className={styles.devideBlock}>
         <div className="line"></div>
@@ -36,14 +89,18 @@ const SignUp = () => {
         </Link>
         <Link href="/social-signin-g">
           <a>
-            <img className={styles.iconGoogle} src="assets/google.svg" alt="" />
+            <img
+              className={styles.iconGoogle}
+              src="/assets/google.svg"
+              alt=""
+            />
           </a>
         </Link>
       </div>
 
       <Link href="/login">
         <div className={styles.signUp}>
-          <a className="signUp">Go to Login</a>
+          Already have an account?<a className="signUp">&ensp;Login Here</a>
         </div>
       </Link>
     </div>

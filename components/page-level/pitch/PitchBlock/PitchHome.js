@@ -8,7 +8,7 @@ import {
   setCaptainHome433,
   setCaptainHome442,
   setCaptainHome451,
-} from "@redux/actions/pitchActions";
+} from "@redux/pitch.slice";
 
 const Pitch = ({ lineUp, addNameHandler }) => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const Pitch = ({ lineUp, addNameHandler }) => {
   const colorGK = useSelector((state) => state.pitch.colorHomeGoalkeeper);
   const colorPlayers = colorPl.colorHomePlayers;
   const colorGoalk = colorGK.colorHomeGoalkeeper;
+
   if (lineUp === "4-4-2") {
     playerName = useSelector((state) => state.pitch.playerInfoHome442);
   } else if (lineUp === "4-3-3") {

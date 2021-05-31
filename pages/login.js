@@ -7,7 +7,10 @@ import Login from "@page/login/";
 const LoginPage = () => {
   return (
     <Layout hideHeader>
-      <Seo title="Clubbie App" desc="Lorem ipsum dolor sit amet" />
+      <Seo
+        title="Clubbie Login"
+        desc="Clubbie Account Login - Raising The Bar For Amateur Sports"
+      />
       <main className="main">
         <Wrap>
           <Login />

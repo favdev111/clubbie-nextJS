@@ -10,6 +10,9 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/lab": "4.0.0-alpha.58",
+    "@reduxjs/toolkit": "1.5.1",
     "classnames": "^2.3.1",
     "next": "10.2.0",
     "next-redux-wrapper": "^6.0.2",
