@@ -23,6 +23,7 @@ export const getStaticProps = async () => {
       desc:
         "Lorem ipsum dolor sit amet lorem ipsum homa ferestes kasa de ver hele amın oglu",
       date: "4 weeks ago",
+      avatar: "/asset",
       viewCount: 255,
       likeCount: 15,
       commentCount: 5,
@@ -33,6 +34,7 @@ export const getStaticProps = async () => {
       desc:
         "Lorem ipsum dolor sit amet lorem ipsum homa ferestes kasa de ver hele amın oglu",
       date: "4 weeks ago",
+      avatar: "/asset",
       viewCount: 255,
       likeCount: 15,
       commentCount: 5,
