@@ -27,3 +27,20 @@
   background-color: var(--c-white-10);
   color: var(--c-black);
 }
+
+.addContent {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-32);
+  border: 1px solid var(--c-white-10);
+  padding: 46px 46px;
+  border-radius: var(--radius-lg);
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+}
+.addButton img {
+  padding: 0 12px;
+}

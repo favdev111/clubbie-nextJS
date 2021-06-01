@@ -34,7 +34,12 @@ function Home() {
         </div>
       </div>
 
-      <div> Add contnet </div>
+      <div className={styles.addContent}>
+        <div className={styles.addButton}>
+          <img src="/assets/plus-turk.svg" />
+          Add Content
+        </div>
+      </div>
 
       {/* Posts here */}
     </div>
