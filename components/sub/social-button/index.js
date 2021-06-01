@@ -1,8 +1,9 @@
 import React from "react";
+import styles from "./index.module.css";
 
 function SocialButton({ type, children }) {
   return (
-    <div>
+    <div className={styles.socialButton}>
       {type == "repost" && <img src="/assets/home-repost.svg" />}
       {type == "fav" && <img src="/assets/home-fav.svg" />}
       {type == "comment" && <img src="/assets/home-comment.svg" />}

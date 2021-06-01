@@ -1,0 +1,11 @@
+.socialButton {
+  padding: 16px;
+  background-color: var(--c-white-10);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+.socialButton p {
+  margin-left: 5px;
+}
