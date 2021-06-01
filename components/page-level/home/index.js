@@ -11,19 +11,32 @@ function Home() {
       <CommonSearch />
       <h1> Videos</h1>
       <div className={styles.tagContent}>
-        {["All Sports", "Football", "Cricket", "Netball", "Boxing"].map(
-          (tag, index) => (
-            <Tag
-              activeTag={activeTag}
-              onClick={() => setActiveTag(index)}
-              index={index}
-              key={tag + index}
-            >
-              {tag}
-            </Tag>
-          )
-        )}
+        <div className={styles.tagInner}>
+          {["All Sports", "Football", "Cricket", "Netball", "Boxing"].map(
+            (tag, index) => (
+              <Tag
+                activeTag={activeTag}
+                onClick={() => setActiveTag(index)}
+                index={index}
+                key={tag + index}
+              >
+                {tag}
+              </Tag>
+            )
+          )}
+        </div>
+
+        <div className={styles.sortSelect}>
+          <select name="sort" id="sort">
+            <option value="recent">Recent</option>
+            <option value="popular">Popular</option>
+          </select>
+        </div>
       </div>
+
+      <div> Add contnet </div>
+
+      {/* Posts here */}
     </div>
   );
 }

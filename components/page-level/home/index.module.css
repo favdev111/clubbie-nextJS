@@ -7,4 +7,23 @@
 
 .tagContent {
   display: flex;
+  justify-content: space-between;
+}
+
+.tagInner {
+  display: flex;
+  height: 32px;
+}
+
+.sortSelect select {
+  padding: 12px 82px 12px 16px;
+  background-color: var(--c-white-10);
+  color: var(--c-white);
+  border-radius: var(--radius-lg);
+  outline: none;
+}
+
+.sortSelect select:focus {
+  background-color: var(--c-white-10);
+  color: var(--c-black);
 }
