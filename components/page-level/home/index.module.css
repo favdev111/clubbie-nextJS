@@ -31,7 +31,7 @@
 .addContent {
   display: flex;
   justify-content: center;
-  margin: var(--space-32);
+  margin: var(--space-32) 0 var(--space-32) 0;
   border: 1px solid var(--c-white-10);
   padding: 46px 46px;
   border-radius: var(--radius-lg);
