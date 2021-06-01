@@ -3,25 +3,29 @@ import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 
 function HomeVideosCard({ data }) {
-  const { desc } = data;
+  const { desc, url, avatar } = data;
   return (
     <div className={styles.videoCard}>
-      <img src="" />
+      <img className={styles.preview} src={url} />
 
-      <div className={styles.cardInner}>
-        <div className={styles.cardInnerHeader}>
-          <div className={styles.cardInnerInfo}>
+      <div className={styles.cardInfo}>
+        <div className={styles.cardInfoHeader}>
+          <div className={styles.cardInfoProfile}>
             <p> Hernes</p>
             <p> .. ago</p>
+            <img src={avatar} />
           </div>
-          <img src="" />
+          <SocialButton type="upload" />
         </div>
-        <div className={styles.cardUpload}>+</div>
+
+        <p> {desc}</p>
+        <p> 255 views</p>
+        {/* buttons */}
+        <SocialButton type="fav"> </SocialButton>
+        <SocialButton type="repost"> </SocialButton>
+        <SocialButton type="send" />
+        <SocialButton type="comment"> </SocialButton>
       </div>
-      <p> {desc}</p>
-      <p> 255 views</p>
-      {/* buttons */}
-      <SocialButton type="fav"> hey </SocialButton>
     </div>
   );
 }
