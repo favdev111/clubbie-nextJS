@@ -5,6 +5,10 @@
   display: flex;
   align-items: center;
   margin-right: 12px;
+  cursor: pointer;
+}
+.socialButton:hover {
+  background-color: var(--c-white-30);
 }
 .socialButton p {
   margin-left: 5px;

@@ -10,7 +10,7 @@ function SocialButton({ type, children }) {
       {type == "upload" && <img src="/assets/home-upload.svg" />}
       {type == "send" && <img src="/assets/home-send.svg" />}
 
-      {children && <p> {children}</p>}
+      {children && <p className="opacity-50"> {children}</p>}
     </div>
   );
 }
