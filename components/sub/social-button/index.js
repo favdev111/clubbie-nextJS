@@ -3,13 +3,12 @@ import React from "react";
 function SocialButton({ type, children }) {
   return (
     <div>
-      <img
-        src={type == "fav" && "/assets/home-fav.svg"}
-        src={type == "repost" && "/assets/home-repost.svg"}
-        src={type == "comment" && "/assets/home-comment.svg"}
-        src={type == "upload" && "/assets/home-upload.svg"}
-        src={type == "send" && "/assets/home-send.svg"}
-      />
+      {type == "repost" && <img src="/assets/home-repost.svg" />}
+      {type == "fav" && <img src="/assets/home-fav.svg" />}
+      {type == "comment" && <img src="/assets/home-comment.svg" />}
+      {type == "upload" && <img src="/assets/home-upload.svg" />}
+      {type == "send" && <img src="/assets/home-send.svg" />}
+
       {children && <p> {children}</p>}
     </div>
   );

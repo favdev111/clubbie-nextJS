@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./index.module.css";
+import SocialButton from "@sub/social-button";
 
 function HomeVideosCard({ data }) {
   const { desc } = data;
@@ -20,6 +21,7 @@ function HomeVideosCard({ data }) {
       <p> {desc}</p>
       <p> 255 views</p>
       {/* buttons */}
+      <SocialButton type="fav"> hey </SocialButton>
     </div>
   );
 }
