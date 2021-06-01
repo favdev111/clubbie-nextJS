@@ -4,9 +4,6 @@
   max-width: 940px;
   padding-top: 50px;
 }
-.profileTitle {
-  margin-bottom: 48px;
-}
 .profilePlayer {
   background: #141f34 0% 0% no-repeat padding-box;
   width: 100%;
@@ -24,23 +21,20 @@
 .profilePlayerHeaderInnerLeft {
   display: flex;
 }
-
 .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
   display: flex;
-  align-items: center;
+  align-items: top;
 }
 .profile .profilePlayer .profilePlayerBody {
-  margin-top: 16px;
+  margin-top: 5px;
 }
 .profile .profileButtons {
   margin-top: 48px;
   display: flex;
 }
-
 .profile .profileButtons button {
   margin-right: 15px;
 }
-
 .profile .profilePhotos {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -72,8 +66,71 @@
 .profile .profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+.profileTitle {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+.profilePlayerImage {
+  width: 50px;
+  height: 50px;
+}
+.profile .profileEditIcon {
+  max-width: 18px;
+  max-height: 18px;
+  display: flex;
+  margin-top: 5px;
+}
+.profileEditButton {
+  display: none;
+}
 
-@media screen and (max-width: 900px) and (min-width: 640px) {
+@media (min-width: 470px) {
+  .profile .profilePlayerImage {
+    width: 100px;
+    height: 100px;
+  }
+  .profile .profileEditIcon {
+    display: none;
+  }
+  .profileEditButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile .profileTitle {
+    font-size: 20px;
+  }
+  .profile .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  /* .profile .profilePlayer .profilePlayerHeader {
+    justify-content: start;
+    display: block;
+  } */
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
+    width: 96px;
+    height: 96px;
+  }
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: top;
+  }
+
+  .profile .profileButtons {
+    display: grid;
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .profile .profilePlayerImage {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
   .navbar .navbarList {
     margin-left: 12px;
   }
@@ -83,6 +140,8 @@
 
   .profile .profileTitle {
     padding-left: 30px;
+    margin-bottom: 48px;
+    /* font-size: unset; */
   }
 
   .profile .profilePhotos {
@@ -92,33 +151,5 @@
   .profile .profileButtons {
     display: flex;
     justify-content: center;
-  }
-}
-@media (max-width: 640px) {
-  .profile .profileTitle {
-    padding-left: 10px;
-  }
-
-  .profile .profilePhotos {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-
-  .profile .profilePlayer .profilePlayerHeader {
-    justify-content: start;
-    display: block;
-  }
-  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
-    width: 96px;
-    height: 96px;
-  }
-  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
-    display: flex;
-    align-items: center;
-    padding-top: 30px;
-  }
-
-  .profile .profileButtons {
-    display: grid;
-    gap: 0.5rem;
   }
 }

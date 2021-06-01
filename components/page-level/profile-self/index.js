@@ -17,7 +17,7 @@ function ProfileSelf({ join, isPublic, person }) {
       <div className={styles.profilePlayer}>
         <div className={styles.profilePlayerHeader}>
           <div className={styles.profilePlayerHeaderInnerLeft}>
-            <Avatar />
+            <Avatar src={person.image} className={styles.profilePlayerImage} />
             <ProfileInfo
               join={join}
               footballerName={person.name}
@@ -25,7 +25,14 @@ function ProfileSelf({ join, isPublic, person }) {
             />
           </div>
           <div className={styles.profilePlayerHeaderInnerRight}>
-            <OvalButton isPublic={isPublic} appearence="edit">
+            {!isPublic && (
+              <img src="/assets/edit.svg" className={styles.profileEditIcon} />
+            )}
+            <OvalButton
+              isPublic={isPublic}
+              appearence="edit"
+              classes={styles.profileEditButton}
+            >
               Edit Profile
             </OvalButton>
           </div>

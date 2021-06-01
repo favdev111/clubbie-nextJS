@@ -2,12 +2,13 @@
   background-color: var(--c-white-20);
   color: white;
   border-radius: 10px;
-  padding: 20px 32px 20px 32px;
+  padding: 20px 32px 20px 32px !important;
   display: flex;
   align-items: center;
   border: 0px;
   max-height: 44px;
   cursor: pointer;
+  outline: none;
 }
 .ovalButton img {
   padding-right: 6px;
@@ -18,4 +19,10 @@
 .buttonBank {
   background-color: #5fc4ee;
   font-family: "Touche W03 Bold", "Arial", sans-serif;
+}
+
+@media (max-width: 640px) {
+  .ovalButton {
+    margin: 0 20px 0 20px !important;
+  }
 }
