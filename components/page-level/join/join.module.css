@@ -4,11 +4,11 @@
   max-width: 940px;
   padding-top: 50px;
 }
-.join .joinHeader {
+.joinHeader {
   display: flex;
   justify-content: space-between;
 }
-.join .joinHeader .skip {
+.joinHeader .skip {
   border: none;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.5);
@@ -16,10 +16,10 @@
   font-family: "Touche W03 Regular", "Arial", sans-serif;
   cursor: pointer;
 }
-.join .joinHeader .skip:hover {
+.joinHeader .skip:hover {
   color: white;
 }
-.join .joinHeader .joinHeaderInner {
+.joinHeader .joinHeaderInner {
   display: flex;
   height: max-content;
   align-items: center;
