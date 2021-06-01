@@ -1,5 +1,5 @@
 import React from "react";
-import ForwardButton from "@sub/button-forward";
+import DirectedButton from "@sub/button-directed";
 import styles from "./profile-info.module.css";
 
 function ProfileInfo({ footballerName, role, join }) {
@@ -8,7 +8,9 @@ function ProfileInfo({ footballerName, role, join }) {
       <h2> {footballerName} </h2>
       <h6> {role} </h6>
       {join ? (
-        <ForwardButton appearence="join"> Join a club </ForwardButton>
+        <DirectedButton appearence="join" direction="forward">
+          Join a club
+        </DirectedButton>
       ) : (
         <div>
           <img src="/assets/team2.png" />
