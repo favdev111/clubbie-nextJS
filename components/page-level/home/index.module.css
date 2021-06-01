@@ -4,3 +4,7 @@
   max-width: var(--container-lg);
   padding-top: 50px;
 }
+
+.tagContent {
+  display: flex;
+}

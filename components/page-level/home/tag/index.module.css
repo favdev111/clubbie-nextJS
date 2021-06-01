@@ -1,0 +1,7 @@
+.tag {
+  background-color: var(--c-white-10);
+  /* padding: top right bottom left  */
+  padding: var(--space-6) var(--space-18) var(--space-6) var(--space-18);
+  border-radius: var(--radius-lg);
+  margin-right: var(--space-12);
+}
