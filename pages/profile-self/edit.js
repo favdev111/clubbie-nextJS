@@ -1,22 +1,23 @@
 import React from "react";
+import ProfileSelf from "@page/profile-self";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import ProfileSelf from "@page/profile-self/";
 
-function ProfilePagePublic({ person }) {
+function ProfilePage({ person }) {
   return (
     <Layout>
-      <Seo title="Profile Self Public" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf person={person} isPublic />
+      <Seo title="Edit Profile" desc="Edit Your Public Profile on Clubbie" />
+      <ProfileSelf person={person} editMode />
     </Layout>
   );
 }
 
-export default ProfilePagePublic;
+export default ProfilePage;
 
 export const getStaticProps = async () => {
   const person = {
     name: "Roger Steward",
+    image: "/assets/profile-avatar.png",
     role: "Footballer",
     email: "roger@gmail.com",
     telephone: "+44 7500 555 555",

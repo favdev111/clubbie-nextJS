@@ -1,8 +1,8 @@
 import React from "react";
-import Wrap from "@layout/account-wrapper/";
-import AccountVerif from "@page/account-verification/";
 import Layout from "@layout";
 import Seo from "@layout/seo";
+import Wrap from "@layout/account-wrapper/";
+import AccountVerif from "@page/auth/account-verification/";
 
 const AccountVerifPage = () => {
   return (

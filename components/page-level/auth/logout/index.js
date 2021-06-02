@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "@sub/button";
-import styles from "./logout.module.css";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import GoogleLogin from "@sub/button-google-auth/index";
+import styles from "./logout.module.css";
 
 const Logout = () => {
   return (

@@ -1,19 +1,18 @@
 import React from "react";
-
+import ProfileSelf from "@page/profile-self/";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import ProfileSelf from "@page/profile-self/";
 
-function ProfilePage({ person }) {
+function ProfilePageNoclub({ person }) {
   return (
     <Layout>
-      <Seo title="Profile Self" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf person={person} />
+      <Seo title="Profile Self NoClub" desc="Lorem ipsum dolor sit amet" />
+      <ProfileSelf person={person} join />
     </Layout>
   );
 }
 
-export default ProfilePage;
+export default ProfilePageNoclub;
 
 export const getStaticProps = async () => {
   const person = {

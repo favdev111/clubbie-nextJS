@@ -1,22 +1,22 @@
+import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import React from "react";
 import Wrap from "@layout/account-wrapper/";
-import SignUp from "@page/sign-up";
+import Login from "@page/auth/login";
 
-const SignUpPage = () => {
+const LoginPage = () => {
   return (
     <Layout hideHeader>
       <Seo
-        title="Clubbie Signup"
-        desc="Clubbie Account Signup - Raising The Bar For Amateur Sports"
+        title="Clubbie Login"
+        desc="Clubbie Account Login - Raising The Bar For Amateur Sports"
       />
       <main className="main">
         <Wrap>
-          <SignUp />
+          <Login />
         </Wrap>
       </main>
     </Layout>
   );
 };
-export default SignUpPage;
+export default LoginPage;

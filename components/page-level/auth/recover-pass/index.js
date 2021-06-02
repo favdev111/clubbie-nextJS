@@ -1,5 +1,4 @@
 import React from "react";
-// import styles from "recoverPass.module.css";
 import TemplateInput from "@sub/input";
 import Button from "@sub/button";
 import Link from "next/link";

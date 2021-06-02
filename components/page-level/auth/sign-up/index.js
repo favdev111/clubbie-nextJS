@@ -1,33 +1,40 @@
 import React, { useState } from "react";
-import Button from "@sub/button";
 import TemplateInput from "@sub/input";
+import Button from "@sub/button";
 import Link from "next/link";
-import styles from "./login.module.css";
+import styles from "./signup.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "@redux/auth.slice";
 import Alert from "@material-ui/lab/Alert";
+import Router from "next/router";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import GoogleLogin from "@sub/button-google-auth/index";
+import { signup } from "@redux/auth.slice";
 
-const Login = () => {
-  // TODO: redirect to home/somewhere after login
-
+const SignUp = () => {
   const dispatch = useDispatch();
 
-  const loginError = useSelector((state) => state.auth.errors.loginError);
+  const user = useSelector((state) => state.auth.user);
+  Object.keys(user).length > 0 && Router.push("/account-confirmation"); // redirect on signup
+
+  const signupError = useSelector((state) => state.auth.errors.signupError);
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
+    const email = e.target.email.value.trim();
     const password = e.target.password.value;
+    const passwordConfirm = e.target.passwordConfirm.value;
     if (!/.+@.+\..+/.test(email)) {
       setError("Invalid Email Address");
       return;
     }
+    if (password !== passwordConfirm) {
+      setError("Paswords Don't Match");
+      return;
+    }
     setError("");
     dispatch(
-      login({
+      signup({
         email,
         password,
       })
@@ -35,38 +42,40 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.loginBlock}>
-      <h1 className={styles.title}>Login</h1>
-
-      <form onSubmit={handleOnSubmit} className={styles.formLogin}>
+    <div className={styles.signupBlock}>
+      <h1 className={styles.title}>Sign Up</h1>
+      <form onSubmit={handleOnSubmit} className={styles.formSignup}>
         <TemplateInput
-          type="text"
+          type="email"
           placeholder="Your Email Address"
           name="email"
           required
         />
         <TemplateInput
           type="password"
-          placeholder="Password"
+          placeholder="Choose a password"
           name="password"
           required
         />
-        {(error || loginError) && (
+        <TemplateInput
+          type="password"
+          placeholder="Repeat password"
+          name="passwordConfirm"
+          required
+        />
+        {(error || signupError) && (
           <Alert variant="filled" severity="error">
-            {error || loginError}
+            {error || signupError}
           </Alert>
         )}
         <div className={styles.formAct}>
-          <Link href="/recovery-pass">
-            <a className={styles.forgotPass}>Forgot Password?</a>
-          </Link>
-          <Button>Login</Button>
+          <Button>Sign Up</Button>
         </div>
       </form>
 
       <div className={styles.devideBlock}>
         <div className="line"></div>
-        <a className={styles.text}>Or</a>
+        <div className={styles.text}>Or</div>
         <div className="line"></div>
       </div>
 
@@ -75,12 +84,12 @@ const Login = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/sign-up">
-        <div className="signupContent">
-          <a className="signUp">Don’t have an Account? Sign Up</a>
+      <Link href="/login">
+        <div className={styles.signUp}>
+          Already have an account?<a className="signUp">&ensp;Login Here</a>
         </div>
       </Link>
     </div>
   );
 };
-export default Login;
+export default SignUp;

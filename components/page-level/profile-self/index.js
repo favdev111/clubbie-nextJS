@@ -88,7 +88,7 @@ function ProfileSelf({ join, isPublic, person, editMode }) {
               </div>
             </div>
             <div className={styles.profilePhotosItem}>
-              <img src="assets/photo2.png" />
+              <img src="/assets/photo2.png" />
               <div className={styles.profilePhotosOptions}>
                 <img src="assets/edit-photo.svg" />
                 <img src="/assets/thrash.svg" />

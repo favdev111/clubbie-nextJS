@@ -1,22 +1,18 @@
 import React from "react";
+import Join from "@page/join/";
 import Layout from "@layout/";
 import Seo from "@layout/seo";
-import Join from "@page/join/";
 
-function TeamhubJoinTeamPage({ teamData }) {
+function TeamhubJoinClubPage({ teamData }) {
   return (
     <Layout>
-      <Seo title="Join a team" desc="Lorem ipsum dolor sit amet" />
-      <Join
-        title="Join a Team"
-        current={{ name: "Aondimentum", src: "./" }}
-        data={teamData}
-      />
+      <Seo title="Join a Club" desc="Lorem ipsum dolor sit amet" />
+      <Join title="Join a Club" data={teamData} />
     </Layout>
   );
 }
 
-export default TeamhubJoinTeamPage;
+export default TeamhubJoinClubPage;
 
 export const getStaticProps = async () => {
   const teamData = [
