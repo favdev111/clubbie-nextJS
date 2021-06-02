@@ -4,7 +4,7 @@ import Header from "./header";
 
 function Layout({ children, showFooter, hideHeader }) {
   return (
-    <div>
+    <main>
       <Seo />
       {/* Body */}
       {!hideHeader && <Header />}
@@ -12,7 +12,7 @@ function Layout({ children, showFooter, hideHeader }) {
       {children}
 
       {/*       {showFooter && <Footer />} */}
-    </div>
+    </main>
   );
 }
 

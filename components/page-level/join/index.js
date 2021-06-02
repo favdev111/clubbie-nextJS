@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./join.module.css";
 import Link from "next/link";
+import CommonSearch from "@sub/search";
 
 function Join({ title, data, current }) {
   return (
@@ -25,11 +26,7 @@ function Join({ title, data, current }) {
 
         <button className={styles.skip}> Skip </button>
       </div>
-      <div className={styles.joinSearchbox}>
-        <img src="/assets/search.svg" />
-
-        <input type="text" placeholder="Search" />
-      </div>
+      <CommonSearch />
       <div className={styles.joinListContent}>
         <ul className="join__list">
           {data &&

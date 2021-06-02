@@ -1,0 +1,47 @@
+.homePage {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-lg);
+  padding-top: 50px;
+}
+
+.tagContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tagInner {
+  display: flex;
+  height: 32px;
+}
+
+.sortSelect select {
+  padding: 12px 82px 12px 16px;
+  background-color: var(--c-white-10);
+  color: var(--c-white);
+  border-radius: var(--radius-lg);
+  outline: none;
+}
+
+.sortSelect select:focus {
+  background-color: var(--c-white-10);
+  color: var(--c-black);
+}
+
+.addContent {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-32) 0 var(--space-32) 0;
+  border: 1px solid var(--c-white-10);
+  padding: 46px 46px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+}
+.addButton img {
+  padding: 0 12px;
+}

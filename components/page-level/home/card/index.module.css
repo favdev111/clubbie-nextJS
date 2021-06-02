@@ -1,0 +1,35 @@
+.videoCard {
+  border-radius: var(--radius-lg);
+  background-color: var(--c-primary);
+  margin-bottom: 50px;
+}
+.cardInfo {
+  padding: 32px;
+}
+.preview {
+  border-radius: var(--radius-lg);
+  max-height: 487px;
+}
+.desc {
+  padding-bottom: 12px;
+}
+.cardInfoProfile img {
+  border-radius: var(--radius-xl);
+}
+.cardInfoProfile {
+  display: flex;
+  align-items: center;
+}
+.avatarInfo {
+  padding-left: 12px;
+}
+.cardInfoHeader {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.socialButtons {
+  padding-top: 12px;
+  display: flex;
+}
