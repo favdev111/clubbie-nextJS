@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@sub/avatar";
 import OvalButton from "@sub/button-oval";
-import ForwardButton from "@sub/button-forward";
+import DirectedButton from "@sub/button-directed";
 import Link from "next/link";
 import ProfileInfo from "./info";
 import ProfileDetails from "./details";
@@ -17,7 +17,7 @@ function ProfileSelf({ join, isPublic, person }) {
       <div className={styles.profilePlayer}>
         <div className={styles.profilePlayerHeader}>
           <div className={styles.profilePlayerHeaderInnerLeft}>
-            <Avatar />
+            <Avatar src={person.image} className={styles.profilePlayerImage} />
             <ProfileInfo
               join={join}
               footballerName={person.name}
@@ -25,7 +25,14 @@ function ProfileSelf({ join, isPublic, person }) {
             />
           </div>
           <div className={styles.profilePlayerHeaderInnerRight}>
-            <OvalButton isPublic={isPublic} appearence="edit">
+            {!isPublic && (
+              <img src="/assets/edit.svg" className={styles.profileEditIcon} />
+            )}
+            <OvalButton
+              isPublic={isPublic}
+              appearence="edit"
+              classes={styles.profileEditButton}
+            >
               Edit Profile
             </OvalButton>
           </div>
@@ -34,7 +41,9 @@ function ProfileSelf({ join, isPublic, person }) {
           <ProfileDetails data={person} isPublic={isPublic} />
           <Link href="/connected-banks">
             <a>
-              <ForwardButton> Connected Bank Accounts </ForwardButton>
+              <DirectedButton direction="forward">
+                Connected Bank Accounts
+              </DirectedButton>
             </a>
           </Link>
         </div>

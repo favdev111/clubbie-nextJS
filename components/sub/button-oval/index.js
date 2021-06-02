@@ -2,10 +2,18 @@ import React from "react";
 import cn from "classnames";
 import styles from "./ovalbutton.module.css";
 
-function OvalButton({ children, appearence, status, isPublic, theme }) {
+function OvalButton({
+  children,
+  appearence,
+  status,
+  isPublic,
+  theme,
+  classes,
+}) {
   return (
     <button
       className={cn(
+        classes,
         styles.ovalButton,
         appearence !== "edit" && "secondary",
         theme === "bank" && styles.buttonBank,

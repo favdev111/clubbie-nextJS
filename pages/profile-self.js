@@ -18,6 +18,7 @@ export default ProfilePage;
 export const getStaticProps = async () => {
   const person = {
     name: "Roger Steward",
+    image: "/assets/profile-avatar.png",
     role: "Footballer",
     email: "roger@gmail.com",
     telephone: "+44 7500 555 555",

@@ -1,5 +1,5 @@
 import React from "react";
-import ForwardButton from "@sub/button-forward";
+import DirectedButton from "@sub/button-directed";
 import styles from "./bankcard.module.css";
 
 function BankCard({ data }) {
@@ -17,7 +17,10 @@ function BankCard({ data }) {
         {data.default ? (
           <p className="opacity-50">Default</p>
         ) : (
-          <ForwardButton appearence="bank"> Set Default</ForwardButton>
+          <DirectedButton appearence="bank" direction="forward">
+            {" "}
+            Set Default
+          </DirectedButton>
         )}
       </div>
     </div>

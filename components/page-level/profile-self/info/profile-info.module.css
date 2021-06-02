@@ -2,15 +2,37 @@
   display: block;
   padding-left: 16px;
 }
-.profileInfo h2 {
+.profileInfo .playerName {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-.profileInfo h6 {
+.profileInfo .playerRole {
   margin-bottom: 12px;
-  font-size: 16px;
   font-weight: 500;
+  font-size: 18px;
 }
-.profileInfo img {
+.profileInfo .playerClubImg {
   padding-right: 16px;
 }
+
+@media (min-width: 470px) {
+}
+
+@media (max-width: 470px) {
+  .playerName {
+    font-size: 17px;
+  }
+  .playerRole {
+    font-size: 12px !important;
+  }
+  .playerClubImg {
+    height: auto;
+    width: 40px;
+  }
+}
+
+/* @media screen and (min-width: 640px) and (max-width: 900px) {
+  .playerName {
+    font-size: 17px;
+  }
+} */

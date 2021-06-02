@@ -7,7 +7,6 @@
   padding-top: 32px;
   color: var(--c-white-50);
 }
-
 .profilePlayerBodyContentItem p {
   padding-top: 16px;
   color: var(--c-white);
@@ -18,7 +17,7 @@
 .span3 {
   grid-column: span 3 / span 3;
 }
-@media screen and (max-width: 760px) and (min-width: 360px) {
+@media (max-width: 760px) {
   .span1 {
     grid-column: span 3 / span 3;
   }

@@ -1,12 +1,9 @@
 import React from "react";
 
-function Avatar({ src }) {
+function Avatar({ src, className }) {
   return (
     <>
-      <img
-        className="profile__player__header__avatar"
-        src="/assets/profile-avatar.png"
-      />
+      <img className={className} src={src} />
     </>
   );
 }

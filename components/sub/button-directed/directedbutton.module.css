@@ -1,4 +1,4 @@
-.forwardButton {
+.directedButton {
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -8,10 +8,10 @@
   font-size: 16px;
   cursor: pointer;
 }
-.forwardButton img {
+.directedButton img {
   padding-left: 6px;
 }
-.forwardButton:hover {
+.directedButton:hover {
   text-decoration: underline;
 }
 .bank {

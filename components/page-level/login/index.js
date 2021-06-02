@@ -6,15 +6,15 @@ import styles from "./login.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@redux/auth.slice";
 import Alert from "@material-ui/lab/Alert";
+import FacebookLogin from "@sub/button-facebook-auth/index";
+import GoogleLogin from "@sub/button-google-auth/index";
 
 const Login = () => {
   // TODO: redirect to home/somewhere after login
 
   const dispatch = useDispatch();
 
-  const loginError = useSelector(
-    (state) => state.auth.errors.loginError
-  );
+  const loginError = useSelector((state) => state.auth.errors.loginError);
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
@@ -71,24 +71,8 @@ const Login = () => {
       </div>
 
       <div className={styles.socialSignin}>
-        <Link href="/social-signin-fb">
-          <a>
-            <img
-              className={styles.iconFacebook}
-              src="/assets/facebook.svg"
-              alt=""
-            />
-          </a>
-        </Link>
-        <Link href="/social-signin-g">
-          <a>
-            <img
-              className={styles.iconGoogle}
-              src="/assets/google.svg"
-              alt=""
-            />
-          </a>
-        </Link>
+        <FacebookLogin />
+        <GoogleLogin />
       </div>
 
       <Link href="/sign-up">
