@@ -1,0 +1,38 @@
+.profilePlayerBodyContent {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 30px;
+}
+.profilePlayerBodyContentItem {
+  padding: 5px;
+  color: var(--c-white-50);
+}
+.profilePlayerBodyContentItem p {
+  padding-bottom: 10px;
+  /* color: var(--c-white); */
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span2 {
+  grid-column: span 2 / span 2;
+}
+.span3 {
+  grid-column: span 3 / span 3;
+}
+.profilePlayerClubChips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 48px;
+}
+.btnChipPadding {
+  padding: 7px;
+}
+@media (max-width: 760px) {
+  .span1 {
+    grid-column: span 2 / span 2;
+  }
+  .span2 {
+    grid-column: span 2 / span 2;
+  }
+}
