@@ -1,9 +1,8 @@
+import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-
-import React from "react";
 import Wrap from "@layout/account-wrapper/";
-import AccountConfirm from "@page/account-confirm/";
+import AccountConfirm from "@page/auth/account-confirm/";
 
 const AccountConfirmPage = () => {
   return (

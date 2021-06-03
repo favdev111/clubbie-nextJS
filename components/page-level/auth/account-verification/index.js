@@ -3,8 +3,8 @@ import Button from "@sub/button";
 import TemplateInput from "@sub/input";
 import styles from "./accountVerif.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { verifyAccount } from "@redux/auth.slice";
 import Alert from "@material-ui/lab/Alert";
+import { verifyAccount } from "@redux/auth.slice";
 
 const AccountVerif = () => {
   // TODO: redirect to home/somewhere after verification

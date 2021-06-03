@@ -1,20 +1,20 @@
+import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import React from "react";
 import Wrap from "@layout/account-wrapper/";
-import Logout from "@page/logout/";
+import RecoverPass from "@page/auth/recover-pass/";
 
-const LogoutPage = () => {
+const RecoverPassPage = () => {
   return (
     <Layout hideHeader>
-      <Seo title="Clubbie App" desc="Lorem ipsum dolor sit amet" />
+      <Seo title="Recover pass" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
-          <Logout />
+          <RecoverPass />
         </Wrap>
       </main>
     </Layout>
   );
 };
 
-export default LogoutPage;
+export default RecoverPassPage;

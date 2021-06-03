@@ -2,93 +2,115 @@ import React from "react";
 import Avatar from "@sub/avatar";
 import OvalButton from "@sub/button-oval";
 import DirectedButton from "@sub/button-directed";
+import Button from "@sub/button";
 import Link from "next/link";
 import ProfileInfo from "./info";
+import ProfileEdit from "./edit";
 import ProfileDetails from "./details";
-
 import styles from "./profileself.module.css";
 
-function ProfileSelf({ join, isPublic, person }) {
-  // Fake data
-
+function ProfileSelf({ join, isPublic, person, editMode }) {
   return (
     <div className={styles.profile}>
-      <h1 className={styles.profileTitle}> Profile </h1>
+      <h1 className={styles.profileTitle}>{editMode && "Edit "}Profile</h1>
       <div className={styles.profilePlayer}>
         <div className={styles.profilePlayerHeader}>
           <div className={styles.profilePlayerHeaderInnerLeft}>
             <Avatar src={person.image} className={styles.profilePlayerImage} />
-            <ProfileInfo
-              join={join}
-              footballerName={person.name}
-              role={person.role}
-            />
+            {!editMode && (
+              <ProfileInfo
+                join={join}
+                footballerName={person.name}
+                role={person.role}
+              />
+            )}
           </div>
           <div className={styles.profilePlayerHeaderInnerRight}>
-            {!isPublic && (
-              <img src="/assets/edit.svg" className={styles.profileEditIcon} />
+            {editMode ? (
+              <div>
+                <Button>Save Changes</Button>
+              </div>
+            ) : (
+              <>
+                {!isPublic && (
+                  <img
+                    src="/assets/edit.svg"
+                    className={styles.profileEditIcon}
+                  />
+                )}
+                <OvalButton
+                  isPublic={isPublic}
+                  appearence="edit"
+                  classes={styles.profileEditButton}
+                >
+                  Edit Profile
+                </OvalButton>
+              </>
             )}
-            <OvalButton
-              isPublic={isPublic}
-              appearence="edit"
-              classes={styles.profileEditButton}
-            >
-              Edit Profile
-            </OvalButton>
           </div>
         </div>
         <div className={styles.profilePlayerBody}>
-          <ProfileDetails data={person} isPublic={isPublic} />
-          <Link href="/connected-banks">
-            <a>
-              <DirectedButton direction="forward">
-                Connected Bank Accounts
-              </DirectedButton>
-            </a>
-          </Link>
+          {editMode ? (
+            <ProfileEdit data={person} />
+          ) : (
+            <ProfileDetails data={person} isPublic={isPublic} />
+          )}
+          {!editMode && (
+            <Link href="/connected-banks">
+              <a>
+                <DirectedButton direction="forward">
+                  Connected Bank Accounts
+                </DirectedButton>
+              </a>
+            </Link>
+          )}
         </div>
       </div>
-      <div className={styles.profileButtons}>
-        <OvalButton status="active" appearence="uploaded">
-          Uploaded
-        </OvalButton>
-        <OvalButton status="passive" appearence="tagged">
-          Tagged
-        </OvalButton>
-        <OvalButton status="passive" appearence="reposts">
-          Reposts
-        </OvalButton>
-      </div>
-      <div className={styles.profilePhotos}>
-        <div className={styles.profilePhotosItem}>
-          <img src="/assets/photo1.png"></img>
-          <div className={styles.profilePhotosOptions}>
-            <img src="/assets/edit-photo.svg" />
-            <img src="/assets/thrash.svg" />
+      {!editMode && (
+        <>
+          <div className={styles.profileButtons}>
+            <OvalButton status="active" appearence="uploaded">
+              Uploaded
+            </OvalButton>
+            <OvalButton status="passive" appearence="tagged">
+              Tagged
+            </OvalButton>
+            <OvalButton status="passive" appearence="reposts">
+              Reposts
+            </OvalButton>
           </div>
-        </div>
-        <div className={styles.profilePhotosItem}>
-          <img src="assets/photo2.png" />
-          <div className={styles.profilePhotosOptions}>
-            <img src="assets/edit-photo.svg" />
-            <img src="/assets/thrash.svg" />
+          <div className={styles.profilePhotos}>
+            <div className={styles.profilePhotosItem}>
+              <img src="/assets/photo1.png"></img>
+              <div className={styles.profilePhotosOptions}>
+                <img src="/assets/edit-photo.svg" />
+                <img src="/assets/thrash.svg" />
+              </div>
+            </div>
+            <div className={styles.profilePhotosItem}>
+              <img src="/assets/photo2.png" />
+              <div className={styles.profilePhotosOptions}>
+                <img src="assets/edit-photo.svg" />
+                <img src="/assets/thrash.svg" />
+              </div>
+            </div>
+            <div className={styles.profilePhotosItem}>
+              <img src="/assets/photo3.png" />
+              <div className={styles.profilePhotosOptions}>
+                <img src="/assets/edit-photo.svg" />
+                <img src="/assets/thrash.svg" />
+              </div>
+            </div>
+            <div className={styles.profilePhotosItem}>
+              <img src="/assets/photo2.png" />
+              <div className={styles.profilePhotosOptions}>
+                <img src="/assets/edit-photo.svg" />
+                <img src="/assets/thrash.svg" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className={styles.profilePhotosItem}>
-          <img src="/assets/photo3.png" />
-          <div className={styles.profilePhotosOptions}>
-            <img src="/assets/edit-photo.svg" />
-            <img src="/assets/thrash.svg" />
-          </div>
-        </div>
-        <div className={styles.profilePhotosItem}>
-          <img src="/assets/photo2.png" />
-          <div className={styles.profilePhotosOptions}>
-            <img src="/assets/edit-photo.svg" />
-            <img src="/assets/thrash.svg" />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
