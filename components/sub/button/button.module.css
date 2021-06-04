@@ -1,17 +1,14 @@
 .btn {
-  padding: 16px 48px 16px 48px;
-  border-radius: 10px;
-  background: #5fc4ee;
+  padding: var(--space-16) var(--space-48) var(--space-16) var(--space-48);
+  border-radius: var(--radius-md);
+  background: var(--c-turk);
   outline: none;
   border: none;
   cursor: pointer;
 }
 
 .contTxt {
-  font-family: "ToucheW03-Bold", sans-serif;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 17px;
+  font-family: var(--ff-bold);
   text-align: center;
-  color: #fff;
+  color: var(--c-white);
 }

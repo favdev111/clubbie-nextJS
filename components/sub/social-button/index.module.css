@@ -1,10 +1,10 @@
 .socialButton {
-  padding: 16px;
+  padding: var(--space-16);
   background-color: var(--c-white-10);
   border-radius: var(--radius-xl);
   display: flex;
   align-items: center;
-  margin-right: 12px;
+  margin-right: var(--space-12);
   cursor: pointer;
 }
 .socialButton:hover {

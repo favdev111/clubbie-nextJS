@@ -1,34 +1,24 @@
 .confirmBlock {
-    display: block;
-    width: 454px;
-    margin: 215px auto 0px;
+  display: block;
+  width: var(--container-md);
+  margin: 215px auto 0px;
 }
-.title {
-    font-family: ToucheW03-Bold, sans-serif;
-    font-weight: normal;
-    font-size: 32px;
-    line-height: 32px;
-    text-align: center;
-    color: #fff;
-}
+
 .textBlock {
-    display: block;
-    margin: 25px auto 64px;
+  display: block;
+  margin: 25px auto var(--space-64);
 }
 .text {
-    font-family: ToucheW03-Regular, sans-serif;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: justify;
-    color: #fff;
-    opacity: 0.5;
+  line-height: 24px;
+  text-align: justify;
+  color: var(--c-white-50);
 }
 .confEmail {
-    color: #1ea7fd;
+  padding-left: var(--space-3);
+  color: var(--c-turk);
 }
 .btnConfirm {
-    display: block;
-    width: 142px;
-    margin: 24px auto 0px;
+  display: block;
+  width: 142px;
+  margin: var(--space-24) auto 0px;
 }

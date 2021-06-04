@@ -33,7 +33,7 @@ const GoogleButton = () => {
         onFailure={handleError}
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
-          <div onClick={renderProps.onClick} className="pointer margin20">
+          <div onClick={renderProps.onClick} className="auth-icon">
             <img src="/assets/google.svg" alt="google-auth" />
           </div>
         )}

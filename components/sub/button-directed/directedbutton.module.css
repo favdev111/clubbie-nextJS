@@ -3,9 +3,8 @@
   align-items: center;
   background-color: transparent;
   border: none;
-  color: #5fc4ee;
-  font-family: "Touche W03 Bold", "Arial", sans-serif;
-  font-size: 16px;
+  color: var(--c-turk);
+  font-family: var(--ff-bold);
   cursor: pointer;
 }
 .directedButton img {

@@ -7,7 +7,7 @@ function TeamhubJoinClubPage({ teamData }) {
   return (
     <Layout>
       <Seo title="Join a Club" desc="Lorem ipsum dolor sit amet" />
-      <Join title="Join a Club" data={teamData} />
+      <Join title="Join a Club" current data={teamData} />
     </Layout>
   );
 }

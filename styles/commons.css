@@ -17,7 +17,9 @@
   text-align: center;
   color: var(--c-turk) !important;
   margin-bottom: var(--space-32);
+  cursor: pointer;
 }
+
 .line {
   width: var(--space-192);
   height: var(--space-1);
@@ -33,13 +35,13 @@
 /* Oval Button  */
 
 .active {
-  background-color: #5fc4ee !important;
+  background-color: var(--c-turk) !important;
 }
 .passive {
   opacity: 0.6;
 }
 .passive:hover {
-  background-color: #5fc4ee;
+  background-color: var(--c-turk);
   opacity: 1;
 }
 
@@ -61,4 +63,9 @@
 }
 .back:hover {
   background-color: var(--c-turk);
+}
+
+/* Auth */
+.auth-icon {
+  cursor: pointer;
 }

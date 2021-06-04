@@ -42,8 +42,8 @@ function Home({ videos }) {
       </div>
 
       {/* Posts here */}
-      {videos.map((video) => (
-        <HomeVideosCard data={video} />
+      {videos.map((video, index) => (
+        <HomeVideosCard key={video + index} data={video} />
       ))}
     </div>
   );

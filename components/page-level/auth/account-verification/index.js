@@ -32,10 +32,10 @@ const AccountVerif = () => {
       <h1 className={styles.title}>Account Verification</h1>
 
       <div className={styles.textBlock}>
-        <p className={styles.text}>
+        <p className="opacity-50">
           Please enter your the 6-digit code we sent you by email.
         </p>
-        <p className={styles.text}>
+        <p className="opacity-50">
           Verification only takes a few minutes, helps secure your account.
         </p>
       </div>

@@ -1,70 +1,70 @@
 .modal {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-    pointer-events: none;
-    z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+  z-index: 1000;
 }
 .modalContent {
-    display: block;
-    position: absolute;
-    width: 530px;
-    height: 400px;
-    border-radius: 15px;
-    background: #141f34;
+  display: block;
+  position: absolute;
+  width: 530px;
+  height: 400px;
+  border-radius: 15px;
+  background: var(--c-primary);
 }
 .modalContentIconClose {
-    display: block;
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(112, 112, 112, 0.25);
-    top: 12px;
-    right: 12px;
-    cursor: pointer;
+  display: block;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(112, 112, 112, 0.25);
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
 }
 .modalContentIconCloseImg {
-    margin: 16px;
+  margin: 16px;
 }
 .modalContentTitle {
-    font-family: 'Touche W03 Regular', 'Arial', sans-serif;
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    color: #fff;
-    margin-top: 45px;
+  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  color: #fff;
+  margin-top: 45px;
 }
 .modalContentColormap {
-    display: block;
-    width: 350px;
-    height: 132px;
-    margin: 32px auto 0;
-    font-size: 0;
+  display: block;
+  width: 350px;
+  height: 132px;
+  margin: 32px auto 0;
+  font-size: 0;
 }
 .modalContentColormapCol {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    margin: 6px 9px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 6px 9px;
 }
 .modalContentBtn {
-    display: block;
-    width: 140px;
-    margin: 73px auto 0;
-    cursor: pointer;
+  display: block;
+  width: 140px;
+  margin: 73px auto 0;
+  cursor: pointer;
 }
 .activeModal {
-    opacity: 1;
-    pointer-events: all;
-    z-index: 1200;
+  opacity: 1;
+  pointer-events: all;
+  z-index: 1200;
 }

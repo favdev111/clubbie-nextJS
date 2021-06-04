@@ -15,7 +15,7 @@ const FacebookButton = () => {
       scope="public_profile,user_friends,email"
       callback={responseFacebook}
       render={(renderProps) => (
-        <div onClick={renderProps.onClick} className="pointer margin20">
+        <div onClick={renderProps.onClick} className="auth-icon">
           <img src="/assets/facebook.svg" alt="facebook-auth" />
         </div>
       )}

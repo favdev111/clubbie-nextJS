@@ -15,8 +15,8 @@
   position: fixed;
   font-size: inherit;
   font-family: sans-serif;
-  background: #f44336;
-  color: white;
+  background: var(--c-red);
+  color: var(--c-white);
 }
 
 .notificationIcon {

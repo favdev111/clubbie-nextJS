@@ -1,127 +1,122 @@
 .homeKit {
-    display: block;
-    padding: 34px 32px;
-    width: 454px;
-    height: 198px;
-    border-radius: 15px;
-    background: rgba(20, 31, 52, 0.4);
-    cursor: pointer;
+  display: block;
+  padding: var(--space-32) var(--space-32);
+  width: var(--container-md);
+  height: 198px;
+  border-radius: var(--radius-lg);
+  background: rgba(20, 31, 52, 0.4);
+  cursor: pointer;
 }
 .homeKit:hover {
-    border: 3px solid #5fc4ee;
-    padding: 31px 29px;
-    background: rgba(20, 31, 52, 0.4);
+  border: var(--border-3) solid var(--c-turk);
+  padding: 31px 29px;
+  background: rgba(20, 31, 52, 0.4);
 }
 .homeKitTitle {
-    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
-    font-size: 18px;
-    line-height: 18px;
-    text-align: left;
-    color: #fff;
+  line-height: 18px;
+  text-align: left;
 }
 .homeKitItem {
-    display: block;
-    margin-top: 36px;
+  display: block;
+  margin-top: 36px;
 }
-.homeKitItemHome, .homeKitItemGoalkeeper {
-    display: flex;
-    justify-content: space-between;
+.homeKitItemHome,
+.homeKitItemGoalkeeper {
+  display: flex;
+  justify-content: space-between;
 }
 .homeKitItemHome {
-    margin-bottom: 27px;
-    z-index: 600;
+  margin-bottom: 27px;
+  z-index: 600;
 }
 .homeKitItemHColor {
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: #e7ba19;
-    border-radius: 50%;
+  display: block;
+  width: var(--space-32);
+  height: var(--space-32);
+  background: var(--c-yellow);
+  border-radius: var(--radius-full);
 }
 .homeKitItemGKColor {
-    display: block;
-    width: 32px;
-    height: 32px;
-    background: #ff000b;
-    border-radius: 50%;
+  display: block;
+  width: var(--space-32);
+  height: var(--space-32);
+  background: var(--c-red);
+  border-radius: var(--radius-full);
 }
 .homeKitItemText {
-    font-family: 'Touche W03 Bold', 'Arial Black', sans-serif;
-    font-size: 16px;
-    line-height: 30px;
-    text-align: left;
-    color: #fff;
+  font-family: var(--ff-bold);
+  line-height: 30px;
+  text-align: left;
 }
 .activeKit {
-    border: 3px solid #5fc4ee;
-    padding: 31px 29px;
-    background: rgba(37, 64, 115, 0.4);
+  border: var(--border-3) solid var(--c-turk);
+  padding: 31px 29px;
+  background: rgba(37, 64, 115, 0.4);
 }
 @media only screen and (max-width: 600px) {
-    .homeKit {
-        width: 300px;
-        margin-bottom: 20px;
-        padding: 22px 20px;
-        height: 170px;
-    }
-    .homeKit:hover {
-        border: 3px solid #5fc4ee;
-        padding: 19px 17px;
-        background: rgba(20, 31, 52, 0.4);
-    }
-    .homeKitItem {
-        margin-top: 18px;
-    }
-    .homeKitItemHome {
-        margin-bottom: 18px;
-    }
-    .activeKit {
-        border: 3px solid #5fc4ee;
-        padding: 19px 17px;
-    }
+  .homeKit {
+    width: 300px;
+    margin-bottom: 20px;
+    padding: 22px 20px;
+    height: 170px;
+  }
+  .homeKit:hover {
+    border: var(--border-3) solid var(--c-turk);
+    padding: 19px 17px;
+    background: rgba(20, 31, 52, 0.4);
+  }
+  .homeKitItem {
+    margin-top: 18px;
+  }
+  .homeKitItemHome {
+    margin-bottom: 18px;
+  }
+  .activeKit {
+    border: var(--border-3) solid var(--c-turk);
+    padding: 19px 17px;
+  }
 }
 @media only screen and (min-width: 600px) {
-    .homeKit {
-        width: 300px;
-        margin-bottom: 20px;
-        padding: 22px 20px;
-        height: 170px;
-    }
-    .homeKit:hover {
-        padding: 19px 17px;
-        border: 3px solid #5fc4ee;
-        background: rgba(20, 31, 52, 0.4);
-    }
-    .homeKitItem {
-        margin-top: 18px;
-    }
-    .homeKitItemHome {
-        margin-bottom: 18px;
-    }
-    .activeKit {
-        border: 3px solid #5fc4ee;
-        padding: 19px 17px;
-    }
+  .homeKit {
+    width: 300px;
+    margin-bottom: 20px;
+    padding: 22px 20px;
+    height: 170px;
+  }
+  .homeKit:hover {
+    padding: 19px 17px;
+    border: var(--border-3) solid var(--c-turk);
+    background: rgba(20, 31, 52, 0.4);
+  }
+  .homeKitItem {
+    margin-top: 18px;
+  }
+  .homeKitItemHome {
+    margin-bottom: 18px;
+  }
+  .activeKit {
+    border: var(--border-3) solid var(--c-turk);
+    padding: 19px 17px;
+  }
 }
 @media only screen and (min-width: 1200px) {
-    .homeKit {
-        width: 380px;
-        padding: 22px 20px;
-    }
-    .homeKit:hover {
-        padding: 19px 17px;
-        border: 3px solid #5fc4ee;
-        background: rgba(20, 31, 52, 0.4);
-    }
-    .homeKitItem {
-        margin-top: 18px;
-    }
-    .homeKitItemHome {
-        margin-bottom: 18px;
-    }
-    .activeKit {
-        border: 3px solid #5fc4ee;
-        padding: 19px 17px;
-    }
+  .homeKit {
+    width: 380px;
+    padding: 22px 20px;
+  }
+  .homeKit:hover {
+    padding: 19px 17px;
+    border: var(--border-3) solid var(--c-turk);
+    background: rgba(20, 31, 52, 0.4);
+  }
+  .homeKitItem {
+    margin-top: 18px;
+  }
+  .homeKitItemHome {
+    margin-bottom: 18px;
+  }
+  .activeKit {
+    border: var(--border-3) solid var(--c-turk);
+    padding: 19px 17px;
+  }
 }
-
