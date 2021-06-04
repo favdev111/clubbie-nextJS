@@ -18,7 +18,6 @@ function BankCard({ data }) {
           <p className="opacity-50">Default</p>
         ) : (
           <DirectedButton appearence="bank" direction="forward">
-            {" "}
             Set Default
           </DirectedButton>
         )}

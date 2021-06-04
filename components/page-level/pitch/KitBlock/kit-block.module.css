@@ -1,54 +1,54 @@
 .kitBlock {
+  display: flex;
+  justify-content: space-between;
+  width: var(--container-lg);
+  height: 198px;
+  margin: 55px auto 0;
+}
+@media only screen and (max-width: 600px) {
+  .kitBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    height: 100%;
+    margin: 35px auto 0;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .kitBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    height: 100%;
+    margin: 35px auto 0;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .kitBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 800px;
+    margin: 35px auto 0;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .kitBlock {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    height: 198px;
+    margin: 55px auto 0;
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .kitBlock {
     display: flex;
     justify-content: space-between;
     width: 940px;
     height: 198px;
     margin: 55px auto 0;
-}
-@media only screen and (max-width: 600px) {
-    .kitBlock {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 300px;
-        height: 100%;
-        margin: 35px auto 0;
-    }
-}
-@media only screen and (min-width: 600px) {
-    .kitBlock {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 300px;
-        height: 100%;
-        margin: 35px auto 0;
-    }
-}
-@media only screen and (min-width: 1200px) {
-    .kitBlock {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 800px;
-        margin: 35px auto 0;
-    }
-}
-@media only screen and (min-width: 1440px) {
-    .kitBlock {
-        display: flex;
-        justify-content: space-between;
-        width: 800px;
-        height: 198px;
-        margin: 55px auto 0;
-    }
-}
-@media only screen and (min-width: 1920px) {
-    .kitBlock {
-        display: flex;
-        justify-content: space-between;
-        width: 940px;
-        height: 198px;
-        margin: 55px auto 0;
-    }
+  }
 }

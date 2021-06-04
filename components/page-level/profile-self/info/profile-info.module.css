@@ -1,18 +1,18 @@
 .profileInfo {
   display: block;
-  padding-left: 16px;
+  padding-left: var(--space-16);
 }
 .profileInfo .playerName {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
 }
 .profileInfo .playerRole {
-  margin-bottom: 12px;
+  margin-bottom: var(--space-12);
   font-weight: 500;
   font-size: 18px;
 }
 .profileInfo .playerClubImg {
-  padding-right: 16px;
+  padding-right: var(--space-16);
 }
 
 @media (min-width: 470px) {

@@ -1,7 +1,7 @@
 .join {
   margin-left: auto;
   margin-right: auto;
-  max-width: 940px;
+  max-width: var(--container-lg);
   padding-top: 50px;
 }
 .joinHeader {

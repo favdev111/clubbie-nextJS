@@ -14,7 +14,7 @@ const AwayKit = ({
       onClick={awayKitHandler}
       className={`${styles.awayKit} ${state ? styles.activeKit : ""}`}
     >
-      <h2 className={styles.awayKitTitle}>Away Kit</h2>
+      <h3 className={styles.awayKitTitle}>Away Kit</h3>
       <div className={styles.awayKitItem}>
         <div className={styles.awayKitItemAway}>
           <span className={styles.awayKitItemText}>Away</span>

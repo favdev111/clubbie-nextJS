@@ -1,9 +1,9 @@
 .profile {
   margin-left: auto;
   margin-right: auto;
-  max-width: 940px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  max-width: var(--container-lg);
+  padding-top: var(--space-50);
+  padding-bottom: var(--space-50);
 }
 .profilePlayer {
   background: #141f34 0% 0% no-repeat padding-box;
@@ -30,7 +30,7 @@
   margin-top: 5px;
 }
 .profile .profileButtons {
-  margin-top: 48px;
+  margin-top: var(--space-48);
   display: flex;
 }
 .profile .profileButtons button {
@@ -41,7 +41,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .profile .profilePhotos .profilePhotosItem {
-  margin-top: 30px;
+  margin-top: var(--space-30);
   position: relative;
   display: flex;
   align-items: center;
@@ -57,12 +57,12 @@
   position: absolute;
 }
 .profile .profilePhotos .profilePhotosItem .profilePhotosOptions img {
-  margin-right: 16px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 99px;
-  padding: 16px;
-  width: 64px;
-  height: 64px;
+  margin-right: var(--space-16);
+  background-color: var(--c-black-50);
+  border-radius: var(--radius-full);
+  padding: var(--space-16);
+  width: var(--space-64);
+  height: var(--space-64);
 }
 .profile .profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
   background-color: rgba(0, 0, 0, 0.8);
@@ -105,10 +105,6 @@
   .profile .profilePhotos {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-  /* .profile .profilePlayer .profilePlayerHeader {
-    justify-content: start;
-    display: block;
-  } */
   .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
     width: 96px;
     height: 96px;

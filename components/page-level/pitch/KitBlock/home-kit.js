@@ -14,7 +14,7 @@ const HomeKit = ({
       onClick={homeKitHandler}
       className={`${styles.homeKit} ${state ? styles.activeKit : ""}`}
     >
-      <h2 className={styles.homeKitTitle}>Home Kit</h2>
+      <h3 className={styles.homeKitTitle}>Home Kit</h3>
       <div className={styles.homeKitItem}>
         <div className={styles.homeKitItemHome}>
           <span className={styles.homeKitItemText}>Home</span>

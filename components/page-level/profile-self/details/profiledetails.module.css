@@ -1,14 +1,14 @@
 .profilePlayerBodyContent {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-bottom: 48px;
+  margin-bottom: var(--space-48);
 }
 .profilePlayerBodyContentItem {
-  padding-top: 32px;
+  padding-top: var(--space-32);
   color: var(--c-white-50);
 }
 .profilePlayerBodyContentItem p {
-  padding-top: 16px;
+  padding-top: var(--space-16);
   color: var(--c-white);
 }
 .span1 {

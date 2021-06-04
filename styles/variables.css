@@ -21,6 +21,7 @@
   --c-primary: #141f34;
   --c-turk: #5fc4ee;
   --c-black: rgb(0, 0, 0);
+  --c-black-50: rgba(0, 0, 0, 0.5);
   --c-white: rgb(255, 255, 255);
   --c-white-70: rgba(255, 255, 255, 0.7);
   --c-white-50: rgba(255, 255, 255, 0.5);
@@ -43,12 +44,14 @@
   --space-3: 3px;
   --space-6: 6px;
   --space-12: 12px;
+  --space-16: 16px;
   --space-18: 18px;
   --space-22: 22px;
   --space-24: 24px;
   --space-30: 30px;
   --space-32: 32px;
   --space-48: 48px;
+  --space-50: 50px;
   --space-64: 64px;
   --space-95: 95px;
   --space-192: 192px;

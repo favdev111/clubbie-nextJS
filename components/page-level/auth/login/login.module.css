@@ -29,6 +29,7 @@
 .text {
   padding: 0px 24px 0px 24px;
   color: var(--c-white-50);
+  cursor: default;
 }
 .socialSignin {
   display: flex;
