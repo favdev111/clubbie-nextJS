@@ -2,7 +2,7 @@
   margin-left: auto;
   margin-right: auto;
   max-width: var(--container-lg);
-  padding-top: 50px;
+  padding-top: var(--space-50);
 }
 .joinHeader {
   display: flex;
@@ -11,29 +11,25 @@
 .joinHeader .skip {
   border: none;
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 16px;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
+  color: var(--c-white-50);
   cursor: pointer;
 }
 .joinHeader .skip:hover {
-  color: white;
+  color: var(--c-white);
 }
-.joinHeader .joinHeaderInner {
+.joinHeaderInner {
   display: flex;
   height: max-content;
   align-items: center;
   position: relative;
 }
-.join .joinHeader .joinHeaderInner .joinHeaderCurrent {
+.joinHeaderCurrent {
   display: flex;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
-  color: white;
   align-items: center;
 }
-.join .joinHeader .joinHeaderInner .joinHeaderCurrent img {
-  margin-left: 16px;
-  margin-right: 6px;
+.joinHeaderCurrent img {
+  margin-left: var(--space-16);
+  margin-right: var(--space-6);
 }
 .join .joinHeader .joinHeaderInner button {
   background-color: transparent;
@@ -43,81 +39,46 @@
   left: -26px;
 }
 .join .joinHeader .joinHeaderInner h1 {
-  font-size: 32px;
-  color: white;
-  font-family: "Touche W03 Bold", "Arial", sans-serif;
   display: flex;
 }
-.join .joinSearchbox {
-  width: 100%;
-  margin-top: 24px;
-  margin-bottom: 50px;
-  position: relative;
-  color: white;
-}
-.join .joinSearchbox img {
-  position: absolute;
-  left: 14px;
-  top: 14px;
-  width: 21px;
-  height: 21px;
-}
-.join .joinSearchbox input {
-  width: 100%;
-  height: 52px;
-  border-radius: 10px;
-  background: #ffffff0d 0% 0% no-repeat padding-box;
-  border: none;
-  font-size: 16px;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
-  color: rgba(255, 255, 255, 0.5);
-  padding-left: 44px;
-  position: relative;
-}
-.join .joinSearchbox input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-.join .joinListContent {
+
+.joinListContent {
   height: 500px;
   overflow-y: scroll;
 }
-.join .joinListContent::-webkit-scrollbar-track {
+.joinListContent::-webkit-scrollbar-track {
   padding: 1px 0;
   background-color: transparent;
 }
-.join .joinListContent:-webkit-scrollbar {
+.joinListContent:-webkit-scrollbar {
   width: 1px !important;
 }
-.join .joinListContent::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-  background-color: #5fc4ee;
+.joinListContent::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 6px var(--c-white-30);
+  background-color: var(--c-turk);
   border: none;
 }
 .join .joinListContent .joinListItem {
-  margin-bottom: 32px;
+  margin-bottom: var(--space-32);
   display: flex;
   align-items: center;
-  font-size: 16px;
-  color: white;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
 }
 .join .joinListContent .joinListItem img {
-  margin-right: 6px;
-  height: 24px;
-  width: 24px;
+  margin-right: var(--space-6);
+  height: var(--space-24);
+  width: var(--space-24);
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .join {
-    padding: 30px;
+    padding: var(--space-30);
   }
 }
 @media screen and (max-width: 760px) and (min-width: 360px) {
   .join {
-    margin-top: 30px;
-    padding: 30px;
+    margin-top: var(--space-24);
+    padding: var(--space-24);
   }
   .join .joinHeaderInner .joinHeaderCurrent {
     padding: 10px;
