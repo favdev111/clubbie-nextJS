@@ -3,7 +3,6 @@
   margin-top: 24px;
   margin-bottom: 50px;
   position: relative;
-  color: white;
 }
 .commonSearch img {
   position: absolute;
@@ -15,16 +14,13 @@
 .commonSearch input {
   width: 100%;
   height: 52px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: #ffffff0d 0% 0% no-repeat padding-box;
   border: none;
-  font-size: 16px;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
-  color: rgba(255, 255, 255, 0.5);
   padding-left: 44px;
+  color: var(--c-white-70);
   position: relative;
 }
 .commonSearch input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
+  color: var(--c-white-50);
 }

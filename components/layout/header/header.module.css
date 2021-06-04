@@ -1,5 +1,5 @@
 .header {
-  height: 64px;
+  height: var(--space-64);
   display: flex;
   align-items: center;
   margin-left: auto;

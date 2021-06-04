@@ -72,7 +72,7 @@ function ProfileEdit({ data }) {
       <div className={styles.profilePlayerClubChips}>
         <div className={cn(styles.span3, styles.profilePlayerBodyContentItem)}>
           <p>Clubs</p>
-        </div>{" "}
+        </div>
         <div className={cn(styles.span1, styles.profilePlayerBodyContentItem)}>
           <Chip text="Shottery United" onCloseClick={removeClub} />
         </div>

@@ -4,33 +4,30 @@
 }
 .navbarList {
   display: flex;
-  margin-left: 96px;
+  margin-left: var(--space-95);
   list-style-type: none;
 }
 .navbarListItemLink {
   cursor: pointer;
-  margin-right: 64px;
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
-  font-size: 16px;
+  margin-right: var(--space-64);
   padding: 0 5px 0 5px;
-  color: white;
-  border-bottom: 4px solid transparent;
-  height: 64px;
+  border-bottom: var(--border-4) solid transparent;
+  height: var(--space-64);
   display: flex;
   align-items: center;
 }
 .navbar .navbarListItem .navbarListItemLink:hover {
-  color: #e7ba19;
-  border-bottom-width: 4px;
-  border-color: #e7ba19;
-  font-weight: 600;
+  color: var(--c-yellow);
+  border-bottom-width: var(--border-4);
+  border-color: var(--c-yellow);
+  font-family: var(--ff-bold);
 }
 @media screen and (max-width: 760px) and (min-width: 360px) {
   .navbar .navbarList {
-    margin-left: 12px;
+    margin-left: var(--space-12);
   }
   .navbar .navbarListItem .navbarListItemLink {
-    margin-right: 12px;
+    margin-right: var(--space-12);
   }
 }
 @media (max-width: 640px) {

@@ -1,7 +1,7 @@
 .ovalButton {
   background-color: var(--c-white-20);
-  color: white;
-  border-radius: 10px;
+  color: var(--c-white);
+  border-radius: var(--radius-md);
   padding: 20px 32px 20px 32px !important;
   display: flex;
   align-items: center;
@@ -11,14 +11,14 @@
   outline: none;
 }
 .ovalButton img {
-  padding-right: 6px;
+  padding-right: var(--space-6);
 }
 .ovalButton:hover {
   opacity: 0.7;
 }
 .buttonBank {
-  background-color: #5fc4ee;
-  font-family: "Touche W03 Bold", "Arial", sans-serif;
+  background-color: var(--c-turk);
+  font-family: var(--ff-bold);
 }
 
 @media (max-width: 640px) {
