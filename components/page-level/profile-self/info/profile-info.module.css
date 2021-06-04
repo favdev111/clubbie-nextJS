@@ -9,7 +9,7 @@
 .profileInfo .playerRole {
   margin-bottom: var(--space-12);
   font-weight: 500;
-  font-size: 18px;
+  font-size: var(--fs-h3);
 }
 .profileInfo .playerClubImg {
   padding-right: var(--space-16);

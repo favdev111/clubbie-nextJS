@@ -22,7 +22,6 @@
   top: 33px;
 }
 .playerSignText {
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
   font-size: 22px;
   text-align: center;
   color: #fff;
@@ -39,7 +38,6 @@
   cursor: default;
 }
 .playerNameText {
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
   font-size: 14px;
   line-height: 18px;
   text-align: center;
@@ -54,7 +52,6 @@
   cursor: default;
 }
 .playerCaptainText {
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
   font-size: 14px;
   text-align: center;
   color: #fff;
@@ -84,7 +81,7 @@
     padding: var(--space-1) 10px;
   }
   .playerNameText {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 20px;
     z-index: 7000;
   }

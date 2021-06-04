@@ -12,8 +12,8 @@
   margin-bottom: 22px;
 }
 .availPlayersHeaderText {
-  font-family: "Touche W03 Bold", "Arial Black", sans-serif;
-  font-size: 18px;
+  font-family: var(--ff-bold);
+  font-size: var(--fs-h3);
   line-height: 24px;
   text-align: left;
   color: #fff;
@@ -48,7 +48,6 @@
 }
 .availPlayersListName,
 .availPlayersListPos {
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
   line-height: 21px;
   color: #fff;
   cursor: pointer;
@@ -83,8 +82,8 @@
   margin-bottom: 22px;
 }
 .unavailPlayersHeaderText {
-  font-family: "Touche W03 Bold", "Arial Black", sans-serif;
-  font-size: 18px;
+  font-family: var(--ff-bold);
+  font-size: var(--fs-h3);
   line-height: 24px;
   text-align: left;
   color: #fff;
@@ -93,7 +92,6 @@
   display: block;
 }
 .unavailPlayersListName {
-  font-family: "Touche W03 Regular", "Arial", sans-serif;
   line-height: 21px;
   text-align: left;
   color: #fff;
@@ -117,7 +115,7 @@
     margin-bottom: 12px;
   }
   .availPlayersHeaderText {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 22px;
   }
   .availPlayersList {
@@ -130,7 +128,7 @@
   }
   .availPlayersListName,
   .availPlayersListPos {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 27px;
   }
   .availPlayersListItem:hover,
@@ -157,7 +155,7 @@
     margin-bottom: 12px;
   }
   .availPlayersHeaderText {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 22px;
   }
   .availPlayersList {
@@ -170,7 +168,7 @@
   }
   .availPlayersListName,
   .availPlayersListPos {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 27px;
   }
   .availPlayersListItem:hover,
@@ -287,7 +285,7 @@
     width: 390px;
   }
   .availPlayersHeaderText {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 24px;
   }
   .availPlayersList {
@@ -316,7 +314,7 @@
     right: 263px;
   }
   .unavailPlayersHeaderText {
-    font-size: 18px;
+    font-size: var(--fs-h3);
     line-height: 24px;
   }
   .unavailPlayersListName {
