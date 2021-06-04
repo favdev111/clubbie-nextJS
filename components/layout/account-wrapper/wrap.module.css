@@ -29,12 +29,11 @@
   width: 320px; /*16vw*/
 }
 .logoText {
-  font-family: "ToucheW03-Regular", sans-serif;
   font-weight: normal;
   font-size: 19px; /*15px 0.9rem*/
   line-height: 23px; /* 15px*/
   text-align: center;
-  color: #e4c044;
+  color: var(--c-yellow);
   margin-top: 10px;
 }
 .picBlock {
