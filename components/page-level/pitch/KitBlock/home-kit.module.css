@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 .homeKit:hover {
-  border: 3px solid var(--c-turk);
+  border: var(--border-3) solid var(--c-turk);
   padding: 31px 29px;
   background: rgba(20, 31, 52, 0.4);
 }
@@ -49,7 +49,7 @@
   text-align: left;
 }
 .activeKit {
-  border: 3px solid var(--c-turk);
+  border: var(--border-3) solid var(--c-turk);
   padding: 31px 29px;
   background: rgba(37, 64, 115, 0.4);
 }
@@ -61,7 +61,7 @@
     height: 170px;
   }
   .homeKit:hover {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
     background: rgba(20, 31, 52, 0.4);
   }
@@ -72,7 +72,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }
@@ -85,7 +85,7 @@
   }
   .homeKit:hover {
     padding: 19px 17px;
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     background: rgba(20, 31, 52, 0.4);
   }
   .homeKitItem {
@@ -95,7 +95,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }
@@ -106,7 +106,7 @@
   }
   .homeKit:hover {
     padding: 19px 17px;
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     background: rgba(20, 31, 52, 0.4);
   }
   .homeKitItem {
@@ -116,7 +116,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }

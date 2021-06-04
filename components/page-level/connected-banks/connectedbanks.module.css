@@ -1,22 +1,22 @@
 .connectedbanks {
-  max-width: 940px;
-  padding-top: 50px;
+  max-width: var(--container-lg);
+  padding-top: var(--space-50);
   margin-left: auto;
   margin-right: auto;
 }
 .connectedbanksTitle h1 {
-  margin-bottom: 48px;
+  margin-bottom: var(--space-48);
 }
 .connectedbanksBody {
-  background: #141f34 0% 0% no-repeat padding-box;
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
   width: 100%;
-  border-radius: 15px;
-  padding: 32px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
 }
 .connectedbanksBodyInner {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 32px;
+  gap: var(--space-32);
 }
 .connectedbanksButton {
   display: flex;
@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 900px) and (min-width: 640px) {
   .connectedbanks {
-    padding: 50px 20px 0 20px;
+    padding: var(--space-50) var(--space-20) 0 var(--space-20);
   }
   .connectedbanksTitle h1 {
     margin-left: 30px;
@@ -35,17 +35,17 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
   .connectedbanksButton {
-    padding-top: 50px;
+    padding-top: var(--space-50);
   }
 }
 @media (max-width: 640px) {
   .connectedbanks {
-    padding: 80px 20px 0 20px;
+    padding: 80px var(--space-20) 0 var(--space-20);
   }
   .connectedbanksBodyInner {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
   .connectedbanksButton {
-    padding-top: 50px;
+    padding-top: var(--space-50);
   }
 }

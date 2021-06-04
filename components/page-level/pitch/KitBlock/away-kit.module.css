@@ -8,12 +8,12 @@
   cursor: pointer;
 }
 .awayKit:hover {
-  border: 3px solid var(--c-turk);
+  border: var(--border-3) solid var(--c-turk);
   padding: 31px 29px;
   background: rgba(20, 31, 52, 0.4);
 }
 .awayKit:active {
-  border: 3px solid var(--c-turk);
+  border: var(--border-3) solid var(--c-turk);
   padding: 31px 29px;
   background: rgba(20, 31, 52, 0.4);
 }
@@ -53,7 +53,7 @@
   text-align: left;
 }
 .activeKit {
-  border: 3px solid var(--c-turk);
+  border: var(--border-3) solid var(--c-turk);
   padding: 31px 29px;
   background: rgba(37, 64, 115, 0.4);
 }
@@ -66,7 +66,7 @@
   }
   .awayKit:hover {
     padding: 19px 17px;
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     background: rgba(20, 31, 52, 0.4);
   }
   .awayKitItem {
@@ -76,7 +76,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }
@@ -89,7 +89,7 @@
   }
   .awayKit:hover {
     padding: 19px 17px;
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     background: rgba(20, 31, 52, 0.4);
   }
   .awayKitItem {
@@ -99,7 +99,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }
@@ -111,7 +111,7 @@
   .awayKit:hover,
   .awayKit:active {
     padding: 19px 17px;
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     background: rgba(20, 31, 52, 0.4);
   }
   .awayKitItem {
@@ -121,7 +121,7 @@
     margin-bottom: 18px;
   }
   .activeKit {
-    border: 3px solid var(--c-turk);
+    border: var(--border-3) solid var(--c-turk);
     padding: 19px 17px;
   }
 }

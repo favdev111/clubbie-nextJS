@@ -6,7 +6,7 @@
   padding-bottom: var(--space-50);
 }
 .profilePlayer {
-  background: #141f34 0% 0% no-repeat padding-box;
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
   width: 100%;
   border-radius: var(--radius-lg);
   padding: var(--space-32);

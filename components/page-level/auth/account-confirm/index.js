@@ -5,7 +5,7 @@ import Button from "@sub/button";
 const AccountConfirm = () => {
   return (
     <div className={styles.confirmBlock}>
-      <h1 className={styles.title}>Confirm your account</h1>
+      <h1 className="text-center">Confirm your account</h1>
 
       <div className={styles.textBlock}>
         <p className={styles.text}>

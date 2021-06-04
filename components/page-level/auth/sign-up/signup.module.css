@@ -17,7 +17,7 @@
   display: block;
   height: 52px;
   margin-left: 297px;
-  margin-top: 24px;
+  margin-top: var(--space-24);
 }
 
 /* Component */
@@ -27,13 +27,13 @@
   margin-top: var(--space-48);
 }
 .text {
-  padding: 0px 24px 0px 24px;
+  padding: 0px var(--space-24) 0px var(--space-24);
   color: var(--c-white-50);
 }
 .socialSignin {
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: var(--space-32);
   margin: var(--space-32) auto 0px;
 }
 

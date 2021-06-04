@@ -47,7 +47,7 @@
   overflow-y: scroll;
 }
 .joinListContent::-webkit-scrollbar-track {
-  padding: 1px 0;
+  padding: var(--space-1) 0;
   background-color: transparent;
 }
 .joinListContent:-webkit-scrollbar {

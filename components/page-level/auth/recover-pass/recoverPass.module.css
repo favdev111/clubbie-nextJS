@@ -10,7 +10,7 @@
   display: block;
   width: 370px;
   height: 44px;
-  margin: 12px auto 64px;
+  margin: var(--space-12) auto var(--space-64);
 }
 
 .formRecover {
@@ -20,7 +20,7 @@
 .formSubmit {
   display: block;
   margin-left: 304px;
-  margin-top: 24px;
+  margin-top: var(--space-24);
 }
 .toLogin {
   text-align: center;

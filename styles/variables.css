@@ -48,6 +48,7 @@
   --space-16: 16px;
   --space-18: 18px;
   --space-22: 22px;
+  --space-20: 20px;
   --space-24: 24px;
   --space-30: 30px;
   --space-32: 32px;
@@ -58,6 +59,7 @@
   --space-192: 192px;
 
   /* Border With */
+  --border-3: 3px;
   --border-4: 4px;
   --border-5: 5px;
   --border-6: 6px;

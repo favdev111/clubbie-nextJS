@@ -1,7 +1,7 @@
 .teamhubCard {
   display: flex;
   width: var(--container-md);
-  background: #141f34 0% 0% no-repeat padding-box;
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
   border-radius: var(--radius-lg);
   padding: var(--space-16);
   min-height: 155px;

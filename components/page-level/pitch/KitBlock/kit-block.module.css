@@ -47,7 +47,7 @@
   .kitBlock {
     display: flex;
     justify-content: space-between;
-    width: 940px;
+    width: var(--container-lg);
     height: 198px;
     margin: 55px auto 0;
   }

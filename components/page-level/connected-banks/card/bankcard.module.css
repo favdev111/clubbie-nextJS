@@ -1,7 +1,7 @@
 .bankcard {
   background: #ffffff0d 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: var(--radius-md);
+  padding: var(--space-16);
   font-size: var(--fs-small);
   display: flex;
   justify-content: space-between;
@@ -9,8 +9,8 @@
 
 .bankcardExp {
   display: flex;
-  padding-top: 16px;
-  padding-bottom: 12px;
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-12);
 }
 .bankcardExp p {
   padding-left: 2px;

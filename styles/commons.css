@@ -35,13 +35,13 @@
 /* Oval Button  */
 
 .active {
-  background-color: #5fc4ee !important;
+  background-color: var(--c-turk) !important;
 }
 .passive {
   opacity: 0.6;
 }
 .passive:hover {
-  background-color: #5fc4ee;
+  background-color: var(--c-turk);
   opacity: 1;
 }
 
