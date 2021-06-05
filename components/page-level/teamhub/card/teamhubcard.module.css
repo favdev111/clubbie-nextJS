@@ -36,18 +36,17 @@
   .last {
     grid-column-start: 1;
   }
+  .teamhubCard {
+    grid-column: span 1 / span 1;
+    width: 100%;
+  }
 }
 @media screen and (max-width: 760px) and (min-width: 360px) {
   .teamhubCard {
     grid-column: span 1 / span 1;
-    max-width: 320px;
-    height: unset;
-    display: block;
+    width: 100%;
   }
-  .teamhubCard .teamhubCardInfo {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
+
   .last {
     grid-column-start: 1;
   }
