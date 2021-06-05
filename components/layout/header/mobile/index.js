@@ -12,8 +12,8 @@ function MobileNavigation() {
   return (
     <footer className={styles.mobileNav}>
       <ul className={styles.navList}>
-        {navItems.map((item) => (
-          <li className={styles.navItem}>
+        {navItems.map((item, index) => (
+          <li key={item + index} className={styles.navItem}>
             <div className={styles.navSvg}>
               <img src={item.src} alt={item.name} />
             </div>
