@@ -4,12 +4,12 @@ import cn from "classnames";
 
 function Tag({ children, activeTag, index, onClick }) {
   return (
-    <div
+    <span
       onClick={onClick}
       className={cn(styles.tag, activeTag == index && styles.active)}
     >
       {children}
-    </div>
+    </span>
   );
 }
 
