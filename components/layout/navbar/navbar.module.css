@@ -28,6 +28,7 @@
   }
   .navbar .navbarListItem .navbarListItemLink {
     margin-right: var(--space-12);
+    display: none;
   }
 }
 @media (max-width: 640px) {

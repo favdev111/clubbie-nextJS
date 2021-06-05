@@ -8,7 +8,7 @@ function Navbar() {
     <div className={styles.navbar}>
       <Logo />
       <ul className={styles.navbarList}>
-        {["Home", "Teamhub"].map((nav, index) => (
+        {["Home", "Teamhub"].map((nav) => (
           <li key={`${nav}index`} className={styles.navbarListItem}>
             <Link href="./">
               <div className={styles.navbarListItemLink}>{nav}</div>
