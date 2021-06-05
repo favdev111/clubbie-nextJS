@@ -111,10 +111,10 @@
     text-align: center;
   }
   .mobileCurrent p {
-    padding-top: 10px;
+    padding-top: var(--space-10);
   }
   .mobileButtons {
-    padding-top: 24px;
+    padding-top: var(--space-24);
     display: flex;
     justify-content: space-between;
   }

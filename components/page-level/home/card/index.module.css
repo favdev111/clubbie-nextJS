@@ -22,18 +22,18 @@
   align-items: center;
 }
 .avatarInfo {
-  padding-left: 12px;
+  padding-left: var(--space-12);
 }
 .cardInfoHeader {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
-  padding: 32px;
+  padding: var(--space-32);
 }
 
 .socialButtons {
-  padding-top: 12px;
-  padding: 32px 0 12px 32px;
+  padding-top: var(--space-12);
+  padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
 }
 
@@ -52,13 +52,13 @@
   }
   .desc {
     order: 3;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
   }
   .viewCount {
     position: absolute;
-    bottom: 24px;
-    right: 24px;
+    bottom: var(--space-24);
+    right: var(--space-24);
   }
   .socialButtons {
     order: 4;

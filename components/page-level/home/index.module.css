@@ -16,11 +16,11 @@
 
 .tagInner {
   display: flex;
-  height: 32px;
+  height: var(--space-32);
 }
 
 .sortSelect select {
-  padding: 12px 82px 12px 16px;
+  padding: var(--space-12) 82px var(--space-12) var(--space-16);
   background-color: var(--c-white-10);
   color: var(--c-white);
   border-radius: var(--radius-lg);
@@ -47,7 +47,7 @@
   align-items: center;
 }
 .addButton img {
-  padding: 0 12px;
+  padding: 0 var(--space-12);
 }
 
 @media (max-width: 768px) {
@@ -56,7 +56,7 @@
   }
   .mobileSort span {
     font-size: var(--fs-base);
-    padding-right: 24px;
+    padding-right: var(--space-24);
     line-height: 17px;
   }
   .mobileSort span:active {
