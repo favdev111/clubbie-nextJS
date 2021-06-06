@@ -43,6 +43,7 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
     background-color: unset;
     position: relative;
+    margin-bottom: 10px;
   }
   .cardInfoHeader {
     order: 1;
@@ -56,9 +57,7 @@
     padding-right: var(--space-24);
   }
   .viewCount {
-    position: absolute;
-    bottom: var(--space-24);
-    right: var(--space-24);
+    order: 5;
   }
   .socialButtons {
     order: 4;

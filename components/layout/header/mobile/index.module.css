@@ -20,7 +20,7 @@
     justify-content: space-evenly;
     list-style-type: none;
     align-items: center;
-    padding: var(--space-12);
+    padding: var(--space-12) 0 var(--space-12) 0;
   }
   .navText {
     font-size: var(--fs-small);
