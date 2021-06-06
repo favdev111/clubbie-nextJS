@@ -16,7 +16,9 @@
 
 .tagInner {
   display: flex;
-  height: var(--space-32);
+
+  align-items: center;
+  overflow-y: hidden;
 }
 
 .sortSelect select {
@@ -58,12 +60,14 @@
     font-size: var(--fs-base);
     padding-right: var(--space-24);
     line-height: 17px;
+    cursor: pointer;
   }
   .mobileSort span:active {
     font-size: var(--fs-h3);
     font-family: var(--ff-bold);
     color: var(--c-turk);
   }
+
   .mobileSort {
     display: flex;
     padding-left: var(--space-36);
@@ -71,7 +75,6 @@
   }
   .tagContent {
     padding-left: var(--space-36);
-    padding-bottom: var(--space-48);
   }
   .search {
     display: none;
