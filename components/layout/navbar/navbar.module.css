@@ -36,4 +36,7 @@
     display: flex;
     justify-content: space-between;
   }
+  .navbar .navbarList {
+    display: none;
+  }
 }
