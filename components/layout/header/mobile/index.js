@@ -1,23 +1,36 @@
 import React from "react";
 import styles from "./index.module.css";
+import Link from "next/link";
 
 function MobileNavigation() {
   const navItems = [
-    { name: "Notification", src: "/assets/mobile-nav/bell.svg" },
-    { name: "Clubbie", src: "/assets/mobile-nav/clubbie.svg" },
-    { name: "Add Content", src: "/assets/mobile-nav/plus-circle.svg" },
-    { name: "Profile", src: "/assets/mobile-nav/profile.svg" },
-    { name: "TeamHub", src: "/assets/mobile-nav/teamhub.svg" },
+    {
+      name: "Notification",
+      navSrc: "./",
+      imgSrc: "/assets/mobile-nav/bell.svg",
+    },
+    { name: "Clubbie", navSrc: "./", imgSrc: "/assets/mobile-nav/clubbie.svg" },
+    {
+      name: "Add Content",
+      navSrc: "./",
+      imgSrc: "/assets/mobile-nav/plus-circle.svg",
+    },
+    { name: "Profile", navSrc: "./", imgSrc: "/assets/mobile-nav/profile.svg" },
+    { name: "TeamHub", navSrc: "./", imgSrc: "/assets/mobile-nav/teamhub.svg" },
   ];
   return (
     <footer className={styles.mobileNav}>
       <ul className={styles.navList}>
         {navItems.map((item, index) => (
           <li key={item + index} className={styles.navItem}>
-            <div className={styles.navSvg}>
-              <img src={item.src} alt={item.name} />
-            </div>
-            <span className={styles.navText}> {item.name} </span>
+            <Link href={item.navSrc}>
+              <div>
+                <div className={styles.navSvg}>
+                  <img src={item.imgSrc} alt={item.name} />
+                </div>
+                <span className={styles.navText}> {item.name} </span>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
