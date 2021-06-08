@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 .directedButton img {
-  padding-left: 6px;
+  padding-left: var(--space-6);
 }
 .directedButton:hover {
   text-decoration: underline;

@@ -4,15 +4,14 @@
 }
 .notificationItem {
   margin-right: var(--space-16);
-  padding: var(--space-16);
+  padding: var(--space-10);
   background-color: #192745;
   border-radius: var(--radius-full);
   cursor: pointer;
 }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .notifications {
-    display: flex;
-    float: right;
-    padding-right: var(--space-16);
+    display: none;
+    padding-right: var(--space-10);
   }
 }

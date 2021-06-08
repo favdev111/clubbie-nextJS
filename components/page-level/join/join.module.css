@@ -69,10 +69,19 @@
   height: var(--space-24);
   width: var(--space-24);
 }
+.mobileCurrent {
+  display: none;
+}
+.mobileButtons {
+  display: none;
+}
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .join {
     padding: var(--space-30);
+  }
+  .joinHeaderInner h1 {
+    text-align: center;
   }
 }
 @media screen and (max-width: 760px) and (min-width: 360px) {
@@ -82,5 +91,34 @@
   }
   .join .joinHeaderInner .joinHeaderCurrent {
     padding: 10px;
+  }
+  .back {
+    display: none;
+  }
+  .skip {
+    display: none;
+  }
+  .joinHeader {
+    display: flex;
+    justify-content: center;
+  }
+  .joinHeaderCurrent {
+    display: none;
+  }
+  .mobileCurrent {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  .mobileCurrent p {
+    padding-top: var(--space-10);
+  }
+  .mobileButtons {
+    padding-top: var(--space-24);
+    display: flex;
+    justify-content: space-between;
+  }
+  .mobileButtons button {
+    background-color: none;
   }
 }

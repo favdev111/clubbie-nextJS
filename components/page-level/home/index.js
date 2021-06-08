@@ -8,8 +8,15 @@ function Home({ videos }) {
   const [activeTag, setActiveTag] = useState(0);
   return (
     <div className={styles.homePage}>
-      <CommonSearch />
-      <h1> Videos</h1>
+      <div className={styles.search}>
+        <CommonSearch />
+      </div>
+      <h1 className={styles.title}> Videos</h1>
+      <div className={styles.mobileSort}>
+        <span> Recent </span>
+        <span> Following </span>
+        <span> Ranking </span>
+      </div>
       <div className={styles.tagContent}>
         <div className={styles.tagInner}>
           {["All Sports", "Football", "Cricket", "Netball", "Boxing"].map(
@@ -29,7 +36,8 @@ function Home({ videos }) {
         <div className={styles.sortSelect}>
           <select name="sort" id="sort">
             <option value="recent">Recent</option>
-            <option value="popular">Popular</option>
+            <option value="popular">Following</option>
+            <option value="Ranking">Ranking</option>
           </select>
         </div>
       </div>

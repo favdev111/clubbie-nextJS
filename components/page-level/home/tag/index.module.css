@@ -9,8 +9,15 @@
   -moz-user-select: none; /* Firefox all */
   -ms-user-select: none; /* IE 10+ */
   user-select: none; /* Likely future */
+  width: max-content;
 }
 
 .active {
   background-color: var(--c-turk);
+}
+
+@media (max-width: 768px) {
+  .tag {
+    font-size: var(--fs-small);
+  }
 }

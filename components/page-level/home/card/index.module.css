@@ -3,15 +3,16 @@
   background-color: var(--c-primary);
   margin-bottom: 50px;
 }
-.cardInfo {
-  padding: 32px;
-}
+
 .preview {
   border-radius: var(--radius-lg);
   max-height: 487px;
 }
 .desc {
-  padding-bottom: 12px;
+  padding: 12px 0 0 30px;
+}
+.viewCount {
+  padding: 12px 0 0 30px;
 }
 .cardInfoProfile img {
   border-radius: var(--radius-xl);
@@ -21,15 +22,44 @@
   align-items: center;
 }
 .avatarInfo {
-  padding-left: 12px;
+  padding-left: var(--space-12);
 }
 .cardInfoHeader {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
+  padding: var(--space-32);
 }
 
 .socialButtons {
-  padding-top: 12px;
+  padding-top: var(--space-12);
+  padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .videoCard {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    background-color: unset;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .cardInfoHeader {
+    order: 1;
+  }
+  .preview {
+    order: 2;
+  }
+  .desc {
+    order: 3;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+  }
+  .viewCount {
+    order: 5;
+  }
+  .socialButtons {
+    order: 4;
+  }
 }

@@ -6,15 +6,24 @@ import CommonSearch from "@sub/search";
 function Join({ title, data, current }) {
   return (
     <div className={styles.join}>
+      {current && (
+        <div className={styles.mobileCurrent}>
+          <div>
+            <img src="/assets/aondimentum.svg" />
+            <p> Aondimentum</p>
+          </div>
+        </div>
+      )}
       <div className={styles.joinHeader}>
         <div className={styles.joinHeaderInner}>
           <Link href="/">
-            <a>
+            <a className={styles.back}>
               <button>
                 <img src="/assets/back.svg" />
               </button>
             </a>
           </Link>
+
           <h1> {title} </h1>
           {current && (
             <div className={styles.joinHeaderCurrent}>
@@ -37,6 +46,14 @@ function Join({ title, data, current }) {
               </li>
             ))}
         </ul>
+      </div>
+      <div className={styles.mobileButtons}>
+        <Link href="/">
+          <a> Go back </a>
+        </Link>
+        <Link href="/">
+          <a> Skip </a>
+        </Link>
       </div>
     </div>
   );

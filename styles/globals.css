@@ -52,3 +52,9 @@ img {
 ::-webkit-scrollbar {
   width: 5px;
 }
+
+@media (max-width: 768px) {
+  main {
+    padding-bottom: 70px;
+  }
+}

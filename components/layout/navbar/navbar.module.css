@@ -22,17 +22,21 @@
   border-color: var(--c-yellow);
   font-family: var(--ff-bold);
 }
-@media screen and (max-width: 760px) and (min-width: 360px) {
+@media screen and (max-width: 768px) and (min-width: 360px) {
   .navbar .navbarList {
     margin-left: var(--space-12);
   }
   .navbar .navbarListItem .navbarListItemLink {
     margin-right: var(--space-12);
+    display: none;
   }
 }
 @media (max-width: 640px) {
   .navbar {
     display: flex;
     justify-content: space-between;
+  }
+  .navbar .navbarList {
+    display: none;
   }
 }
