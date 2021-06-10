@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./accountConfirm.module.css";
 import Button from "@sub/button";
 import { useSelector, useDispatch } from "react-redux";
+import Router from "next/router";
 
 
 const AccountConfirm = () => {
@@ -28,7 +29,7 @@ const AccountConfirm = () => {
 
       <div className={styles.btnConfirm}>
         <Button>Resend</Button>
-        <button onClick={() => Router.push("/auth/account-confirmation")}> Confirm</button>
+        <button onClick={() => Router.push("/auth/account-verification")}> Confirm</button>
       </div>
     </div>
   );
