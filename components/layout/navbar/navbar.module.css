@@ -16,12 +16,13 @@
   display: flex;
   align-items: center;
 }
-.navbar .navbarListItem .navbarListItemLink:hover {
+.navbarListItemLink:hover {
   color: var(--c-yellow);
   border-bottom-width: var(--border-4);
   border-color: var(--c-yellow);
   font-family: var(--ff-bold);
 }
+
 @media screen and (max-width: 768px) and (min-width: 360px) {
   .navbar .navbarList {
     margin-left: var(--space-12);
