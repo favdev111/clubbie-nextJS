@@ -7,10 +7,9 @@
   text-align: center;
   margin: 0 auto var(--space-64);
 }
-.formSignup {
-  display: block;
-  width: 100%;
-  font-size: 0px;
+.signupButton {
+  display: flex;
+ justify-content: flex-end;
 }
 
 .formAct {

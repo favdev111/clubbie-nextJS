@@ -10,6 +10,7 @@ const AccountVerif = () => {
   // TODO: redirect to home/somewhere after verification
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const verifyAccError = useSelector(
     (state) => state.auth.errors.verifyAccError
