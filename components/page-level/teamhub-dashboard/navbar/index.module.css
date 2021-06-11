@@ -1,0 +1,17 @@
+.teamhubNav {
+  margin-top: 300px;
+}
+.navList {
+  list-style-type: none;
+}
+.navItem {
+  padding: 6px 0px 6px 12px;
+  border-left: 6px solid transparent;
+  margin-bottom: 32px;
+  cursor: pointer;
+}
+.selected {
+  border-left: 6px solid var(--c-turk);
+  color: var(--c-turk);
+  font-family: var(--ff-bold);
+}

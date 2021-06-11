@@ -13,8 +13,9 @@ import { signup } from "@redux/auth.slice";
 const SignUp = () => {
   const dispatch = useDispatch();
 
+
   const user = useSelector((state) => state.auth.user);
-  Object.keys(user).length > 0 && Router.push("/account-confirmation"); // redirect on signup
+  Object.keys(user).length > 0 && Router.push("/auth/account-confirmation"); // redirect on signup
 
   const signupError = useSelector((state) => state.auth.errors.signupError);
   const [error, setError] = useState("");
@@ -68,8 +69,8 @@ const SignUp = () => {
             {error || signupError}
           </Alert>
         )}
-        <div className={styles.formAct}>
-          <Button>Sign Up</Button>
+        <div className={styles.signupButton}> 
+           <Button>Sign Up</Button>
         </div>
       </form>
 
