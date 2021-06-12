@@ -1,0 +1,21 @@
+.event {
+  width: var(--container-lg);
+}
+.event h1 {
+  padding-bottom: 20px;
+}
+.eventHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.draft {
+  font-family: var(--ff-bold);
+  color: var(--c-turk);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.draft p {
+  padding-left: 3px;
+}
