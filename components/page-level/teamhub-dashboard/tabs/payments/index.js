@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import ButtonForPayments from "./button";
 import AllPayments from "./all-payments";
 import EventsPayments from "./event";
+import PaymentsSubscriptions from "./subscriptions";
 
 function Payments() {
   const [activeButton, setActive] = useState(0);
@@ -29,8 +30,7 @@ function Payments() {
       </div>
       {activeButton == 0 && <AllPayments />}
       {activeButton == 1 && <EventsPayments />}
-      {/*        {activeButton == 2 && <AllPayments />}
-       */}
+      {activeButton == 2 && <PaymentsSubscriptions />}
     </div>
   );
 }
