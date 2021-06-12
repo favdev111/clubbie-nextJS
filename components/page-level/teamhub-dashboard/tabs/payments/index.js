@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
+
 import ButtonForPayments from "./button";
 import AllPayments from "./all-payments";
+import EventsPayments from "./event";
 
 function Payments() {
   const [activeButton, setActive] = useState(0);
