@@ -1,0 +1,31 @@
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  padding: 24px;
+}
+.tableHead {
+  color: var(--c-white-50);
+  background-color: var(--c-nav);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+.teamCell {
+  grid-column: span 4 / span 4;
+}
+.cell {
+  grid-column: span 1 / span 1;
+}
+.first {
+  font-family: var(--ff-bold);
+}
+.pts {
+  color: var(--c-turk);
+  font-family: var(--ff-bold);
+}
+.darkerBg {
+  background-color: var(--c-primary);
+}
+.brightBg {
+  background-color: var(--c-nav);
+}
