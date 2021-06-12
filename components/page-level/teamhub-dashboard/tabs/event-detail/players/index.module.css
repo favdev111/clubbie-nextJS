@@ -1,6 +1,7 @@
 .available {
   background-color: var(--c-primary);
   padding: 32px;
+  border-radius: var(--radius-lg);
 }
 .header {
   display: flex;
