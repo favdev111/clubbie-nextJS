@@ -1,0 +1,9 @@
+.eventDetail {
+  width: var(--container-lg);
+  margin-bottom: 200px;
+}
+.twoRows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}

@@ -1,0 +1,13 @@
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+.infoInner {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+.infoInner p {
+  padding-left: 5px;
+}

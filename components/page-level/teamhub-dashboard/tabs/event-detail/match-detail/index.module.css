@@ -1,0 +1,5 @@
+.matchDetail {
+  background-color: var(--c-primary);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+}
