@@ -1,0 +1,34 @@
+.content {
+  margin-bottom: 200px;
+}
+.card {
+  display: flex;
+  padding: 12px;
+}
+
+.inner {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.card {
+  display: flex;
+  border-radius: var(--radius-lg);
+  flex-direction: column;
+  background-color: var(--c-primary);
+}
+.cardInner {
+  padding: 16px 24px 6px 24px;
+  display: flex;
+  justify-content: space-between;
+}
+.cardInner span {
+  font-family: var(--ff-bold);
+}
+.income span {
+  color: var(--c-green);
+}
+.outcome span {
+  color: var(--c-red);
+}

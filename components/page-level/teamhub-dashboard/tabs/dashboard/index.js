@@ -5,6 +5,7 @@ import MyTeam from "./myteam";
 import RecentVideos from "./recent";
 import UpNext from "./upnext";
 import LeagueTable from "./league-table";
+import PaymentOverview from "./pay-overview";
 
 function Dashboard() {
   const dashboard = {
@@ -44,6 +45,7 @@ function Dashboard() {
         {/* League table */}
         <LeagueTable />
         {/* Payments overview */}
+        <PaymentOverview />
       </div>
     </div>
   );
