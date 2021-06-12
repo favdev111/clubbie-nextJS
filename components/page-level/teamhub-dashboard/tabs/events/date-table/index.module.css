@@ -8,6 +8,10 @@
   background-color: var(--c-white-20);
   padding: 32px;
   cursor: pointer;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
 }
 .month:hover {
   background-color: var(--c-white-30);
