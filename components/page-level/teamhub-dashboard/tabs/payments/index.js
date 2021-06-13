@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
 
-import ButtonForPayments from "./button";
+import RouteButton from "../../route-button";
 import AllPayments from "./all-payments";
 import EventsPayments from "./event";
 import PaymentsSubscriptions from "./subscriptions";
@@ -18,14 +18,14 @@ function Payments() {
       <h1> Payments</h1>
       <div className={styles.buttons}>
         {route.map((button, index) => (
-          <ButtonForPayments
+          <RouteButton
             setActive={setActive}
             index={index}
             active={activeButton}
             key={button + index}
           >
             {button.text}
-          </ButtonForPayments>
+          </RouteButton>
         ))}
       </div>
       {activeButton == 0 && <AllPayments />}

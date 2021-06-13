@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./index.module.css";
 import cn from "classnames";
 
-function ButtonForPayments({ children, index, active, setActive }) {
+function RouteButton({ children, index, active, setActive }) {
   return (
     <button
       onClick={() => setActive(index)}
@@ -13,4 +13,4 @@ function ButtonForPayments({ children, index, active, setActive }) {
   );
 }
 
-export default ButtonForPayments;
+export default RouteButton;
