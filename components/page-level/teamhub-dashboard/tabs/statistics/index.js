@@ -72,7 +72,7 @@ function Statistics() {
 
   return (
     <div className={styles.statistics}>
-      <h1> Payments</h1>
+      <h1> Statistics</h1>
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.buttons}>
