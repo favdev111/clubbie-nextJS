@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 import RouteButton from "../../route-button";
 import StatisticResults from "./results";
+import StatisticFixtures from "./fixtures";
 
 function Statistics() {
   const [activeButton, setActive] = useState(0);
@@ -43,6 +44,30 @@ function Statistics() {
       ],
     },
   ];
+
+  const fixtures = [
+    {
+      homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
+      awayTeam: { name: "Men's FC", src: "./assets/team2.png" },
+      eventDetails: {
+        date: "07.01.12",
+        kickoff: "02.00 PM",
+        adress: "Lorem Upsum Street,",
+        state: "Lorem, 01277",
+      },
+    },
+    {
+      homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
+      awayTeam: { name: "Men's FC", src: "./assets/team2.png" },
+      eventDetails: {
+        date: "07.01.12",
+        kickoff: "02.00 PM",
+        adress: "Lorem Upsum Street,",
+        state: "Lorem, 01277",
+      },
+    },
+  ];
+
   return (
     <div className={styles.statistics}>
       <h1> Payments</h1>
@@ -65,8 +90,8 @@ function Statistics() {
       {/* Route */}
 
       {activeButton == 0 && <StatisticResults data={results} />}
-      {/*       {activeButton == 1 && <EventsPayments />}
-      {activeButton == 2 && <PaymentsSubscriptions />} */}
+      {activeButton == 1 && <StatisticFixtures data={fixtures} />}
+      {activeButton == 2 && <PaymentsSubscriptions />}
     </div>
   );
 }

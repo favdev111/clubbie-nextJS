@@ -1,0 +1,9 @@
+.card {
+  display: flex;
+  margin-top: 24px;
+  border-radius: var(--radius-lg);
+  justify-content: space-evenly;
+  background-color: var(--c-primary);
+  padding: 32px;
+  margin-bottom: 32px;
+}
