@@ -7,6 +7,7 @@ function LeagueTables() {
     <div>
       <div className={styles.progress}>
         <ProgressBar />
+        <p>Coming soon</p>
       </div>
     </div>
   );

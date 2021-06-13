@@ -4,6 +4,7 @@ import RouteButton from "../../route-button";
 import StatisticResults from "./results";
 import StatisticFixtures from "./fixtures";
 import LeagueTables from "./league-tables";
+import PlayerStats from "./player-stats";
 
 function Statistics() {
   const [activeButton, setActive] = useState(0);
@@ -86,13 +87,14 @@ function Statistics() {
             </RouteButton>
           ))}
         </div>
-        <div> select box</div>
+        {activeButton == 0 && <div> select box</div>}
       </div>
       {/* Route */}
 
       {activeButton == 0 && <StatisticResults data={results} />}
       {activeButton == 1 && <StatisticFixtures data={fixtures} />}
       {activeButton == 2 && <LeagueTables />}
+      {activeButton == 3 && <PlayerStats />}
     </div>
   );
 }
