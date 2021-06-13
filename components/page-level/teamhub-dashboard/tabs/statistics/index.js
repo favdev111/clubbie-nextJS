@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import RouteButton from "../../route-button";
 import StatisticResults from "./results";
 import StatisticFixtures from "./fixtures";
+import LeagueTables from "./league-tables";
 
 function Statistics() {
   const [activeButton, setActive] = useState(0);
@@ -91,7 +92,7 @@ function Statistics() {
 
       {activeButton == 0 && <StatisticResults data={results} />}
       {activeButton == 1 && <StatisticFixtures data={fixtures} />}
-      {activeButton == 2 && <PaymentsSubscriptions />}
+      {activeButton == 2 && <LeagueTables />}
     </div>
   );
 }
