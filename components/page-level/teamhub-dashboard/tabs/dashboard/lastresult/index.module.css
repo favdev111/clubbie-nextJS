@@ -1,0 +1,38 @@
+.lastResult {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.eventCard {
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  margin-top: 24px;
+  background-color: var(--c-primary);
+}
+.inner {
+  display: flex;
+  justify-content: space-evenly;
+}
+.score {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scorers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.scorersInner {
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+.goal {
+  padding-right: 16px;
+}
+
+.goal span {
+  color: var(--c-turk);
+}

@@ -1,0 +1,27 @@
+.teamCards {
+  margin-top: var(--space-24);
+  min-width: var(--container-sm);
+  background-color: var(--c-white-10);
+  margin-right: 30px;
+  padding: var(--space-16);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.cardImg {
+}
+
+.cardDetail {
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--space-16);
+}
+.cardSpan {
+  font-family: var(--ff-bold);
+  padding-bottom: 5px;
+}
+
+.active {
+  background-color: var(--c-turk);
+}

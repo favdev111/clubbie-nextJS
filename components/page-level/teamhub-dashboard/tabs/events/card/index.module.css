@@ -1,0 +1,71 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-primary);
+  border-radius: var(--radius-lg);
+}
+
+.cardImg {
+  position: relative;
+  cursor: pointer;
+}
+
+.price {
+  display: none;
+}
+.cardImg:hover .price {
+  display: block;
+  transition: all;
+}
+.price {
+  background-color: var(--c-turk);
+  padding: 12px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+.cardImg:hover .more {
+  display: block;
+  transition: all;
+}
+.more {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+.score {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.cardDetail {
+  padding-top: 12px;
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.infoInner {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+.infoInner p {
+  padding-left: 5px;
+}
+
+.availableCard {
+  background-color: var(--c-turk);
+  padding: 16px;
+  text-align: center;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  cursor: pointer;
+}
+.unavailable {
+  background-color: var(--c-red);
+}

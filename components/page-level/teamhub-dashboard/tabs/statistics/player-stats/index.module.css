@@ -1,0 +1,25 @@
+.playerStats {
+  margin-bottom: 300px;
+}
+.tableHead {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  background-color: var(--c-nav);
+  padding: 16px;
+  margin-top: 24px;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  color: var(--c-white-50);
+}
+.cellName {
+  grid-column: span 2 / span 2;
+}
+.Cell {
+  grid-column: span 1 / span 1;
+}
+.table {
+  display: grid;
+  padding: 16px;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  background-color: var(--c-primary);
+}

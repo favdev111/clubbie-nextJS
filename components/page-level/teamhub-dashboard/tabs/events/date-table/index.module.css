@@ -1,0 +1,29 @@
+.table {
+  display: flex;
+  overflow-x: hidden;
+  border-radius: var(--radius-lg);
+  padding: 12px;
+}
+.month {
+  background-color: var(--c-white-20);
+  padding: 32px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+.month:hover {
+  background-color: var(--c-white-30);
+}
+.selected {
+  font-family: var(--ff-bold);
+  background-color: var(--c-turk);
+
+  transform: scale(1.2);
+  transition: all 300ms;
+  border-radius: var(--radius-lg);
+}
+.selected:hover {
+  background-color: var(--c-turk);
+}

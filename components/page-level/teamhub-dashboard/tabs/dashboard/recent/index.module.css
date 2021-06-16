@@ -1,0 +1,14 @@
+.recent {
+  margin-bottom: var(--space-32);
+}
+.recentHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: var(--space-48);
+  padding-bottom: var(--space-24);
+}
+.recentVideos {
+  display: flex;
+  justify-content: space-between;
+}

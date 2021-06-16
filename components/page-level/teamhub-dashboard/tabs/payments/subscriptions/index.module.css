@@ -1,0 +1,48 @@
+.subscriptions {
+  margin-top: 32px;
+}
+
+.header {
+  display: flex;
+  background-color: var(--c-primary);
+  justify-content: space-between;
+  padding: 32px;
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+}
+.detail {
+  background-color: var(--c-white-05);
+  border-bottom-left-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+  margin-bottom: 24px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 32px;
+}
+.cell p {
+  padding-bottom: 5px;
+}
+.detailBelow {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+}
+.button {
+  border-radius: var(--radius-md);
+  background-color: var(--c-nav);
+  padding: 12px 32px 12px 32px;
+  font-family: var(--ff-bold);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.button:hover {
+  opacity: 0.8;
+}
+
+.pastPaymentTable {
+  margin-top: 24px;
+  margin-bottom: 200px;
+}

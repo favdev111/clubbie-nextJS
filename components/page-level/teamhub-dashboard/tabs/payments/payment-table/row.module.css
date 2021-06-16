@@ -1,0 +1,9 @@
+.table {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background-color: var(--c-primary);
+  padding: 16px;
+}
+.tableItem {
+  background-color: var(--c-white-05);
+}

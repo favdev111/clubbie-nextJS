@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--c-white-05);
+  margin-bottom: 16px;
+  border-radius: var(--radius-lg);
+}
+.leftSide {
+  display: flex;
+  align-items: center;
+}
+.leftSide img {
+  padding-right: 12px;
+}
+.title {
+  margin-bottom: 6px;
+  font-family: var(--ff-bold);
+}
+.rightSide {
+  color: var(--c-turk);
+  display: flex;
+  align-items: center;
+}

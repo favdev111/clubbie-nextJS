@@ -1,0 +1,29 @@
+.detailCover {
+  position: relative;
+  margin-bottom: 24px;
+}
+.more {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.price {
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.detailCover:hover .more {
+  display: block;
+  cursor: pointer;
+}
+
+.detailCover:hover .price {
+  display: block;
+  font-family: var(--ff-bold);
+  background-color: var(--c-turk);
+  padding: 10px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+}

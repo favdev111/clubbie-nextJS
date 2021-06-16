@@ -1,0 +1,22 @@
+.animate {
+  animation: animate 3s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+@keyframes animate {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.transform {
+  animation: myTrans 3s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+
+@keyframes myTrans {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+  }
+}

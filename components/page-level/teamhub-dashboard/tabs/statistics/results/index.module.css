@@ -1,0 +1,14 @@
+.dateSort {
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background-color: var(--c-white-05);
+  margin-bottom: 24px;
+}
+.sortInner {
+  display: flex;
+  padding: 6px;
+  justify-content: space-evenly;
+}
+.dayTitle {
+  padding-bottom: 24px;
+}

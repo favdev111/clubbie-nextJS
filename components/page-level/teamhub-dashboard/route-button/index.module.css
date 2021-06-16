@@ -1,0 +1,14 @@
+.button {
+  padding: 12px;
+  color: white;
+  background-color: var(--c-white-10);
+  border: none;
+  outline: none;
+  border-radius: var(--radius-lg);
+  margin-right: 16px;
+  cursor: pointer;
+}
+.active {
+  background-color: var(--c-turk);
+  font-family: var(--ff-bold);
+}

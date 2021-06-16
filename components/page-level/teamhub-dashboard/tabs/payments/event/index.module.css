@@ -1,0 +1,42 @@
+.duePayments {
+  margin-top: 36px;
+}
+.duePaymentTable {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.pastPaymentTable {
+  margin-bottom: 200px;
+  margin-top: 30px;
+}
+.buttons {
+  background-color: var(--c-primary);
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+.paid {
+  padding: 16px 32px 16px 32px;
+  color: var(--c-turk);
+  background-color: unset;
+  border: 1px solid var(--c-turk);
+  font-family: var(--ff-bold);
+  margin-right: 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.paid:hover {
+  background-color: var(--c-white-10);
+}
+.pay {
+  padding: 16px 32px 16px 32px;
+  cursor: pointer;
+  background-color: var(--c-turk);
+  color: var(--c-white);
+  font-family: var(--ff-bold);
+  border: none;
+  border-radius: var(--radius-md);
+}
+.pay:hover {
+  opacity: 0.8;
+}

@@ -1,0 +1,8 @@
+.notifications {
+  width: var(--container-lg);
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttons {
+  margin-bottom: 24px;
+}

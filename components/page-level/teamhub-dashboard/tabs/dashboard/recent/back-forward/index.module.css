@@ -1,0 +1,17 @@
+.backForward {
+  display: flex;
+  width: 108px;
+  justify-content: space-between;
+}
+.left {
+  background-color: var(--c-white-20);
+  padding: 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.right {
+  background-color: var(--c-white-20);
+  padding: 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}

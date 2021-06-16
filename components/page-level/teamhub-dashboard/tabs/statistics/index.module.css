@@ -1,0 +1,11 @@
+.statistics {
+  width: var(--container-lg);
+}
+.statistics h1 {
+  padding-bottom: 20px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}

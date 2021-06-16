@@ -1,0 +1,12 @@
+.cell {
+  grid-column: span 1 / span 1;
+  color: var(--c-white-50);
+}
+.cellSpan2 {
+  grid-column: span 2 / span 2;
+  color: var(--c-white-50);
+}
+.cellSpan3 {
+  grid-column: span 3 / span 3;
+  color: var(--c-white-50);
+}
