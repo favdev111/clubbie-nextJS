@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./index.module.css";
-
+import Search from "@svg/search";
 function CommonSearch() {
   return (
     <div className={styles.commonSearch}>
-      <img src="/assets/search.svg" />
+      <a>
+        <Search />
+      </a>
 
       <input type="text" placeholder="Search" />
     </div>

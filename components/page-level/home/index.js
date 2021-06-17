@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
 import HomeVideosCard from "./card";
 import Tag from "./tag";
+import PlusTurk from "@svg/plus-turk";
 
 function Home({ videos }) {
   const [activeTag, setActiveTag] = useState(0);
@@ -44,7 +45,9 @@ function Home({ videos }) {
 
       <div className={styles.addContent}>
         <div className={styles.addButton}>
-          <img src="/assets/plus-turk.svg" />
+          <a>
+            <PlusTurk />
+          </a>
           Add Content
         </div>
       </div>
