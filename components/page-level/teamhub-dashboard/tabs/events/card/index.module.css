@@ -9,6 +9,11 @@
   position: relative;
   cursor: pointer;
 }
+.cardImg img {
+  display: flex;
+  width: 100%;
+  object-fit: contain;
+}
 
 .price {
   display: none;

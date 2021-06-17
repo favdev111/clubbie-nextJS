@@ -52,9 +52,11 @@
     display: flex;
     max-height: 18px;
     min-width: fit-content;
+    color: var(--c-white-50);
   }
   .selected {
     border: unset;
+    color: var(--c-turk);
   }
   .navList {
     display: flex;

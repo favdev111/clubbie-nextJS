@@ -52,7 +52,7 @@ function Events() {
     },
   ];
   return (
-    <div className={styles.eventContent}>
+    <>
       <div className={styles.event}>
         <div className={styles.eventHeader}>
           <h1> Events</h1>
@@ -74,7 +74,7 @@ function Events() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -12,7 +12,8 @@
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .dashboard {
     padding-left: unset;
-    display: grid;
+    display: flex;
+    flex-direction: column;
   }
 }
 
