@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./index.module.css";
 
 import TableRow from "../payment-table/row";
+import CheckBox from "@sub/checkbox";
 import Head from "../payment-table/head";
 import PaymentCell from "../payment-table/cell";
 
@@ -27,8 +28,8 @@ function AllPayments() {
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="2"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>
-              <PaymentCell>
-                <input type="checkbox" id="" name="" value="" />
+              <PaymentCell center>
+                <CheckBox />
               </PaymentCell>
             </TableRow>
           ))}
@@ -36,8 +37,8 @@ function AllPayments() {
             <PaymentCell> Due payments total</PaymentCell>
             <PaymentCell span="2" />
             <PaymentCell> £29.50</PaymentCell>
-            <PaymentCell>
-              <input type="checkbox" id="" name="" value="" />
+            <PaymentCell center>
+              <CheckBox />
             </PaymentCell>
           </TableRow>
           <div className={styles.buttons}>

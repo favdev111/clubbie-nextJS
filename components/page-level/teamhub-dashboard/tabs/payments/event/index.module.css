@@ -40,3 +40,7 @@
 .pay:hover {
   opacity: 0.8;
 }
+
+.checkbox {
+  margin-left: 6px;
+}
