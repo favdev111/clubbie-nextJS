@@ -1,5 +1,6 @@
 .cell {
   grid-column: span 1 / span 1;
+  text-align: center;
 }
 
 .cellSpan2 {

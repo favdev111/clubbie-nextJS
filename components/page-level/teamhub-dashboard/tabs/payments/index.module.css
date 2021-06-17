@@ -4,3 +4,31 @@
 .payments h1 {
   padding-bottom: 20px;
 }
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+  .payments {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .payments {
+    padding: 24px;
+  }
+  .payments h1 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .payments {
+    padding: 12px;
+  }
+  .payments h1 {
+    display: none;
+  }
+  .buttons {
+    display: flex;
+  }
+}

@@ -13,6 +13,7 @@ function PaymentsSubscriptions() {
   return (
     <div className={styles.subscriptions}>
       {/* Next subs card */}
+      <div className={styles.fix}></div>
       <div className={styles.subsCard}>
         <div className={styles.header}>
           <h3> Next subscriptions payment</h3>

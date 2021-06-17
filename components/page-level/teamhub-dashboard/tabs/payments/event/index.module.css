@@ -44,3 +44,9 @@
 .checkbox {
   margin-left: 6px;
 }
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .pastPaymentTable {
+    margin-bottom: unset;
+  }
+}
