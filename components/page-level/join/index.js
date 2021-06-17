@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./join.module.css";
 import Link from "next/link";
 import CommonSearch from "@sub/search";
-
+import LeftArrow from "@svg/left-arrow";
 function Join({ title, data, current }) {
   return (
     <div className={styles.join}>
@@ -19,7 +19,7 @@ function Join({ title, data, current }) {
           <Link href="/">
             <a className={styles.back}>
               <button>
-                <img src="/assets/back.svg" />
+                <LeftArrow />
               </button>
             </a>
           </Link>

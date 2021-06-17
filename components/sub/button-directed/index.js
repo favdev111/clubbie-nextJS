@@ -1,6 +1,8 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./directedbutton.module.css";
+import RightArrow from "@svg/right-arrow";
+import LeftArrow from "@svg/left-arrow";
 
 function DirectedButton({ children, appearence, direction }) {
   return (
@@ -10,9 +12,17 @@ function DirectedButton({ children, appearence, direction }) {
         appearence === "bank" && styles.bank
       )}
     >
-      {direction === "backward" && <img src="/assets/back.svg" />}
+      {direction === "backward" && (
+        <a>
+          <LeftArrow />
+        </a>
+      )}
       {children}
-      {direction === "forward" && <img src="/assets/forward.svg" />}
+      {direction === "forward" && (
+        <a>
+          <RightArrow />
+        </a>
+      )}
     </button>
   );
 }
