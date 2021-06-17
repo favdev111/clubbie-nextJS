@@ -2,21 +2,25 @@ import React from "react";
 import styles from "./index.module.css";
 import Link from "next/link";
 
+import Bell from "@svg/mobile/bell";
+import Clubbie from "@svg/mobile/clubbie";
+import Plus from "@svg/mobile/plus";
+import Profile from "@svg/mobile/profile";
+import Teamhub from "@svg/mobile/teamhub";
+
 function MobileNavigation() {
   const navItems = [
     {
       name: "Notification",
       navSrc: "./",
-      imgSrc: "/assets/mobile-nav/bell.svg",
     },
-    { name: "Clubbie", navSrc: "./", imgSrc: "/assets/mobile-nav/clubbie.svg" },
+    { name: "Clubbie", navSrc: "./" },
     {
       name: "Add Content",
       navSrc: "./",
-      imgSrc: "/assets/mobile-nav/plus-circle.svg",
     },
-    { name: "Profile", navSrc: "./", imgSrc: "/assets/mobile-nav/profile.svg" },
-    { name: "TeamHub", navSrc: "./", imgSrc: "/assets/mobile-nav/teamhub.svg" },
+    { name: "Profile", navSrc: "./" },
+    { name: "TeamHub", navSrc: "./" },
   ];
   return (
     <footer className={styles.mobileNav}>
@@ -26,7 +30,11 @@ function MobileNavigation() {
             <Link href={item.navSrc}>
               <div>
                 <div className={styles.navSvg}>
-                  <img src={item.imgSrc} alt={item.name} />
+                  {index == 0 && <Bell />}
+                  {index == 1 && <Clubbie />}
+                  {index == 2 && <Plus />}
+                  {index == 3 && <Profile />}
+                  {index == 4 && <Teamhub />}
                 </div>
                 <span className={styles.navText}> {item.name} </span>
               </div>
