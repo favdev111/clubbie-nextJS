@@ -72,7 +72,7 @@ function Statistics() {
 
   return (
     <div className={styles.statistics}>
-      <h1> Statistics</h1>
+      <h1 className={styles.title}> Statistics</h1>
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.buttons}>
@@ -87,9 +87,10 @@ function Statistics() {
             </RouteButton>
           ))}
         </div>
-        {activeButton == 0 && <div> select box</div>}
+        {activeButton == 0 && <div className={styles.select}> select box</div>}
       </div>
       {/* Route */}
+      <div className={styles.fix}></div>
 
       {activeButton == 0 && <StatisticResults data={results} />}
       {activeButton == 1 && <StatisticFixtures data={fixtures} />}

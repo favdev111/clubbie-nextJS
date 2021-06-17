@@ -10,5 +10,6 @@
   grid-column: span 3 / span 3;
 }
 .center {
-  margin-left: 6px;
+  display: flex;
+  justify-content: center;
 }

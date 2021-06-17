@@ -8,3 +8,8 @@
 .progress p {
   padding-top: 12px;
 }
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .progress {
+    margin-bottom: 150px;
+  }
+}

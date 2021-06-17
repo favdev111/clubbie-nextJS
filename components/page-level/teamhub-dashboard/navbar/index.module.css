@@ -29,12 +29,17 @@
     margin-top: 35px;
     margin-left: 20px;
   }
-  .selected {
-    border: unset;
-  }
+
   .navList {
     display: flex;
     flex-direction: row;
+  }
+  .navItem {
+    color: var(--c-white-50);
+  }
+  .selected {
+    border: unset;
+    color: var(--c-turk);
   }
 }
 

@@ -1,5 +1,5 @@
 .statistics {
-  width: var(--container-lg);
+  max-width: var(--container-lg);
 }
 .statistics h1 {
   padding-bottom: 20px;
@@ -8,4 +8,37 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+  min-width: max-content;
+}
+.fix {
+  min-width: var(--container-lg);
+}
+@media screen and (max-width: 1300px) and (min-width: 1024px) {
+  .fix {
+    min-width: 800px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .statistics {
+    padding: 24px;
+  }
+  .title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .title {
+    display: none;
+  }
+  .statistics {
+    padding: 12px;
+  }
+  .select {
+    display: none;
+  }
+  .buttons {
+    display: flex;
+  }
 }

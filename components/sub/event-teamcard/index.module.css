@@ -14,5 +14,10 @@
 @media screen and (max-width: 766px) and (min-width: 360px) {
   .card {
     text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .card img {
+    min-width: 35px;
   }
 }
