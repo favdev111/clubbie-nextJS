@@ -28,7 +28,10 @@
   margin-bottom: 200px;
 }
 
-@media screen and (max-width: 1684px) and (min-width: 1024px) {
+@media screen and (max-width: 1250px) and (min-width: 1024px) {
+  .event {
+    max-width: 800px;
+  }
 }
 
 @media screen and (max-width: 1024px) and (min-width: 850px) {

@@ -1,9 +1,39 @@
 .eventDetail {
-  width: var(--container-lg);
+  max-width: var(--container-lg);
   margin-bottom: 200px;
 }
 .twoRows {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 32px;
+}
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+  .eventDetail {
+    padding-right: 24px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .eventDetail {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    margin-bottom: 50px;
+  }
+  .eventDetail h1 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .eventDetail {
+    padding: 12px;
+    margin-bottom: unset;
+  }
+  .eventDetail h1 {
+    display: none;
+  }
+  .twoRows {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 }
