@@ -2,3 +2,25 @@
   display: flex;
   padding-left: 280px;
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+  .dashboard {
+    padding-left: 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .dashboard {
+    padding-left: unset;
+    display: grid;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .dashboard {
+    padding-left: unset;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}

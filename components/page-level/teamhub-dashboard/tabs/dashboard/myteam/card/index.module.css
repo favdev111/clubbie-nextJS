@@ -25,3 +25,46 @@
 .active {
   background-color: var(--c-turk);
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .teamCards {
+    background-color: transparent;
+    padding: 32px;
+    justify-content: center;
+    min-width: 220px;
+    margin-right: 15px;
+  }
+  .cardImg {
+    padding-left: 6px;
+  }
+
+  .active {
+    border: 1px solid var(--c-turk);
+  }
+  .yellow {
+    color: var(--c-yellow);
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .teamCards {
+    background-color: transparent;
+    padding: 6px;
+    justify-content: center;
+    min-width: 220px;
+    margin-right: 15px;
+  }
+  .cardImg {
+    padding-left: 6px;
+  }
+
+  .active {
+    border: 1px solid var(--c-turk);
+  }
+  .yellow {
+    color: var(--c-yellow);
+  }
+}

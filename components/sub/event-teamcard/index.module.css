@@ -11,3 +11,8 @@
   font-family: var(--ff-bold);
   padding-top: 5px;
 }
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .card {
+    text-align: center;
+  }
+}

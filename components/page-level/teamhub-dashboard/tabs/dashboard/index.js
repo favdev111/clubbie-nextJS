@@ -33,7 +33,7 @@ function Dashboard() {
   return (
     <div className={styles.dashboardContent}>
       <div className={styles.dashboard}>
-        <h1> Dashboard</h1>
+        <h1 className={styles.title}> Dashboard</h1>
         {/* teamcard */}
         <MyTeam />
         {/* recent videos */}

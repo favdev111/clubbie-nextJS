@@ -11,4 +11,33 @@
 .recentVideos {
   display: flex;
   justify-content: space-between;
+  gap: 32px;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .recentHeader {
+    padding: 24px;
+  }
+  .recentVideos {
+    display: flex;
+    padding: 16px;
+    gap: 32px;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .recentHeader {
+    padding: 12px;
+  }
+  .recentVideos {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 32px;
+  }
+  .recentVideos img {
+    object-fit: cover;
+    width: 100%;
+  }
 }

@@ -9,7 +9,9 @@ function TeamCard({ data }) {
       <img className={styles.cardImg} src={src} />
       <div className={styles.cardDetail}>
         <p className={styles.cardSpan}> {name} </p>
-        <p> Logged in as Player</p>
+        <p>
+          Logged in as <span className={styles.yellow}> Player</span>
+        </p>
       </div>
     </div>
   );

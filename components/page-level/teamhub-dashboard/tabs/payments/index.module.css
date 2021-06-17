@@ -1,5 +1,5 @@
 .payments {
-  width: var(--container-lg);
+  max-width: var(--container-lg);
 }
 .payments h1 {
   padding-bottom: 20px;

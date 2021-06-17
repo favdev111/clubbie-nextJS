@@ -15,7 +15,7 @@ export default function Bell() {
           transform="translate(0)"
         />
         <path
-          class="a"
+          className={styles.a}
           d="M13.913,21a2.106,2.106,0,0,1-3.643,0"
           transform="translate(0.384 -0.049)"
         />

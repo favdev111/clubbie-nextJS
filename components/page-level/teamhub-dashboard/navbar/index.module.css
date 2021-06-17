@@ -16,3 +16,52 @@
   color: var(--c-turk);
   font-family: var(--ff-bold);
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+  .teamhubNav {
+    padding-left: 10px;
+    margin-right: 200px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .teamhubNav {
+    margin-top: 35px;
+    margin-left: 20px;
+  }
+  .selected {
+    border: unset;
+  }
+  .navList {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .teamhubNav {
+    margin-top: 24px;
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 100%;
+  }
+  .navItem {
+    padding: 0 32px 0 0;
+    cursor: pointer;
+    margin-bottom: unset;
+    display: flex;
+    max-height: 18px;
+    min-width: fit-content;
+  }
+  .selected {
+    border: unset;
+  }
+  .navList {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    flex-direction: row;
+    overflow-x: scroll;
+  }
+}

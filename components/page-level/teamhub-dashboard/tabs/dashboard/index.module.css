@@ -1,6 +1,28 @@
 .dashboard {
-  width: var(--container-lg);
+  max-width: var(--container-lg);
 }
-.dashboard h1 {
+.title {
   padding-bottom: 20px;
+}
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+  .dashboard {
+    padding-right: 24px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .dashboard {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .title {
+    display: none;
+  }
 }

@@ -5,3 +5,16 @@
   align-items: center;
   width: 200px;
 }
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .details {
+    width: unset;
+    text-align: center;
+    padding: 12px;
+  }
+}

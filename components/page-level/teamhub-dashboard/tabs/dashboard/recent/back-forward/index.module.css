@@ -1,6 +1,6 @@
 .backForward {
   display: flex;
-  width: 108px;
+  width: 80px;
   justify-content: space-between;
 }
 .left {
