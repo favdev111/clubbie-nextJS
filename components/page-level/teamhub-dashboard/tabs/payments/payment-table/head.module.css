@@ -11,4 +11,5 @@
 .cellSpan3 {
   grid-column: span 3 / span 3;
   color: var(--c-white-50);
+  text-align: center;
 }
