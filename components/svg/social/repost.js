@@ -14,9 +14,9 @@ export default function Repost() {
           transform="translate(-6.039 -1)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <path
           id="Path_2215"
@@ -25,9 +25,9 @@ export default function Repost() {
           transform="translate(-3 -1.868)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <path
           id="Path_2216"
@@ -36,9 +36,9 @@ export default function Repost() {
           transform="translate(-3 -4.039)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <path
           id="Path_2217"
@@ -47,9 +47,9 @@ export default function Repost() {
           transform="translate(-3 -3.605)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
       </g>
     </svg>

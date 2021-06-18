@@ -24,7 +24,7 @@ function AllPayments() {
           </TableRow>
           {/* Table  */}
           {duePayments.map((item) => (
-            <TableRow tableItem>
+            <TableRow key={item + Math.random()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="2"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>
@@ -58,7 +58,7 @@ function AllPayments() {
           </TableRow>
           {/* Table */}
           {duePayments.map((item) => (
-            <TableRow tableItem>
+            <TableRow key={item + Math.round()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="3"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>

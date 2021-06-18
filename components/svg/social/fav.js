@@ -13,9 +13,9 @@ export default function Fav() {
         transform="translate(-0.849 -2.298)"
         fill="none"
         stroke="#5fc4ee"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
       />
     </svg>
   );

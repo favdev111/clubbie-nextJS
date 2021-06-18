@@ -13,7 +13,7 @@ export default function PlusTurk() {
           d="M12.05,24.1A12.05,12.05,0,1,0,0,12.05,12.064,12.064,0,0,0,12.05,24.1Zm0-22.594A10.544,10.544,0,1,1,1.506,12.05,10.556,10.556,0,0,1,12.05,1.506Zm0,0"
           fill="#5FC4EE"
           stroke="#5FC4EE"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <path
           id="Контур_2705"
@@ -22,7 +22,7 @@ export default function PlusTurk() {
           transform="translate(-121.975 -228.703)"
           fill="#5FC4EE"
           stroke="#5FC4EE"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <path
           id="Контур_2706"
@@ -31,7 +31,7 @@ export default function PlusTurk() {
           transform="translate(-228.703 -121.975)"
           fill="#5FC4EE"
           stroke="#5FC4EE"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
     </svg>
