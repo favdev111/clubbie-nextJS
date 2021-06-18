@@ -66,7 +66,7 @@ function PlayerStats() {
           </div>
           {/* Table */}
           {stats.map((player) => (
-            <div className={styles.table}>
+            <div key={player + Math.random()} className={styles.table}>
               <div className={styles.cellName}> {player.name}</div>
               <div className={styles.Cell}> {player.rank}</div>
               <div className={styles.Cell}> {player.appearances}</div>

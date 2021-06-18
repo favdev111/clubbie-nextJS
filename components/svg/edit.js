@@ -13,9 +13,9 @@ export default function EditIcon() {
         transform="translate(-1.25 -1.422)"
         fill="none"
         stroke="#5fc4ee"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );

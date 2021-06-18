@@ -13,9 +13,9 @@ export default function Available() {
           d="M20,21V19a4,4,0,0,0-4-4H8a4,4,0,0,0-4,4v2"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <circle
           id="Ellipse_49"
@@ -26,9 +26,9 @@ export default function Available() {
           transform="translate(8 3)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>

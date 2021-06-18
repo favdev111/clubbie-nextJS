@@ -16,9 +16,9 @@ export default function KickOff() {
           transform="translate(2 2)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <path
           id="Path_2219"
@@ -26,9 +26,9 @@ export default function KickOff() {
           d="M12,6v6l4,2"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>

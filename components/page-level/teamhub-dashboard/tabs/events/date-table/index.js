@@ -25,6 +25,7 @@ function DateTable({ selected, setSelected }) {
     <div id="table" className={styles.table}>
       {months.map((month, index) => (
         <div
+        key={month + index + Math.random()}
           onClick={(e) => setSelected(index)}
           className={cn(styles.month, selected == index && styles.selected)}
         >

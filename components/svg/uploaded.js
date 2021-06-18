@@ -16,9 +16,9 @@ export default function Uploaded() {
           transform="translate(2 2)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_24"
@@ -27,9 +27,9 @@ export default function Uploaded() {
           transform="translate(7 2)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_25"
@@ -38,9 +38,9 @@ export default function Uploaded() {
           transform="translate(17 2)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_26"
@@ -49,9 +49,9 @@ export default function Uploaded() {
           transform="translate(2 12)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_27"
@@ -60,9 +60,9 @@ export default function Uploaded() {
           transform="translate(2 7)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_28"
@@ -71,9 +71,9 @@ export default function Uploaded() {
           transform="translate(2 17)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_29"
@@ -82,9 +82,9 @@ export default function Uploaded() {
           transform="translate(17 17)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <line
           id="Line_30"
@@ -93,9 +93,9 @@ export default function Uploaded() {
           transform="translate(17 7)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
       </g>
     </svg>

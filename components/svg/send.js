@@ -15,9 +15,9 @@ export default function Send() {
           transform="translate(7 0.093)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
         <path
           id="Path_2594"
@@ -26,9 +26,9 @@ export default function Send() {
           transform="translate(-2 -2)"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.4"
         />
       </g>
     </svg>

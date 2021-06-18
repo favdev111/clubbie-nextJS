@@ -39,7 +39,7 @@ function PaymentOverview() {
         {/* Outcome */}
         <div className={styles.card}>
           {payments.outcome.map((item) => (
-            <div className={cn(styles.cardInner, styles.outcome)}>
+            <div key={item + Math.random()} className={cn(styles.cardInner, styles.outcome)}>
               <p> {item.date} </p>
               <span> {item.cost}</span>
             </div>

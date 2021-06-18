@@ -70,7 +70,7 @@ function Events() {
         {/* Cards */}
         <div className={styles.eventCardsRow}>
           {data.map((card) => (
-            <EventCard data={card} />
+            <EventCard key={card + Math.random()} data={card} />
           ))}
         </div>
       </div>

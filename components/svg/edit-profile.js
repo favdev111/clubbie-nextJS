@@ -13,9 +13,9 @@ export default function EditProfile() {
           d="M11,4H4A2,2,0,0,0,2,6V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V13"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_2693"
@@ -23,9 +23,9 @@ export default function EditProfile() {
           d="M18.5,2.5a2.121,2.121,0,0,1,3,3L12,15,8,16l1-4Z"
           fill="none"
           stroke="#5fc4ee"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
       </g>
     </svg>

@@ -12,9 +12,9 @@ export default function Comment() {
         transform="translate(-2.3 -2.3)"
         fill="none"
         stroke="#5fc4ee"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
       />
     </svg>
   );

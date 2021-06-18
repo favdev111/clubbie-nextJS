@@ -19,7 +19,7 @@ export default function Tag() {
           transform="translate(-76.095)"
           fill="#fff"
           stroke="#fff"
-          stroke-width="0.5"
+          strokeWidth="0.5"
         />
         <path
           id="Path_2602"
@@ -28,7 +28,7 @@ export default function Tag() {
           transform="translate(0 -280.108)"
           fill="#fff"
           stroke="#fff"
-          stroke-width="0.5"
+          strokeWidth="0.5"
         />
       </g>
     </svg>

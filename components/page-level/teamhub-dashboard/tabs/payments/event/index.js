@@ -24,7 +24,7 @@ function EventsPayments() {
           </TableRow>
           {/* Table  */}
           {duePayments.map((item) => (
-            <TableRow wkey={item + Math.random()} tableItem>
+            <TableRow key={item + Math.random()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="2"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>

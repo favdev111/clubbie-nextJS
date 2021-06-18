@@ -53,7 +53,7 @@ function PaymentsSubscriptions() {
           </TableRow>
           {/* Table */}
           {duePayments.map((item) => (
-            <TableRow tableItem>
+            <TableRow key={item + Math.random()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="3"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>
