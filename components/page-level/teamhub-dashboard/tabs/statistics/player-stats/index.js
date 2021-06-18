@@ -53,27 +53,31 @@ function PlayerStats() {
     <div className={styles.playerStats}>
       <h3> Player Stats</h3>
       {/* Table head  */}
-      <div className={styles.tableHead}>
-        <div className={styles.cellName}>Player</div>
-        <div className={styles.Cell}>Rank</div>
-        <div className={styles.Cell}>Appearances</div>
-        <div className={styles.Cell}>Goals</div>
-        <div className={styles.Cell}>Assist</div>
-        <div className={styles.Cell}>Yellow Card</div>
-        <div className={styles.Cell}>Red Card</div>
-      </div>
-      {/* Table */}
-      {stats.map((player) => (
-        <div className={styles.table}>
-          <div className={styles.cellName}> {player.name}</div>
-          <div className={styles.Cell}> {player.rank}</div>
-          <div className={styles.Cell}> {player.appearances}</div>
-          <div className={styles.Cell}> {player.goals}</div>
-          <div className={styles.Cell}> {player.assists}</div>
-          <div className={styles.Cell}> {player.yellowCard}</div>
-          <div className={styles.Cell}> {player.redCard}</div>
+      <div className={styles.mobileOverflow}>
+        <div className={styles.overflowInner}>
+          <div className={styles.tableHead}>
+            <div className={styles.cellName}>Player</div>
+            <div className={styles.Cell}>Rank</div>
+            <div className={styles.Cell}>Appearances</div>
+            <div className={styles.Cell}>Goals</div>
+            <div className={styles.Cell}>Assist</div>
+            <div className={styles.Cell}>Yellow Card</div>
+            <div className={styles.Cell}>Red Card</div>
+          </div>
+          {/* Table */}
+          {stats.map((player) => (
+            <div key={player + Math.random()} className={styles.table}>
+              <div className={styles.cellName}> {player.name}</div>
+              <div className={styles.Cell}> {player.rank}</div>
+              <div className={styles.Cell}> {player.appearances}</div>
+              <div className={styles.Cell}> {player.goals}</div>
+              <div className={styles.Cell}> {player.assists}</div>
+              <div className={styles.Cell}> {player.yellowCard}</div>
+              <div className={styles.Cell}> {player.redCard}</div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }

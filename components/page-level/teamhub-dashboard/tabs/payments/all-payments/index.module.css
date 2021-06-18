@@ -40,3 +40,9 @@
 .pay:hover {
   opacity: 0.8;
 }
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .pastPaymentTable {
+    margin-bottom: unset;
+  }
+}

@@ -11,3 +11,22 @@
   background-color: var(--c-primary);
   padding: 32px;
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .upNext {
+    padding: 24px;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .upNext {
+    padding: 12px;
+  }
+  .card {
+    padding: 12px;
+    text-align: center;
+  }
+}

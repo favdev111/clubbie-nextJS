@@ -1,6 +1,11 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./ovalbutton.module.css";
+import Send from "@svg/send";
+import EditProfile from "@svg/edit-profile";
+import Uploaded from "@svg/uploaded";
+import Tag from "@svg/tag";
+import Repost from "@svg/repost";
 
 function OvalButton({
   children,
@@ -21,12 +26,24 @@ function OvalButton({
         status | (status === "passive") && "passive"
       )}
     >
-      {appearence === "edit" && (
-        <img src={isPublic ? "/assets/send.png" : "/assets/edit.svg"} />
+      {appearence === "edit" && <a>{isPublic ? <Send /> : <EditProfile />}</a>}
+
+      {appearence === "uploaded" && (
+        <a>
+          <Uploaded />
+        </a>
       )}
-      {appearence === "uploaded" && <img src="/assets/upload.svg" />}
-      {appearence === "tagged" && <img src="/assets/tag.svg" />}
-      {appearence === "reposts" && <img src="/assets/repost.svg" />}
+      {appearence === "tagged" && (
+        <a>
+          <Tag />
+        </a>
+      )}
+      {appearence === "reposts" && (
+        <a>
+          {" "}
+          <Repost />
+        </a>
+      )}
       {children}
     </button>
   );

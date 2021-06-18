@@ -5,7 +5,8 @@
   display: grid;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   background-color: var(--c-nav);
-  padding: 16px;
+  padding: 16px 16px 16px 0;
+  text-align: center;
   margin-top: 24px;
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
@@ -19,7 +20,28 @@
 }
 .table {
   display: grid;
-  padding: 16px;
+  text-align: center;
+  padding: 16px 16px 16px 0;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   background-color: var(--c-primary);
+}
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .table {
+    gap: 32px;
+  }
+  .tableHead {
+    word-break: break-all;
+  }
+  .playerStats {
+    margin-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+  }
+  .mobileOverflow {
+    overflow-x: scroll;
+  }
+  .overflowInner {
+    white-space: nowrap;
+    width: max-content;
+  }
 }

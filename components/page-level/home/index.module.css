@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
 }
-.addButton img {
+.addButton a {
   padding: 0 var(--space-12);
 }
 

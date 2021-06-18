@@ -22,25 +22,25 @@
 .profilePlayerHeaderInnerLeft {
   display: flex;
 }
-.profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+.profilePlayerHeaderInnerRight {
   display: flex;
   align-items: top;
 }
-.profile .profilePlayer .profilePlayerBody {
+.profilePlayerBody {
   margin-top: 5px;
 }
-.profile .profileButtons {
+.profileButtons {
   margin-top: var(--space-48);
   display: flex;
 }
-.profile .profileButtons button {
+.profileButtons button {
   margin-right: 15px;
 }
 .profile .profilePhotos {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.profile .profilePhotos .profilePhotosItem {
+.profilePhotosItem {
   margin-top: var(--space-30);
   position: relative;
   display: flex;
@@ -56,13 +56,17 @@
   align-items: center;
   position: absolute;
 }
-.profile .profilePhotos .profilePhotosItem .profilePhotosOptions img {
+
+.profile .profilePhotos .profilePhotosItem .profilePhotosOptions a {
   margin-right: var(--space-16);
   background-color: var(--c-black-50);
   border-radius: var(--radius-full);
   padding: var(--space-16);
   width: var(--space-64);
   height: var(--space-64);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .profile .profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
   background-color: rgba(0, 0, 0, 0.8);

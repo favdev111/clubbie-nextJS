@@ -13,6 +13,7 @@ function PaymentsSubscriptions() {
   return (
     <div className={styles.subscriptions}>
       {/* Next subs card */}
+      <div className={styles.fix}></div>
       <div className={styles.subsCard}>
         <div className={styles.header}>
           <h3> Next subscriptions payment</h3>
@@ -52,7 +53,7 @@ function PaymentsSubscriptions() {
           </TableRow>
           {/* Table */}
           {duePayments.map((item) => (
-            <TableRow tableItem>
+            <TableRow key={item + Math.random()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="3"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>

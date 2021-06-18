@@ -1,3 +1,42 @@
 .myTeamFlex {
   display: flex;
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .myTeam {
+    background-color: var(--c-white-10);
+    margin: 12px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    display: block;
+  }
+  .myTeam h3 {
+    font-size: 14px;
+    color: var(--c-white-50);
+    font-family: var(--ff-regular);
+  }
+  .myTeamFlex {
+    overflow-x: scroll;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .myTeam {
+    background-color: var(--c-white-10);
+    margin: 12px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    display: block;
+  }
+  .myTeam h3 {
+    font-size: 14px;
+    color: var(--c-white-50);
+    font-family: var(--ff-regular);
+  }
+  .myTeamFlex {
+    overflow-x: scroll;
+  }
+}

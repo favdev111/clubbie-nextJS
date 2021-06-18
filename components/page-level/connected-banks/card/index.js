@@ -1,6 +1,7 @@
 import React from "react";
 import DirectedButton from "@sub/button-directed";
 import styles from "./bankcard.module.css";
+import Mastercard from "@svg/mastercard";
 
 function BankCard({ data }) {
   return (
@@ -11,7 +12,7 @@ function BankCard({ data }) {
           <p className="opacity-50">EXP</p>
           <p>{data.exp}</p>
         </div>
-        <img src="/assets/mastercard.svg" />
+        <Mastercard />
       </div>
       <div className={styles.bankcardDefault}>
         {data.default ? (

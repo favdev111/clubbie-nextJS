@@ -4,8 +4,9 @@
   margin-bottom: 50px;
   position: relative;
 }
-.commonSearch img {
+.commonSearch a {
   position: absolute;
+  display: flex;
   left: 14px;
   top: 14px;
   width: 21px;

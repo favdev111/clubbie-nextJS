@@ -1,5 +1,6 @@
 .cell {
   grid-column: span 1 / span 1;
+  text-align: center;
 }
 
 .cellSpan2 {
@@ -7,4 +8,8 @@
 }
 .cellSpan3 {
   grid-column: span 3 / span 3;
+}
+.center {
+  display: flex;
+  justify-content: center;
 }

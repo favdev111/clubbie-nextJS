@@ -3,3 +3,14 @@
   margin-bottom: 50px;
   border-radius: var(--radius-lg);
 }
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .table {
+    padding: 24px;
+  }
+}
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .table {
+    padding: 12px;
+  }
+}

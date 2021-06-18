@@ -10,7 +10,7 @@
   cursor: pointer;
   outline: none;
 }
-.ovalButton img {
+.ovalButton a {
   padding-right: var(--space-6);
 }
 .ovalButton:hover {

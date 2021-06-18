@@ -7,3 +7,16 @@
 .tableItem {
   background-color: var(--c-white-05);
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .table {
+    gap: 2px;
+    text-overflow: ellipsis;
+  }
+}

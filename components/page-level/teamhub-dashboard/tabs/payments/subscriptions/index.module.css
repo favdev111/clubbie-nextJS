@@ -1,7 +1,10 @@
 .subscriptions {
   margin-top: 32px;
+  display: block;
 }
-
+.fix {
+  min-width: var(--container-lg);
+}
 .header {
   display: flex;
   background-color: var(--c-primary);
@@ -45,4 +48,15 @@
 .pastPaymentTable {
   margin-top: 24px;
   margin-bottom: 200px;
+}
+@media screen and (max-width: 1200px) and (min-width: 1024px) {
+  .fix {
+    min-width: unset;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .pastPaymentTable {
+    margin-bottom: unset;
+  }
 }

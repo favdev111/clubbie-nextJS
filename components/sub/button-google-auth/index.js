@@ -3,6 +3,7 @@ import GoogleLogin from "react-google-login";
 import { googleLogin } from "@redux/auth.slice";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationSnack from "@sub/notification-snack";
+import Google from "@svg/social/google";
 
 const GoogleButton = () => {
   // TODO: redirect after login
@@ -34,7 +35,7 @@ const GoogleButton = () => {
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
           <div onClick={renderProps.onClick} className="auth-icon">
-            <img src="/assets/google.svg" alt="google-auth" />
+            <Google />
           </div>
         )}
       />

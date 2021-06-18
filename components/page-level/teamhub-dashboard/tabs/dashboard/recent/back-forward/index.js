@@ -1,16 +1,16 @@
 import React from "react";
-import RightArrow from "@svg/right-arrow";
-import LeftArrow from "@svg/left-arrow";
+import ThickRight from "@svg/thick-right-arrow";
+import ThickLeft from "@svg/thick-left-arrow";
 import styles from "./index.module.css";
 
 function BackForward() {
   return (
     <div className={styles.backForward}>
       <div className={styles.left}>
-        <LeftArrow />
+        <ThickLeft />
       </div>
       <div className={styles.right}>
-        <RightArrow />
+        <ThickRight />
       </div>
     </div>
   );

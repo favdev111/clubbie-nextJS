@@ -14,7 +14,7 @@ function AvailablePlayers() {
       </div>
       <div className={styles.players}>
         {players.map((player) => (
-          <p>{player}</p>
+          <p key={player + Math.random()}>{player}</p>
         ))}
       </div>
     </div>

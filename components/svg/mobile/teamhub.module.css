@@ -1,0 +1,14 @@
+.a {
+  fill: #4363a5;
+}
+.a,
+.b {
+  font-size: 18px;
+  font-family: ToucheW03-Bold;
+  font-weight: 700;
+}
+.b {
+  fill: none;
+  stroke: #4363a5;
+  stroke-width: 0.5px;
+}

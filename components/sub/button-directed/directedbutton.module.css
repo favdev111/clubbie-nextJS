@@ -7,7 +7,7 @@
   font-family: var(--ff-bold);
   cursor: pointer;
 }
-.directedButton img {
+.directedButton a {
   padding-left: var(--space-6);
 }
 .directedButton:hover {

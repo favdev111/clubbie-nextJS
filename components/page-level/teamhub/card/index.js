@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./teamhubcard.module.css";
-
+import RightArrow from "@svg/right-arrow";
 function TeamhubCard({ data, type, last }) {
   return (
     <div className={cn(styles.teamhubCard, last && styles.last)}>
@@ -13,7 +13,7 @@ function TeamhubCard({ data, type, last }) {
         <p className="opacity-50"> {data.desc} </p>
       </div>
       <button className={styles.teamhubCardButton}>
-        <img src="/assets/forward.svg" />
+        <RightArrow />
       </button>
     </div>
   );

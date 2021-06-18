@@ -7,7 +7,7 @@ import AvailablePlayers from "./players";
 function EventDetail() {
   return (
     <div className={styles.eventDetail}>
-      <h1>Events</h1>
+      <h1>Event Details</h1>
       <DetailCover />
       <div className={styles.twoRows}>
         <MatchDetail />

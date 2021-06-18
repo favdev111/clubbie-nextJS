@@ -12,3 +12,24 @@
 .dayTitle {
   padding-bottom: 24px;
 }
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .dateSort {
+    padding: 5px;
+  }
+  .sortInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .score {
+    min-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score p {
+    padding-top: 6px;
+  }
+}

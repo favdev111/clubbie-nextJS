@@ -9,6 +9,10 @@ import ProfileEdit from "./edit";
 import ProfileDetails from "./details";
 import styles from "./profileself.module.css";
 
+import EditPhoto from "@svg/edit-photo";
+import Thrash from "@svg/thrash";
+import EditProfile from "@svg/edit-profile";
+
 function ProfileSelf({ join, isPublic, person, editMode }) {
   return (
     <div className={styles.profile}>
@@ -33,10 +37,9 @@ function ProfileSelf({ join, isPublic, person, editMode }) {
             ) : (
               <>
                 {!isPublic && (
-                  <img
-                    src="/assets/edit.svg"
-                    className={styles.profileEditIcon}
-                  />
+                  <a className={styles.profileEditIcon}>
+                    <EditProfile />
+                  </a>
                 )}
                 <OvalButton
                   isPublic={isPublic}
@@ -79,33 +82,51 @@ function ProfileSelf({ join, isPublic, person, editMode }) {
               Reposts
             </OvalButton>
           </div>
+
+          {/* Todo - Split as a component */}
           <div className={styles.profilePhotos}>
             <div className={styles.profilePhotosItem}>
               <img src="/assets/photo1.png"></img>
               <div className={styles.profilePhotosOptions}>
-                <img src="/assets/edit-photo.svg" />
-                <img src="/assets/thrash.svg" />
+                <a>
+                  <EditPhoto />
+                </a>
+                <a>
+                  <Thrash />
+                </a>
               </div>
             </div>
             <div className={styles.profilePhotosItem}>
               <img src="/assets/photo2.png" />
               <div className={styles.profilePhotosOptions}>
-                <img src="assets/edit-photo.svg" />
-                <img src="/assets/thrash.svg" />
+                <a>
+                  <EditPhoto />
+                </a>
+                <a>
+                  <Thrash />
+                </a>
               </div>
             </div>
             <div className={styles.profilePhotosItem}>
               <img src="/assets/photo3.png" />
               <div className={styles.profilePhotosOptions}>
-                <img src="/assets/edit-photo.svg" />
-                <img src="/assets/thrash.svg" />
+                <a>
+                  <EditPhoto />
+                </a>
+                <a>
+                  <Thrash />
+                </a>
               </div>
             </div>
             <div className={styles.profilePhotosItem}>
               <img src="/assets/photo2.png" />
               <div className={styles.profilePhotosOptions}>
-                <img src="/assets/edit-photo.svg" />
-                <img src="/assets/thrash.svg" />
+                <a>
+                  <EditPhoto />
+                </a>
+                <a>
+                  <Thrash />
+                </a>
               </div>
             </div>
           </div>

@@ -17,11 +17,13 @@ function MyTeam() {
   ];
   return (
     <>
-      <h3> My team</h3>
-      <div className={styles.myTeamFlex}>
-        {myTeams.map((team, index) => (
-          <TeamCard key={team + index} index={index} data={team} />
-        ))}
+      <div className={styles.myTeam}>
+        <h3> My team</h3>
+        <div className={styles.myTeamFlex}>
+          {myTeams.map((team, index) => (
+            <TeamCard key={team + index} index={index} data={team} />
+          ))}
+        </div>
       </div>
     </>
   );

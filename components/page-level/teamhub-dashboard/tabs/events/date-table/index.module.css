@@ -27,3 +27,17 @@
 .selected:hover {
   background-color: var(--c-turk);
 }
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .table {
+    padding: 2px;
+    overflow-x: scroll;
+  }
+  .selected {
+    font-family: unset;
+  }
+  .month {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

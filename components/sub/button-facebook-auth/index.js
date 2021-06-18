@@ -1,5 +1,6 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import Facebook from "@svg/social/facebook";
 
 const responseFacebook = (response) => {
   // Get the response for now
@@ -16,7 +17,7 @@ const FacebookButton = () => {
       callback={responseFacebook}
       render={(renderProps) => (
         <div onClick={renderProps.onClick} className="auth-icon">
-          <img src="/assets/facebook.svg" alt="facebook-auth" />
+          <Facebook />
         </div>
       )}
     />

@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import TableRow from "../payment-table/row";
 import Head from "../payment-table/head";
 import PaymentCell from "../payment-table/cell";
+import CheckBox from "@sub/checkbox";
 
 function EventsPayments() {
   const duePayments = [
@@ -23,12 +24,12 @@ function EventsPayments() {
           </TableRow>
           {/* Table  */}
           {duePayments.map((item) => (
-            <TableRow tableItem>
+            <TableRow key={item + Math.random()} tableItem>
               <PaymentCell> {item.date} </PaymentCell>
               <PaymentCell span="2"> {item.event} </PaymentCell>
               <PaymentCell> {item.amount} </PaymentCell>
-              <PaymentCell>
-                <input type="checkbox" id="" name="" value="" />
+              <PaymentCell center>
+                <CheckBox />
               </PaymentCell>
             </TableRow>
           ))}
@@ -36,8 +37,8 @@ function EventsPayments() {
             <PaymentCell> Due payments total</PaymentCell>
             <PaymentCell span="2" />
             <PaymentCell> £29.50</PaymentCell>
-            <PaymentCell>
-              <input type="checkbox" id="" name="" value="" />
+            <PaymentCell center>
+              <CheckBox />
             </PaymentCell>
           </TableRow>
           <div className={styles.buttons}>

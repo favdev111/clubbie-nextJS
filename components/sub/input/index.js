@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import styles from "./input.module.css";
+import Eye from "@svg/eye";
 
-const TemplateInput = ({ type, placeholder, name, value, required, onChange }) => {
+const TemplateInput = ({
+  type,
+  placeholder,
+  name,
+  value,
+  required,
+  onChange,
+}) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
     e.preventDefault();
@@ -29,7 +37,7 @@ const TemplateInput = ({ type, placeholder, name, value, required, onChange }) =
           onClick={showPasswordHandler}
           className={styles.showPassword}
         >
-          <img src="/assets/eye.svg" alt="show password" />
+          <Eye />
         </a>
       ) : null}
     </div>

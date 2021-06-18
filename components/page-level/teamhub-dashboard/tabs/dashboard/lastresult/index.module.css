@@ -36,3 +36,27 @@
 .goal span {
   color: var(--c-turk);
 }
+
+@media screen and (max-width: 1684px) and (min-width: 1024px) {
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .title {
+    display: none;
+  }
+  .lastResult {
+    padding: 24px;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .lastResult {
+    padding: 12px;
+  }
+  .eventCard {
+    padding: 16px;
+  }
+  .card {
+    text-align: center;
+  }
+}

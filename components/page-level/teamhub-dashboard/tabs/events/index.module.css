@@ -1,5 +1,5 @@
 .event {
-  width: var(--container-lg);
+  max-width: var(--container-lg);
 }
 .event h1 {
   padding-bottom: 20px;
@@ -26,4 +26,44 @@
   gap: 32px;
   margin-top: 24px;
   margin-bottom: 200px;
+}
+
+@media screen and (max-width: 1280px) and (min-width: 1024px) {
+  .event {
+    max-width: 70%;
+    padding-right: 24px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 850px) {
+  .event {
+    flex-direction: column;
+  }
+  .event h1 {
+    display: none;
+  }
+  .draft {
+    display: none;
+  }
+  .eventCardsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 24px;
+    margin-top: unset;
+    margin-bottom: unset;
+  }
+}
+
+@media screen and (max-width: 850px) and (min-width: 360px) {
+  .event h1 {
+    display: none;
+  }
+  .draft {
+    display: none;
+  }
+  .eventCardsRow {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 12px;
+    margin-top: unset;
+    margin-bottom: unset;
+  }
 }
