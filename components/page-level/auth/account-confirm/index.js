@@ -8,7 +8,7 @@ import Router from "next/router";
 const AccountConfirm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-
+  const userMail = user.local?.email
 
   return (
     <div className={styles.confirmBlock}>
@@ -18,7 +18,7 @@ const AccountConfirm = () => {
         <p className={styles.text}>
           Please verify your email address so you can sign in if you ever forget
           your password. We've sent a confirmation email to
-          <span className={styles.confEmail}>{user.local.email}</span>
+          <span className={styles.confEmail}>{userMail}</span>
         </p>
         <br />
         <br />
@@ -29,8 +29,8 @@ const AccountConfirm = () => {
 
       <div className={styles.btnConfirm}>
         <Button>Resend</Button>
-        <button onClick={() => Router.push("/auth/account-verification")}> Confirm</button>
-      </div>
+{/*         <button onClick={() => Router.push("/auth/account-verification")}> Confirm</button>
+ */}      </div>
     </div>
   );
 };
