@@ -20,7 +20,11 @@ function ProfileSelf({ join, isPublic, person, editMode }) {
       <div className={styles.profilePlayer}>
         <div className={styles.profilePlayerHeader}>
           <div className={styles.profilePlayerHeaderInnerLeft}>
-            <Avatar src={person.image} className={styles.profilePlayerImage} />
+            <Avatar
+              src={person.image}
+              editMode={editMode}
+              className={styles.profilePlayerImage}
+            />
             {!editMode && (
               <ProfileInfo
                 join={join}
