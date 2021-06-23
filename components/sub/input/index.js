@@ -9,6 +9,8 @@ const TemplateInput = ({
   value,
   required,
   onChange,
+  multiLine,
+  rows,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -22,24 +24,38 @@ const TemplateInput = ({
 
   return (
     <div className={styles.inputCont}>
-      <input
-        className={styles.inputBlock}
-        type={typeInput}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        required={required}
-        onChange={onChange}
-      />
-      {type === "password" ? (
-        <a
-          href="#"
-          onClick={showPasswordHandler}
-          className={styles.showPassword}
-        >
-          <Eye />
-        </a>
-      ) : null}
+      {!multiLine ? (
+        <>
+          <input
+            className={styles.inputBlock}
+            type={typeInput}
+            placeholder={placeholder}
+            name={name}
+            value={value}
+            required={required}
+            onChange={onChange}
+          />
+          {type === "password" ? (
+            <a
+              href="#"
+              onClick={showPasswordHandler}
+              className={styles.showPassword}
+            >
+              <Eye />
+            </a>
+          ) : null}
+        </>
+      ) : (
+        <textarea
+          className={styles.inputBlock}
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          required={required}
+          onChange={onChange}
+          rows={rows || 2}
+        ></textarea>
+      )}
     </div>
   );
 };

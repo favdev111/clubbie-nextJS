@@ -6,7 +6,7 @@ import EditPhotoSVG from "@svg/edit-photo";
 import ThrashSVG from "@svg/thrash";
 import OvalButton from "@sub/button-oval";
 
-function ProfileSelf({ join, isPublic, profile, editMode }) {
+function ProfileSelf({ isPublic, profile, editMode }) {
   return (
     <div className={styles.profile}>
       <h1 className={styles.profileTitle}>{editMode && "Edit "}Profile</h1>
@@ -14,7 +14,7 @@ function ProfileSelf({ join, isPublic, profile, editMode }) {
         {editMode && !isPublic ? (
           <ProfileEdit profile={profile} />
         ) : (
-          <ProfileDetails profile={profile} isPublic={isPublic} join={join} />
+          <ProfileDetails profile={profile} isPublic={isPublic} />
         )}
       </div>
       {!editMode && (

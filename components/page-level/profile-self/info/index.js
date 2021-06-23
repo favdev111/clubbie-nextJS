@@ -4,7 +4,7 @@ import DirectedButton from "@sub/button-directed";
 import styles from "./profile-info.module.css";
 import Avatar from "@sub/avatar";
 
-function ProfileInfo({ footballerName, playerTitle, join, image }) {
+function ProfileInfo({ footballerName, playerTitle, isPublic, image }) {
   return (
     <>
       <Avatar
@@ -14,19 +14,20 @@ function ProfileInfo({ footballerName, playerTitle, join, image }) {
       <div className={styles.profileInfo}>
         <h2 className={styles.playerName}> {footballerName} </h2>
         <h6 className={styles.playerRole}> {playerTitle} </h6>
-        {join ? (
-          <Link href="/teamhub/join-club">
-            <a>
-              <DirectedButton direction="forward">
-                <span className={styles.btnChipPadding}>Join Club</span>
-              </DirectedButton>
-            </a>
-          </Link>
-        ) : (
-          <div>
-            <img className={styles.playerClubImg} src="/assets/team2.png" />
-            <img className={styles.playerClubImg} src="/assets/team1.png" />
-          </div>
+        {!isPublic && (
+          <>
+            <div>
+              <img className={styles.playerClubImg} src="/assets/team2.png" />
+              <img className={styles.playerClubImg} src="/assets/team1.png" />
+              <Link href="/teamhub/join-club">
+                <a>
+                  <DirectedButton direction="forward">
+                    <span className={styles.btnChipPadding}>Join Club</span>
+                  </DirectedButton>
+                </a>
+              </Link>
+            </div>
+          </>
         )}
       </div>
     </>

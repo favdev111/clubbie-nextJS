@@ -8,7 +8,7 @@ import OvalButton from "@sub/button-oval";
 import EditProfileSVG from "@svg/edit-profile";
 import { useRouter } from "next/router";
 
-function ProfileDetails({ join, profile, isPublic }) {
+function ProfileDetails({ profile, isPublic }) {
   const router = useRouter();
 
   return (
@@ -17,7 +17,7 @@ function ProfileDetails({ join, profile, isPublic }) {
         <div className={styles.profilePlayerHeaderInnerLeft}>
           <ProfileInfo
             image={profile?.image || "/assets/person-placeholder.jpg"}
-            join={join}
+            isPublic={isPublic}
             footballerName={profile?.fullname}
             playerTitle={profile?.playerTitle}
           />
@@ -33,7 +33,7 @@ function ProfileDetails({ join, profile, isPublic }) {
                 isPublic={isPublic}
                 appearence="edit"
                 classes={styles.profileEditButton}
-                onClick={() => router.push("/profile-self/edit")}
+                onClick={() => router.push("/profile/self/edit")}
               >
                 Edit Profile
               </OvalButton>

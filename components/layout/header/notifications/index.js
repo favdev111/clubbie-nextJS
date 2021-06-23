@@ -15,7 +15,7 @@ function Notifications({ authUser }) {
         <NotificationsSvg />
       </a>
 
-      <Link href="/profile-self">
+      <Link href="/profile/self">
         <img
           className={styles.profileBubble}
           src={authUser?.profile?.image || "/assets/person-placeholder.jpg"}
