@@ -4,11 +4,13 @@ import CommonSearch from "@sub/search";
 import HomeVideosCard from "./card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
+import YouShouldSignUp from "@sub/sign-up-warn";
 
 function Home({ videos }) {
   const [activeTag, setActiveTag] = useState(0);
   return (
     <div className={styles.homePage}>
+      <YouShouldSignUp open />
       <div className={styles.search}>
         <CommonSearch />
       </div>
