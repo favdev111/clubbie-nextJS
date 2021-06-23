@@ -2,6 +2,7 @@ import React from "react";
 import cn from "classnames";
 import styles from "./teamhubcard.module.css";
 import RightArrow from "@svg/right-arrow";
+
 function TeamhubCard({ data, type, last }) {
   return (
     <div className={cn(styles.teamhubCard, last && styles.last)}>
