@@ -14,6 +14,7 @@ function OvalButton({
   isPublic,
   theme,
   classes,
+  onClick,
 }) {
   return (
     <button
@@ -25,6 +26,7 @@ function OvalButton({
         status | (status === "active") && "active",
         status | (status === "passive") && "passive"
       )}
+      onClick={onClick}
     >
       {appearence === "edit" && <a>{isPublic ? <Send /> : <EditProfile />}</a>}
 
