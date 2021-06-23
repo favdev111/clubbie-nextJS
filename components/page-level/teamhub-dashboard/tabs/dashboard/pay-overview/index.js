@@ -29,7 +29,10 @@ function PaymentOverview() {
         {/* Income */}
         <div className={styles.card}>
           {payments.income.map((item) => (
-            <div className={cn(styles.cardInner, styles.income)}>
+            <div
+              key={item + Math.random()}
+              className={cn(styles.cardInner, styles.income)}
+            >
               <p> {item.date} </p>
               <span> £{item.cost}</span>
             </div>
@@ -39,7 +42,10 @@ function PaymentOverview() {
         {/* Outcome */}
         <div className={styles.card}>
           {payments.outcome.map((item) => (
-            <div key={item + Math.random()} className={cn(styles.cardInner, styles.outcome)}>
+            <div
+              key={item + Math.random()}
+              className={cn(styles.cardInner, styles.outcome)}
+            >
               <p> {item.date} </p>
               <span> {item.cost}</span>
             </div>
