@@ -1,9 +1,10 @@
 import React from "react";
+import Link from "next/link";
 import styles from "./notifications.module.css";
 import NotificationsSvg from "@svg/notifications";
 import Messages from "@svg/messages";
 
-function Notifications() {
+function Notifications({ authUser }) {
   return (
     <div className={styles.notifications}>
       <a className={styles.notificationItem}>
@@ -14,7 +15,12 @@ function Notifications() {
         <NotificationsSvg />
       </a>
 
-      <img src="/assets/avatar.png" />
+      <Link href="/profile-self">
+        <img
+          className={styles.profileBubble}
+          src={authUser?.profile?.image || "/assets/person-placeholder.jpg"}
+        />
+      </Link>
     </div>
   );
 }
