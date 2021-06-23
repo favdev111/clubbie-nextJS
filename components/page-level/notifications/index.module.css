@@ -25,4 +25,7 @@
     margin-top: 20px;
     padding: 12px;
   }
+  .buttons {
+    display: flex;
+  }
 }
