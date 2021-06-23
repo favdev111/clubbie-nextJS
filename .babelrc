@@ -12,7 +12,8 @@
           "@sub": "./components/sub",
           "@layout": "./components/layout",
           "@redux": "./redux",
-          "@api": "./api"
+          "@api": "./api",
+          "@utils": "./utils"
         }
       }
     ]
