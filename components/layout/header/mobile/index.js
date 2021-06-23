@@ -14,7 +14,7 @@ function MobileNavigation() {
       name: "Notification",
       navSrc: "/notifications",
     },
-    { name: "Clubbie", navSrc: "./" },
+    { name: "Clubbie", navSrc: "/" },
     {
       name: "Add Content",
       navSrc: "./",
