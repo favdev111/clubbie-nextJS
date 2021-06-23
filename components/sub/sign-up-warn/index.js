@@ -7,7 +7,7 @@ function YouShouldSignUp({ open }) {
   /* _app.js better for popups 
     method: send setPopupOpen state with props */
   return (
-    <div className={cn(open ? styles.popup : styles.close)}>
+    <div className={cn(!open ? styles.popup : styles.close)}>
       <div className={styles.content}>
         <p> Does it seem fun? You need to login or sign up to interact</p>
         <span className={styles.closePopup}>X</span>
