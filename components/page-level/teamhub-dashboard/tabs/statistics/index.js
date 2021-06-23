@@ -87,7 +87,14 @@ function Statistics() {
             </RouteButton>
           ))}
         </div>
-        {activeButton == 0 && <div className={styles.select}> select box</div>}
+        {activeButton == 0 && (
+          <div className={styles.select}>
+            <select>
+              <option> My Team</option>
+              {/* <option> other options </option> */}
+            </select>
+          </div>
+        )}
       </div>
       {/* Route */}
       <div className={styles.fix}></div>
