@@ -2,7 +2,7 @@ import React from "react";
 import Dashboard from "./tabs/dashboard";
 import Events from "./tabs/events";
 import Payments from "./tabs/payments";
-import Statistics from "./tabs/Statistics";
+import Statistics from "./tabs/statistics";
 import EventDetail from "./tabs/event-detail";
 function TeamhubRouter({ selectedIndex }) {
   return (
