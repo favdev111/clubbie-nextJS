@@ -42,6 +42,16 @@
   display: flex;
 }
 
+.registerButton {
+  display: flex;
+  justify-content: flex-end;
+}
+.registerText {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
 .joinListContent {
   height: 500px;
   overflow-y: scroll;
