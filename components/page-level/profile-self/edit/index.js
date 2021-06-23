@@ -3,6 +3,7 @@ import styles from "./profileedit.module.css";
 import cn from "classnames";
 import Chip from "@sub/Chip";
 import TemplateInput from "@sub/input";
+import TemplateSelectBox from "@sub/selectbox";
 import DirectedButton from "@sub/button-directed";
 
 function ProfileEdit({ data }) {
@@ -22,7 +23,7 @@ function ProfileEdit({ data }) {
         </div>
         <div className={cn(styles.span1, styles.profilePlayerBodyContentItem)}>
           <p>Title</p>
-          <TemplateInput type="text" name="role" required value={data.role} />
+          <TemplateSelectBox options={["Player", "Admin"]} />
         </div>
         <div className={cn(styles.span1, styles.profilePlayerBodyContentItem)}>
           <p>Email</p>
