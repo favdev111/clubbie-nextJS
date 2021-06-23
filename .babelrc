@@ -11,7 +11,8 @@
           "@page": "./components/page-level",
           "@sub": "./components/sub",
           "@layout": "./components/layout",
-          "@redux": "./redux"
+          "@redux": "./redux",
+          "@api": "./api"
         }
       }
     ]
