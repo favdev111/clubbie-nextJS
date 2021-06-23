@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileSelf from "@page/profile-self/";
+import ProfileSelf from "@page/profile";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import Users from "@api/services/Users";

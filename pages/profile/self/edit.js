@@ -1,6 +1,6 @@
 import React from "react";
 import Cookies from "js-cookie";
-import ProfileSelf from "@page/profile-self";
+import ProfileSelf from "@page/profile";
 import Seo from "@layout/seo";
 import Layout from "@layout";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";

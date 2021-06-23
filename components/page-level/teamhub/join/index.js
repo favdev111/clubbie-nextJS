@@ -51,7 +51,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
         .then(() => {
           Teams.JoinTeam(item.id)
             .then(() => {
-              router.push("/profile-self"); // redirect to profile
+              router.push("/profile/self"); // redirect to profile
             })
             .catch((err) => {
               console.log("err joining team => ", err); // TODO: show error
@@ -93,7 +93,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
         .then((res) => {
           console.log("res creating team => ", res);
           const team = res.data;
-          router.push(`/profile-self`); // TODO: show success msg
+          router.push(`/profile/self`); // TODO: show success msg
         })
         .catch((err) => {
           console.log("err creating team => ", err); // TODO: show error
