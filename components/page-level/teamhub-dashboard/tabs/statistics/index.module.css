@@ -13,6 +13,13 @@
 .fix {
   min-width: var(--container-lg);
 }
+.select select {
+  padding: var(--space-12) 22px var(--space-12) var(--space-16);
+  background-color: var(--c-white-10);
+  color: var(--c-white);
+  border-radius: var(--radius-lg);
+  outline: none;
+}
 @media screen and (max-width: 1300px) and (min-width: 1024px) {
   .fix {
     min-width: 800px;
