@@ -28,11 +28,72 @@
 .btnChipPadding {
   padding: 7px;
 }
+.profilePlayerBody {
+  margin-top: 5px;
+}
+
 @media (max-width: 760px) {
   .span1 {
     grid-column: span 2 / span 2;
   }
   .span2 {
     grid-column: span 2 / span 2;
+  }
+}
+
+.profilePlayerHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.profilePlayerHeaderInnerLeft {
+  display: flex;
+}
+.profilePlayerHeaderInnerRight {
+  display: flex;
+  align-items: top;
+}
+.profileEditIcon {
+  max-width: 18px;
+  max-height: 18px;
+  display: flex;
+  margin-top: 5px;
+}
+.profileEditButton {
+  display: none;
+}
+
+@media (min-width: 470px) {
+  .profileEditIcon {
+    display: none;
+  }
+  .profileEditButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: top;
+  }
+}
+
+.profilePlayerImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+@media (min-width: 470px) {
+  .profilePlayerImage {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (min-width: 640px) {
+  .profilePlayerImage {
+    width: 150px;
+    height: 150px;
   }
 }

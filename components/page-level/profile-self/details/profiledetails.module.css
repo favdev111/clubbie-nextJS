@@ -17,11 +17,52 @@
 .span3 {
   grid-column: span 3 / span 3;
 }
+.profilePlayerBody {
+  margin-top: 5px;
+}
+
 @media (max-width: 760px) {
   .span1 {
     grid-column: span 3 / span 3;
   }
   .span3 {
     grid-column: span 3 / span 3;
+  }
+}
+
+.profilePlayerHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.profilePlayerHeaderInnerLeft {
+  display: flex;
+}
+.profilePlayerHeaderInnerRight {
+  display: flex;
+  align-items: top;
+}
+.profileEditIcon {
+  max-width: 18px;
+  max-height: 18px;
+  display: flex;
+  margin-top: 5px;
+}
+.profileEditButton {
+  display: none;
+}
+
+@media (min-width: 470px) {
+  .profileEditIcon {
+    display: none;
+  }
+  .profileEditButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: top;
   }
 }

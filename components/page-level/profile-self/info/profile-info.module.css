@@ -15,7 +15,17 @@
   padding-right: var(--space-16);
 }
 
+.profilePlayerImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
 @media (min-width: 470px) {
+  .profilePlayerImage {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 @media (max-width: 470px) {
@@ -31,8 +41,9 @@
   }
 }
 
-/* @media screen and (min-width: 640px) and (max-width: 900px) {
-  .playerName {
-    font-size: 17px;
+@media (min-width: 640px) {
+  .profilePlayerImage {
+    width: 150px;
+    height: 150px;
   }
-} */
+}
