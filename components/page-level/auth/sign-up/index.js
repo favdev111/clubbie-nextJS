@@ -1,26 +1,21 @@
 import React, { useState } from "react";
-import TemplateInput from "@sub/input";
-import Button from "@sub/button";
+import cookie from "js-cookie";
 import Link from "next/link";
-import styles from "./signup.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import Alert from "@material-ui/lab/Alert";
 import Router from "next/router";
+import Alert from "@material-ui/lab/Alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import GoogleLogin from "@sub/button-google-auth/index";
-import { signup } from "@redux/auth.slice";
+import TemplateInput from "@sub/input";
+import Button from "@sub/button";
+import Auth from "@api/services/Auth";
+import styles from "./signup.module.css";
 
+// TODO: redirect if already logged in
 const SignUp = () => {
-  const dispatch = useDispatch();
-
-
-  const user = useSelector((state) => state.auth.user);
-  Object.keys(user).length > 0 && Router.push("/auth/account-confirmation"); // redirect on signup
-
-  const signupError = useSelector((state) => state.auth.errors.signupError);
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
+    // handle client side errors
     e.preventDefault();
     const email = e.target.email.value.trim();
     const password = e.target.password.value;
@@ -30,16 +25,36 @@ const SignUp = () => {
       return;
     }
     if (password !== passwordConfirm) {
-      setError("Paswords Don't Match");
+      setError("Passwords Don't Match");
       return;
     }
-    setError("");
-    dispatch(
-      signup({
-        email,
-        password,
+
+    // make api call
+    Auth.SignUp({
+      email,
+      password,
+    })
+      .then((res) => {
+        cookie.set("user", JSON.stringify(res.data.user), {
+          expires: new Date(res.data.tokens.access.expiry),
+        });
+        cookie.set("access_token", res.data.tokens.access.token, {
+          expires: new Date(res.data.tokens.access.expiry),
+        });
+        cookie.set("refresh_token", res.data.tokens.refresh.token, {
+          expires: new Date(res.data.tokens.refresh.expiry),
+        });
+        setError("");
+        Router.push("/auth/account-verification"); // redirect to verification
       })
-    );
+      .catch((err) => {
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            err?.request ||
+            "Some Error Occured"
+        );
+      });
   };
 
   return (
@@ -64,13 +79,13 @@ const SignUp = () => {
           name="passwordConfirm"
           required
         />
-        {(error || signupError) && (
+        {error && (
           <Alert variant="filled" severity="error">
-            {error || signupError}
+            {error}
           </Alert>
         )}
-        <div className={styles.signupButton}> 
-           <Button>Sign Up</Button>
+        <div className={styles.signupButton}>
+          <Button>Sign Up</Button>
         </div>
       </form>
 

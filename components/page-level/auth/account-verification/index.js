@@ -1,20 +1,15 @@
 import React, { useState } from "react";
+import Router from "next/router";
+import cookie from "js-cookie";
+import Alert from "@material-ui/lab/Alert";
 import Button from "@sub/button";
 import TemplateInput from "@sub/input";
+import Auth from "@api/services/Auth";
+import HTTPClient from "@api/HTTPClient";
 import styles from "./accountVerif.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import Alert from "@material-ui/lab/Alert";
-import { verifyAccount } from "@redux/auth.slice";
 
+// TODO: redirect if not logged in
 const AccountVerif = () => {
-  // TODO: redirect to home/somewhere after verification
-
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-
-  const verifyAccError = useSelector(
-    (state) => state.auth.errors.verifyAccError
-  );
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
@@ -25,7 +20,26 @@ const AccountVerif = () => {
       return;
     }
     setError("");
-    dispatch(verifyAccount({ activationCode }));
+
+    // make api call, set client side axios header
+    HTTPClient.setHeader(
+      "Authorization",
+      `Bearer ${cookie.get("access_token")}`
+    );
+    Auth.ActivateAccount({ activationCode })
+      .then((res) => {
+        cookie.set("user", JSON.stringify(res.data.user));
+        setError("");
+        Router.push("/"); // redirect to home
+      })
+      .catch((err) => {
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            err?.request ||
+            "Some Error Occured"
+        );
+      });
   };
 
   return (
@@ -49,9 +63,9 @@ const AccountVerif = () => {
           required
         />
 
-        {(error || verifyAccError) && (
+        {error && (
           <Alert variant="filled" severity="error">
-            {error || verifyAccError}
+            {error}
           </Alert>
         )}
         <div className={styles.btnVerif}>

@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import Button from "@sub/button";
-import TemplateInput from "@sub/input";
+import cookie from "js-cookie";
+import Router from "next/router";
 import Link from "next/link";
-import styles from "./login.module.css";
-import { useSelector, useDispatch } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
+import TemplateInput from "@sub/input";
 import GoogleLogin from "@sub/button-google-auth/index";
-import { login } from "@redux/auth.slice";
+import Button from "@sub/button";
+import Auth from "@api/services/Auth";
+import styles from "./login.module.css";
 
+// TODO: redirect if already logged in
 const Login = () => {
-  // TODO: redirect to home/somewhere after login
-
-  const dispatch = useDispatch();
-
-  const loginError = useSelector((state) => state.auth.errors.loginError);
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
@@ -26,12 +23,34 @@ const Login = () => {
       return;
     }
     setError("");
-    dispatch(
-      login({
-        email,
-        password,
+
+    // make api call
+    Auth.Login({
+      email,
+      password,
+    })
+      .then((res) => {
+        cookie.set("user", JSON.stringify(res.data.user), {
+          expires: new Date(res.data.tokens.access.expiry),
+        });
+        cookie.set("access_token", res.data.tokens.access.token, {
+          expires: new Date(res.data.tokens.access.expiry),
+        });
+        cookie.set("refresh_token", res.data.tokens.refresh.token, {
+          expires: new Date(res.data.tokens.refresh.expiry),
+        });
+        setError("");
+
+        Router.push("/"); // redirect to home
       })
-    );
+      .catch((err) => {
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            err?.request ||
+            "Some Error Occured"
+        );
+      });
   };
 
   return (
@@ -51,9 +70,9 @@ const Login = () => {
           name="password"
           required
         />
-        {(error || loginError) && (
+        {error && (
           <Alert variant="filled" severity="error">
-            {error || loginError}
+            {error}
           </Alert>
         )}
         <div className={styles.formAct}>
@@ -75,7 +94,7 @@ const Login = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/sign-up">
+      <Link href="/auth/sign-up">
         <div className="signupContent">
           <a className="signUp">Don’t have an Account? Sign Up</a>
         </div>
