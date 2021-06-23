@@ -2,7 +2,7 @@ import Auth from "@api/services/Auth";
 import HTTPClient from "@api/HTTPClient";
 import { parseCookies } from "@utils/helpers/parseCookies";
 
-export const requirePageAuth = (inner) => {
+export const requiresPageAuth = (inner) => {
   return async (context) => {
     // get persitant user from cookie
     const cookies = parseCookies(context.req);

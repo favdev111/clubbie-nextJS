@@ -1,20 +1,19 @@
-import HTTPClient from '../HTTPClient'
+import HTTPClient from "@api/HTTPClient";
 
 export default class ClubManagementRoutes {
   static async Fetch(query) {
-    return HTTPClient.get(`/clubs`, query)
+    return HTTPClient.get(`/clubs`, query);
   }
 
   static async Get(id) {
-    return HTTPClient.get(`/clubs/detail/${id}`)
+    return HTTPClient.get(`/clubs/details?id=${id}`);
   }
 
-  static async Register(payload) {
-    return HTTPClient.post(`/clubs/register`, payload)
+  static async RegisterClub(payload) {
+    return HTTPClient.post(`/clubs/register`, payload);
   }
 
-  static async JoinClubAsPlayer(id, payload) {
-    return HTTPClient.patch(`/clubs/${id}/join`, payload)
+  static async JoinClub(id) {
+    return HTTPClient.patch(`/clubs/${id}/join`);
   }
-
 }
