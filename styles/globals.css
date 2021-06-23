@@ -23,7 +23,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
-  background: rgb(55, 113, 137);
+  min-height: 100vh;
+  background: cover rgb(55, 113, 137);
   background: no-repeat
     linear-gradient(
       166deg,
