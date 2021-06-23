@@ -1,0 +1,11 @@
+.selectBox {
+  padding: var(--space-12) 82px var(--space-12) var(--space-16);
+  background-color: var(--c-white-10);
+  color: var(--c-white-50);
+  width: 100%;
+  border-radius: var(--radius-lg);
+  outline: none;
+}
+.option {
+  color: var(--c-black);
+}
