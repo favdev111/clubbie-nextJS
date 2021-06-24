@@ -6,6 +6,7 @@
 .profilePlayerBodyContentItem {
   padding-top: var(--space-32);
   color: var(--c-white-50);
+  text-transform: capitalize;
 }
 .profilePlayerBodyContentItem p {
   padding-top: var(--space-16);

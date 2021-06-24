@@ -36,6 +36,12 @@ export default class HTTPClient {
     });
   }
 
+  static async put(path, data = {}, headers = {}) {
+    return client.put(path, data, {
+      headers,
+    });
+  }
+
   static async delete(path, data = {}, headers = {}) {
     return client.delete(path, {
       data,

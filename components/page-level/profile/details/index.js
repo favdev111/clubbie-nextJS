@@ -18,7 +18,7 @@ function ProfileDetails({ profile, isPublic }) {
           <ProfileInfo
             image={profile?.image || "/assets/person-placeholder.jpg"}
             isPublic={isPublic}
-            footballerName={profile?.fullname}
+            footballerName={profile?.fullName}
             playerTitle={profile?.playerTitle}
           />
         </div>
@@ -76,6 +76,17 @@ function ProfileDetails({ profile, isPublic }) {
                 >
                   Telephone
                   <p> {profile?.telephone}</p>
+                </div>
+              )}
+              {profile?.address && (
+                <div
+                  className={cn(
+                    styles.span1,
+                    styles.profilePlayerBodyContentItem
+                  )}
+                >
+                  Address
+                  <p> {profile?.address}</p>
                 </div>
               )}
               {profile?.city && (
