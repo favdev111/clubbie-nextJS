@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProfilePageNoclub from "../../pages/profile-self-noclub";
+import ProfilePageNoclub from "../../pages/profile-self/no-club";
 const person = {
   name: "Roger Steward",
   role: "Footballer",

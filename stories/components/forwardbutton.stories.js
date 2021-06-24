@@ -1,12 +1,12 @@
 import React from "react";
-import ForwardButton from "../../components/sub/button-forward";
+import DirectedButton from "../../components/sub/button-directed";
 
 export default {
   title: "UI Elements/Forward Button",
-  component: ForwardButton,
+  component: DirectedButton,
 };
 
-const Template = (args) => <ForwardButton {...args} />;
+const Template = (args) => <DirectedButton {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

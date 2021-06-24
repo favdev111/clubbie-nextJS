@@ -25,6 +25,9 @@
   .navText {
     font-size: var(--fs-small);
   }
+  .navItem {
+    cursor: pointer;
+  }
 
   .navSvg {
     display: flex;

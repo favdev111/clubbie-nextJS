@@ -1,6 +1,6 @@
 import React from "react";
 
-import TeamhubPage from "../../pages/teamhub-initial";
+import TeamhubPage from "../../pages/teamhub/initial";
 
 export default {
   title: "Pages/Teamhub",

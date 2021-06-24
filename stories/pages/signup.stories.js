@@ -1,6 +1,6 @@
 import React from "react";
 
-import SignUpPage from "../../pages/sign-up";
+import SignUpPage from "../../pages/auth/sign-up";
 
 export default {
   title: "Pages/Sign Up",
