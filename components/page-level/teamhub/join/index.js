@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Cookie from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import CommonSearch from "@sub/search";
@@ -8,6 +7,7 @@ import LeftArrow from "@svg/left-arrow";
 import HTTPClient from "@api/HTTPClient";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
+import auth from "@utils/helpers/auth";
 import styles from "./join.module.css";
 
 function Join({ title, clubs, teams, selectedClub, register }) {
@@ -44,7 +44,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
       return;
     }
     if (selectedClub && teams) {
-      const accessToken = Cookie.get("access_token");
+      const accessToken = auth.getAccessToken();
       HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
 
       Clubs.JoinClub(selectedClub.id)
@@ -67,7 +67,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
     if (!register) return;
     if (clubs && newClubTitle.length > 0) {
       // create a new club
-      const accessToken = Cookie.get("access_token");
+      const accessToken = auth.getAccessToken();
       HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
 
       Clubs.RegisterClub({
@@ -84,7 +84,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
     }
     if (teams && selectedClub && newTeamTitle.length > 0) {
       // create a new team
-      const accessToken = Cookie.get("access_token");
+      const accessToken = auth.getAccessToken();
       HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
 
       Teams.RegisterTeam(selectedClub.id, {

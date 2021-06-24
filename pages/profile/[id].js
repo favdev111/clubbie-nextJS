@@ -4,14 +4,15 @@ import Layout from "@layout";
 import Seo from "@layout/seo";
 import Users from "@api/services/Users";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
+import auth from "@utils/helpers/auth";
 
 function ProfilePagePublic({ profile, requiredCookiesToSet }) {
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
-    cookie.set("access_token", requiredCookiesToSet.tokens.access.token, {
+    auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
       expires: new Date(requiredCookiesToSet.tokens.access.expiry),
     });
-    cookie.set("refresh_token", requiredCookiesToSet.tokens.refresh.token, {
+    auth.setRefreshToken(requiredCookiesToSet.tokens.refresh.token, {
       expires: new Date(requiredCookiesToSet.tokens.refresh.expiry),
     });
   }

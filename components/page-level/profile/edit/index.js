@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import cn from "classnames";
 import Chip from "@sub/Chip";
@@ -10,6 +9,7 @@ import Button from "@sub/button";
 import Files from "@api/services/Files";
 import Users from "@api/services/Users";
 import HTTPClient from "@api/HTTPClient";
+import auth from "@utils/helpers/auth";
 import styles from "./profileedit.module.css";
 
 function ProfileEdit({ profile }) {
@@ -24,10 +24,7 @@ function ProfileEdit({ profile }) {
     e.preventDefault();
 
     // set access header
-    HTTPClient.setHeader(
-      "Authorization",
-      `Bearer ${Cookies.get("access_token")}`
-    );
+    HTTPClient.setHeader("Authorization", `Bearer ${auth.getAccessToken()}`);
 
     // POST: files/upload
     let imageIdToUpload = null;
@@ -63,7 +60,7 @@ function ProfileEdit({ profile }) {
     await Users.UpdateProfile(updateBody)
       .then((res) => {
         console.log("res => ", res);
-        Cookies.set("user", res.data);
+        auth.setUser(res.data);
       })
       .catch((err) => {
         console.log("err => ", err);
