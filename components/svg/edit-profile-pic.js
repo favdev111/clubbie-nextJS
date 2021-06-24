@@ -1,10 +1,11 @@
-export default function EditProfilePic() {
+export default function EditProfilePic({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="19.2"
       viewBox="0 0 24 19.2"
+      className={className}
     >
       <g
         id="photo-camera_2_"

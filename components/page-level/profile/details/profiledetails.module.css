@@ -1,0 +1,69 @@
+.profilePlayerBodyContent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: var(--space-48);
+}
+.profilePlayerBodyContentItem {
+  padding-top: var(--space-32);
+  color: var(--c-white-50);
+  text-transform: capitalize;
+}
+.profilePlayerBodyContentItem p {
+  padding-top: var(--space-16);
+  color: var(--c-white);
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span3 {
+  grid-column: span 3 / span 3;
+}
+.profilePlayerBody {
+  margin-top: 5px;
+}
+
+@media (max-width: 760px) {
+  .span1 {
+    grid-column: span 3 / span 3;
+  }
+  .span3 {
+    grid-column: span 3 / span 3;
+  }
+}
+
+.profilePlayerHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.profilePlayerHeaderInnerLeft {
+  display: flex;
+}
+.profilePlayerHeaderInnerRight {
+  display: flex;
+  align-items: top;
+}
+.profileEditIcon {
+  max-width: 18px;
+  max-height: 18px;
+  display: flex;
+  margin-top: 5px;
+}
+.profileEditButton {
+  display: none;
+}
+
+@media (min-width: 470px) {
+  .profileEditIcon {
+    display: none;
+  }
+  .profileEditButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: top;
+  }
+}

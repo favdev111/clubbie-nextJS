@@ -16,6 +16,12 @@
   display: flex;
   align-items: center;
 }
+.navbarListItemLinkActive {
+  color: var(--c-yellow);
+  border-bottom-width: var(--border-4);
+  border-color: var(--c-yellow);
+  font-family: var(--ff-bold);
+}
 .navbarListItemLink:hover {
   color: var(--c-yellow);
   border-bottom-width: var(--border-4);
