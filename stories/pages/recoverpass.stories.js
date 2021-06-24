@@ -1,6 +1,6 @@
 import React from "react";
 
-import RecoverPassPage from "../../pages/recovery-pass";
+import RecoverPassPage from "../../pages/auth/recovery-pass";
 
 export default {
   title: "Pages/Recovery Password",

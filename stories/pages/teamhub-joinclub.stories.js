@@ -1,6 +1,6 @@
 import React from "react";
 
-import TeamhubJoinClubPage from "../../pages/teamhub-jointeam";
+import TeamhubJoinClubPage from "../../pages/teamhub/join-team";
 
 const teamData = [
   { name: "Aondimentum", src: "./" },

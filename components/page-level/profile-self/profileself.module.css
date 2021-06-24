@@ -154,3 +154,12 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 760px) {
+  .profile {
+    margin: 0 12px 12px 12px;
+  }
+  .profile h1 {
+    display: none;
+  }
+}

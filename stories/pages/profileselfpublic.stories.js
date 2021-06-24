@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProfilePagePublic from "../../pages/profile-self-public";
+import ProfilePagePublic from "../../pages/profile-self/public";
 const person = {
   name: "Roger Steward",
   role: "Footballer",

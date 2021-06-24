@@ -1,6 +1,6 @@
 import React from "react";
 
-import AccountConfirmPage from "../../pages/account-confirmation";
+import AccountConfirmPage from "../../pages/auth/account-confirmation";
 
 export default {
   title: "Pages/Account Confirmation",

@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoginPage from "../../pages/login";
+import LoginPage from "../../pages/auth/login";
 
 export default {
   title: "Pages/Login",

@@ -8,13 +8,16 @@ function Navbar() {
     <div className={styles.navbar}>
       <Logo />
       <ul className={styles.navbarList}>
-        {["Home", "Teamhub"].map((nav) => (
-          <li key={`${nav}index`} className={styles.navbarListItem}>
-            <Link href="./">
-              <div className={styles.navbarListItemLink}>{nav}</div>
-            </Link>
-          </li>
-        ))}
+        <li className={styles.navbarListItem}>
+          <Link href="/">
+            <div className={styles.navbarListItemLink}> Home </div>
+          </Link>
+        </li>
+        <li className={styles.navbarListItem}>
+          <Link href="/teamhub">
+            <div className={styles.navbarListItemLink}>Teamhub</div>
+          </Link>
+        </li>
       </ul>
     </div>
   );

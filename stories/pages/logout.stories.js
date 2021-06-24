@@ -1,6 +1,6 @@
 import React from "react";
 
-import LogoutPage from "../../pages/logout";
+import LogoutPage from "../../pages/auth/logout";
 
 export default {
   title: "Pages/Logout",

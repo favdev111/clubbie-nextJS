@@ -44,4 +44,10 @@
     padding: 12px;
     margin-bottom: 20px;
   }
+  .inner {
+    gap: 12px;
+  }
+  .card {
+    padding: 6px;
+  }
 }

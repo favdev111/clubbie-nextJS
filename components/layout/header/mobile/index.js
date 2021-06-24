@@ -12,15 +12,15 @@ function MobileNavigation() {
   const navItems = [
     {
       name: "Notification",
-      navSrc: "./",
+      navSrc: "/notifications",
     },
-    { name: "Clubbie", navSrc: "./" },
+    { name: "Clubbie", navSrc: "/" },
     {
       name: "Add Content",
       navSrc: "./",
     },
-    { name: "Profile", navSrc: "./" },
-    { name: "TeamHub", navSrc: "./" },
+    { name: "Profile", navSrc: "/profile-self" },
+    { name: "TeamHub", navSrc: "/teamhub" },
   ];
   return (
     <footer className={styles.mobileNav}>

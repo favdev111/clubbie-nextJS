@@ -1,6 +1,6 @@
 import React from "react";
 
-import AccountVerifPage from "../../pages/account-verification";
+import AccountVerifPage from "../../pages/auth/account-verification";
 
 export default {
   title: "Pages/Account Verification",

@@ -47,7 +47,7 @@ function PaymentOverview() {
               className={cn(styles.cardInner, styles.outcome)}
             >
               <p> {item.date} </p>
-              <span> {item.cost}</span>
+              <span> £{item.cost}</span>
             </div>
           ))}
         </div>
