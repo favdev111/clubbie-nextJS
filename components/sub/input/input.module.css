@@ -39,3 +39,9 @@
   background: transparent;
   opacity: 1;
 }
+.textArea {
+  resize: none;
+}
+.resizableTextArea {
+  resize: both;
+}

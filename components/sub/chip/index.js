@@ -1,18 +1,25 @@
 import React from "react";
+import cn from "classnames";
 import styles from "./chip.module.css";
 
-const Chip = (props) => {
-  const { component, text, image, onCloseClick } = props;
-
+const Chip = ({ component, text, image, onCloseClick, background }) => {
   return (
-    <div className={styles.chip}>
+    <div
+      className={cn(
+        styles.chip,
+        background === "danger" && styles.backgroundDanger,
+        background === "success" && styles.backgroundSuccess
+      )}
+    >
       {component ? (
         <div>{component}</div>
       ) : (
         <>
-          <div className={styles.chipHead}>
-            <img src="/assets/team2.png" />
-          </div>
+          {image && (
+            <div className={styles.chipHead}>
+              <img src={image} />
+            </div>
+          )}
           <div className={styles.chipContent}>{text}</div>
           {onCloseClick && (
             <div className={styles.chipClose}>

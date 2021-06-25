@@ -3,12 +3,12 @@ import styles from "./profiledetails.module.css";
 import cn from "classnames";
 import Link from "next/link";
 import DirectedButton from "@sub/button-directed";
-import ProfileInfo from "../info";
+import ProfileInfo from "./info";
 import OvalButton from "@sub/button-oval";
 import EditProfileSVG from "@svg/edit-profile";
 import { useRouter } from "next/router";
 
-function ProfileDetails({ profile, isPublic }) {
+function ProfileDetails({ profile, isPublic, clubs }) {
   const router = useRouter();
 
   return (
@@ -20,6 +20,7 @@ function ProfileDetails({ profile, isPublic }) {
             isPublic={isPublic}
             footballerName={profile?.fullName}
             playerTitle={profile?.playerTitle}
+            clubs={clubs}
           />
         </div>
         <div className={styles.profilePlayerHeaderInnerRight}>

@@ -16,7 +16,8 @@ import playerTitles from "@utils/fixedValues/playerTitles";
 import countries from "@utils/fixedValues/countries";
 import styles from "./profileedit.module.css";
 
-function ProfileEdit({ profile }) {
+function ProfileEdit({ profile, clubs }) {
+  // TODO: edit email, delete clubs , handle image display, show errors
   const router = useRouter();
 
   const defaultImage = "/assets/person-placeholder.jpg";
@@ -32,11 +33,16 @@ function ProfileEdit({ profile }) {
   const [country, setCountry] = useState(() => profile?.country);
   const [postCode, setPostCode] = useState(() => profile?.postCode);
   const [bio, setBio] = useState(() => profile?.bio);
+  const [clubsToRemove, setClubsToRemove] = useState([]);
 
-  const removeClub = () => {};
+  const removeClub = (id) => {
+    const x = new Set([...clubsToRemove, id]);
+    setClubsToRemove(x);
+  };
   const onImagePicked = (image) => setImage(image);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    console.log("Remove these clubs => ", clubsToRemove);
 
     // set access header
     HTTPClient.setHeader("Authorization", `Bearer ${auth.getAccessToken()}`);
@@ -174,12 +180,6 @@ function ProfileEdit({ profile }) {
               selected={country}
               onChange={(e) => setCountry(e.target.value)}
             ></TemplateSelect>
-            {/* <TemplateInput
-              type="text"
-              name="country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            /> */}
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
@@ -212,16 +212,19 @@ function ProfileEdit({ profile }) {
           >
             <p>Clubs</p>
           </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <Chip text="Shottery United" onCloseClick={removeClub} />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <Chip text="Shottery United" onCloseClick={removeClub} />
-          </div>
+          {clubs.map((club) => (
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <Chip
+                image={
+                  club?.crest?.s3Url || "/assets/club-badge-placeholder.png"
+                }
+                text={club.title}
+                onCloseClick={() => removeClub(club.id)}
+              />
+            </div>
+          ))}
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >

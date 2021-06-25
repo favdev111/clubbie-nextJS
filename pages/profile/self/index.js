@@ -6,9 +6,10 @@ import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 import { parseCookies } from "@utils/helpers/parseCookies";
 import Users from "@api/services/Users";
+import Clubs from "@api/services/Clubs";
 import HTTPClient from "@api/HTTPClient";
 
-function ProfilePage({ requiredCookiesToSet, posts }) {
+function ProfilePage({ requiredCookiesToSet, user, posts, clubs }) {
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -19,12 +20,10 @@ function ProfilePage({ requiredCookiesToSet, posts }) {
     });
   }
 
-  const authUser = auth.getUser();
-
   return (
     <Layout>
       <Seo title="My Profile" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf profile={authUser?.profile} posts={posts} />
+      <ProfileSelf profile={user?.profile} posts={posts} clubs={clubs} />
     </Layout>
   );
 }
@@ -56,10 +55,16 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     reposted: userRepostedPosts,
   };
 
+  const clubIds = user.clubs.map((c) => c.club);
+  const userClubs = await Clubs.GetClubsWithDetails(clubIds);
+  const clubs = userClubs.data;
+
   return {
     props: {
       requiredCookiesToSet,
+      user,
       posts,
+      clubs,
     },
   };
 });

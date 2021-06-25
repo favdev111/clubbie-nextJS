@@ -9,6 +9,12 @@ export default class ClubManagementRoutes {
     return HTTPClient.get(`/clubs/details?id=${id}`);
   }
 
+  static async GetClubsWithDetails(ids) {
+    return HTTPClient.get(
+      `/clubs/details?${ids.map((id) => `id=${id}`).join("&")}`
+    );
+  }
+
   static async RegisterClub(payload) {
     return HTTPClient.post(`/clubs/register`, payload);
   }
