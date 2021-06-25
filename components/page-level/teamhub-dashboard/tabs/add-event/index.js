@@ -13,6 +13,7 @@ function AddEvent() {
     watch,
     formState: { errors },
   } = useForm();
+  /* todo, object is nearly ready */
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -134,6 +135,7 @@ function AddEvent() {
             <div className={styles.buttons}>
               {["Yes", "No "].map((button, index) => (
                 <button
+                  type="button"
                   key={`${index}buttonforform`}
                   onClick={() => setRecurring(index)}
                   className={cn(
@@ -162,6 +164,7 @@ function AddEvent() {
             <div className={styles.buttons}>
               {["Weekly", "Fortnight", "Monthly"].map((button, index) => (
                 <button
+                  type="button"
                   key={`${index}buttonforform2`}
                   onClick={() => intervalSet(index)}
                   className={cn(
