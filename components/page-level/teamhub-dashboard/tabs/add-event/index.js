@@ -31,6 +31,7 @@ function AddEvent() {
             placeholder="Add title"
             {...register("title", { required: true, maxLength: 20 })}
           />
+          {/* Todo - Like buttons below */}
           <div className={styles.eventType}>
             <div>
               <input
