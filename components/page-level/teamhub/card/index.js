@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import cn from "classnames";
 import styles from "./teamhubcard.module.css";
 import RightArrow from "@svg/right-arrow";
@@ -13,9 +14,11 @@ function TeamhubCard({ data, type, last }) {
         <h3> {data.title}</h3>
         <p className="opacity-50"> {data.desc} </p>
       </div>
-      <button className={styles.teamhubCardButton}>
-        <RightArrow />
-      </button>
+      <Link href={data.link}>
+        <button className={styles.teamhubCardButton}>
+          <RightArrow />
+        </button>
+      </Link>
     </div>
   );
 }

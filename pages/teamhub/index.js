@@ -1,48 +1,45 @@
-import React, { useState } from "react";
-import cookie from "js-cookie";
-import { parseCookies } from "@utils/helpers/parseCookies";
-import Cookies from "js-cookie";
+import React, { useState, useEffect } from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub-dashboard";
 import Clubs from "@api/services/Clubs";
 import HTTPClient from "@api/HTTPClient";
 import Router from "next/router";
-
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
+import auth from "@utils/helpers/auth";
+import { parseCookies } from "@utils/helpers/parseCookies";
 
 function TeamhubDashboard({ requiredCookiesToSet, token, clubs }) {
   const [activeTeam, setTeam] = useState(0);
 
+  // set cookies on client
   if (requiredCookiesToSet?.tokens) {
-    cookie.set("access_token", requiredCookiesToSet.tokens.access.token);
-    cookie.set("refresh_token", requiredCookiesToSet.tokens.refresh.token, {
+    auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
+      expires: new Date(requiredCookiesToSet.tokens.access.expiry),
+    });
+    auth.setRefreshToken(requiredCookiesToSet.tokens.refresh.token, {
       expires: new Date(requiredCookiesToSet.tokens.refresh.expiry),
     });
   }
-  const authUser =
-    typeof Cookies.get("user") === "string"
-      ? JSON.parse(decodeURI(Cookies.get("user")))
-      : Cookies.get("user");
 
-  if (authUser?.clubs.length == 0) {
-    Router.push("./teamhub/initial");
-  }
-  if (authUser?.clubs.length > 0) {
-    return (
-      <Layout>
-        <Seo title="Dashboard" desc="Lorem ipsum dolor sit amet" />
-        <DashboardContent
-          activeTeam={activeTeam}
-          setTeam={setTeam}
-          token={token}
-          user={authUser}
-        ></DashboardContent>
-      </Layout>
-    );
-  } else {
-    return null;
-  }
+  const authUser = auth.getUser();
+  useEffect(() => {
+    if (authUser?.clubs.length === 0) {
+      Router.push("./teamhub/initial");
+    }
+  }, [authUser]);
+
+  return (
+    <Layout>
+      <Seo title="Dashboard" desc="Lorem ipsum dolor sit amet" />
+      <DashboardContent
+        activeTeam={activeTeam}
+        setTeam={setTeam}
+        token={token}
+        user={authUser}
+      ></DashboardContent>
+    </Layout>
+  );
 }
 
 export default TeamhubDashboard;

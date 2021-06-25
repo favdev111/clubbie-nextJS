@@ -7,15 +7,18 @@ function Teamhub() {
     title: "Club Official",
     desc:
       "Top of the Pile, The Big Cheese, Head-Honcho (e.g. Club Chair, Club Secretary, Club Treasurer)",
+    link: "/teamhub/register-club",
   };
   const teamLeader = {
     title: "Team Leader",
     desc:
       "The Organisers, The Strategisers, The Leaders (e.g. Manager, Coach, Captain, Team Secretary)",
+    link: "/teamhub/register-club",
   };
   const player = {
     title: "Player",
     desc: "The Heart and Soul of any Club. Just remember to bring your kit.",
+    link: "/teamhub/join-club",
   };
   return (
     <div className={styles.teamhub}>
