@@ -4,21 +4,23 @@ import Date from "@svg/date";
 import KickOff from "@svg/kickoff";
 import Place from "@svg/place";
 
+/* Not done yet */
+
 function MatchInfo({ data }) {
-  const { date, kickoff, place } = data;
+  const { eventDateTime, kickoff, location } = data;
   return (
     <div className={styles.cardInfo}>
       <div className={styles.infoInner}>
         <Date />
-        <p> {date}</p>
+        <p> {eventDateTime}</p>
       </div>
       <div className={styles.infoInner}>
         <KickOff />
-        <p> {kickoff}</p>
+        <p> {eventDateTime}</p>
       </div>
       <div className={styles.infoInner}>
         <Place />
-        <p> {place}</p>
+        <p> {location}</p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import LastResult from "./lastresult";
 import MyTeam from "./myteam";
@@ -6,8 +6,25 @@ import RecentVideos from "./recent";
 import UpNext from "./upnext";
 import LeagueTable from "./league-table";
 import PaymentOverview from "./pay-overview";
+import Teams from "@api/services/Teams";
+import HTTPClient from "@api/HTTPClient";
 
-function Dashboard() {
+function Dashboard({ user, token, activeTeam, setTeam }) {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
+
+    const fetchTeams = async () => {
+      const response = await Teams.GetTeamsWithDetail(
+        user.teams[activeTeam].team
+      );
+      const team = response.data;
+      setData(team);
+    };
+    fetchTeams();
+  }, [activeTeam]);
+
   const dashboard = {
     upnext: {
       homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
@@ -35,7 +52,12 @@ function Dashboard() {
       <div className={styles.dashboard}>
         <h1 className={styles.title}> Dashboard</h1>
         {/* teamcard */}
-        <MyTeam />
+        <MyTeam
+          data={data}
+          user={user}
+          setactive={setTeam}
+          active={activeTeam}
+        />
         {/* recent videos */}
         <RecentVideos />
         {/* up next */}
