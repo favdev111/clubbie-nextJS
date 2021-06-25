@@ -5,7 +5,7 @@ import HTTPClient from "@api/HTTPClient";
 import Qs from "qs";
 
 function MatchCard({ data, token }) {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState(null);
   const [query, setQuery] = useState("");
 
   /* Not done yet */
@@ -28,14 +28,13 @@ function MatchCard({ data, token }) {
     });
 
     fetchPromise.then(async () => {});
-  }, [query]);
+  }, []);
 
-  console.log(teams);
   return (
     <div className={styles.score}>
       <div className={styles.teamCard}>
-        <img src={teams[0].crest.s3Url} />
-        {teams[0].title}
+        <img src={teams && teams[0].crest.s3Url} />
+        {teams && teams[0].title}
       </div>
 
       {/* Middle */}
@@ -46,8 +45,8 @@ function MatchCard({ data, token }) {
 
       {/* Away Team */}
       <div className={styles.teamCard}>
-        <img src={teams[1].crest.s3Url} />
-        {teams[1].title}
+        <img src={teams && teams[1].crest.s3Url} />
+        {teams && teams[1]?.title}
       </div>
     </div>
   );
