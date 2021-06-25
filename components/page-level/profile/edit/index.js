@@ -21,7 +21,9 @@ function ProfileEdit({ profile }) {
 
   const defaultImage = "/assets/person-placeholder.jpg";
 
-  const [image, setImage] = useState(() => profile?.image || defaultImage);
+  const [image, setImage] = useState(
+    () => profile?.image?.s3Url || defaultImage
+  );
   const [fullName, setFullName] = useState(() => profile?.fullName);
   const [playerTitle, setPlayerTitle] = useState(() => profile?.playerTitle);
   const [telephone, setTelephone] = useState(() => profile?.telephone);

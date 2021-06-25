@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Alert from "@material-ui/lab/Alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
@@ -12,6 +12,7 @@ import styles from "./login.module.css";
 
 // TODO: redirect if already logged in
 const Login = () => {
+  const router = useRouter();
   const [error, setError] = useState("");
 
   const handleOnSubmit = (e) => {
@@ -40,8 +41,7 @@ const Login = () => {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
-
-        Router.push("/"); // redirect to home
+        router.push("/");
       })
       .catch((err) => {
         setError(
