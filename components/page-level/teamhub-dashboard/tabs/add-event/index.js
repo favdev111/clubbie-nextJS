@@ -38,7 +38,7 @@ function AddEvent() {
                 type="radio"
                 value="match"
                 {...register("eventType", { required: true })}
-              ></input>
+              />
               <label htmlFor="match"> Match</label>
             </div>
             <div>
@@ -46,7 +46,7 @@ function AddEvent() {
                 type="radio"
                 value="train"
                 {...register("eventType", { required: true })}
-              ></input>
+              />
               <label htmlFor="train"> Train</label>
             </div>
           </div>
@@ -98,7 +98,7 @@ function AddEvent() {
                 className={styles.inputStyle}
                 type="text"
                 {...register("location", { required: true })}
-              ></input>
+              />
             </div>
             <div className={styles.cell}>
               Add Fee?
@@ -107,15 +107,23 @@ function AddEvent() {
                 defaultValue="0"
                 type="number"
                 {...register("fee")}
-              ></input>
+              />
             </div>
             <div className={styles.cell}>
               Add Message?
-              <input className={styles.inputStyle} type="text"></input>
+              <input
+                className={styles.inputStyle}
+                type="text"
+                {...register("message")}
+              />
             </div>
             <div className={styles.cell}>
               Cost Of Event
-              <input className={styles.inputStyle} type="number"></input>
+              <input
+                className={styles.inputStyle}
+                type="number"
+                {...register("cost")}
+              />
             </div>
           </div>
           <div className={styles.buttonOptions}>
@@ -135,8 +143,15 @@ function AddEvent() {
             </div>
             {/* Hidden */}
             <select className={styles.noShow}>
-              <option> Yes </option>
-              <option> No </option>
+              {recurringEvent == 0 ? (
+                <option value="yes" {...register("recurring")}>
+                  Yes
+                </option>
+              ) : (
+                <option value="no" {...register("recurring")}>
+                  Yes
+                </option>
+              )}
             </select>
           </div>
           <div>
@@ -144,6 +159,7 @@ function AddEvent() {
             <div className={styles.buttons}>
               {["Weekly", "Fortnight", "Monthly"].map((button, index) => (
                 <button
+                  key={`${index}buttonforform2`}
                   onClick={() => intervalSet(index)}
                   className={cn(
                     interval == index ? styles.button : styles.passive
@@ -155,9 +171,21 @@ function AddEvent() {
             </div>
             {/* Hidden */}
             <select className={styles.noShow}>
-              <option> Weekly </option>
-              <option> Fortnight </option>
-              <option> Monthly </option>
+              {interval == 0 && (
+                <option {...register("onEvery")} value="weekly">
+                  Weekly
+                </option>
+              )}
+              {interval == 1 && (
+                <option {...register("onEvery")} value="fortnight">
+                  Fortnight
+                </option>
+              )}
+              {interval == 2 && (
+                <option {...register("onEvery")} value="monthy">
+                  Monthly
+                </option>
+              )}
             </select>
           </div>
           <div className={styles.formGrid}>
@@ -176,19 +204,28 @@ function AddEvent() {
                 defaultValue="0"
                 type="number"
                 {...register("totalEvents", { required: true })}
-              ></input>
+              />
             </div>
           </div>
-          <div className={styles.file}>
-            Number of Events
-            <input
-              className={styles.inputStyle}
-              type="file"
-              {...register("file", { required: true })}
-            ></input>
-            <div className={styles.formSubmit}>
-              <button className={styles.button}> Post </button>
+          <div className={styles.cell}>
+            Add files
+            <div className={styles.file}>
+              {/* Todo */}
+              {/*               <input
+                className={styles.inputStyle}
+                type="file"
+                {...register("file", { required: true })}
+              /> */}
             </div>
+          </div>
+          <div className={styles.formSubmit}>
+            <button
+              type="submit"
+              onClick={() => onSubmit()}
+              className={styles.button}
+            >
+              Post
+            </button>
           </div>
         </form>
       </div>
