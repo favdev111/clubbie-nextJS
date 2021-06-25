@@ -42,7 +42,6 @@ function OvalButton({
       )}
       {appearence === "reposts" && (
         <a>
-          {" "}
           <Repost />
         </a>
       )}
