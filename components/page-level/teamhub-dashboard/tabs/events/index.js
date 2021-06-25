@@ -52,7 +52,7 @@ function Events({ activeTeam, user, token }) {
             <EventCard
               user={user}
               token={token}
-              key={card + Math.random()}
+              key={Math.random() + 12}
               data={card}
             />
           ))}

@@ -9,7 +9,7 @@ import MatchCard from "@sub/match-card";
 import MatchInfo from "@sub/match-info";
 
 function EventCard({ available, data, user, token }) {
-  const { location, eventDateTime, coverImage, teams } = data;
+  const { location, eventDateTime, coverImage, teams, eventType } = data;
   const { s3Url } = coverImage;
 
   /* Not done yet */
@@ -29,7 +29,11 @@ function EventCard({ available, data, user, token }) {
       {/* Card lower *--* Below image */}
 
       <div className={styles.cardDetail}>
-        <MatchCard user={user} token={token} data={teams} />
+        {/* Event Type  */}
+        {eventType == "match" && (
+          <MatchCard user={user} token={token} data={teams} />
+        )}
+        {eventType == "social" && <div> Social </div>}
 
         {/* Info */}
 

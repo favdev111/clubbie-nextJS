@@ -28,7 +28,7 @@ function MatchCard({ data, token }) {
     });
 
     fetchPromise.then(async () => {});
-  }, []);
+  });
 
   return (
     <div className={styles.score}>
