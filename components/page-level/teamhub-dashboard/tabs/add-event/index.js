@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 import { useForm } from "react-hook-form";
 import cn from "classnames";
-
+import Link from "next/link";
 function AddEvent() {
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
@@ -20,7 +20,9 @@ function AddEvent() {
       {/* Header */}
       <div className={styles.header}>
         <h1> Create Event</h1>
-        <a> Cancel</a>
+        <Link href="./">
+          <a> Cancel</a>
+        </Link>
       </div>
       {/* Body */}
       <div className={styles.content}>
