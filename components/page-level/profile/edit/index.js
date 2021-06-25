@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/Router";
 import cn from "classnames";
-import Chip from "@sub/Chip";
+import Chip from "@sub/chip";
 import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
 import DirectedButton from "@sub/button-directed";
