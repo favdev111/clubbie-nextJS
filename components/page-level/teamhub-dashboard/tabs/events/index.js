@@ -3,8 +3,8 @@ import styles from "./index.module.css";
 import EditIcon from "@svg/edit.js";
 import DateTable from "./date-table";
 import EventCard from "./card";
-import Link from "next/link"
-import Event from "@api/services/event";
+import Link from "next/link";
+import Event from "@api/services/Event";
 import HTTPClient from "@api/HTTPClient";
 
 function Events({ activeTeam, user, token }) {
@@ -24,8 +24,6 @@ function Events({ activeTeam, user, token }) {
     fetchEvents();
   }, []);
 
-
-
   const date = new Date();
   const month = date.getMonth();
   const [selectedMonth, setSelected] = useState(month);
@@ -38,12 +36,11 @@ function Events({ activeTeam, user, token }) {
 
           {/* Drafts, Add event etc */}
           <Link href="/teamhub/add-event">
-          <div className={styles.draft}>
-            <EditIcon />
-            <p>Add new event </p>
-          </div>
-        </Link>
-
+            <div className={styles.draft}>
+              <EditIcon />
+              <p>Add new event </p>
+            </div>
+          </Link>
         </div>
 
         {/* Date */}
