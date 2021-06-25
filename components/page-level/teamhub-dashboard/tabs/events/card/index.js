@@ -29,7 +29,6 @@ function EventCard({ available, data, user, token }) {
       {/* Card lower *--* Below image */}
 
       <div className={styles.cardDetail}>
-        {/* Home team */}
         <MatchCard user={user} token={token} data={teams} />
 
         {/* Info */}

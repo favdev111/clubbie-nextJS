@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 
 function DashboardContent({ activeTeam, setTeam, user, token }) {
   const [selectedIndex, setIndex] = useState(0);
-  const nav = ["Dashboard", "Events", "Payments", "Statistics", "Event Detail"];
+  const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
   return (
     <div className={styles.dashboard}>

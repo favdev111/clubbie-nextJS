@@ -23,19 +23,19 @@ function MatchCard({ data, token }) {
       paramSerialize(params).then(async function (result) {
         setQuery(result.params);
         const response = query != "" && (await Teams.GetTeamsWithDetail(query));
-        setTeams(response);
+        setTeams(response.data);
       });
     });
 
     fetchPromise.then(async () => {});
   }, [query]);
 
+  console.log(teams);
   return (
     <div className={styles.score}>
       <div className={styles.teamCard}>
-        {/*    <img src={hometeam.src} /> */}
-        {/*        {hometeam.name} */}
-        {data[0].teamId}
+        <img src={teams[0].crest.s3Url} />
+        {teams[0].title}
       </div>
 
       {/* Middle */}
@@ -46,10 +46,8 @@ function MatchCard({ data, token }) {
 
       {/* Away Team */}
       <div className={styles.teamCard}>
-        {/*       <img src={awayteam.src} /> */}
-        {/*         {awayteam.name}
-         */}
-        {data[1].teamId}
+        <img src={teams[1].crest.s3Url} />
+        {teams[1].title}
       </div>
     </div>
   );
