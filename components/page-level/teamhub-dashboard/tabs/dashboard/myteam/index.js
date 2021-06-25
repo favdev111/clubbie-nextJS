@@ -2,7 +2,7 @@ import React from "react";
 import TeamCard from "./card";
 import styles from "./index.module.css";
 
-function MyTeam() {
+function MyTeam({ active, setactive, data }) {
   const myTeams = [
     {
       name: "Shottery United",
@@ -21,7 +21,13 @@ function MyTeam() {
         <h3> My team</h3>
         <div className={styles.myTeamFlex}>
           {myTeams.map((team, index) => (
-            <TeamCard key={team + index} index={index} data={team} />
+            <TeamCard
+              key={team + index}
+              active={active}
+              index={index}
+              data={team}
+              setactive={setactive}
+            />
           ))}
         </div>
       </div>

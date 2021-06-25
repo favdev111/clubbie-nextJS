@@ -3,6 +3,7 @@
   flex-direction: column;
   background-color: var(--c-primary);
   border-radius: var(--radius-lg);
+  height: max-content;
 }
 
 .cardImg {

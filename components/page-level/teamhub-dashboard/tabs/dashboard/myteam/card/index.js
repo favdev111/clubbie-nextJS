@@ -2,11 +2,17 @@ import React from "react";
 import styles from "./index.module.css";
 import cn from "classnames";
 
-function TeamCard({ data }) {
-  const { src, name, active } = data;
+function TeamCard({ index, data, active, setactive }) {
+  const { src, name } = data;
+  /* Not done yet */
+
   return (
-    <div className={cn(styles.teamCards, active && styles.active)}>
+    <div
+      onClick={() => setactive(index)}
+      className={cn(styles.teamCards, active == index && styles.active)}
+    >
       <img className={styles.cardImg} src={src} />
+      {/* data[0].crest.s3Url image */}
       <div className={styles.cardDetail}>
         <p className={styles.cardSpan}> {name} </p>
         <p>

@@ -2,33 +2,24 @@ import React from "react";
 import styles from "./index.module.css";
 import cn from "classnames";
 /* Svg */
-import Date from "@svg/date";
-import KickOff from "@svg/kickoff";
-import Place from "@svg/place";
 import ThreeDots from "@svg/threedots";
 
 /* Sub */
 import MatchCard from "@sub/match-card";
 import MatchInfo from "@sub/match-info";
 
-function EventCard({ data }) {
-  const {
-    src,
-    hometeam,
-    awayteam,
-    date,
-    kickoff,
-    place,
-    available,
-    price,
-  } = data;
+function EventCard({ available, data, user, token }) {
+  const { location, eventDateTime, coverImage, teams, eventType } = data;
+  const { s3Url } = coverImage;
+
+  /* Not done yet */
   return (
     <div className={styles.card}>
       {/* Card upper *--* Image side */}
       <div className={styles.cardImg}>
-        <img src={src} />
+        <img src={s3Url} />
         <div className={styles.price}>
-          <p> £{price} </p>
+          <p> £ </p>
         </div>
         <div className={styles.more}>
           <ThreeDots />
@@ -38,12 +29,15 @@ function EventCard({ data }) {
       {/* Card lower *--* Below image */}
 
       <div className={styles.cardDetail}>
-        {/* Home team */}
-        <MatchCard data={{ hometeam, awayteam }} />
+        {/* Event Type  */}
+        {eventType == "match" && (
+          <MatchCard user={user} token={token} data={teams} />
+        )}
+        {eventType == "social" && <div> Social </div>}
 
         {/* Info */}
 
-        <MatchInfo data={{ date, kickoff, place }} />
+        <MatchInfo data={{ eventDateTime, eventDateTime, location }} />
 
         {/* Avaibility */}
         <div

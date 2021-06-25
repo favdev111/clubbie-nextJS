@@ -18,6 +18,6 @@ export default class TeamManagementRoutes {
   }
 
   static async GetTeamsWithDetail(query) {
-    return HTTPClient.get(`/teams/details`, query);
+    return HTTPClient.get(`/teams/details?${query}`);
   }
 }

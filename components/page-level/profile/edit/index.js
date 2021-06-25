@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import cn from "classnames";
-import Chip from "@sub/Chip";
+import Chip from "@sub/chip";
 import TemplateInput from "@sub/input";
 import DirectedButton from "@sub/button-directed";
 import Avatar from "@sub/avatar";
