@@ -92,7 +92,9 @@ function ContentAdd() {
           <UploadSVG></UploadSVG>
         </label>
         <span className={styles.marginTop}>
-          Drag and drop a video or&ensp;
+          {/* Todo: make span drag/dropable */}
+          <span>Drag and drop a video or</span>
+          &ensp;
           <a className={styles.dragDropVideosBrowseFiles}>
             <label htmlFor="icon-button-file">Browser Files</label>
           </a>
@@ -105,7 +107,7 @@ function ContentAdd() {
             <label htmlFor="icon-button-file">
               <ImageCard />
             </label>
-            {image && <ImageCard image={image} />}
+            {image && <ImageCard image={image} setImage={setImage} />}
           </div>
         </div>
         <div className={styles.addContentWrapper}>

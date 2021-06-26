@@ -2,7 +2,9 @@ import React from "react";
 import styles from "./contentImageCard.module.css";
 import UploadSVG from "@svg/upload";
 
-function ContentImageCard({ image }) {
+function ContentImageCard({ image, setImage }) {
+  const handleOnClick = () => setImage(null);
+
   return image ? (
     <div className={styles.profilePhotosItem}>
       <img src={image.src}></img>
@@ -22,6 +24,7 @@ function ContentImageCard({ image }) {
           alignItems: "center",
           fontWeight: "bold",
         }}
+        onClick={handleOnClick}
       >
         x
       </span>
