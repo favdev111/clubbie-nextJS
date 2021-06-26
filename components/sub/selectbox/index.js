@@ -1,7 +1,14 @@
 import React from "react";
 import styles from "./index.module.css";
 
-function TemplateSelectBox({ name, id, options, selected, onChange }) {
+function TemplateSelectBox({
+  name,
+  id,
+  options,
+  selected,
+  onChange,
+  placeholder,
+}) {
   return (
     <>
       <select
@@ -10,6 +17,9 @@ function TemplateSelectBox({ name, id, options, selected, onChange }) {
         id={id}
         onChange={onChange}
       >
+        <option value="" className={styles.option}>
+          {placeholder}
+        </option>
         {options.map((option) => (
           <option
             className={styles.option}
