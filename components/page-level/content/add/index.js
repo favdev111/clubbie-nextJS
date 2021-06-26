@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/Router";
+import { useRouter } from "next/router";
 import cn from "classnames";
 import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
