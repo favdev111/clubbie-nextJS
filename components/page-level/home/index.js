@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
 import HomeVideosCard from "./card";
@@ -6,8 +7,9 @@ import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
 import YouShouldSignUp from "@sub/sign-up-warn";
 
-function Home({ videos }) {
+function Home({ posts }) {
   const [activeTag, setActiveTag] = useState(0);
+
   return (
     <div className={styles.homePage}>
       <YouShouldSignUp open />
@@ -45,18 +47,21 @@ function Home({ videos }) {
         </div>
       </div>
 
-      <div className={styles.addContent}>
-        <div className={styles.addButton}>
-          <a>
-            <PlusTurk />
-          </a>
-          Add Content
-        </div>
-      </div>
+      <Link href="/content">
+        <a>
+          <div className={styles.addContent}>
+            <div className={styles.addButton}>
+              <a>
+                <PlusTurk />
+              </a>
+              Add Content
+            </div>
+          </div>
+        </a>
+      </Link>
 
-      {/* Posts here */}
-      {videos.map((video, index) => (
-        <HomeVideosCard key={video + index} data={video} />
+      {posts.map((post, index) => (
+        <HomeVideosCard key={post + index} data={post} />
       ))}
     </div>
   );
