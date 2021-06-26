@@ -9,11 +9,11 @@ export default class UserManagementRoutes {
     return HTTPClient.get(`/users/uploaded-posts/${id}`);
   }
 
-  static async GetLikedPosts() {
+  static async GetLikedPosts(id) {
     return HTTPClient.get(`/users/liked-posts/${id}`);
   }
 
-  static async GetRepostedPosts() {
+  static async GetRepostedPosts(id) {
     return HTTPClient.get(`/users/reposted-posts/${id}`);
   }
 

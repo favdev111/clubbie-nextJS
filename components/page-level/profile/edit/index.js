@@ -1,33 +1,51 @@
 import React, { useState } from "react";
-import Cookies from "js-cookie";
 import Link from "next/link";
+import { useRouter } from "next/Router";
 import cn from "classnames";
 import Chip from "@sub/chip";
 import TemplateInput from "@sub/input";
+import TemplateSelect from "@sub/selectbox";
 import DirectedButton from "@sub/button-directed";
 import Avatar from "@sub/avatar";
 import Button from "@sub/button";
 import Files from "@api/services/Files";
 import Users from "@api/services/Users";
 import HTTPClient from "@api/HTTPClient";
+import auth from "@utils/helpers/auth";
+import playerTitles from "@utils/fixedValues/playerTitles";
+import countries from "@utils/fixedValues/countries";
 import styles from "./profileedit.module.css";
 
-function ProfileEdit({ profile }) {
-  const defaultImage = "/assets/person-placeholder.jpg";
-  const [image, setImage] = useState(() => profile?.image || defaultImage);
+function ProfileEdit({ profile, clubs }) {
+  // TODO: edit email, delete clubs , handle image display, show errors
+  const router = useRouter();
 
-  const removeClub = () => {};
-  const onImagePicked = (image) => {
-    setImage(image); // {src,file}
+  const defaultImage = "/assets/person-placeholder.jpg";
+
+  const [image, setImage] = useState(
+    () => profile?.image?.s3Url || defaultImage
+  );
+  const [fullName, setFullName] = useState(() => profile?.fullName);
+  const [playerTitle, setPlayerTitle] = useState(() => profile?.playerTitle);
+  const [telephone, setTelephone] = useState(() => profile?.telephone);
+  const [address, setAddress] = useState(() => profile?.address);
+  const [city, setCity] = useState(() => profile?.city);
+  const [country, setCountry] = useState(() => profile?.country);
+  const [postCode, setPostCode] = useState(() => profile?.postCode);
+  const [bio, setBio] = useState(() => profile?.bio);
+  const [clubsToRemove, setClubsToRemove] = useState([]);
+
+  const removeClub = (id) => {
+    const x = new Set([...clubsToRemove, id]);
+    setClubsToRemove(x);
   };
+  const onImagePicked = (image) => setImage(image);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    console.log("Remove these clubs => ", clubsToRemove);
 
     // set access header
-    HTTPClient.setHeader(
-      "Authorization",
-      `Bearer ${Cookies.get("access_token")}`
-    );
+    HTTPClient.setHeader("Authorization", `Bearer ${auth.getAccessToken()}`);
 
     // POST: files/upload
     let imageIdToUpload = null;
@@ -47,15 +65,15 @@ function ProfileEdit({ profile }) {
 
     // POST: users/profile
     const formBody = {
-      fullName: e.target?.fullName?.value.trim() || null,
+      fullName: fullName?.trim() || null,
       image: imageIdToUpload || null,
-      playerTitle: e.target?.playerTitle?.value.trim() || null,
-      telephone: e.target?.telephone?.value.trim() || null,
-      address: e.target?.address?.value.trim() || null,
-      city: e.target?.city?.value.trim() || null,
-      country: e.target?.country?.value.trim() || null,
-      postCode: e.target?.postCode?.value.trim() || null,
-      bio: e.target?.bio?.value.trim() || null,
+      playerTitle: playerTitle?.trim() || null,
+      telephone: telephone?.trim() || null,
+      address: address?.trim() || null,
+      city: city?.trim() || null,
+      country: country?.trim() || null,
+      postCode: postCode?.trim() || null,
+      bio: bio?.trim() || null,
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
@@ -63,7 +81,8 @@ function ProfileEdit({ profile }) {
     await Users.UpdateProfile(updateBody)
       .then((res) => {
         console.log("res => ", res);
-        Cookies.set("user", res.data);
+        auth.setUser(res.data);
+        router.push("/profile/self");
       })
       .catch((err) => {
         console.log("err => ", err);
@@ -97,19 +116,20 @@ function ProfileEdit({ profile }) {
             <TemplateInput
               type="text"
               name="fullName"
-              value={profile?.fullName}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >
             <p>Title</p>
-            {/* make it a dropdown menu */}
-            <TemplateInput
-              type="text"
+            <TemplateSelect
               name="playerTitle"
-              value={profile?.playerTitle}
-            />
+              options={playerTitles}
+              selected={playerTitle}
+              onChange={(e) => setPlayerTitle(e.target.value)}
+            ></TemplateSelect>
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
@@ -124,7 +144,8 @@ function ProfileEdit({ profile }) {
             <TemplateInput
               type="text"
               name="telephone"
-              value={profile?.telephone}
+              value={telephone}
+              onChange={(e) => setTelephone(e.target.value)}
             />
           </div>
           <div
@@ -134,24 +155,31 @@ function ProfileEdit({ profile }) {
             <TemplateInput
               type="text"
               name="address"
-              value={profile?.address}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >
             <p>City</p>
-            <TemplateInput type="text" name="city" value={profile?.city} />
+            <TemplateInput
+              type="text"
+              name="city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >
             <p>Country</p>
-            <TemplateInput
-              type="text"
+            <TemplateSelect
               name="country"
-              value={profile?.country}
-            />
+              options={countries}
+              selected={country}
+              onChange={(e) => setCountry(e.target.value)}
+            ></TemplateSelect>
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
@@ -160,7 +188,8 @@ function ProfileEdit({ profile }) {
             <TemplateInput
               type="text"
               name="postCode"
-              value={profile?.postCode}
+              value={postCode}
+              onChange={(e) => setPostCode(e.target.value)}
             />
           </div>
           <div
@@ -171,7 +200,9 @@ function ProfileEdit({ profile }) {
               type="text"
               name="bio"
               multiLine
-              value={profile?.bio}
+              value={bio}
+              rows={2}
+              onChange={(e) => setBio(e.target.value)}
             />
           </div>
         </div>
@@ -181,16 +212,19 @@ function ProfileEdit({ profile }) {
           >
             <p>Clubs</p>
           </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <Chip text="Shottery United" onCloseClick={removeClub} />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <Chip text="Shottery United" onCloseClick={removeClub} />
-          </div>
+          {clubs.map((club) => (
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <Chip
+                image={
+                  club?.crest?.s3Url || "/assets/club-badge-placeholder.png"
+                }
+                text={club.title}
+                onCloseClick={() => removeClub(club.id)}
+              />
+            </div>
+          ))}
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >

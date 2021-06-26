@@ -2,11 +2,17 @@
   display: flex;
   white-space: nowrap;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--c-white-10);
   color: #ffffff;
   border-radius: var(--radius-md);
   padding: 5px 8px 5px 3px;
   width: 100%;
+}
+.backgroundDanger {
+  background-color: var(--c-red);
+}
+.backgroundSuccess {
+  background-color: var(--c-green);
 }
 .chipHead {
   margin-left: 10px;

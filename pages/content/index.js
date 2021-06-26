@@ -1,12 +1,13 @@
 import React from "react";
-import ProfileSelf from "@page/profile";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import Users from "@api/services/Users";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
+import { parseCookies } from "@utils/helpers/parseCookies";
+import HTTPClient from "@api/HTTPClient";
+import Content from "@page/content";
 
-function ProfilePagePublic({ profile, requiredCookiesToSet }) {
+function ContentAdd({ requiredCookiesToSet, user }) {
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -19,26 +20,30 @@ function ProfilePagePublic({ profile, requiredCookiesToSet }) {
 
   return (
     <Layout>
-      <Seo title="User Profile" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf profile={profile} isPublic />
+      <Seo title="Add Content Profile" desc="Lorem ipsum dolor sit amet" />
+      <Content profile={user.profile} isPublic addMode />
     </Layout>
   );
 }
 
-export default ProfilePagePublic;
+export default ContentAdd;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const userId = ctx.params.id;
-
   const requiredCookiesToSet = {
     tokens: ctx.setCookieForTokens || false,
   };
-  const response = await Users.GetUserProfile(userId);
-  const userProfile = response.data;
+
+  const cookies = parseCookies(ctx.req);
+  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
+  const user = (() => {
+    return typeof cookies.user === "string"
+      ? JSON.parse(cookies.user)
+      : cookies.user;
+  })();
 
   return {
     props: {
-      profile: userProfile,
+      user,
     },
   };
 });

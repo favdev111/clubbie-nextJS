@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Router from "next/router";
-import cookie from "js-cookie";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@sub/button";
 import TemplateInput from "@sub/input";
 import Auth from "@api/services/Auth";
 import HTTPClient from "@api/HTTPClient";
+import authUser from "@utils/helpers/auth";
 import styles from "./accountVerif.module.css";
 
 // TODO: redirect if not logged in
@@ -24,11 +24,11 @@ const AccountVerif = () => {
     // make api call, set client side axios header
     HTTPClient.setHeader(
       "Authorization",
-      `Bearer ${cookie.get("access_token")}`
+      `Bearer ${authUser.getAccessToken()}`
     );
     Auth.ActivateAccount({ activationCode })
       .then((res) => {
-        cookie.set("user", JSON.stringify(res.data.user));
+        authUser.setUser(res.data.user);
         setError("");
         Router.push("/"); // redirect to home
       })

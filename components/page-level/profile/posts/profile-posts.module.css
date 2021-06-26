@@ -1,0 +1,136 @@
+.profileButtons {
+  margin-top: var(--space-48);
+  display: flex;
+}
+.profileButtons button {
+  margin-right: 15px;
+}
+.profilePhotos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.profilePhotosItem {
+  margin-top: var(--space-30);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.noPosts {
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-16);
+  padding: var(--space-64);
+  border-radius: var(--radius-lg);
+}
+.profilePhotos .profilePhotosItem:hover .profilePhotosOptions {
+  display: flex;
+}
+.profilePhotos .profilePhotosItem .profilePhotosOptions {
+  display: none;
+  align-items: center;
+  position: absolute;
+}
+
+.profilePhotos .profilePhotosItem .profilePhotosOptions a {
+  margin-right: var(--space-16);
+  background-color: var(--c-black-50);
+  border-radius: var(--radius-full);
+  padding: var(--space-16);
+  width: var(--space-64);
+  height: var(--space-64);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profilePhotos .profilePhotosItem .profilePhotosOptions img:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.profileTitle {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+.profilePlayerImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.profileEditIcon {
+  max-width: 18px;
+  max-height: 18px;
+  display: flex;
+  margin-top: 5px;
+}
+.profileEditButton {
+  display: none;
+}
+
+@media (min-width: 470px) {
+  .profilePlayerImage {
+    width: 100px;
+    height: 100px;
+  }
+  .profileEditIcon {
+    display: none;
+  }
+  .profileEditButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .profileTitle {
+    font-size: 20px;
+  }
+  .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .profilePlayer .profilePlayerHeader .profilePlayerHeaderAvatar {
+    width: 96px;
+    height: 96px;
+  }
+  .profilePlayer .profilePlayerHeader .profilePlayerHeaderInnerRight {
+    display: flex;
+    align-items: top;
+  }
+
+  .profileButtons {
+    display: grid;
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .profilePlayerImage {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .navbar .navbarList {
+    margin-left: 12px;
+  }
+  .navbar .navbarListItem .navbarListItemLink {
+    margin-right: 12px;
+  }
+
+  .profileTitle {
+    padding-left: 30px;
+    margin-bottom: 48px;
+    /* font-size: unset; */
+  }
+
+  .profilePhotos {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .profileButtons {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cn from "classnames";
 import styles from "./input.module.css";
 import Eye from "@svg/eye";
 
@@ -11,6 +12,7 @@ const TemplateInput = ({
   onChange,
   multiLine,
   rows,
+  resizable,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -47,7 +49,11 @@ const TemplateInput = ({
         </>
       ) : (
         <textarea
-          className={styles.inputBlock}
+          className={cn(
+            styles.inputBlock,
+            styles.textArea,
+            resizable && styles.resizableTextArea
+          )}
           placeholder={placeholder}
           name={name}
           value={value}

@@ -5,7 +5,9 @@
   width: 100%;
   border-radius: var(--radius-lg);
   outline: none;
+  text-transform: capitalize;
 }
 .option {
   color: var(--c-black);
+  text-transform: capitalize;
 }

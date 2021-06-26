@@ -33,7 +33,7 @@ export const requiresPageAuth = (inner) => {
     // set access header for axios, server side
     HTTPClient.setHeader(
       "Authorization",
-      `Bearer ${accessToken || context.setCookieForTokens.access.token}`
+      `Bearer ${accessToken || context?.setCookieForTokens?.access?.token}`
     );
 
     return inner ? inner(context) : { props: { user } };

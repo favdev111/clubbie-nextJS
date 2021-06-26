@@ -9,6 +9,10 @@ export default class AuthManagementRoutes {
     return HTTPClient.post(`/auth/login`, payload);
   }
 
+  static async Logout(payload) {
+    return HTTPClient.post(`/auth/logout`, payload);
+  }
+
   static async ActivateAccount(payload) {
     return HTTPClient.patch(`/auth/activate-account`, payload);
   }

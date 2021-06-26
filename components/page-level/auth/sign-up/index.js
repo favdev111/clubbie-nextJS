@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import cookie from "js-cookie";
 import Link from "next/link";
 import Router from "next/router";
 import Alert from "@material-ui/lab/Alert";
@@ -8,6 +7,7 @@ import GoogleLogin from "@sub/button-google-auth/index";
 import TemplateInput from "@sub/input";
 import Button from "@sub/button";
 import Auth from "@api/services/Auth";
+import authUser from "@utils/helpers/auth";
 import styles from "./signup.module.css";
 
 // TODO: redirect if already logged in
@@ -35,13 +35,13 @@ const SignUp = () => {
       password,
     })
       .then((res) => {
-        cookie.set("user", JSON.stringify(res.data.user), {
+        authUser.setUser(res.data.user, {
           expires: new Date(res.data.tokens.access.expiry),
         });
-        cookie.set("access_token", res.data.tokens.access.token, {
+        authUser.setAccessToken(res.data.tokens.access.token, {
           expires: new Date(res.data.tokens.access.expiry),
         });
-        cookie.set("refresh_token", res.data.tokens.refresh.token, {
+        authUser.setRefreshToken(res.data.tokens.refresh.token, {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
