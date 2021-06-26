@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = "https://dev-api.clubbie.com/v1/"; //process.env.API_BASE_URL;
 
 const SIGNUP_URL = `${API_BASE_URL}/v1/auth/signup`;
 const LOGIN_URL = `${API_BASE_URL}/v1/auth/login`;
