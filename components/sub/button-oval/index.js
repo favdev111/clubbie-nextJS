@@ -6,6 +6,7 @@ import EditProfile from "@svg/edit-profile";
 import Uploaded from "@svg/uploaded";
 import Tag from "@svg/tag";
 import Repost from "@svg/repost";
+import Messages from "@svg/messages";
 
 function OvalButton({
   children,
@@ -29,6 +30,11 @@ function OvalButton({
       onClick={onClick}
     >
       {appearence === "edit" && <a>{isPublic ? <Send /> : <EditProfile />}</a>}
+      {appearence === "message" && (
+        <a>
+          <Messages />
+        </a>
+      )}
 
       {appearence === "uploaded" && (
         <a>

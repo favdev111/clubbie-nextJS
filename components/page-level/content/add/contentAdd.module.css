@@ -52,7 +52,7 @@
   cursor: pointer;
   text-decoration: underline;
 }
-.imagePickedBubbleWrapper {
+.mediaPickedBubbleWrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

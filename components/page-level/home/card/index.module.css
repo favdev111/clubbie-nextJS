@@ -3,6 +3,9 @@
   background-color: var(--c-primary);
   margin-bottom: 50px;
 }
+.videoCard span {
+  cursor: pointer;
+}
 .preview {
   border-radius: var(--radius-lg);
   max-height: 487px;

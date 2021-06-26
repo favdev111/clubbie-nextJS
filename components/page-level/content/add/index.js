@@ -11,12 +11,12 @@ import auth from "@utils/helpers/auth";
 import sports from "@utils/fixedValues/sports";
 import styles from "./contentAdd.module.css";
 import UploadSVG from "@svg/upload";
-import ImageCard from "./imageCard";
+import MediaCard from "./mediaCard";
 
 function ContentAdd() {
   const router = useRouter();
 
-  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState(null);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [sport, setSport] = useState();
@@ -27,11 +27,13 @@ function ContentAdd() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (e) => {
-      const imagePicked = {
+      const mediaPicked = {
         src: e.target.result,
         file,
       };
-      setImage(imagePicked);
+      setMedia(mediaPicked);
+      console.log("media");
+      console.log(mediaPicked);
     };
     reader.readAsDataURL(file);
   };
@@ -39,38 +41,52 @@ function ContentAdd() {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     // set access header
-    HTTPClient.setHeader("Authorization", `Bearer ${auth.getAccessToken()}`);
+    HTTPClient.setHeader("Authorization", `Bearer ${auth?.getAccessToken()}`);
 
-    if (!image || !title || !description || !sport)
+    if (!media || !title || !description || !sport || !tagSomeone) {
       alert("All fields are required"); // Todo: handle these properly
+      return;
+    }
 
     // POST: files/upload
-    let imageIdToUpload = null;
-    if (image.src && image.file) {
-      const imageForm = new FormData();
-      imageForm.append("files", image.file);
-      await Files.UploadFile("postImg", imageForm)
+    let mediaIdToUpload = null;
+    if (media?.src && media?.file) {
+      const mediaForm = new FormData();
+      mediaForm.append("files", media?.file);
+      await Files.UploadFile(
+        media?.src?.includes("image") ? "postImg" : "postVideo",
+        mediaForm
+      )
         .then((res) => {
-          imageIdToUpload = res.data[0].id;
-          console.log("image res => ", res);
+          mediaIdToUpload = res?.data[0]?.id;
+          console.log("media res => ", res);
         })
         .catch((err) => {
-          console.log("image err => ", err);
+          console.log("media err => ", err);
           alert(err?.response?.data?.message); // TODO: error comp
         });
     }
 
-    const formBody = {
-      media: imageIdToUpload,
-      contentType: "image",
-      title: title.trim(),
-      description: description.trim(),
-      tags: [{ type: sport.trim(), value: sport.trim() }],
-      // tagSomeone: tagSomeone.trim(),
-    };
-    console.log(formBody);
+    const tags = tagSomeone?.split(",").map((tag) => {
+      return {
+        type: sport?.trim(),
+        value: tag?.trim(),
+      };
+    });
 
-    await Posts.CreatePost(formBody)
+    const formBody = {
+      media: mediaIdToUpload,
+      thumbnail: media?.src?.includes("image") ? null : mediaIdToUpload,
+      contentType: media?.src?.includes("image") ? "image" : "video",
+      title: title?.trim(),
+      description: description?.trim(),
+      tags,
+    };
+    const contentBody = Object.fromEntries(
+      Object.entries(formBody).filter(([_, v]) => v != null)
+    );
+
+    await Posts.CreatePost(contentBody)
       .then((res) => {
         console.log(res);
         router.route("/");
@@ -83,7 +99,7 @@ function ContentAdd() {
       <div className={styles.dragDropVideos}>
         <input
           hidden
-          accept="image/*"
+          accept="image/*,video/*"
           id="icon-button-file"
           type="file"
           onChange={onFileChange}
@@ -103,11 +119,11 @@ function ContentAdd() {
       <div className={styles.profilePlayerBody}>
         <div className={styles.relatedVideosWrapper}>
           <h3>Related Photos/Videos</h3>
-          <div className={styles.imagePickedBubbleWrapper}>
+          <div className={styles.mediaPickedBubbleWrapper}>
             <label htmlFor="icon-button-file">
-              <ImageCard />
+              <MediaCard />
             </label>
-            {image && <ImageCard image={image} setImage={setImage} />}
+            {media && <MediaCard media={media} setMedia={setMedia} />}
           </div>
         </div>
         <div className={styles.addContentWrapper}>
