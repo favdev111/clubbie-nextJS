@@ -1,0 +1,74 @@
+.contentMediaWrapper {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contentMedia {
+  border-radius: var(--radius-lg);
+  max-height: 487px;
+  width: 100%;
+  object-fit: cover;
+}
+.contentBody {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contentViews {
+  padding: 20px;
+}
+.contentTitle {
+  display: flex;
+  align-items: center;
+}
+.contentDateTime {
+  display: block;
+  margin-left: 25px;
+}
+.postAuthorProfile img {
+  border-radius: var(--radius-xl);
+  height: var(--space-48);
+  width: var(--space-48);
+}
+.postAuthorProfile {
+  display: flex;
+  align-items: center;
+}
+.postAuthorInfo {
+  padding-left: var(--space-12);
+}
+.postAuthorName {
+  cursor: pointer;
+}
+.postAuthorName:hover {
+  font-weight: bold;
+}
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+.contentActionButtons {
+  padding-top: var(--space-12);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.commentsWrapper {
+  margin-top: var(--space-50);
+}
+@media (max-width: 768px) {
+  .postHeader {
+    order: 1;
+  }
+}

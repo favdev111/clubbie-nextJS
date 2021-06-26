@@ -1,14 +1,20 @@
 import React from "react";
 import ContentAdd from "./add";
+import ContentDetails from "./details";
 import styles from "./content.module.css";
 
-function ProfileSelf({ profile, addMode, posts, clubs }) {
+function Content({ addMode, content }) {
   return (
     <div className={styles.content}>
-      <h1 className={styles.contentTitle}>{addMode && "Add "}Content</h1>
-      <div className={styles.contentBody}>{addMode && <ContentAdd />}</div>
+      <h1 className={styles.contentTitle}>
+        {addMode && "Add "}Content{content && " Details"}
+      </h1>
+      <div className={styles.contentBody}>
+        {addMode && <ContentAdd />}
+        {content && <ContentDetails content={content} />}
+      </div>
     </div>
   );
 }
 
-export default ProfileSelf;
+export default Content;
