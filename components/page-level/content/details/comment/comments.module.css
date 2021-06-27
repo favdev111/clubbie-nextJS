@@ -1,0 +1,69 @@
+.commentBoxWrapper {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  padding: 0;
+  margin-top: var(--space-8);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  padding: var(--space-24);
+  display: flex;
+  flex-direction: row;
+}
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.commentBody {
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  margin-left: var(--space-8);
+  margin-right: var(--space-8);
+  padding: var(--space-8);
+  padding-left: var(--space-16);
+}
+.commentActions {
+  margin: var(--space-8);
+  padding: var(--space-8);
+  padding-left: var(--space-16);
+}
+.commentActions span {
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  margin-right: var(--space-8);
+  cursor: pointer;
+}
+.hasLiked {
+  background: var(--c-red) 0% 0% no-repeat padding-box !important;
+}
+.hasCommented {
+  background: var(--c-red) 0% 0% no-repeat padding-box !important;
+}
+.commentBoxWrapper img {
+  border-radius: var(--radius-xl);
+  height: var(--space-48);
+  width: var(--space-48);
+}
+.commentContent img:hover {
+  cursor: pointer;
+}
+.commentAuthorName {
+  cursor: pointer;
+}
+.commentAuthorName:hover {
+  font-weight: bold;
+}
+.commentText {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+.addReply {
+  margin: var(--space-8);
+  padding: var(--space-8);
+  padding-left: var(--space-16);
+}

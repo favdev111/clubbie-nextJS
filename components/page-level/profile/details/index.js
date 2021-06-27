@@ -24,7 +24,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
           />
         </div>
         <div className={styles.profilePlayerHeaderInnerRight}>
-          {!isPublic && (
+          {!isPublic ? (
             <>
               <a className={styles.profileEditIcon}>
                 <EditProfileSVG />
@@ -39,6 +39,14 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                 Edit Profile
               </OvalButton>
             </>
+          ) : (
+            <OvalButton
+              isPublic={isPublic}
+              appearence="message"
+              classes={styles.profileEditButton}
+            >
+              Message
+            </OvalButton>
           )}
         </div>
       </div>

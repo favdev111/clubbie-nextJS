@@ -1,13 +1,16 @@
 import React from "react";
-import styles from "./contentImageCard.module.css";
+import styles from "./contentMediaCard.module.css";
 import UploadSVG from "@svg/upload";
 
-function ContentImageCard({ image, setImage }) {
-  const handleOnClick = () => setImage(null);
+function ContentMediaCard({ media, setMedia }) {
+  const handleOnClick = () => setMedia(null);
 
-  return image ? (
+  return media ? (
     <div className={styles.profilePhotosItem}>
-      <img src={image.src}></img>
+      {media?.src?.includes("image") && <img src={media.src}></img>}
+      {media?.src?.includes("video") && (
+        <video src={media.src} controls></video>
+      )}
       {/* TODO: replace with svg comp */}
       <span
         style={{
@@ -38,4 +41,4 @@ function ContentImageCard({ image, setImage }) {
   );
 }
 
-export default ContentImageCard;
+export default ContentMediaCard;

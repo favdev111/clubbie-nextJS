@@ -3,10 +3,14 @@
   background-color: var(--c-primary);
   margin-bottom: 50px;
 }
-
+.videoCard span {
+  cursor: pointer;
+}
 .preview {
   border-radius: var(--radius-lg);
   max-height: 487px;
+  width: 100%;
+  object-fit: cover;
 }
 .desc {
   padding: 12px 0 0 30px;
@@ -16,6 +20,8 @@
 }
 .cardInfoProfile img {
   border-radius: var(--radius-xl);
+  height: var(--space-48);
+  width: var(--space-48);
 }
 .cardInfoProfile {
   display: flex;
@@ -30,13 +36,11 @@
   padding-bottom: 20px;
   padding: var(--space-32);
 }
-
 .socialButtons {
   padding-top: var(--space-12);
   padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
 }
-
 @media (max-width: 768px) {
   .videoCard {
     display: grid;
