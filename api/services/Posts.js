@@ -5,8 +5,8 @@ export default class PostManagementRoutes {
     return HTTPClient.post(`/posts/`, payload);
   }
 
-  static async GetPost(query) {
-    return HTTPClient.get(`/posts/`, query);
+  static async GetPosts(query) {
+    return HTTPClient.get(`/posts/?${new URLSearchParams(query).toString()}`);
   }
 
   static async GetPostById(id) {
