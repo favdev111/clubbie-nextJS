@@ -47,3 +47,6 @@
 .chipSvg:hover {
   color: var(--c-red);
 }
+.roundedImage {
+  border-radius: 50%;
+}

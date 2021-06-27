@@ -13,10 +13,11 @@
   text-transform: capitalize;
 }
 .profileInfo .playerClubImg {
-  padding-right: var(--space-16);
+  margin-right: var(--space-16);
+  border-radius: 50%;
 }
 .profileInfo .clubsCrest img {
-  width: 52px;
+  width: 40px;
   height: 40px;
 }
 .profilePlayerImage {

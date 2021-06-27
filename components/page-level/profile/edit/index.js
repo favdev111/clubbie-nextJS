@@ -220,6 +220,7 @@ function ProfileEdit({ profile, clubs }) {
                 image={
                   club?.crest?.s3Url || "/assets/club-badge-placeholder.png"
                 }
+                roundedImage
                 text={club.title}
                 onCloseClick={() => removeClub(club.id)}
               />

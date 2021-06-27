@@ -30,14 +30,12 @@ function ContentHeader({ author }) {
 function ContentMedia({ contentType, media }) {
   return (
     <div className={styles.contentMediaWrapper}>
-      <span>
-        {contentType?.includes("video") && (
-          <video className={styles.contentMedia} src={media} controls />
-        )}
-        {contentType?.includes("image") && (
-          <img className={styles.contentMedia} src={media} />
-        )}
-      </span>
+      {contentType?.includes("video") && (
+        <video className={styles.contentMedia} src={media} controls />
+      )}
+      {contentType?.includes("image") && (
+        <img className={styles.contentMedia} src={media} />
+      )}
     </div>
   );
 }
