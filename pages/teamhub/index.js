@@ -6,17 +6,16 @@ import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 
-function TeamhubDashboard() {
+function TeamhubDashboard({ user }) {
   const [activeTeam, setTeam] = useState(0);
 
   const token = auth.getAccessToken();
-  const authUser = auth.getUser();
 
   useEffect(() => {
-    if (authUser?.clubs.length === 0) {
+    if (user?.clubs.length === 0) {
       Router.push("./teamhub/initial");
     }
-  }, [authUser]);
+  }, [user]);
 
   return (
     <Layout>
@@ -25,7 +24,7 @@ function TeamhubDashboard() {
         activeTeam={activeTeam}
         setTeam={setTeam}
         token={token}
-        user={authUser}
+        user={user}
       ></DashboardContent>
     </Layout>
   );

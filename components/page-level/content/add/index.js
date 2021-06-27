@@ -6,8 +6,6 @@ import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
 import Files from "@api/services/Files";
 import Posts from "@api/services/Posts";
-import HTTPClient from "@api/HTTPClient";
-import auth from "@utils/helpers/auth";
 import sports from "@utils/fixedValues/sports";
 import styles from "./contentAdd.module.css";
 import UploadSVG from "@svg/upload";

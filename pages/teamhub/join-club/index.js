@@ -4,7 +4,6 @@ import Seo from "@layout/seo";
 import Layout from "@layout";
 import Clubs from "@api/services/Clubs";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import auth from "@utils/helpers/auth";
 
 function TeamhubJoinClubPage({ clubs }) {
   return (
