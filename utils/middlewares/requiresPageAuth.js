@@ -40,6 +40,22 @@ export const requiresPageAuth = (inner) => {
       `Bearer ${accessToken || context?.setCookieForTokens?.access?.token}`
     );
 
-    return inner ? inner(context) : { props: { user } };
+    const props = await (async () => {
+      const innerProps = inner ? await inner(context) : {};
+      const commonProps = { props: { user } };
+      return {
+        props: {
+          setCookiesOnClient: context.setCookieForTokens
+            ? {
+                tokens: context.setCookieForTokens,
+              }
+            : false,
+          ...innerProps?.props,
+          ...commonProps.props,
+        },
+      };
+    })();
+
+    return props;
   };
 };

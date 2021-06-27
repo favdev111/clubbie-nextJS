@@ -23,10 +23,6 @@ export default ContentDetails;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const postId = ctx.params.postId;
 
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
-
   const cookies = parseCookies(ctx.req);
   HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
 
@@ -47,7 +43,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   return {
     props: {
-      requiredCookiesToSet,
       post,
     },
     notFound: notFound,

@@ -7,8 +7,8 @@ import "../styles/app.css";
 
 function ClubbieApp({ Component, pageProps }) {
   // if user is on client set cookies there
-  if (process.browser && pageProps?.requiredCookiesToSet?.tokens) {
-    const { tokens } = pageProps.requiredCookiesToSet;
+  if (process.browser && pageProps?.setCookiesOnClient?.tokens) {
+    const { tokens } = pageProps.setCookiesOnClient;
     auth.setAccessToken(tokens.access.token, {
       expires: new Date(tokens.access.expiry),
     });

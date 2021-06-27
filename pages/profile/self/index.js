@@ -25,10 +25,6 @@ function ProfilePage({ user, posts, clubs }) {
 export default ProfilePage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
-
   const cookies = parseCookies(ctx.req);
   HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
   const user = (() => {
@@ -61,7 +57,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   return {
     props: {
-      requiredCookiesToSet,
       user,
       posts,
       clubs,

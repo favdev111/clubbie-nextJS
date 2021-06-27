@@ -15,12 +15,4 @@ function ContentAdd() {
 
 export default ContentAdd;
 
-export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
-
-  return {
-    props: { requiredCookiesToSet },
-  };
-});
+export const getServerSideProps = requiresPageAuth();

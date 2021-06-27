@@ -17,17 +17,12 @@ function TeamhubJoinClubPage({ clubs }) {
 export default TeamhubJoinClubPage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
-
   const response = await Clubs.Fetch().catch(() => false);
   const clubs = response?.data;
   const notFound = !clubs;
 
   return {
     props: {
-      requiredCookiesToSet,
       clubs: clubs.results,
     },
     notFound: notFound,

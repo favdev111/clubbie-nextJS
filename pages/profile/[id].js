@@ -19,9 +19,6 @@ export default ProfilePagePublic;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const userId = ctx.params.id;
 
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
   const response = await Users.GetUserProfile(userId).catch(() => false);
   const userProfile = response?.data;
   userProfile.id = userId;
@@ -44,7 +41,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   return {
     props: {
-      requiredCookiesToSet,
       profile: userProfile,
       posts,
     },

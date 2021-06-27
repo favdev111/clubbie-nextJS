@@ -5,7 +5,6 @@ import DashboardContent from "@page/teamhub-dashboard";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
-import { parseCookies } from "@utils/helpers/parseCookies";
 
 function TeamhubDashboard() {
   const [activeTeam, setTeam] = useState(0);
@@ -34,17 +33,4 @@ function TeamhubDashboard() {
 
 export default TeamhubDashboard;
 
-export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-    /* Not done yet */
-  };
-
-  const cookies = parseCookies(ctx.req);
-
-  return {
-    props: {
-      requiredCookiesToSet: requiredCookiesToSet,
-    },
-  };
-});
+export const getServerSideProps = requiresPageAuth();
