@@ -21,6 +21,9 @@ export const requiresPageAuth = (getPropsFunc) => {
     const accessToken = cookies.access_token;
     const refreshToken = cookies.refresh_token;
 
+    // set user in context
+    context.user = user;
+
     // refresh tokens logic
     if (!user || !accessToken) {
       if (refreshToken) {

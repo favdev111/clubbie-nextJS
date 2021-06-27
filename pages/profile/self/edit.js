@@ -3,9 +3,7 @@ import ProfileSelf from "@page/profile";
 import Seo from "@layout/seo";
 import Layout from "@layout";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import { parseCookies } from "@utils/helpers/parseCookies";
 import Clubs from "@api/services/Clubs";
-import HTTPClient from "@api/HTTPClient";
 
 function ProfilePage({ user, clubs }) {
   return (
@@ -23,12 +21,7 @@ function ProfilePage({ user, clubs }) {
 export default ProfilePage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const cookies = parseCookies(ctx.req);
-  const user = (() => {
-    return typeof cookies.user === "string"
-      ? JSON.parse(cookies.user)
-      : cookies.user;
-  })();
+  const user = ctx?.user;
 
   const clubIds = user.clubs.map((c) => c.club);
   const userClubs = await Clubs.GetClubsWithDetails(clubIds).catch(() => false);
