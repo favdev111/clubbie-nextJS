@@ -11,19 +11,39 @@ import HTTPClient from "@api/HTTPClient";
 
 function Dashboard({ user, token, activeTeam, setTeam }) {
   const [selectedTeam, setSelectedTeam] = useState([]);
+  const [userTeams, setUserTeams] = useState([]);
 
   useEffect(() => {
     HTTPClient.setHeader("Authorization", `Bearer ${token}`);
-    const fetchTeams = async () => {
-      const response = await Teams.GetTeamsWithDetail(
-        `id=${user?.teams[activeTeam]?.team}`
-      ).catch((x) => console.log(x.response));
-      const team = response?.data;
-      setData(team);
-    };
-    fetchTeams();
-  }, [activeTeam]);
+    const fetchUserTeams = async () => {
+      /* queries */
+      const arr = [];
+      user.teams.map((i) => {
+        arr.push(i.team);
+      });
+      const queries = arr.reduce((a, b) => {
+        let sum = `${a}` + `&id=${b}`;
+        return sum;
+      });
 
+      const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
+      const allUserTeams = response.data;
+      setUserTeams(allUserTeams);
+    };
+
+    const fetchSelectedTeam = async () => {
+      /* Ibrar will change endpoint for that, so 
+      we can fetch another endpoint to get Recent videos,
+      up next, last result, etc for the team */
+      const response = await Teams.GetTeamsWithDetail(
+        `id=${user.teams[activeTeam].team}`
+      );
+      const team = response.data;
+      setSelectedTeam(team);
+    };
+    fetchUserTeams();
+    fetchSelectedTeam();
+  }, [activeTeam]);
   const dashboard = {
     upnext: {
       homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
