@@ -45,6 +45,7 @@
 .addButton {
   display: flex;
   align-items: center;
+  color: var(--c-white);
 }
 .addButton a {
   padding: 0 var(--space-12);

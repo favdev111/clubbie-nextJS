@@ -100,7 +100,7 @@ const SignUp = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/login">
+      <Link href="/auth/login">
         <div className={styles.signUp}>
           Already have an account?<a className="signUp">&ensp;Login Here</a>
         </div>

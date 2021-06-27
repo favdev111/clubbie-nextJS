@@ -37,3 +37,6 @@
   gap: var(--space-32);
   margin: var(--space-32) auto 0px;
 }
+.whiteColor {
+  color: var(--c-white);
+}
