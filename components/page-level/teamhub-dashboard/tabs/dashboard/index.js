@@ -17,7 +17,7 @@ function Dashboard({ user, token, activeTeam, setTeam }) {
 
     const fetchTeams = async () => {
       const response = await Teams.GetTeamsWithDetail(
-        `id=${user.teams[activeTeam].team}`
+        `id=${user?.teams[activeTeam]?.team}`
       );
       const team = response.data;
       setData(team);
