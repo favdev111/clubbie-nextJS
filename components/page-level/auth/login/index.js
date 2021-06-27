@@ -32,7 +32,7 @@ const Login = () => {
     })
       .then((res) => {
         authUser.setUser(res.data.user, {
-          expires: new Date(res.data.tokens.access.expiry),
+          expires: new Date(res.data.tokens.refresh.expiry),
         });
         authUser.setAccessToken(res.data.tokens.access.token, {
           expires: new Date(res.data.tokens.access.expiry),

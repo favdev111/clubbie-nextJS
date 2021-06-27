@@ -28,7 +28,7 @@ const AccountVerif = () => {
     );
     Auth.ActivateAccount({ activationCode })
       .then((res) => {
-        authUser.setUser(res.data.user);
+        authUser.setUser(res.data.user); // Todo: make this cookie to not expire
         setError("");
         Router.push("/"); // redirect to home
       })

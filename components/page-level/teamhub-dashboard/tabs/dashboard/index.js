@@ -14,12 +14,11 @@ function Dashboard({ user, token, activeTeam, setTeam }) {
 
   useEffect(() => {
     HTTPClient.setHeader("Authorization", `Bearer ${token}`);
-
     const fetchTeams = async () => {
       const response = await Teams.GetTeamsWithDetail(
         `id=${user?.teams[activeTeam]?.team}`
-      );
-      const team = response.data;
+      ).catch((x) => console.log(x.response));
+      const team = response?.data;
       setData(team);
     };
     fetchTeams();

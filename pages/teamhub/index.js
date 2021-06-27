@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub-dashboard";
-import Clubs from "@api/services/Clubs";
-import HTTPClient from "@api/HTTPClient";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 import { parseCookies } from "@utils/helpers/parseCookies";
 
-function TeamhubDashboard({ requiredCookiesToSet, token, clubs }) {
+function TeamhubDashboard({ requiredCookiesToSet }) {
   const [activeTeam, setTeam] = useState(0);
 
   // set cookies on client
@@ -22,7 +20,9 @@ function TeamhubDashboard({ requiredCookiesToSet, token, clubs }) {
     });
   }
 
+  const token = auth.getAccessToken();
   const authUser = auth.getUser();
+
   useEffect(() => {
     if (authUser?.clubs.length === 0) {
       Router.push("./teamhub/initial");
@@ -52,19 +52,9 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   const cookies = parseCookies(ctx.req);
 
-  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
-
-  const response = await Clubs.Fetch().catch(() => false);
-  const clubs = response?.data;
-
-  const notFound = !clubs;
-
   return {
     props: {
-      requiredCookiesToSet,
-      clubs: clubs?.results,
-      token: cookies?.access_token,
+      requiredCookiesToSet: requiredCookiesToSet,
     },
-    notFound: notFound,
   };
 });

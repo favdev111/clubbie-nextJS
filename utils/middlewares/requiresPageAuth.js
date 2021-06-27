@@ -6,7 +6,11 @@ export const requiresPageAuth = (inner) => {
   return async (context) => {
     // get persitant user from cookie
     const cookies = parseCookies(context.req);
-    const user = JSON.stringify(cookies.user) || undefined;
+    const user = (() => {
+      return typeof cookies.user === "string"
+        ? JSON.parse(cookies.user)
+        : cookies.user;
+    })();
     const accessToken = cookies.access_token;
     const refreshToken = cookies.refresh_token;
 

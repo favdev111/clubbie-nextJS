@@ -81,7 +81,7 @@ function ProfileEdit({ profile, clubs }) {
     await Users.UpdateProfile(updateBody)
       .then((res) => {
         console.log("res => ", res);
-        auth.setUser(res.data);
+        auth.setUser(res.data); // TODO: make this cookies to not expire
         router.push("/profile/self");
       })
       .catch((err) => {
