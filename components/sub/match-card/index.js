@@ -33,7 +33,7 @@ function MatchCard({ data, token }) {
   return (
     <div className={styles.score}>
       <div className={styles.teamCard}>
-        <img src={teams && teams[0].crest.s3Url} />
+        <img src={teams && teams[0].crest?.s3Url} />
         {teams && teams[0].title}
       </div>
 
@@ -45,7 +45,7 @@ function MatchCard({ data, token }) {
 
       {/* Away Team */}
       <div className={styles.teamCard}>
-        <img src={teams && teams[1].crest.s3Url} />
+        <img src={teams && teams[1].crest?.s3Url} />
         {teams && teams[1]?.title}
       </div>
     </div>

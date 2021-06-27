@@ -10,14 +10,13 @@ import MatchInfo from "@sub/match-info";
 
 function EventCard({ available, data, user, token }) {
   const { location, eventDateTime, coverImage, teams, eventType } = data;
-  const { s3Url } = coverImage;
 
   /* Not done yet */
   return (
     <div className={styles.card}>
       {/* Card upper *--* Image side */}
       <div className={styles.cardImg}>
-        <img src={s3Url} />
+        <img src={data.coverImage?.s3Url} />
         <div className={styles.price}>
           <p> £ </p>
         </div>

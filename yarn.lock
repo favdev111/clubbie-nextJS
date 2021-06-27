@@ -1453,6 +1453,11 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.2.0.tgz#f3933a44e365864f4dad5db94158106d511e8131"
   integrity sha512-sqKVVVOe5ivCaXDWivIJYVSaEgdQK9ul7a4Kity5Iw7u9+wBAPbX1RMSnLLmp7O4Vzj0WOWwMAJsTL00xwaNug==
 
+"@hookform/resolvers@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.6.0.tgz#a4497fe33807d4ba09c34f41549f87a642550886"
+  integrity sha512-1Pbxjc4HEzATEcRsyDfkEQR/3OWaQwbemW9HTTYH+ZiLF2mzafl5Pn++65gwNnJSGzXUp5LIq3Nz2+Cz4m2U8A==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"

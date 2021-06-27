@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 
 function MyTeam({ active, setactive, userTeams, user }) {
   const userTeamRoles = [];
-  user.teams.map((i) => {
+  user?.teams.map((i) => {
     userTeamRoles.push(i.role);
   });
   return (
