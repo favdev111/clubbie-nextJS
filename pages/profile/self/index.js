@@ -9,17 +9,7 @@ import Users from "@api/services/Users";
 import Clubs from "@api/services/Clubs";
 import HTTPClient from "@api/HTTPClient";
 
-function ProfilePage({ requiredCookiesToSet, user, posts, clubs }) {
-  // set cookies on client
-  if (requiredCookiesToSet?.tokens) {
-    auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
-      expires: new Date(requiredCookiesToSet.tokens.access.expiry),
-    });
-    auth.setRefreshToken(requiredCookiesToSet.tokens.refresh.token, {
-      expires: new Date(requiredCookiesToSet.tokens.refresh.expiry),
-    });
-  }
-
+function ProfilePage({ user, posts, clubs }) {
   return (
     <Layout>
       <Seo title="My Profile" desc="Lorem ipsum dolor sit amet" />

@@ -9,17 +9,7 @@ import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Content from "@page/content";
 
-function ContentDetails({ requiredCookiesToSet, post }) {
-  // set cookies on client
-  if (requiredCookiesToSet?.tokens) {
-    auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
-      expires: new Date(requiredCookiesToSet.tokens.access.expiry),
-    });
-    auth.setRefreshToken(requiredCookiesToSet.tokens.refresh.token, {
-      expires: new Date(requiredCookiesToSet.tokens.refresh.expiry),
-    });
-  }
-
+function ContentDetails({ post }) {
   return (
     <Layout>
       <Seo title="Content Details" desc="Lorem ipsum dolor sit amet" />

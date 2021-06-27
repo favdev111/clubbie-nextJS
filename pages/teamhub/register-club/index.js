@@ -4,19 +4,8 @@ import Seo from "@layout/seo";
 import Layout from "@layout";
 import Clubs from "@api/services/Clubs";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import auth from "@utils/helpers/auth";
 
-function TeamhubRegisterClubPage({ clubs, requiredCookiesToSet }) {
-  // set cookies on client
-  if (requiredCookiesToSet?.tokens) {
-    auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
-      expires: new Date(requiredCookiesToSet.tokens.access.expiry),
-    });
-    auth.setRefreshToken(requiredCookiesToSet.tokens.refresh.token, {
-      expires: new Date(requiredCookiesToSet.tokens.refresh.expiry),
-    });
-  }
-
+function TeamhubRegisterClubPage({ clubs }) {
   return (
     <Layout>
       <Seo title="Register a Club" desc="Lorem ipsum dolor sit amet" />
