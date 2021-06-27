@@ -21,7 +21,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   const response = await Users.GetUserProfile(userId).catch(() => false);
   const userProfile = response?.data;
-  userProfile.id = userId;
 
   const resUploadedPosts = await Users.GetUsersPosts(userId).catch(() => false); // avoid page error for now
   const userUploadedPosts = resUploadedPosts?.data;
@@ -41,7 +40,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   return {
     props: {
-      profile: userProfile,
+      profile: { ...userProfile, id: userId },
       posts,
     },
     notFound: notFound,
