@@ -15,10 +15,25 @@ const schema = yup.object().shape({
   eventDateTime: yup.string().required(),
 });
 
+const now = new Date();
+let dd = now.getDate();
+let mm = now.getMonth() + 1;
+let yyyy = now.getFullYear();
+
+if (dd < 10) {
+  dd = "0" + dd;
+}
+if (mm < 10) {
+  mm = "0" + mm;
+}
+
+const today = yyyy + "-" + mm + "-" + dd;
+
 function AddEvent({ user, token }) {
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
+  const [formMessage, setMessage] = useState();
 
   useEffect(() => {
     HTTPClient.setHeader("Authorization", `Bearer ${token}`);
@@ -76,9 +91,11 @@ function AddEvent({ user, token }) {
     await Event.CreateEvent(updateBody)
       .then((res) => {
         console.log("res => ", res);
+        setMessage("Succesfully Created");
       })
       .catch((err) => {
         console.log("err => ", err);
+        setMessage("An error... Please check form");
       });
   };
 
@@ -150,6 +167,7 @@ function AddEvent({ user, token }) {
               <input
                 className={styles.inputStyle}
                 type="date"
+                min={today}
                 required
                 {...register("eventDate", { required: true })}
               />
@@ -303,6 +321,7 @@ function AddEvent({ user, token }) {
               Post
             </button>
           </div>
+          {formMessage}
         </form>
       </div>
     </div>
