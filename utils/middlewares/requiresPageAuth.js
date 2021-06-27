@@ -2,9 +2,16 @@ import Auth from "@api/services/Auth";
 import HTTPClient from "@api/HTTPClient";
 import { parseCookies } from "@utils/helpers/parseCookies";
 
-export const requiresPageAuth = (inner) => {
+/**
+ * Requires user auth to view a page.
+ * Handles logic to keep user logged in with access/refresh tokens.
+ * Updates server side axios access header
+ * @param {Function|undefined} getPropsFunc - Next.Js server func, one of [ getServerSideProps, getStaticProps, getInitialProps ]
+ * @returns {Props}
+ */
+export const requiresPageAuth = (getPropsFunc) => {
   return async (context) => {
-    // get persitant user from cookie
+    // cookie user
     const cookies = parseCookies(context.req);
     const user = (() => {
       return typeof cookies.user === "string"
@@ -14,7 +21,7 @@ export const requiresPageAuth = (inner) => {
     const accessToken = cookies.access_token;
     const refreshToken = cookies.refresh_token;
 
-    // handle refresh tokens logic
+    // refresh tokens logic
     if (!user || !accessToken) {
       if (refreshToken) {
         await Auth.RefreshTokens({ refreshToken })
@@ -34,14 +41,15 @@ export const requiresPageAuth = (inner) => {
       }
     }
 
-    // set access header for axios, server side
+    // set axios access header, server side
     HTTPClient.setHeader(
       "Authorization",
       `Bearer ${accessToken || context?.setCookieForTokens?.access?.token}`
     );
 
+    // props for client side
     const props = await (async () => {
-      const innerProps = inner ? await inner(context) : {};
+      const innerProps = getPropsFunc ? await getPropsFunc(context) : {};
       const commonProps = { props: { user } };
       return {
         props: {

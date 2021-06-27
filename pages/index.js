@@ -20,10 +20,7 @@ const HomePage = ({ posts }) => {
 export default HomePage;
 
 export const getServerSideProps = async (ctx) => {
-  // TODO: get posts no auth
-  const cookies = parseCookies(ctx.req);
-  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
-
+  // TODO: pagination
   const response = await Posts.GetPosts({ limit: 10, page: 1 });
   const posts = response.data;
 

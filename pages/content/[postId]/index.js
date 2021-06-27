@@ -23,9 +23,6 @@ export default ContentDetails;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const postId = ctx.params.postId;
 
-  const cookies = parseCookies(ctx.req);
-  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
-
   // get posts
   const responsePost = await Posts.GetPostById(postId);
   let post = responsePost?.data;
