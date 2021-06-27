@@ -10,6 +10,7 @@
   cursor: pointer;
 }
 .cardImg {
+  max-width: 70px;
 }
 
 .cardDetail {
