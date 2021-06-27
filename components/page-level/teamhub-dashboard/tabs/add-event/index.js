@@ -1,20 +1,103 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import { useForm } from "react-hook-form";
 import cn from "classnames";
 import Link from "next/link";
-function AddEvent() {
+import Event from "@api/services/Event";
+import Teams from "@api/services/Teams";
+import HTTPClient from "@api/HTTPClient";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  title: yup.string().required(),
+  teamA: yup.string().required(),
+  eventDateTime: yup.string().required(),
+});
+
+const now = new Date();
+let dd = now.getDate();
+let mm = now.getMonth() + 1;
+let yyyy = now.getFullYear();
+
+if (dd < 10) {
+  dd = "0" + dd;
+}
+if (mm < 10) {
+  mm = "0" + mm;
+}
+
+const today = yyyy + "-" + mm + "-" + dd;
+
+function AddEvent({ user, token }) {
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
+  const [userTeams, setUserTeams] = useState([]);
+  const [formMessage, setMessage] = useState();
+
+  useEffect(() => {
+    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
+    const fetchUserTeams = async () => {
+      /* queries */
+      const arr = [];
+      user.teams.map((i) => {
+        arr.push(i.team);
+      });
+      const queries = arr.reduce((a, b) => {
+        let sum = `${a}` + `&id=${b}`;
+        return sum;
+      });
+
+      const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
+      const allUserTeams = response.data;
+      setUserTeams(allUserTeams);
+    };
+    fetchUserTeams();
+  }, []);
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   /* todo, object is nearly ready */
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    const eventDateTime =
+      data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
+
+    const teamA = data?.teamA;
+    const teamB = data?.teamB;
+    const teams = [];
+    teams.push(teamA);
+    teams.push(teamB);
+
+    const formBody = {
+      title: data?.title,
+      eventType: data?.eventType,
+      location: data?.location,
+      eventDateTime: eventDateTime,
+      teams: teams,
+    };
+    const updateBody = Object.fromEntries(
+      Object.entries(formBody).filter(([_, v]) => v != null)
+    );
+
+    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
+
+    await Event.CreateEvent(updateBody)
+      .then((res) => {
+        console.log("res => ", res);
+        setMessage("Succesfully Created");
+      })
+      .catch((err) => {
+        console.log("err => ", err);
+        setMessage("An error... Please check form");
+      });
+  };
 
   return (
     <div className={styles.addEvent}>
@@ -32,6 +115,7 @@ function AddEvent() {
             placeholder="Add title"
             {...register("title", { required: true, maxLength: 20 })}
           />
+          <p> {errors.title?.message} </p>
           {/* Todo - Like buttons below */}
           <div className={styles.eventType}>
             <div>
@@ -55,18 +139,24 @@ function AddEvent() {
           <div className={styles.formGrid}>
             <div className={styles.cell}>
               Team A
-              <select className={styles.inputStyle}>
-                <option {...register("teamA", { required: true })}>
-                  Team 1
-                </option>
+              <select
+                {...register("teamA", { required: true })}
+                className={styles.inputStyle}
+              >
+                {userTeams.map((i) => (
+                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
+                    {i.title}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={styles.cell}>
               Team B
-              <select className={styles.inputStyle}>
-                <option {...register("teamB", { required: true })}>
-                  Team 2
-                </option>
+              <select
+                {...register("teamB", { required: true })}
+                className={styles.inputStyle}
+              >
+                <option value="60d371268ffc8b40e175fb4b">Team 2</option>
               </select>
             </div>
 
@@ -75,6 +165,8 @@ function AddEvent() {
               <input
                 className={styles.inputStyle}
                 type="date"
+                min={today}
+                required
                 {...register("eventDate", { required: true })}
               />
             </div>
@@ -83,15 +175,14 @@ function AddEvent() {
               <input
                 className={styles.inputStyle}
                 type="time"
+                required
                 {...register("eventDateTime", { required: true })}
               />
             </div>
             <div className={styles.cell}>
               Who?
               <select className={styles.inputStyle}>
-                <option {...register("createdBy", { required: true })}>
-                  1
-                </option>
+                <option {...register("createdBy")}>1</option>
               </select>
             </div>
             <div className={styles.cell}>
@@ -99,6 +190,7 @@ function AddEvent() {
               <input
                 className={styles.inputStyle}
                 type="text"
+                required
                 {...register("location", { required: true })}
               />
             </div>
@@ -198,7 +290,7 @@ function AddEvent() {
               <input
                 className={styles.inputStyle}
                 type="date"
-                {...register("firstEventStartDate", { required: true })}
+                {...register("firstEventStartDate", { required: false })}
               />
             </div>
             <div className={styles.cell}>
@@ -207,12 +299,12 @@ function AddEvent() {
                 className={styles.inputStyle}
                 defaultValue="0"
                 type="number"
-                {...register("totalEvents", { required: true })}
+                {...register("totalEvents")}
               />
             </div>
           </div>
           <div className={styles.cell}>
-            Add files
+            Cover Image
             <div className={styles.file}>
               {/* Todo */}
               {/*               <input
@@ -223,14 +315,11 @@ function AddEvent() {
             </div>
           </div>
           <div className={styles.formSubmit}>
-            <button
-              type="submit"
-              onClick={() => onSubmit()}
-              className={styles.button}
-            >
+            <button type="submit" className={styles.button}>
               Post
             </button>
           </div>
+          {formMessage}
         </form>
       </div>
     </div>

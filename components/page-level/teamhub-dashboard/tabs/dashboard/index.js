@@ -10,7 +10,7 @@ import Teams from "@api/services/Teams";
 import HTTPClient from "@api/HTTPClient";
 
 function Dashboard({ user, token, activeTeam, setTeam }) {
-  const [data, setData] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState([]);
 
   useEffect(() => {
     HTTPClient.setHeader("Authorization", `Bearer ${token}`);
@@ -52,8 +52,9 @@ function Dashboard({ user, token, activeTeam, setTeam }) {
         <h1 className={styles.title}> Dashboard</h1>
         {/* teamcard */}
         <MyTeam
-          data={data}
+          data={selectedTeam}
           user={user}
+          userTeams={userTeams}
           setactive={setTeam}
           active={activeTeam}
         />

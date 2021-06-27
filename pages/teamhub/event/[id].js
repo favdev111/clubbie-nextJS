@@ -1,14 +1,11 @@
 import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import AddEvent from "@page/teamhub-dashboard/tabs/add-event";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
-import { parseCookies } from "@utils/helpers/parseCookies";
 
-function AddNewEvent({ requiredCookiesToSet, token, teams }) {
+function EventDetail({ profile, requiredCookiesToSet, posts }) {
   // set cookies on client
-  console.log(teams);
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
       expires: new Date(requiredCookiesToSet.tokens.access.expiry),
@@ -18,30 +15,41 @@ function AddNewEvent({ requiredCookiesToSet, token, teams }) {
     });
   }
 
-  const authUser = auth.getUser();
-
   return (
     <Layout>
-      <Seo title="Dashboard" desc="Lorem ipsum dolor sit amet" />
-      <AddEvent user={authUser} token={token} />
+      <Seo title="User Profile" desc="Lorem ipsum dolor sit amet" />
     </Layout>
   );
 }
 
-export default AddNewEvent;
+export default EventDetail;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
+  const id = ctx.params.id;
+  console.log(ctx.params);
+
   const requiredCookiesToSet = {
     tokens: ctx.setCookieForTokens || false,
-    /* Not done yet */
   };
+  /*   const response = await Users.GetUserProfile(userId);
+  const userProfile = response.data;
 
-  const cookies = parseCookies(ctx.req);
+  const resUploadedPosts = await Users.GetUsersPosts(userId);
+  const userUploadedPosts = resUploadedPosts.data;
+  const resLikedPosts = await Users.GetLikedPosts(userId);
+  const userLikedPosts = resLikedPosts.data;
+  const resRepostedPosts = await Users.GetRepostedPosts(userId);
+  const userRepostedPosts = resRepostedPosts.data;
+  const posts = {
+    uploaded: userUploadedPosts,
+    liked: userLikedPosts,
+    reposted: userRepostedPosts,
+  };
+ */
 
   return {
     props: {
       requiredCookiesToSet,
-      token: cookies.access_token,
     },
   };
 });
