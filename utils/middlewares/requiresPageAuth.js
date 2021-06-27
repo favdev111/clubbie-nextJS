@@ -64,6 +64,7 @@ export const requiresPageAuth = (getPropsFunc) => {
           ...innerProps?.props,
           ...commonProps.props,
         },
+        notFound: innerProps?.notFound,
       };
     })();
 

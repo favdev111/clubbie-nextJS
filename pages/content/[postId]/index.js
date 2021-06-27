@@ -24,7 +24,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const postId = ctx.params.postId;
 
   // get posts
-  const responsePost = await Posts.GetPostById(postId);
+  const responsePost = await Posts.GetPostById(postId).catch(() => false);
   let post = responsePost?.data;
 
   // get comments
