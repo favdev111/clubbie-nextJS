@@ -30,12 +30,14 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
 
-  const response = await Clubs.Get(clubId);
-  const club = response.data[0];
+  const response = await Clubs.Get(clubId).catch(() => false);
+  const club = response?.data[0];
+  const notFound = !clubs;
 
   return {
     props: {
       club,
     },
+    notFound: notFound,
   };
 });

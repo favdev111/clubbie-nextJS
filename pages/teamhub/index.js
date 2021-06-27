@@ -54,14 +54,17 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
 
-  const response = await Clubs.Fetch();
-  const clubs = response.data;
+  const response = await Clubs.Fetch().catch(() => false);
+  const clubs = response?.data;
+
+  const notFound = !clubs;
 
   return {
     props: {
       requiredCookiesToSet,
-      clubs: clubs.results,
-      token: cookies.access_token,
+      clubs: clubs?.results,
+      token: cookies?.access_token,
     },
+    notFound: notFound,
   };
 });

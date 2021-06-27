@@ -31,13 +31,15 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     tokens: ctx.setCookieForTokens || false,
   };
 
-  const response = await Clubs.Fetch();
-  const clubs = response.data;
+  const response = await Clubs.Fetch().catch(() => false);
+  const clubs = response?.data;
+  const notFound = !clubs;
 
   return {
     props: {
       requiredCookiesToSet,
       clubs: clubs.results,
     },
+    notFound: notFound,
   };
 });
