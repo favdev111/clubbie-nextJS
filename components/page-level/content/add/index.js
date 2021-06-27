@@ -40,9 +40,6 @@ function ContentAdd() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // set access header
-    HTTPClient.setHeader("Authorization", `Bearer ${auth?.getAccessToken()}`);
-
     if (!media || !title || !description || !sport || !tagSomeone) {
       alert("All fields are required"); // Todo: handle these properly
       return;

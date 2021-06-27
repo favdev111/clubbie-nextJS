@@ -23,6 +23,7 @@ function ProfilePage({ user, clubs }) {
 export default ProfilePage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
+  const cookies = parseCookies(ctx.req);
   const user = (() => {
     return typeof cookies.user === "string"
       ? JSON.parse(cookies.user)

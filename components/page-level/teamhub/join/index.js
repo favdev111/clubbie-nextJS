@@ -4,10 +4,8 @@ import { useRouter } from "next/router";
 import CommonSearch from "@sub/search";
 import Button from "@sub/button";
 import LeftArrow from "@svg/left-arrow";
-import HTTPClient from "@api/HTTPClient";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
-import auth from "@utils/helpers/auth";
 import styles from "./join.module.css";
 
 function Join({ title, clubs, teams, selectedClub, register }) {
@@ -44,9 +42,6 @@ function Join({ title, clubs, teams, selectedClub, register }) {
       return;
     }
     if (selectedClub && teams) {
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
       Clubs.JoinClub(selectedClub?.id)
         .then(() => {
           Teams.JoinTeam(item?.id)
@@ -67,9 +62,6 @@ function Join({ title, clubs, teams, selectedClub, register }) {
     if (!register) return;
     if (clubs && newClubTitle?.length > 0) {
       // create a new club
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
       Clubs.RegisterClub({
         title: newClubTitle,
       })
@@ -84,9 +76,6 @@ function Join({ title, clubs, teams, selectedClub, register }) {
     }
     if (teams && selectedClub && newTeamTitle?.length > 0) {
       // create a new team
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
       Teams.RegisterTeam(selectedClub?.id, {
         title: newTeamTitle,
       })
