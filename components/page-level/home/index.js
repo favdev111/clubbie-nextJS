@@ -47,22 +47,25 @@ function Home({ posts }) {
         </div>
       </div>
 
-      <Link href="/content">
-        <a>
-          <div className={styles.addContent}>
-            <div className={styles.addButton}>
-              <a>
-                <PlusTurk />
-              </a>
-              Add Content
+      <span>
+        <Link href="/content">
+          <a>
+            <div className={styles.addContent}>
+              <div className={styles.addButton}>
+                <a>
+                  <PlusTurk />
+                </a>
+                Add Content
+              </div>
             </div>
-          </div>
-        </a>
-      </Link>
+          </a>
+        </Link>
+      </span>
 
-      {posts.map((post, index) => (
-        <HomeVideosCard key={post + index} data={post} />
-      ))}
+      {posts &&
+        posts.map((post, index) => (
+          <HomeVideosCard key={post + index} data={post} />
+        ))}
     </div>
   );
 }
