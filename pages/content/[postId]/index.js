@@ -40,17 +40,26 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const cookies = parseCookies(ctx.req);
   HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
 
+  // get posts
   const responsePost = await Posts.GetPostById(postId);
-  let post = responsePost.data;
+  let post = responsePost?.data;
 
-  const responsePostComments = await Comments.GetComments(postId);
-  const comments = responsePostComments.data;
-  post.comments = comments;
+  // get comments
+  const responsePostComments = await Comments.GetComments(postId).catch(
+    () => false
+  );
+  const comments = responsePostComments?.data;
+
+  // validate both are found
+  const notFound = !post || !comments;
+
+  if (!notFound) post.comments = comments;
 
   return {
     props: {
       requiredCookiesToSet,
       post,
     },
+    notFound: notFound,
   };
 });

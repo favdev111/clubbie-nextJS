@@ -7,7 +7,7 @@ import { parseCookies } from "@utils/helpers/parseCookies";
 import HTTPClient from "@api/HTTPClient";
 import Content from "@page/content";
 
-function ContentAdd({ requiredCookiesToSet, user }) {
+function ContentAdd({ requiredCookiesToSet }) {
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -20,7 +20,7 @@ function ContentAdd({ requiredCookiesToSet, user }) {
 
   return (
     <Layout>
-      <Seo title="Add Content Profile" desc="Lorem ipsum dolor sit amet" />
+      <Seo title="Add Content" desc="Lorem ipsum dolor sit amet" />
       <Content addMode />
     </Layout>
   );
@@ -33,17 +33,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     tokens: ctx.setCookieForTokens || false,
   };
 
-  const cookies = parseCookies(ctx.req);
-  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
-  const user = (() => {
-    return typeof cookies.user === "string"
-      ? JSON.parse(cookies.user)
-      : cookies.user;
-  })();
-
   return {
-    props: {
-      user,
-    },
+    props: { requiredCookiesToSet },
   };
 });
