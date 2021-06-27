@@ -32,7 +32,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
 
   const response = await Clubs.Get(clubId).catch(() => false);
   const club = response?.data[0];
-  const notFound = !clubs;
+  const notFound = !club;
 
   return {
     props: {
