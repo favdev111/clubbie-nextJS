@@ -17,12 +17,15 @@ function ProfilePostCard({ post }) {
   //   },
   //   title: "Football",
   // };
+
   return (
     <div className={styles.profilePhotosItem}>
       {post.contentType === "video" && (
-        <video src={post?.thumbnail?.s3Url}></video>
+        <video src={post?.thumbnail?.s3Url || post?.media?.s3Url}></video>
       )}
-      {post.contentType === "image" && <img src={post?.thumbnail?.s3Url}></img>}
+      {post.contentType === "image" && (
+        <img src={post?.thumbnail?.s3Url || post?.media?.s3Url}></img>
+      )}
       <div className={styles.profilePhotosOptions}>
         <a>
           <EditPhotoSVG />

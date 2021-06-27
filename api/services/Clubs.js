@@ -2,7 +2,7 @@ import HTTPClient from "@api/HTTPClient";
 
 export default class ClubManagementRoutes {
   static async Fetch(query) {
-    return HTTPClient.get(`/clubs`, query);
+    return HTTPClient.get(`/clubs?${new URLSearchParams(query).toString()}`);
   }
 
   static async Get(id) {

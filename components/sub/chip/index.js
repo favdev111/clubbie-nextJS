@@ -2,7 +2,14 @@ import React from "react";
 import cn from "classnames";
 import styles from "./chip.module.css";
 
-const Chip = ({ component, text, image, onCloseClick, background }) => {
+const Chip = ({
+  component,
+  text,
+  image,
+  onCloseClick,
+  background,
+  roundedImage,
+}) => {
   return (
     <div
       className={cn(
@@ -17,7 +24,10 @@ const Chip = ({ component, text, image, onCloseClick, background }) => {
         <>
           {image && (
             <div className={styles.chipHead}>
-              <img src={image} />
+              <img
+                src={image}
+                className={roundedImage && styles.roundedImage}
+              />
             </div>
           )}
           <div className={styles.chipContent}>{text}</div>

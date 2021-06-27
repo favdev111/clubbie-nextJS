@@ -6,8 +6,6 @@ import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
 import Files from "@api/services/Files";
 import Posts from "@api/services/Posts";
-import HTTPClient from "@api/HTTPClient";
-import auth from "@utils/helpers/auth";
 import sports from "@utils/fixedValues/sports";
 import styles from "./contentAdd.module.css";
 import UploadSVG from "@svg/upload";
@@ -40,9 +38,6 @@ function ContentAdd() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // set access header
-    HTTPClient.setHeader("Authorization", `Bearer ${auth?.getAccessToken()}`);
-
     if (!media || !title || !description || !sport || !tagSomeone) {
       alert("All fields are required"); // Todo: handle these properly
       return;

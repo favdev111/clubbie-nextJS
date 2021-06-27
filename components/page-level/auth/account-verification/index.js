@@ -21,14 +21,10 @@ const AccountVerif = () => {
     }
     setError("");
 
-    // make api call, set client side axios header
-    HTTPClient.setHeader(
-      "Authorization",
-      `Bearer ${authUser.getAccessToken()}`
-    );
+    // make api call
     Auth.ActivateAccount({ activationCode })
       .then((res) => {
-        authUser.setUser(res.data.user);
+        authUser.setUser(res.data.user); // Todo: make this cookie to not expire
         setError("");
         Router.push("/"); // redirect to home
       })

@@ -36,7 +36,7 @@ const SignUp = () => {
     })
       .then((res) => {
         authUser.setUser(res.data.user, {
-          expires: new Date(res.data.tokens.access.expiry),
+          expires: new Date(res.data.tokens.refresh.expiry),
         });
         authUser.setAccessToken(res.data.tokens.access.token, {
           expires: new Date(res.data.tokens.access.expiry),
@@ -100,7 +100,7 @@ const SignUp = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/login">
+      <Link href="/auth/login">
         <div className={styles.signUp}>
           Already have an account?<a className="signUp">&ensp;Login Here</a>
         </div>

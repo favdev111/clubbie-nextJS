@@ -21,16 +21,14 @@ export default TeamhubJoinTeamPage;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const clubId = ctx.params.clubId; // get club id from params
 
-  const cookies = parseCookies(ctx.req);
-
-  HTTPClient.setHeader("Authorization", `Bearer ${cookies.access_token}`);
-
-  const response = await Clubs.Get(clubId);
-  const club = response.data[0];
+  const response = await Clubs.Get(clubId).catch(() => false);
+  const club = response?.data[0];
+  const notFound = !club;
 
   return {
     props: {
       club,
     },
+    notFound: notFound,
   };
 });

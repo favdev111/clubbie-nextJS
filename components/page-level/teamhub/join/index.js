@@ -4,21 +4,19 @@ import { useRouter } from "next/router";
 import CommonSearch from "@sub/search";
 import Button from "@sub/button";
 import LeftArrow from "@svg/left-arrow";
-import HTTPClient from "@api/HTTPClient";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
-import auth from "@utils/helpers/auth";
 import styles from "./join.module.css";
 
 function Join({ title, clubs, teams, selectedClub, register }) {
   const router = useRouter();
-
+  console.log(clubs);
   const [listItems, setlistItems] = useState(clubs || teams);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
 
   const filterList = (searchText) => {
-    if (searchText.trim().length > 0) {
+    if (searchText?.trim().length > 0) {
       const filtered = (clubs || teams).filter(
         (x) => x.title.toLowerCase().indexOf(searchText.toLowerCase()) > -1
       );
@@ -38,18 +36,15 @@ function Join({ title, clubs, teams, selectedClub, register }) {
 
   const handleItemClick = (item) => {
     if (clubs) {
-      !register && router.push(`/teamhub/join-club/${item.id}/join-team`);
+      !register && router.push(`/teamhub/join-club/${item?.id}/join-team`);
       register &&
-        router.push(`/teamhub/register-club/${item.id}/register-team`);
+        router.push(`/teamhub/register-club/${item?.id}/register-team`);
       return;
     }
     if (selectedClub && teams) {
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
-      Clubs.JoinClub(selectedClub.id)
+      Clubs.JoinClub(selectedClub?.id)
         .then(() => {
-          Teams.JoinTeam(item.id)
+          Teams.JoinTeam(item?.id)
             .then(() => {
               router.push("/profile/self"); // redirect to profile
             })
@@ -65,34 +60,28 @@ function Join({ title, clubs, teams, selectedClub, register }) {
 
   const handleRegisterClick = () => {
     if (!register) return;
-    if (clubs && newClubTitle.length > 0) {
+    if (clubs && newClubTitle?.length > 0) {
       // create a new club
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
       Clubs.RegisterClub({
         title: newClubTitle,
       })
         .then((res) => {
           console.log("res createing club => ", res);
           const club = res.data;
-          router.push(`/teamhub/register-club/${club.id}/register-team`);
+          router.push(`/teamhub/register-club/${club?.id}/register-team`);
         })
         .catch((err) => {
           console.log("err creating club => ", err); // TODO: show error
         });
     }
-    if (teams && selectedClub && newTeamTitle.length > 0) {
+    if (teams && selectedClub && newTeamTitle?.length > 0) {
       // create a new team
-      const accessToken = auth.getAccessToken();
-      HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
-
-      Teams.RegisterTeam(selectedClub.id, {
+      Teams.RegisterTeam(selectedClub?.id, {
         title: newTeamTitle,
       })
         .then((res) => {
           console.log("res creating team => ", res);
-          const team = res.data;
+          // const team = res.data;
           router.push(`/profile/self`); // TODO: show success msg
         })
         .catch((err) => {
@@ -106,8 +95,13 @@ function Join({ title, clubs, teams, selectedClub, register }) {
       {teams && selectedClub && (
         <div className={styles.mobileCurrent}>
           <div>
-            <img src={selectedClub.crest || "/assets/aondimentum.svg"} />
-            <p> {selectedClub.title}</p>
+            <img
+              src={
+                selectedClub?.crest?.s3Url ||
+                "/assets/club-badge-placeholder.png"
+              }
+            />
+            <p> {selectedClub?.title}</p>
           </div>
         </div>
       )}
@@ -122,8 +116,14 @@ function Join({ title, clubs, teams, selectedClub, register }) {
           <h1> {title} </h1>
           {teams && selectedClub && (
             <div className={styles.joinHeaderCurrent}>
-              <img src={selectedClub.crest || "/assets/aondimentum.svg"} />
-              {selectedClub.title}
+              <img
+                src={
+                  selectedClub?.crest?.s3Url ||
+                  "/assets/club-badge-placeholder.png"
+                }
+                className={styles.selectedClubImage}
+              />
+              {selectedClub?.title}
             </div>
           )}
         </div>
@@ -164,19 +164,20 @@ function Join({ title, clubs, teams, selectedClub, register }) {
                 className={styles.joinListItem}
                 onClick={(e) => handleItemClick(item)}
               >
-                <img src={item.crest || "/assets/team1.png"} />
-                {item.title}
+                <img
+                  src={
+                    item?.crest?.s3Url || "/assets/club-badge-placeholder.png"
+                  }
+                  className={styles.crestImage}
+                />
+                {item?.title}
               </li>
             ))}
         </ul>
       </div>
       <div className={styles.mobileButtons}>
-        <Link href="/">
-          <a> Go back </a>
-        </Link>
-        <Link href="/">
-          <a> Skip </a>
-        </Link>
+        <Link href="/">Go back</Link>
+        <Link href="/">Skip</Link>
       </div>
     </div>
   );

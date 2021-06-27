@@ -10,7 +10,6 @@ import Avatar from "@sub/avatar";
 import Button from "@sub/button";
 import Files from "@api/services/Files";
 import Users from "@api/services/Users";
-import HTTPClient from "@api/HTTPClient";
 import auth from "@utils/helpers/auth";
 import playerTitles from "@utils/fixedValues/playerTitles";
 import countries from "@utils/fixedValues/countries";
@@ -43,9 +42,6 @@ function ProfileEdit({ profile, clubs }) {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     console.log("Remove these clubs => ", clubsToRemove);
-
-    // set access header
-    HTTPClient.setHeader("Authorization", `Bearer ${auth.getAccessToken()}`);
 
     // POST: files/upload
     let imageIdToUpload = null;
@@ -81,7 +77,7 @@ function ProfileEdit({ profile, clubs }) {
     await Users.UpdateProfile(updateBody)
       .then((res) => {
         console.log("res => ", res);
-        auth.setUser(res.data);
+        auth.setUser(res.data); // TODO: make this cookies to not expire
         router.push("/profile/self");
       })
       .catch((err) => {
@@ -220,6 +216,7 @@ function ProfileEdit({ profile, clubs }) {
                 image={
                   club?.crest?.s3Url || "/assets/club-badge-placeholder.png"
                 }
+                roundedImage
                 text={club.title}
                 onCloseClick={() => removeClub(club.id)}
               />

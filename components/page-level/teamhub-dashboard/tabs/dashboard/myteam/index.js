@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+import PlusTurkSVG from "@svg/plus-turk";
 import TeamCard from "./card";
 import styles from "./index.module.css";
 
@@ -18,7 +20,14 @@ function MyTeam({ active, setactive, data }) {
   return (
     <>
       <div className={styles.myTeam}>
-        <h3> My team</h3>
+        <div className={styles.myTeamFlex}>
+          <h3>My team</h3>
+          <Link href="/teamhub/initial">
+            <span className={styles.teamhubInitial}>
+              <PlusTurkSVG></PlusTurkSVG>
+            </span>
+          </Link>
+        </div>
         <div className={styles.myTeamFlex}>
           {myTeams.map((team, index) => (
             <TeamCard

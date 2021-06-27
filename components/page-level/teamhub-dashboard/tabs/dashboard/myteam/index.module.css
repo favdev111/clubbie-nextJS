@@ -1,6 +1,10 @@
 .myTeamFlex {
   display: flex;
 }
+.teamhubInitial {
+  margin-left: 15px;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1684px) and (min-width: 1024px) {
 }

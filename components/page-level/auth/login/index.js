@@ -32,7 +32,7 @@ const Login = () => {
     })
       .then((res) => {
         authUser.setUser(res.data.user, {
-          expires: new Date(res.data.tokens.access.expiry),
+          expires: new Date(res.data.tokens.refresh.expiry),
         });
         authUser.setAccessToken(res.data.tokens.access.token, {
           expires: new Date(res.data.tokens.access.expiry),
@@ -76,8 +76,8 @@ const Login = () => {
           </Alert>
         )}
         <div className={styles.formAct}>
-          <Link href="/recovery-pass">
-            <a className={styles.forgotPass}>Forgot Password?</a>
+          <Link href="/auth/recovery-pass">
+            <span className={styles.whiteColor}>Forgot Password?</span>
           </Link>
           <Button>Login</Button>
         </div>

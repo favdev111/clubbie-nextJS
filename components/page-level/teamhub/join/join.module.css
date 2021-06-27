@@ -85,6 +85,14 @@
 .mobileButtons {
   display: none;
 }
+.selectedClubImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.crestImage {
+  border-radius: 50%;
+}
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .join {
