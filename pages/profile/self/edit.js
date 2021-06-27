@@ -22,7 +22,11 @@ function ProfilePage({ requiredCookiesToSet, user, clubs }) {
   return (
     <Layout>
       <Seo title="Edit Profile" desc="Edit Your Public Profile on Clubbie" />
-      <ProfileSelf profile={user?.profile} clubs={clubs} editMode />
+      <ProfileSelf
+        profile={{ ...user?.profile, id: user?.id }}
+        clubs={clubs}
+        editMode
+      />
     </Layout>
   );
 }
@@ -43,8 +47,10 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   })();
 
   const clubIds = user.clubs.map((c) => c.club);
-  const userClubs = await Clubs.GetClubsWithDetails(clubIds);
-  const clubs = userClubs.data;
+  const userClubs = await Clubs.GetClubsWithDetails(clubIds).catch(() => false);
+  const clubs = userClubs?.data || [];
+
+  const notFound = !user;
 
   return {
     props: {
@@ -52,5 +58,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
       user,
       clubs,
     },
+    notFound: notFound,
   };
 });

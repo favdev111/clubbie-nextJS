@@ -18,7 +18,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
           <ProfileInfo
             image={profile?.image?.s3Url || "/assets/person-placeholder.jpg"}
             isPublic={isPublic}
-            footballerName={profile?.fullName}
+            footballerName={profile?.fullName || profile?.id}
             playerTitle={profile?.playerTitle}
             clubs={clubs}
           />

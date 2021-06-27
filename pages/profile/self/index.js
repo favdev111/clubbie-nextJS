@@ -23,7 +23,11 @@ function ProfilePage({ requiredCookiesToSet, user, posts, clubs }) {
   return (
     <Layout>
       <Seo title="My Profile" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf profile={user?.profile} posts={posts} clubs={clubs} />
+      <ProfileSelf
+        profile={{ ...user?.profile, id: user?.id }}
+        posts={posts}
+        clubs={clubs}
+      />
     </Layout>
   );
 }
@@ -43,21 +47,27 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
       : cookies.user;
   })();
 
-  const resUploadedPosts = await Users.GetUsersPosts(user.id);
-  const userUploadedPosts = resUploadedPosts.data;
-  const resLikedPosts = await Users.GetLikedPosts(user.id);
-  const userLikedPosts = resLikedPosts.data;
-  const resRepostedPosts = await Users.GetRepostedPosts(user.id);
-  const userRepostedPosts = resRepostedPosts.data;
+  const resUploadedPosts = await Users.GetUsersPosts(user.id).catch(
+    () => false
+  ); // avoid page error for now
+  const userUploadedPosts = resUploadedPosts?.data;
+  const resLikedPosts = await Users.GetLikedPosts(user.id).catch(() => false); // avoid page error for now
+  const userLikedPosts = resLikedPosts?.data;
+  const resRepostedPosts = await Users.GetRepostedPosts(user.id).catch(
+    () => false
+  ); // avoid page error for now
+  const userRepostedPosts = resRepostedPosts?.data;
   const posts = {
-    uploaded: userUploadedPosts,
-    liked: userLikedPosts,
-    reposted: userRepostedPosts,
+    uploaded: userUploadedPosts || [],
+    liked: userLikedPosts || [],
+    reposted: userRepostedPosts || [],
   };
 
   const clubIds = user.clubs.map((c) => c.club);
-  const userClubs = await Clubs.GetClubsWithDetails(clubIds);
-  const clubs = userClubs.data;
+  const userClubs = await Clubs.GetClubsWithDetails(clubIds).catch(() => false);
+  const clubs = userClubs?.data || [];
+
+  const notFound = !user;
 
   return {
     props: {
@@ -66,5 +76,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
       posts,
       clubs,
     },
+    notFound: notFound,
   };
 });

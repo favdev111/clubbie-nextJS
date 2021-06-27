@@ -33,22 +33,25 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const requiredCookiesToSet = {
     tokens: ctx.setCookieForTokens || false,
   };
-  const response = await Users.GetUserProfile(userId);
-  const userProfile = response.data;
+  const response = await Users.GetUserProfile(userId).catch(() => false);
+  const userProfile = response?.data;
+  userProfile.id = userId;
 
-  const resUploadedPosts = await Users.GetUsersPosts(userId);
-  const userUploadedPosts = resUploadedPosts.data;
-  const resLikedPosts = await Users.GetLikedPosts(userId);
-  const userLikedPosts = resLikedPosts.data;
-  const resRepostedPosts = await Users.GetRepostedPosts(userId);
-  const userRepostedPosts = resRepostedPosts.data;
+  const resUploadedPosts = await Users.GetUsersPosts(userId).catch(() => false); // avoid page error for now
+  const userUploadedPosts = resUploadedPosts?.data;
+  const resLikedPosts = await Users.GetLikedPosts(userId).catch(() => false); // avoid page error for now
+  const userLikedPosts = resLikedPosts?.data;
+  const resRepostedPosts = await Users.GetRepostedPosts(userId).catch(
+    () => false
+  ); // avoid page error for now
+  const userRepostedPosts = resRepostedPosts?.data;
   const posts = {
-    uploaded: userUploadedPosts,
-    liked: userLikedPosts,
-    reposted: userRepostedPosts,
+    uploaded: userUploadedPosts || [],
+    liked: userLikedPosts || [],
+    reposted: userRepostedPosts || [],
   };
 
-  console.log(posts);
+  const notFound = !userProfile;
 
   return {
     props: {
@@ -56,5 +59,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
       profile: userProfile,
       posts,
     },
+    notFound: notFound,
   };
 });
