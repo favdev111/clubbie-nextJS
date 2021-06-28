@@ -1,0 +1,66 @@
+.alertWrapper {
+  display: flex;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+  border-radius: 4px;
+  letter-spacing: 0.01071em;
+}
+.errorAlert {
+  color: var(--c-white);
+  background-color: var(--c-red);
+}
+.warningAlert {
+  color: var(--c-white);
+  background-color: var(--c-yellow);
+}
+.successAlert {
+  color: var(--c-white);
+  background-color: var(--c-green);
+}
+.infoAlert {
+  color: var(--c-white);
+  background-color: var(--c-black-50);
+}
+.alertIconWrapper {
+  display: flex;
+  opacity: 0.9;
+  padding: 7px 0;
+  font-size: 22px;
+  margin-right: 12px;
+}
+.alertIcon {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex-shrink: 0;
+  user-select: none;
+}
+.alertBodyWrapper {
+  padding: 8px 0;
+}
+
+.threeDotsAnimation::after {
+  display: inline-block;
+  animation: dotty steps(1, end) 1s infinite;
+  content: "";
+}
+
+@keyframes dotty {
+  0% {
+    content: ".";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: "...";
+  }
+  100% {
+    content: "";
+  }
+}
