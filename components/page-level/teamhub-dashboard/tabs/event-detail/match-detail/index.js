@@ -6,7 +6,7 @@ import MatchCard from "@sub/match-card";
 function MatchDetail() {
   return (
     <div className={styles.matchDetail}>
-      <MatchCard
+      {/*     <MatchCard
         data={{
           hometeam: { name: "Shottery", src: "./assets/team1.png" },
           awayteam: { name: "Men's", src: "./assets/team2.png" },
@@ -18,7 +18,7 @@ function MatchDetail() {
           kickoff: "01:00 PM",
           place: "Shottery Fields, Stratfort",
         }}
-      />
+      /> */}
     </div>
   );
 }

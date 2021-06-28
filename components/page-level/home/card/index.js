@@ -5,7 +5,7 @@ import SocialButton from "@sub/social-button";
 import cn from "classnames";
 
 function HomeVideosCard({ data }) {
-  const { id, description, media, avatar, author, createdAt } = data;
+  const { id, description, media, author, createdAt } = data;
 
   return (
     <div className={styles.videoCard}>
@@ -21,12 +21,14 @@ function HomeVideosCard({ data }) {
       </Link>
       <div className={styles.cardInfoHeader}>
         <div className={styles.cardInfoProfile}>
-          <img src={avatar || "/assets/person-placeholder.jpg"} />
+          <img
+            src={author?.profile?.image || "/assets/person-placeholder.jpg"}
+          />
           <div className={styles.avatarInfo}>
-            <p className="text-18"> {author || "author name"}</p>
-            <p className="opacity-50">
-              {new Date("2021-06-14T21:07:10.087Z").toLocaleString()}
+            <p className="text-18">
+              {author?.profile?.fullName || "author name"}
             </p>
+            <p className="opacity-50">{new Date(createdAt).toLocaleString()}</p>
           </div>
         </div>
         <SocialButton type="upload" />

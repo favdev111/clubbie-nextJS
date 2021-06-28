@@ -4,9 +4,8 @@ import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub-dashboard";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import auth from "@utils/helpers/auth";
 
-function TeamhubDashboard({ user, activeTeam, setTeam }) {
+function TeamhubEvent({ user, activeTeam, setTeam }) {
   useEffect(() => {
     if (user?.clubs.length === 0) {
       Router.push("./teamhub/initial");
@@ -25,6 +24,6 @@ function TeamhubDashboard({ user, activeTeam, setTeam }) {
   );
 }
 
-export default TeamhubDashboard;
+export default TeamhubEvent;
 
 export const getServerSideProps = requiresPageAuth();

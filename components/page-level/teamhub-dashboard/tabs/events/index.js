@@ -7,12 +7,10 @@ import Link from "next/link";
 import Event from "@api/services/Event";
 import HTTPClient from "@api/HTTPClient";
 
-function Events({ activeTeam, user, token }) {
+function Events({ activeTeam, user }) {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
-
     /* Not done yet */
     const fetchEvents = async () => {
       const teamQuery = {
@@ -22,7 +20,7 @@ function Events({ activeTeam, user, token }) {
       setEvents(response.data.results);
     };
     fetchEvents();
-  }, []);
+  }, [activeTeam]);
 
   const date = new Date();
   const month = date.getMonth();
@@ -49,12 +47,7 @@ function Events({ activeTeam, user, token }) {
         {/* Cards */}
         <div className={styles.eventCardsRow}>
           {events.map((card) => (
-            <EventCard
-              user={user}
-              token={token}
-              key={Math.random() + 12}
-              data={card}
-            />
+            <EventCard user={user} key={Math.random() + 12} data={card} />
           ))}
         </div>
       </div>

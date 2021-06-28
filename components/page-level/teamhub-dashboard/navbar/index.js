@@ -1,6 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import styles from "./index.module.css";
+import router from "next/router";
 
 function TeamhubNav({ nav, selectedIndex, setIndex }) {
   return (
@@ -12,7 +13,13 @@ function TeamhubNav({ nav, selectedIndex, setIndex }) {
               styles.navItem,
               index == selectedIndex && styles.selected
             )}
-            onClick={() => setIndex(index)}
+            onClick={() => {
+              setIndex(index);
+              index == 0 && router.push("/teamhub");
+              index == 1 && router.push("/teamhub/event");
+              index == 2 && router.push("/teamhub/payments");
+              index == 3 && router.push("/teamhub/statistics");
+            }}
             key={item + index}
           >
             {item}

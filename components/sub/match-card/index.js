@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import Teams from "@api/services/Teams";
-import HTTPClient from "@api/HTTPClient";
 import Qs from "qs";
 
-function MatchCard({ data, token }) {
+function MatchCard({ data }) {
   const [teams, setTeams] = useState(null);
   const [query, setQuery] = useState("");
 
   /* Not done yet */
-
   useEffect(() => {
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
     const fetchPromise = new Promise((resolve, reject) => {
       const params = {
         id: [data[0].teamId, data[1].teamId],
@@ -25,15 +22,18 @@ function MatchCard({ data, token }) {
         const response = query != "" && (await Teams.GetTeamsWithDetail(query));
         setTeams(response.data);
       });
+      resolve("success!");
     });
 
-    fetchPromise.then(async () => {});
-  });
+    fetchPromise.then((value) => {
+      console.log(value);
+    });
+  }, [data]);
 
   return (
     <div className={styles.score}>
       <div className={styles.teamCard}>
-        <img src={teams && teams[0].crest.s3Url} />
+        <img src={teams && teams[0].crest?.s3Url} />
         {teams && teams[0].title}
       </div>
 
@@ -45,7 +45,7 @@ function MatchCard({ data, token }) {
 
       {/* Away Team */}
       <div className={styles.teamCard}>
-        <img src={teams && teams[1].crest.s3Url} />
+        <img src={teams && teams[1].crest?.s3Url} />
         {teams && teams[1]?.title}
       </div>
     </div>
