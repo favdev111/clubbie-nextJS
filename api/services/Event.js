@@ -9,8 +9,8 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/edit`, payload);
   }
 
-  static async CancelEventbyId(id, payload) {
-    return HTTPClient.patch(`/event/${id}/cancel`, payload);
+  static async CancelEventbyId(id) {
+    return HTTPClient.patch(`/event/${id}/cancel`);
   }
 
   static async SetAvailability(id, payload) {

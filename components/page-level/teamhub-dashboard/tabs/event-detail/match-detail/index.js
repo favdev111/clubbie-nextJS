@@ -10,9 +10,9 @@ function MatchDetail({ data }) {
     <div className={styles.matchDetail}>
       <div className={styles.score}>
         <div className={styles.teamCard}>
-          <img src={data.teams[0].teamId.crest} />
+          {data && <img src={data.teams[0].teamId.crest} />}
 
-          {data.teams[0].teamId.title}
+          {data && data?.teams[0].teamId.title}
         </div>
 
         {/* Middle */}
@@ -23,31 +23,31 @@ function MatchDetail({ data }) {
 
         {/* Away Team */}
         <div className={styles.teamCard}>
-          <img src={data.teams[1].teamId.crest} />
+          {data && <img src={data?.teams[1].teamId.crest} />}
 
-          {data.teams[1].teamId.title}
+          {data && data?.teams[1].teamId.title}
         </div>
       </div>
       <div className={styles.cardInfo}>
         <div className={styles.infoInner}>
           <Date />
           <p>
-            {DateTime.fromISO(data.eventDateTime, { zone: "utc" }).day}{" "}
-            {DateTime.fromISO(data.eventDateTime, { zone: "utc" }).monthShort}{" "}
-            {DateTime.fromISO(data.eventDateTime, { zone: "utc" }).year}{" "}
+            {DateTime.fromISO(data?.eventDateTime, { zone: "utc" }).day}{" "}
+            {DateTime.fromISO(data?.eventDateTime, { zone: "utc" }).monthShort}{" "}
+            {DateTime.fromISO(data?.eventDateTime, { zone: "utc" }).year}{" "}
           </p>
         </div>
         <div className={styles.infoInner}>
           <KickOff />
           <p>
-            {DateTime.fromISO(data.eventDateTime, { zone: "utc" }).hour}:
-            {DateTime.fromISO(data.eventDateTime, { zone: "utc" }).minute}{" "}
+            {DateTime.fromISO(data?.eventDateTime, { zone: "utc" }).hour}:
+            {DateTime.fromISO(data?.eventDateTime, { zone: "utc" }).minute}{" "}
             Kick-off
           </p>
         </div>
         <div className={styles.infoInner}>
           <Place />
-          <p> {data.location}</p>
+          <p> {data?.location}</p>
         </div>
       </div>
     </div>

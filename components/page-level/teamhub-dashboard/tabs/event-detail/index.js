@@ -6,13 +6,16 @@ import AvailablePlayers from "./players";
 import EditEvent from "@svg/edit-event";
 import ConfirmLineup from "@svg/confirm-lineup";
 import CancelEvent from "@svg/cancel-event";
+import { useRouter } from "next/router";
 
 import RightArrow from "@svg/right-arrow";
 
 import Event from "@api/services/Event";
 
 function EventDetail({ eventId, activeTeam, user }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
+
+  const router = useRouter();
 
   useEffect(() => {
     const teamId = user.teams[activeTeam].team;
@@ -24,9 +27,20 @@ function EventDetail({ eventId, activeTeam, user }) {
     fetchEvents();
   }, [activeTeam]);
 
+  const cancelEvent = (e) => {
+    e.preventDefault();
+    const patch = async () => {
+      const response = await Event.CancelEventbyId(eventId);
+      console.log(response);
+    };
+    patch()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className={styles.eventDetail}>
-      <h1>{data.title}</h1>
+      <h1>{data?.title}</h1>
       <DetailCover img={data?.coverImage} />
       <div className={styles.twoRows}>
         <MatchDetail data={data} />
@@ -43,7 +57,7 @@ function EventDetail({ eventId, activeTeam, user }) {
           </div>
           <RightArrow />
         </div>
-        <div className={styles.routeComponent}>
+        <div onClick={cancelEvent} className={styles.routeComponent}>
           <div className={styles.center}>
             <CancelEvent /> Cancel event
           </div>

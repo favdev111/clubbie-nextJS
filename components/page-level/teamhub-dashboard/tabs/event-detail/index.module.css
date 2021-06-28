@@ -15,6 +15,10 @@
   padding: 32px;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+}
+.routeComponent:hover {
+  background-color: var(--c-black-50);
 }
 .center {
   display: flex;
