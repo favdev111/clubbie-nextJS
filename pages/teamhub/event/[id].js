@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Layout from "@layout";
+import router from "next/router";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 import DashboardContent from "@page/teamhub-dashboard";
 
-function EventDetailPage({ user, requiredCookiesToSet, posts }) {
+function EventDetailPage({ user, requiredCookiesToSet }) {
   const [activeTeam, setTeam] = useState(0);
-
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -25,6 +25,7 @@ function EventDetailPage({ user, requiredCookiesToSet, posts }) {
         activeTeam={activeTeam}
         setTeam={setTeam}
         user={user}
+        eventId={router.router.query.id}
       ></DashboardContent>
     </Layout>
   );
@@ -32,32 +33,4 @@ function EventDetailPage({ user, requiredCookiesToSet, posts }) {
 
 export default EventDetailPage;
 
-export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const id = ctx.params.id;
-  console.log(ctx.params);
-
-  const requiredCookiesToSet = {
-    tokens: ctx.setCookieForTokens || false,
-  };
-  /*   const response = await Users.GetUserProfile(userId);
-  const userProfile = response.data;
-
-  const resUploadedPosts = await Users.GetUsersPosts(userId);
-  const userUploadedPosts = resUploadedPosts.data;
-  const resLikedPosts = await Users.GetLikedPosts(userId);
-  const userLikedPosts = resLikedPosts.data;
-  const resRepostedPosts = await Users.GetRepostedPosts(userId);
-  const userRepostedPosts = resRepostedPosts.data;
-  const posts = {
-    uploaded: userUploadedPosts,
-    liked: userLikedPosts,
-    reposted: userRepostedPosts,
-  };
- */
-
-  return {
-    props: {
-      requiredCookiesToSet,
-    },
-  };
-});
+export const getServerSideProps = requiresPageAuth();

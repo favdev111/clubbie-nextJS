@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import Teams from "@api/services/Teams";
-import HTTPClient from "@api/HTTPClient";
 import Qs from "qs";
 
 function MatchCard({ data }) {
@@ -9,7 +8,6 @@ function MatchCard({ data }) {
   const [query, setQuery] = useState("");
 
   /* Not done yet */
-
   useEffect(() => {
     const fetchPromise = new Promise((resolve, reject) => {
       const params = {
@@ -24,10 +22,13 @@ function MatchCard({ data }) {
         const response = query != "" && (await Teams.GetTeamsWithDetail(query));
         setTeams(response.data);
       });
+      resolve("success!");
     });
 
-    fetchPromise.then(async () => {});
-  });
+    fetchPromise.then((value) => {
+      console.log(value);
+    });
+  }, [data]);
 
   return (
     <div className={styles.score}>

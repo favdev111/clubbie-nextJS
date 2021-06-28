@@ -4,15 +4,29 @@ import { useForm } from "react-hook-form";
 import cn from "classnames";
 import Link from "next/link";
 import Event from "@api/services/Event";
+import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
-import HTTPClient from "@api/HTTPClient";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Training from "@svg/training";
+import Match from "@svg/match";
+import { useRouter } from "next/router";
+import UploadSVG from "@svg/upload";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
   teamA: yup.string().required(),
   eventDateTime: yup.string().required(),
+  fee: yup.number(),
+  recurring: yup.string().required(),
+  firstEventStartDate: yup.string().when("recurring", {
+    is: (val) => val == "0",
+    then: yup.string().required(),
+  }),
+  totalEvents: yup.number().when("recurring", {
+    is: (val) => val == "0",
+    then: yup.number().min(1).required(),
+  }),
 });
 
 const now = new Date();
@@ -34,6 +48,26 @@ function AddEvent({ user }) {
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
+  const [checked, setChecked] = useState(true);
+  const [media, setMedia] = useState(null);
+
+  const router = useRouter();
+
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setMedia(mediaPicked);
+      console.log("media");
+      console.log(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
 
   useEffect(() => {
     const fetchUserTeams = async () => {
@@ -57,6 +91,7 @@ function AddEvent({ user }) {
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = useForm({
@@ -65,6 +100,26 @@ function AddEvent({ user }) {
   /* todo, object is nearly ready */
 
   const onSubmit = async (data) => {
+    let mediaIdToUpload = null;
+    if (media?.src && media?.file) {
+      const mediaForm = new FormData();
+      mediaForm.append("files", media?.file);
+      await Files.UploadFile(
+        media?.src?.includes("image") && "resourceFile",
+        mediaForm
+      )
+        .then((res) => {
+          mediaIdToUpload = res?.data[0]?.s3Url;
+          console.log("media res => ", res);
+        })
+        .catch((err) => {
+          console.log("media err => ", err);
+          alert(err?.response?.data?.message); // TODO: error comp
+        });
+    }
+
+    console.log(mediaIdToUpload);
+
     const eventDateTime =
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
 
@@ -74,12 +129,27 @@ function AddEvent({ user }) {
     teams.push(teamA);
     teams.push(teamB);
 
+    const createRecurringObj = () => {
+      if (data?.recurring == 1) {
+        const obj = {
+          startDate: data?.firstEventStartDate,
+          onEvery: data?.onEvery,
+          totalEvents: data?.totalEvents,
+        };
+        return obj;
+      }
+    };
+
     const formBody = {
       title: data?.title,
       eventType: data?.eventType,
       location: data?.location,
       eventDateTime: eventDateTime,
+      message: data?.message || null,
+      fee: data?.fee || null,
       teams: teams,
+      recurring: createRecurringObj(),
+      coverImage: mediaIdToUpload,
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
@@ -87,7 +157,8 @@ function AddEvent({ user }) {
 
     await Event.CreateEvent(updateBody)
       .then((res) => {
-        console.log("res => ", res);
+        router.push(`/teamhub/event/${res.data.id}`);
+        console.log(res.data);
         setMessage("Succesfully Created");
       })
       .catch((err) => {
@@ -117,20 +188,43 @@ function AddEvent({ user }) {
           <div className={styles.eventType}>
             <div>
               <input
-                defaultChecked
+                checked={checked}
                 type="radio"
+                className={styles.eventTypeInput}
                 value="match"
                 {...register("eventType", { required: true })}
               />
-              <label htmlFor="match"> Match</label>
+              <label
+                className={cn(styles.eventTypeLabel, styles.checked)}
+                htmlFor="match"
+                onClick={() => {
+                  setChecked(!checked);
+                  setValue("eventType", "match");
+                }}
+              >
+                <Match />
+                Match
+              </label>
             </div>
             <div>
               <input
                 type="radio"
                 value="train"
+                className={cn(styles.eventTypeInput)}
+                checked={!checked}
                 {...register("eventType", { required: true })}
               />
-              <label htmlFor="train"> Train</label>
+              <label
+                onClick={() => {
+                  setValue("eventType", "train");
+                  setChecked(!checked);
+                }}
+                className={cn(styles.eventTypeLabel, styles.checked)}
+                htmlFor="train"
+              >
+                <Training />
+                Training
+              </label>
             </div>
           </div>
           <div className={styles.formGrid}>
@@ -196,6 +290,7 @@ function AddEvent({ user }) {
               <input
                 className={styles.inputStyle}
                 defaultValue="0"
+                min="5000"
                 type="number"
                 {...register("fee")}
               />
@@ -224,7 +319,10 @@ function AddEvent({ user }) {
                 <button
                   type="button"
                   key={`${index}buttonforform`}
-                  onClick={() => setRecurring(index)}
+                  onClick={() => {
+                    setValue("recurring", index);
+                    setRecurring(index);
+                  }}
                   className={cn(
                     recurringEvent == index ? styles.button : styles.passive
                   )}
@@ -303,12 +401,26 @@ function AddEvent({ user }) {
           <div className={styles.cell}>
             Cover Image
             <div className={styles.file}>
-              {/* Todo */}
-              {/*               <input
-                className={styles.inputStyle}
-                type="file"
-                {...register("file", { required: true })}
-              /> */}
+              <div className={styles.dragDropVideos}>
+                <input
+                  hidden
+                  accept="image/*,video/*"
+                  id="icon-button-file"
+                  type="file"
+                  onChange={onFileChange}
+                />
+                <label htmlFor="icon-button-file">
+                  <UploadSVG />
+                </label>
+                <span className={styles.marginTop}>
+                  {/* Todo: make span drag/dropable */}
+                  <span>Drag and drop a video or</span>
+                  &ensp;
+                  <a className={styles.dragDropVideosBrowseFiles}>
+                    <label htmlFor="icon-button-file">Browser Files</label>
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
           <div className={styles.formSubmit}>
