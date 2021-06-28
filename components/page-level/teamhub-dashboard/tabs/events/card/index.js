@@ -9,7 +9,7 @@ import ThreeDots from "@svg/threedots";
 import MatchCard from "@sub/match-card";
 import MatchInfo from "@sub/match-info";
 
-function EventCard({ available, data, user, token }) {
+function EventCard({ available, data, user }) {
   const { id, location, eventDateTime, coverImage, teams, eventType } = data;
 
   /* Not done yet */
@@ -31,9 +31,7 @@ function EventCard({ available, data, user, token }) {
 
         <div className={styles.cardDetail}>
           {/* Event Type  */}
-          {eventType == "match" && (
-            <MatchCard user={user} token={token} data={teams} />
-          )}
+          {eventType == "match" && <MatchCard user={user} data={teams} />}
           {eventType == "social" && <div> Social </div>}
 
           {/* Info */}

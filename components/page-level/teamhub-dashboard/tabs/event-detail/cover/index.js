@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 function DetailCover() {
   return (
     <div className={styles.detailCover}>
-      <img src="./assets/detailcover.png" />
+      <img src="../../assets/detailcover.png" />
       <div className={styles.more}>
         <ThreeDots />
       </div>

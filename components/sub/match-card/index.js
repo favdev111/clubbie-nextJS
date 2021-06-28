@@ -4,14 +4,13 @@ import Teams from "@api/services/Teams";
 import HTTPClient from "@api/HTTPClient";
 import Qs from "qs";
 
-function MatchCard({ data, token }) {
+function MatchCard({ data }) {
   const [teams, setTeams] = useState(null);
   const [query, setQuery] = useState("");
 
   /* Not done yet */
 
   useEffect(() => {
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
     const fetchPromise = new Promise((resolve, reject) => {
       const params = {
         id: [data[0].teamId, data[1].teamId],

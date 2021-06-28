@@ -6,9 +6,8 @@ import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 import { parseCookies } from "@utils/helpers/parseCookies";
 
-function AddNewEvent({ requiredCookiesToSet, token, teams }) {
+function AddNewEvent({ requiredCookiesToSet, teams }) {
   // set cookies on client
-  console.log(teams);
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
       expires: new Date(requiredCookiesToSet.tokens.access.expiry),
@@ -23,7 +22,7 @@ function AddNewEvent({ requiredCookiesToSet, token, teams }) {
   return (
     <Layout>
       <Seo title="Dashboard" desc="Lorem ipsum dolor sit amet" />
-      <AddEvent user={authUser} token={token} />
+      <AddEvent user={authUser} />
     </Layout>
   );
 }

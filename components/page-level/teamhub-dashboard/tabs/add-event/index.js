@@ -29,14 +29,13 @@ if (mm < 10) {
 
 const today = yyyy + "-" + mm + "-" + dd;
 
-function AddEvent({ user, token }) {
+function AddEvent({ user }) {
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
 
   useEffect(() => {
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
     const fetchUserTeams = async () => {
       /* queries */
       const arr = [];
@@ -85,8 +84,6 @@ function AddEvent({ user, token }) {
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
-
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
 
     await Event.CreateEvent(updateBody)
       .then((res) => {
