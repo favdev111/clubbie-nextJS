@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Training from "@svg/training";
 import Match from "@svg/match";
+import { useRouter } from "next/router";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -36,6 +37,8 @@ function AddEvent({ user }) {
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
   const [checked, setChecked] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserTeams = async () => {
@@ -87,9 +90,10 @@ function AddEvent({ user }) {
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
+    console.log(updateBody);
     await Event.CreateEvent(updateBody)
       .then((res) => {
-        console.log("res => ", res);
+        router.push(`/teamhub/event/${res.data.id}`);
         setMessage("Succesfully Created");
       })
       .catch((err) => {
