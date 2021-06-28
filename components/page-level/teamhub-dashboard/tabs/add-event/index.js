@@ -10,6 +10,7 @@ import * as yup from "yup";
 import Training from "@svg/training";
 import Match from "@svg/match";
 import { useRouter } from "next/router";
+import UploadSVG from "@svg/upload";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -39,8 +40,25 @@ function AddEvent({ user }) {
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
   const [checked, setChecked] = useState(true);
+  const [media, setMedia] = useState(null);
 
   const router = useRouter();
+
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setMedia(mediaPicked);
+      console.log("media");
+      console.log(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
 
   useEffect(() => {
     const fetchUserTeams = async () => {
@@ -341,12 +359,26 @@ function AddEvent({ user }) {
           <div className={styles.cell}>
             Cover Image
             <div className={styles.file}>
-              {/* Todo */}
-              {/*               <input
-                className={styles.inputStyle}
-                type="file"
-                {...register("file", { required: true })}
-              /> */}
+              <div className={styles.dragDropVideos}>
+                <input
+                  hidden
+                  accept="image/*,video/*"
+                  id="icon-button-file"
+                  type="file"
+                  onChange={onFileChange}
+                />
+                <label htmlFor="icon-button-file">
+                  <UploadSVG />
+                </label>
+                <span className={styles.marginTop}>
+                  {/* Todo: make span drag/dropable */}
+                  <span>Drag and drop a video or</span>
+                  &ensp;
+                  <a className={styles.dragDropVideosBrowseFiles}>
+                    <label htmlFor="icon-button-file">Browser Files</label>
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
           <div className={styles.formSubmit}>

@@ -127,4 +127,28 @@
 .formSubmit {
   display: flex;
   float: right;
+  margin: 30px;
+}
+.dragDropVideos {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragDropVideosBrowseFiles {
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-turk) !important;
+  margin-bottom: var(--space-32);
+  cursor: pointer;
+  text-decoration: underline;
 }
