@@ -74,6 +74,7 @@
 }
 
 .addContentFooter {
+  margin-top: var(--space-10);
   display: flex;
   justify-content: space-between;
 }

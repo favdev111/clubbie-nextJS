@@ -10,6 +10,7 @@ import sports from "@utils/fixedValues/sports";
 import styles from "./contentAdd.module.css";
 import UploadSVG from "@svg/upload";
 import MediaCard from "./mediaCard";
+import Alert from "@sub/alert";
 
 function ContentAdd() {
   const router = useRouter();
@@ -20,6 +21,12 @@ function ContentAdd() {
   const [description, setDescription] = useState();
   const [sport, setSport] = useState();
   const [tagSomeone, setTagSomeone] = useState();
+  const [status, setStatus] = useState({
+    loading: false,
+    msg: null,
+    type: null,
+    animateText: false,
+  });
 
   const onParentMediaPicked = (e) => {
     const file = e.target.files[0];
@@ -31,14 +38,11 @@ function ContentAdd() {
         file,
       };
       setMedia(mediaPicked);
-      console.log("media");
-      console.log(mediaPicked);
     };
     reader.readAsDataURL(file);
   };
 
   const onRelatedMediaPicked = (e) => {
-    console.log("trigger");
     const file = e.target.files[0];
     if (!file) return;
     e.target.value = ""; // reset input value
@@ -57,6 +61,12 @@ function ContentAdd() {
   const uploadMultiplePostMedia = async (media) => {
     const URLs = [];
     const forms = [];
+    setStatus({
+      loading: true,
+      msg: "Uploading Media",
+      type: "info",
+      animateText: true,
+    });
 
     // videos in seperate bucket
     const videosForm = new FormData();
@@ -83,19 +93,16 @@ function ContentAdd() {
     }
 
     // upload videos and images
-    await Promise.all(
+    const uploads = await Promise.all(
       forms.map(async (form) => {
-        await Files.UploadFile(form.purpose, form.data)
+        const upload = await Files.UploadFile(form.purpose, form.data)
           .then((res) => {
-            console.log("multi media res => ", form.purpose, res);
             res.data.map((x) =>
               URLs.push({ contentType: form.contentType, media: x.s3Url })
             );
           })
-          .catch((err) => {
-            console.log("multi media err => ", form.purpose, err);
-            alert(err?.response?.data?.message); // TODO: error comp
-          });
+          .catch(() => undefined);
+        return upload;
       })
     );
 
@@ -145,14 +152,18 @@ function ContentAdd() {
       const payload = Object.fromEntries(
         Object.entries(body).filter(([_, v]) => v != null)
       );
-      const _post = await Posts.CreatePost(payload).catch((e) =>
-        console.log("error creating parent post", e?.response?.data?.message)
-      );
+      const _post = await Posts.CreatePost(payload).catch((e) => undefined);
 
-      console.log("created parent post", _post.data);
-
-      return _post.data;
+      return _post?.data;
     })();
+    if (!parentPost) {
+      setStatus({
+        loading: false,
+        msg: "Error Creating Post",
+        type: "error",
+      });
+      return;
+    }
 
     // Make child posts
     const childPosts = await (async () => {
@@ -170,29 +181,39 @@ function ContentAdd() {
           const payload = Object.fromEntries(
             Object.entries(_body).filter(([_, v]) => v != null)
           );
-          const _posts = await Posts.CreatePost(payload).catch((e) =>
-            console.log("child post creation error", e?.response?.data?.message)
+          const _posts = await Posts.CreatePost(payload).catch(
+            (e) => undefined
           );
-          console.log("child posts created", _posts.data);
-          return _posts.data;
+          return _posts?.data;
         })
       );
-      return posts;
+      return posts?.length > 0 ? posts.filter((x) => x) : false;
     })();
+    if (!childPosts) {
+      setStatus({
+        loading: false,
+        msg: "Error Creating Post",
+        type: "error",
+      });
+      return;
+    }
 
-    console.log("Parent Post => ", parentPost);
-    console.log("Child Posts => ", childPosts);
-
-    if (childPosts.length > 0) {
-      const payload = { childPosts: childPosts.map((x) => x.id) };
+    if (childPosts?.length > 0) {
+      const payload = { childPosts: childPosts.map((x) => x?.id) };
       const appendedPost = await Posts.AppendChildPost(
         parentPost?.id,
         payload
-      ).catch((e) =>
-        console.log("error appending post", e?.response?.data?.message)
-      );
-      console.log("Appended Post => ", appendedPost.data);
+      ).catch(() => undefined);
+      if (!appendedPost) {
+        setStatus({
+          loading: false,
+          msg: "Error Creating Post",
+          type: "error",
+        });
+        return;
+      }
     }
+    setStatus({ loading: false, msg: "Post Created", type: "success" });
   };
 
   return (
@@ -289,15 +310,23 @@ function ContentAdd() {
             />
           </div>
         </div>
+        {status.type && (
+          <Alert
+            variant={status.type}
+            text={status.msg}
+            animateText={status.animateText}
+          ></Alert>
+        )}
         <div className={styles.addContentFooter}>
           <div className={styles.addContentFooterLeft}></div>
           <div className={styles.addContentFooterRight}>
-            {/* Todo proper */}
             <div className={styles.cancelButton} onClick={() => router.back()}>
               Cancel
             </div>
             <div>
-              <Button type="submit">Post</Button>
+              <Button type="submit" loading={status.loading}>
+                Post
+              </Button>
             </div>
           </div>
         </div>
