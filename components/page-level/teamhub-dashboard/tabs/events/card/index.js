@@ -10,7 +10,7 @@ import MatchCard from "@sub/match-card";
 import MatchInfo from "@sub/match-info";
 
 function EventCard({ available, data, user }) {
-  const { id, location, eventDateTime, coverImage, teams, eventType } = data;
+  const { id, location, eventDateTime, teams, eventType } = data;
 
   /* Not done yet */
   return (
@@ -18,7 +18,7 @@ function EventCard({ available, data, user }) {
       <div className={styles.card}>
         {/* Card upper *--* Image side */}
         <div className={styles.cardImg}>
-          <img src={data.coverImage?.s3Url} />
+          <img src={data?.coverImage} />
           <div className={styles.price}>
             <p> £ </p>
           </div>

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import cn from "classnames";
 import Link from "next/link";
 import Event from "@api/services/Event";
+import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -90,6 +91,26 @@ function AddEvent({ user }) {
   /* todo, object is nearly ready */
 
   const onSubmit = async (data) => {
+    let mediaIdToUpload = null;
+    if (media?.src && media?.file) {
+      const mediaForm = new FormData();
+      mediaForm.append("files", media?.file);
+      await Files.UploadFile(
+        media?.src?.includes("image") && "resourceFile",
+        mediaForm
+      )
+        .then((res) => {
+          mediaIdToUpload = res?.data[0]?.s3Url;
+          console.log("media res => ", res);
+        })
+        .catch((err) => {
+          console.log("media err => ", err);
+          alert(err?.response?.data?.message); // TODO: error comp
+        });
+    }
+
+    console.log(mediaIdToUpload);
+
     const eventDateTime =
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
 
@@ -115,16 +136,17 @@ function AddEvent({ user }) {
       eventType: data?.eventType,
       location: data?.location,
       eventDateTime: eventDateTime,
-      message: data?.message,
+      message: data?.message || null,
       teams: teams,
       recurring: createRecurringObj(),
+      coverImage: mediaIdToUpload,
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
     console.log(updateBody);
-    /*     await Event.CreateEvent(updateBody)
+    await Event.CreateEvent(updateBody)
       .then((res) => {
         router.push(`/teamhub/event/${res.data.id}`);
         setMessage("Succesfully Created");
@@ -132,7 +154,7 @@ function AddEvent({ user }) {
       .catch((err) => {
         console.log("err => ", err);
         setMessage("An error... Please check form");
-      }); */
+      });
   };
 
   return (
