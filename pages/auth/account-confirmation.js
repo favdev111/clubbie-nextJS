@@ -4,13 +4,13 @@ import Seo from "@layout/seo";
 import Wrap from "@layout/account-wrapper/";
 import AccountConfirm from "@page/auth/account-confirm/";
 
-const AccountConfirmPage = () => {
+const AccountConfirmPage = ({ user }) => {
   return (
     <Layout hideHeader>
       <Seo title="Account Confirmation" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
-          <AccountConfirm />
+          <AccountConfirm user={user} />
         </Wrap>
       </main>
     </Layout>

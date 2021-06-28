@@ -1,24 +1,22 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
-import { googleLogin } from "@redux/auth.slice";
-import { useDispatch, useSelector } from "react-redux";
 import NotificationSnack from "@sub/notification-snack";
+import Auth from "@api/services/Auth";
 import Google from "@svg/social/google";
 
 const GoogleButton = () => {
   // TODO: redirect after login
-  const dispatch = useDispatch();
   const [error, setError] = React.useState("");
-  const googleLoginError = useSelector(
-    (state) => state.auth.errors.googleLoginError
-  );
 
   const handleResponse = (res) => {
     const { tokenId } = res;
-    const credentials = {
+    const payload = {
       id_token: tokenId,
     };
-    dispatch(googleLogin(credentials));
+    // auth.GoogleLogin here
+    Auth.GoogleLogin(payload)
+      .then((res) => console.log("res google => ", res.response))
+      .catch((err) => console.log("err google => ", err.response));
   };
 
   const handleError = (err) => {
@@ -28,7 +26,7 @@ const GoogleButton = () => {
   return (
     <>
       <GoogleLogin
-        clientId={process.env.GOOLGLE_CLIENT_ID}
+        clientId={process.env.GOOGLE_CLIENT_ID}
         buttonText="Login"
         onSuccess={handleResponse}
         onFailure={handleError}
@@ -39,9 +37,9 @@ const GoogleButton = () => {
           </div>
         )}
       />
-      {(error || googleLoginError) && (
+      {error && (
         <NotificationSnack
-          message={error || googleLoginError}
+          message={error}
           onFinished={() => error && setError("")}
         />
       )}
