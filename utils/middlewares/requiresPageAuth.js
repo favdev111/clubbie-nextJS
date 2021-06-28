@@ -25,6 +25,7 @@ export const requiresPageAuth = (getPropsFunc) => {
     context.user = user;
 
     // refresh tokens logic
+    let requireLogin = false;
     if (!user || !accessToken) {
       if (refreshToken) {
         await Auth.RefreshTokens({ refreshToken })
@@ -33,41 +34,47 @@ export const requiresPageAuth = (getPropsFunc) => {
             context.setCookieForTokens = tokens;
           })
           .catch(() => {
-            context.res.writeHead(307, { location: "/auth/login" });
-            context.res.end();
-            return { props: {} };
+            requireLogin = true;
           });
       } else {
-        context.res.writeHead(307, { location: "/auth/login" });
-        context.res.end();
-        return { props: {} };
+        requireLogin = true;
       }
     }
 
-    // set axios access header, server side
-    HTTPClient.setHeader(
-      "Authorization",
-      `Bearer ${accessToken || context?.setCookieForTokens?.access?.token}`
-    );
-
-    // props for client side
-    const props = await (async () => {
-      const innerProps = getPropsFunc ? await getPropsFunc(context) : {};
-      const commonProps = { props: { user } };
+    // user must login
+    if (requireLogin) {
       return {
-        props: {
-          setCookiesOnClient: context.setCookieForTokens
-            ? {
-                tokens: context.setCookieForTokens,
-              }
-            : false,
-          ...innerProps?.props,
-          ...commonProps.props,
+        redirect: {
+          destination: "/auth/login",
+          statusCode: 307,
         },
-        notFound: innerProps?.notFound,
       };
-    })();
+    } else {
+      // set axios access header, server side
+      HTTPClient.setHeader(
+        "Authorization",
+        `Bearer ${accessToken || context?.setCookieForTokens?.access?.token}`
+      );
 
-    return props;
+      // props for client side
+      const props = await (async () => {
+        const innerProps = getPropsFunc ? await getPropsFunc(context) : {};
+        const commonProps = { props: { user } };
+        return {
+          props: {
+            setCookiesOnClient: context.setCookieForTokens
+              ? {
+                  tokens: context.setCookieForTokens,
+                }
+              : false,
+            ...innerProps?.props,
+            ...commonProps.props,
+          },
+          notFound: innerProps?.notFound,
+        };
+      })();
+
+      return props;
+    }
   };
 };
