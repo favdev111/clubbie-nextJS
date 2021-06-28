@@ -18,7 +18,7 @@ function EventCard({ available, data, user }) {
       <div className={styles.card}>
         {/* Card upper *--* Image side */}
         <div className={styles.cardImg}>
-          <img src={data?.coverImage} />
+          {data.coverImage && <img src={data?.coverImage} />}
           <div className={styles.price}>
             <p> £ </p>
           </div>

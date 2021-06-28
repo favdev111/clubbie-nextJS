@@ -9,7 +9,7 @@ function TeamCard({ index, data, active, setactive, teamRoles }) {
       onClick={() => setactive(index)}
       className={cn(styles.teamCards, active == index && styles.active)}
     >
-      <img className={styles.cardImg} src={data.crest?.s3Url} />
+      <img className={styles.cardImg} src={data?.crest} />
       {/* data[0].crest.s3Url image */}
       <div className={styles.cardDetail}>
         <p className={styles.cardSpan}> {data.title} </p>
