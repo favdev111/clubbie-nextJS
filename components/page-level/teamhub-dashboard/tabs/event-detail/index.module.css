@@ -2,12 +2,27 @@
   max-width: var(--container-lg);
   margin-bottom: 200px;
 }
-
 .twoRows {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 32px;
 }
+
+.routeComponent {
+  background-color: var(--c-primary);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
 @media screen and (max-width: 1684px) and (min-width: 1024px) {
   .eventDetail {
     padding-right: 24px;

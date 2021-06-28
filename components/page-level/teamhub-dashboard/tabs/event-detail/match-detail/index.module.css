@@ -2,6 +2,11 @@
   background-color: var(--c-primary);
   border-radius: var(--radius-lg);
   padding: 12px;
+  grid-row: span 3 / span 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
 }
 .score {
   display: flex;
