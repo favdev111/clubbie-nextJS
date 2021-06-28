@@ -15,6 +15,8 @@ const schema = yup.object().shape({
   title: yup.string().required(),
   teamA: yup.string().required(),
   eventDateTime: yup.string().required(),
+  firstEventStartDate: yup.string(),
+  totalEvents: yup.string(),
 });
 
 const now = new Date();
@@ -79,19 +81,32 @@ function AddEvent({ user }) {
     teams.push(teamA);
     teams.push(teamB);
 
+    const createRecurringObj = () => {
+      if (data?.firstEventStartDate.length > 3) {
+        const obj = {
+          startDate: data?.firstEventStartDate,
+          onEvery: data?.onEvery,
+          totalEvents: data?.totalEvents,
+        };
+        return obj;
+      }
+    };
+
     const formBody = {
       title: data?.title,
       eventType: data?.eventType,
       location: data?.location,
       eventDateTime: eventDateTime,
+      message: data?.message,
       teams: teams,
+      recurring: createRecurringObj(),
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
     console.log(updateBody);
-    await Event.CreateEvent(updateBody)
+    /*     await Event.CreateEvent(updateBody)
       .then((res) => {
         router.push(`/teamhub/event/${res.data.id}`);
         setMessage("Succesfully Created");
@@ -99,7 +114,7 @@ function AddEvent({ user }) {
       .catch((err) => {
         console.log("err => ", err);
         setMessage("An error... Please check form");
-      });
+      }); */
   };
 
   return (
