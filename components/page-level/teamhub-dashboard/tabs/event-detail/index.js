@@ -19,14 +19,13 @@ function EventDetail({ eventId, activeTeam, user }) {
     fetchEvents();
   }, [activeTeam]);
 
-  console.log(data);
   return (
     <div className={styles.eventDetail}>
       <h1>Event Details</h1>
       <DetailCover img={data?.coverImage} />
       <div className={styles.twoRows}>
-        <MatchDetail />
-        <AvailablePlayers />
+        <MatchDetail data={data} />
+        {/*    <AvailablePlayers /> */}
       </div>
     </div>
   );
