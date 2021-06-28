@@ -1,26 +1,25 @@
-.profilePhotosItem {
+.relatedMediaItem {
   margin-top: var(--space-12);
   margin-right: var(--space-12);
-  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   cursor: pointer;
   position: relative;
 }
-.profilePhotosItem video {
+.relatedMediaItem video {
   height: 150px;
   width: 150px;
   border-radius: var(--space-16);
   object-fit: cover;
 }
-.profilePhotosItem img {
+.relatedMediaItem img {
   height: 150px;
   width: 150px;
   border-radius: var(--space-16);
   object-fit: cover;
 }
-.profileImagePicker {
+.relatedMediaPicker {
   height: 150px;
   width: 150px;
   border-radius: var(--space-16);
@@ -29,23 +28,28 @@
   align-items: center;
   justify-content: center;
 }
-.profilePhotosItem .profilePhotosOptions {
-  display: none;
-  align-items: center;
+.mediaCloseIcon {
+  cursor: pointer;
   position: absolute;
+  right: -10px;
+  top: -10px;
 }
-
-.profilePhotosItem .profilePhotosOptions a {
-  margin-right: var(--space-16);
-  background-color: var(--c-black-50);
-  border-radius: var(--radius-full);
-  padding: var(--space-16);
-  width: var(--space-64);
-  height: var(--space-64);
+.parentMediaItem {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
 }
-.profilePhotosItem .profilePhotosOptions img:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+.parentMediaItem video {
+  max-height: 500px;
+  width: 100%;
+  border-radius: var(--space-16);
+  object-fit: cover;
+}
+.parentMediaItem img {
+  height: 400px;
+  width: 100%;
+  border-radius: var(--space-16);
+  object-fit: cover;
+  object-position: top;
 }
