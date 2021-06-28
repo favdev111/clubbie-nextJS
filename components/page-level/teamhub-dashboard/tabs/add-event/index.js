@@ -17,6 +17,7 @@ const schema = yup.object().shape({
   title: yup.string().required(),
   teamA: yup.string().required(),
   eventDateTime: yup.string().required(),
+  fee: yup.number(),
   recurring: yup.string().required(),
   firstEventStartDate: yup.string().when("recurring", {
     is: (val) => val == "0",
@@ -145,6 +146,7 @@ function AddEvent({ user }) {
       location: data?.location,
       eventDateTime: eventDateTime,
       message: data?.message || null,
+      fee: data?.fee || null,
       teams: teams,
       recurring: createRecurringObj(),
       coverImage: mediaIdToUpload,
@@ -288,6 +290,7 @@ function AddEvent({ user }) {
               <input
                 className={styles.inputStyle}
                 defaultValue="0"
+                min="5000"
                 type="number"
                 {...register("fee")}
               />
