@@ -9,6 +9,18 @@ export default class AuthManagementRoutes {
     return HTTPClient.post(`/auth/login`, payload);
   }
 
+  static async GoogleLogin(payload) {
+    return HTTPClient.post(`/auth/login/google`, payload);
+  }
+
+  static async FaceBookLogin(payload) {
+    return HTTPClient.post(`/auth/login/facebook`, payload);
+  }
+
+  static async AppleLogin(payload) {
+    return HTTPClient.post(`/auth/login/apple`, payload);
+  }
+
   static async Logout(payload) {
     return HTTPClient.post(`/auth/logout`, payload);
   }
