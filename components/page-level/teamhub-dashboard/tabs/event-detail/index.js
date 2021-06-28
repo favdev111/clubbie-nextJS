@@ -10,21 +10,20 @@ function EventDetail({ eventId, activeTeam, user }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    const teamId = user.teams[activeTeam].team;
+
     const fetchEvents = async () => {
-      const response = await Event.FetchSingleEvent(
-        eventId,
-        user.teams[activeTeam].team
-      );
-      setData(response.data.results);
+      const response = await Event.FetchSingleEvent(eventId, teamId);
+      setData(response.data);
     };
     fetchEvents();
   }, [activeTeam]);
-  console.log(data);
 
+  console.log(data);
   return (
     <div className={styles.eventDetail}>
       <h1>Event Details</h1>
-      <DetailCover />
+      <DetailCover img={data?.coverImage} />
       <div className={styles.twoRows}>
         <MatchDetail />
         <AvailablePlayers />

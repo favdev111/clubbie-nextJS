@@ -29,7 +29,7 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/create-lineup`, payload);
   }
 
-  static async FetchSingleEvent(teamId, eventId) {
+  static async FetchSingleEvent(eventId, teamId) {
     return HTTPClient.get(`/event/${eventId}?teamId=${teamId}`);
   }
 
