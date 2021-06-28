@@ -28,7 +28,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const clubs = userClubs?.data || [];
 
   const notFound = !user;
-
+  console.log(clubs);
   return {
     props: {
       user,

@@ -2,9 +2,7 @@ import Layout from "@layout";
 import Seo from "@layout/seo";
 import React from "react";
 import Home from "@page/home";
-import HTTPClient from "@api/HTTPClient";
 import Posts from "@api/services/Posts";
-import { parseCookies } from "@utils/helpers/parseCookies";
 
 const HomePage = ({ posts }) => {
   return (

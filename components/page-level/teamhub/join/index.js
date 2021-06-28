@@ -96,10 +96,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
         <div className={styles.mobileCurrent}>
           <div>
             <img
-              src={
-                selectedClub?.crest?.s3Url ||
-                "/assets/club-badge-placeholder.png"
-              }
+              src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
             />
             <p> {selectedClub?.title}</p>
           </div>
@@ -118,8 +115,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
             <div className={styles.joinHeaderCurrent}>
               <img
                 src={
-                  selectedClub?.crest?.s3Url ||
-                  "/assets/club-badge-placeholder.png"
+                  selectedClub?.crest || "/assets/club-badge-placeholder.png"
                 }
                 className={styles.selectedClubImage}
               />
@@ -165,9 +161,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
                 onClick={(e) => handleItemClick(item)}
               >
                 <img
-                  src={
-                    item?.crest?.s3Url || "/assets/club-badge-placeholder.png"
-                  }
+                  src={item?.crest || "/assets/club-badge-placeholder.png"}
                   className={styles.crestImage}
                 />
                 {item?.title}

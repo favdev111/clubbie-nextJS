@@ -31,10 +31,7 @@ function Notifications({ authUser }) {
         Component={() => (
           <img
             className={styles.profileBubble}
-            src={
-              authUser?.profile?.image?.s3Url ||
-              "/assets/person-placeholder.jpg"
-            }
+            src={authUser?.profile?.image || "/assets/person-placeholder.jpg"}
           />
         )}
       ></Dropdown>

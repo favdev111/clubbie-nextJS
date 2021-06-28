@@ -21,9 +21,7 @@ function ProfileEdit({ profile, clubs }) {
 
   const defaultImage = "/assets/person-placeholder.jpg";
 
-  const [image, setImage] = useState(
-    () => profile?.image?.s3Url || defaultImage
-  );
+  const [image, setImage] = useState(() => profile?.image || defaultImage);
   const [fullName, setFullName] = useState(() => profile?.fullName);
   const [playerTitle, setPlayerTitle] = useState(() => profile?.playerTitle);
   const [telephone, setTelephone] = useState(() => profile?.telephone);
@@ -44,14 +42,14 @@ function ProfileEdit({ profile, clubs }) {
     console.log("Remove these clubs => ", clubsToRemove);
 
     // POST: files/upload
-    let imageIdToUpload = null;
+    let imageUploaded = null;
     if (image.src && image.file) {
       const imageForm = new FormData();
       imageForm.append("files", image.file);
       await Files.UploadFile("userImg", imageForm)
         .then((res) => {
-          imageIdToUpload = res.data[0].id;
           console.log("image res => ", res);
+          imageUploaded = res?.data[0]?.s3Url;
         })
         .catch((err) => {
           console.log("image err => ", err);
@@ -62,7 +60,7 @@ function ProfileEdit({ profile, clubs }) {
     // POST: users/profile
     const formBody = {
       fullName: fullName?.trim() || null,
-      image: imageIdToUpload || null,
+      image: imageUploaded || null,
       playerTitle: playerTitle?.trim() || null,
       telephone: telephone?.trim() || null,
       address: address?.trim() || null,
@@ -213,9 +211,7 @@ function ProfileEdit({ profile, clubs }) {
               className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
             >
               <Chip
-                image={
-                  club?.crest?.s3Url || "/assets/club-badge-placeholder.png"
-                }
+                image={club?.crest || "/assets/club-badge-placeholder.png"}
                 roundedImage
                 text={club.title}
                 onCloseClick={() => removeClub(club.id)}
