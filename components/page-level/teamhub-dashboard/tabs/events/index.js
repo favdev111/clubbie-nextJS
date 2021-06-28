@@ -20,7 +20,7 @@ function Events({ activeTeam, user }) {
       setEvents(response.data.results);
     };
     fetchEvents();
-  }, []);
+  }, [activeTeam]);
 
   const date = new Date();
   const month = date.getMonth();

@@ -17,8 +17,15 @@ const schema = yup.object().shape({
   title: yup.string().required(),
   teamA: yup.string().required(),
   eventDateTime: yup.string().required(),
-  firstEventStartDate: yup.string(),
-  totalEvents: yup.string(),
+  recurring: yup.string().required(),
+  firstEventStartDate: yup.string().when("recurring", {
+    is: (val) => val == "0",
+    then: yup.string().required(),
+  }),
+  totalEvents: yup.number().when("recurring", {
+    is: (val) => val == "0",
+    then: yup.number().min(1).required(),
+  }),
 });
 
 const now = new Date();
@@ -83,6 +90,7 @@ function AddEvent({ user }) {
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = useForm({
@@ -121,7 +129,7 @@ function AddEvent({ user }) {
     teams.push(teamB);
 
     const createRecurringObj = () => {
-      if (data?.firstEventStartDate.length > 3) {
+      if (data?.recurring == 1) {
         const obj = {
           startDate: data?.firstEventStartDate,
           onEvery: data?.onEvery,
@@ -145,10 +153,10 @@ function AddEvent({ user }) {
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
-    console.log(updateBody);
     await Event.CreateEvent(updateBody)
       .then((res) => {
         router.push(`/teamhub/event/${res.data.id}`);
+        console.log(res.data);
         setMessage("Succesfully Created");
       })
       .catch((err) => {
@@ -187,7 +195,10 @@ function AddEvent({ user }) {
               <label
                 className={cn(styles.eventTypeLabel, styles.checked)}
                 htmlFor="match"
-                onClick={() => setChecked(!checked)}
+                onClick={() => {
+                  setChecked(!checked);
+                  setValue("eventType", "match");
+                }}
               >
                 <Match />
                 Match
@@ -202,7 +213,10 @@ function AddEvent({ user }) {
                 {...register("eventType", { required: true })}
               />
               <label
-                onClick={() => setChecked(!checked)}
+                onClick={() => {
+                  setValue("eventType", "train");
+                  setChecked(!checked);
+                }}
                 className={cn(styles.eventTypeLabel, styles.checked)}
                 htmlFor="train"
               >
@@ -302,7 +316,10 @@ function AddEvent({ user }) {
                 <button
                   type="button"
                   key={`${index}buttonforform`}
-                  onClick={() => setRecurring(index)}
+                  onClick={() => {
+                    setValue("recurring", index);
+                    setRecurring(index);
+                  }}
                   className={cn(
                     recurringEvent == index ? styles.button : styles.passive
                   )}
