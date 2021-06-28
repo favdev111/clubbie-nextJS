@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { createWrapper } from "next-redux-wrapper";
 import { store } from "@redux/store";
@@ -7,6 +7,8 @@ import HTTPClient from "@api/HTTPClient";
 import "../styles/app.css";
 
 function ClubbieApp({ Component, pageProps }) {
+  const [activeTeam, setTeam] = useState(0);
+
   // client side
   if (process.browser) {
     // set axios access header
@@ -28,7 +30,7 @@ function ClubbieApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <Component activeTeam={activeTeam} setTeam={setTeam} {...pageProps} />
     </Provider>
   );
 }

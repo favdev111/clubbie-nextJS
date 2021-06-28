@@ -6,7 +6,7 @@ import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 
-function TeamhubDashboard({ user, activeTeam, setTeam }) {
+function TeamhubEvent({ user, activeTeam, setTeam }) {
   const token = auth.getAccessToken();
 
   useEffect(() => {
@@ -28,6 +28,6 @@ function TeamhubDashboard({ user, activeTeam, setTeam }) {
   );
 }
 
-export default TeamhubDashboard;
+export default TeamhubEvent;
 
 export const getServerSideProps = requiresPageAuth();

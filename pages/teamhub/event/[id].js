@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
+import DashboardContent from "@page/teamhub-dashboard";
 
-function EventDetail({ profile, requiredCookiesToSet, posts }) {
+function EventDetailPage({ user, requiredCookiesToSet, posts }) {
+  const [activeTeam, setTeam] = useState(0);
+
+  const token = auth.getAccessToken();
+
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -18,11 +23,17 @@ function EventDetail({ profile, requiredCookiesToSet, posts }) {
   return (
     <Layout>
       <Seo title="User Profile" desc="Lorem ipsum dolor sit amet" />
+      <DashboardContent
+        activeTeam={activeTeam}
+        setTeam={setTeam}
+        token={token}
+        user={user}
+      ></DashboardContent>
     </Layout>
   );
 }
 
-export default EventDetail;
+export default EventDetailPage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const id = ctx.params.id;
