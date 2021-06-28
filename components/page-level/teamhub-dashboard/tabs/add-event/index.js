@@ -5,9 +5,10 @@ import cn from "classnames";
 import Link from "next/link";
 import Event from "@api/services/Event";
 import Teams from "@api/services/Teams";
-import HTTPClient from "@api/HTTPClient";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Training from "@svg/training";
+import Match from "@svg/match";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -34,6 +35,7 @@ function AddEvent({ user }) {
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
+  const [checked, setChecked] = useState(true);
 
   useEffect(() => {
     const fetchUserTeams = async () => {
@@ -117,20 +119,37 @@ function AddEvent({ user }) {
           <div className={styles.eventType}>
             <div>
               <input
-                defaultChecked
+                checked={checked}
                 type="radio"
+                className={styles.eventTypeInput}
                 value="match"
                 {...register("eventType", { required: true })}
               />
-              <label htmlFor="match"> Match</label>
+              <label
+                className={cn(styles.eventTypeLabel, styles.checked)}
+                htmlFor="match"
+                onClick={() => setChecked(!checked)}
+              >
+                <Match />
+                Match
+              </label>
             </div>
             <div>
               <input
                 type="radio"
                 value="train"
+                className={cn(styles.eventTypeInput)}
+                checked={!checked}
                 {...register("eventType", { required: true })}
               />
-              <label htmlFor="train"> Train</label>
+              <label
+                onClick={() => setChecked(!checked)}
+                className={cn(styles.eventTypeLabel, styles.checked)}
+                htmlFor="train"
+              >
+                <Training />
+                Training
+              </label>
             </div>
           </div>
           <div className={styles.formGrid}>

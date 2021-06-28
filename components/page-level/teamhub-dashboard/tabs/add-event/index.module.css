@@ -9,6 +9,26 @@
   justify-content: space-between;
   align-items: center;
 }
+.eventTypeInput {
+  opacity: 0;
+}
+.eventTypeInput:checked + .checked {
+  background-color: var(--c-white-50) !important;
+  color: var(--c-white);
+}
+
+.eventTypeLabel {
+  padding: 12px 24px 12px 24px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--c-white-10);
+  color: var(--c-white-50);
+  gap: 32px;
+  max-width: max-content;
+  cursor: pointer;
+}
 
 .content {
   background-color: var(--c-primary);
