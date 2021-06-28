@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import styles from "./index.module.css";
 
-function DashboardContent({ activeTeam, setTeam, user, token }) {
+function DashboardContent({ activeTeam, setTeam, user }) {
   const [selectedIndex, setIndex] = useState(0);
   const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
@@ -33,7 +33,6 @@ function DashboardContent({ activeTeam, setTeam, user, token }) {
         activeTeam={activeTeam}
         setTeam={setTeam}
         user={user}
-        token={token}
         selectedIndex={selectedIndex}
       />
     </div>

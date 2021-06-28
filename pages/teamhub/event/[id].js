@@ -8,8 +8,6 @@ import DashboardContent from "@page/teamhub-dashboard";
 function EventDetailPage({ user, requiredCookiesToSet, posts }) {
   const [activeTeam, setTeam] = useState(0);
 
-  const token = auth.getAccessToken();
-
   // set cookies on client
   if (requiredCookiesToSet?.tokens) {
     auth.setAccessToken(requiredCookiesToSet.tokens.access.token, {
@@ -26,7 +24,6 @@ function EventDetailPage({ user, requiredCookiesToSet, posts }) {
       <DashboardContent
         activeTeam={activeTeam}
         setTeam={setTeam}
-        token={token}
         user={user}
       ></DashboardContent>
     </Layout>

@@ -7,8 +7,6 @@ import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
 
 function TeamhubPayments({ user, activeTeam, setTeam }) {
-  const token = auth.getAccessToken();
-
   useEffect(() => {
     if (user?.clubs.length === 0) {
       Router.push("./teamhub/initial");
@@ -21,7 +19,6 @@ function TeamhubPayments({ user, activeTeam, setTeam }) {
       <DashboardContent
         activeTeam={activeTeam}
         setTeam={setTeam}
-        token={token}
         user={user}
       ></DashboardContent>
     </Layout>

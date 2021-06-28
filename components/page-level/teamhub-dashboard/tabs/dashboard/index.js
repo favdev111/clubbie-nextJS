@@ -9,12 +9,11 @@ import PaymentOverview from "./pay-overview";
 import Teams from "@api/services/Teams";
 import HTTPClient from "@api/HTTPClient";
 
-function Dashboard({ user, token, activeTeam, setTeam }) {
+function Dashboard({ user, activeTeam, setTeam }) {
   const [selectedTeam, setSelectedTeam] = useState([]);
   const [userTeams, setUserTeams] = useState([]);
 
   useEffect(() => {
-    HTTPClient.setHeader("Authorization", `Bearer ${token}`);
     const fetchUserTeams = async () => {
       /* queries */
       const arr = [];
