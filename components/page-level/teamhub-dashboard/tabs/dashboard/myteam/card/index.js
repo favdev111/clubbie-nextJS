@@ -4,7 +4,6 @@ import cn from "classnames";
 
 function TeamCard({ index, data, active, setactive, teamRoles }) {
   /* Not done yet */
-  console.log(data);
   return (
     <div
       onClick={() => setactive(index)}
