@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./contentMediaCard.module.css";
 import UploadSVG from "@svg/upload";
+import styles from "./contentMediaCard.module.css";
 
 // Todo: make a svg and replace this
 function CloseSVG() {
@@ -88,7 +88,6 @@ function ContentMediaCard({
             newRelatedMedia[index] = null;
             const valuesToSet = newRelatedMedia.filter((x) => !!x);
             setRelatedMediaItems([...valuesToSet]);
-            console.log(valuesToSet, index); // TODO: remove this
           }}
         ></RelatedMedia>
       ))) ||
