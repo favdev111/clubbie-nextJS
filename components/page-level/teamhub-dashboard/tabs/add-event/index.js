@@ -131,7 +131,7 @@ function AddEvent({ user }) {
     teams.push(teamB);
 
     const createRecurringObj = () => {
-      if (data?.recurring == 1) {
+      if (data?.recurring == "yes") {
         const obj = {
           startDate: data?.firstEventStartDate,
           onEvery: data?.onEvery,
@@ -193,7 +193,7 @@ function AddEvent({ user }) {
           <div className={styles.eventType}>
             <div>
               <input
-                checked={checked}
+                defaultChecked={checked}
                 type="radio"
                 className={styles.eventTypeInput}
                 value="match"
@@ -216,7 +216,7 @@ function AddEvent({ user }) {
                 type="radio"
                 value="train"
                 className={cn(styles.eventTypeInput)}
-                checked={!checked}
+                defaultChecked={!checked}
                 {...register("eventType", { required: true })}
               />
               <label
