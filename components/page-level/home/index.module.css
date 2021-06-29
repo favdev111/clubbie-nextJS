@@ -60,10 +60,6 @@
     padding-right: var(--space-24);
     line-height: 17px;
     cursor: pointer;
-    -webkit-user-select: none; /* Chrome all / Safari all */
-    -moz-user-select: none; /* Firefox all */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none; /* Likely future */
   }
   .mobileSort span:active {
     font-size: var(--fs-h3);
@@ -79,6 +75,14 @@
   .tagContent {
     padding-left: var(--space-36);
     overflow-y: hidden;
+  }
+  .tagContent::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tagContent {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .search {
     display: none;
