@@ -1,7 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import EditPhotoSVG from "@svg/edit-photo";
-import ThrashSVG from "@svg/thrash";
 import styles from "./postCard.module.css";
 
 function ProfilePostCard({ post }) {
@@ -16,14 +14,6 @@ function ProfilePostCard({ post }) {
         {post?.contentType === "image" && (
           <img src={post?.thumbnail || post?.media}></img>
         )}
-        <div className={styles.profilePhotosOptions}>
-          <a>
-            <EditPhotoSVG />
-          </a>
-          <a>
-            <ThrashSVG />
-          </a>
-        </div>
       </div>
     </Link>
   );
