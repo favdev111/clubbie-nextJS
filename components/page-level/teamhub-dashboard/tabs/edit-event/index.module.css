@@ -86,6 +86,10 @@
   padding: var(--space-16) var(--space-16) var(--space-16) var(--space-16);
   margin: 0px auto var(--space-24);
 }
+.inputStyle:focus {
+  color: var(--c-white);
+  background-color: var(--c-nav);
+}
 .buttonOptions {
   display: flex;
   flex-direction: column;

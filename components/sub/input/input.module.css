@@ -19,6 +19,14 @@
   padding: var(--space-16) var(--space-16) var(--space-16) var(--space-16);
   margin: 0px auto var(--space-24);
 }
+.inputCont:focus {
+  color: var(--c-white);
+  background-color: var(--c-nav);
+}
+.inputBlock:focus {
+  color: var(--c-white);
+  background-color: var(--c-nav);
+}
 .inputCont .inputBlock:focus {
   border: 2px solid var(--c-white-50);
   color: var(--c-white);

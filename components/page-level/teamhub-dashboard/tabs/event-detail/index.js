@@ -54,12 +54,15 @@ function EventDetail({ eventId, activeTeam, user }) {
             <RightArrow />
           </div>
         </Link>
-        <div className={styles.routeComponent}>
-          <div className={styles.center}>
-            <ConfirmLineup /> Confirm Line-up
+        {/* todo */}
+        <Link href={`/teamhub/confirm-lineup/${eventId}`}>
+          <div className={styles.routeComponent}>
+            <div className={styles.center}>
+              <ConfirmLineup /> Confirm Line-up
+            </div>
+            <RightArrow />
           </div>
-          <RightArrow />
-        </div>
+        </Link>
         <div onClick={cancelEvent} className={styles.routeComponent}>
           <div className={styles.center}>
             <CancelEvent /> Cancel event

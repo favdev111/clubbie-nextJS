@@ -66,9 +66,17 @@
   .navList {
     display: flex;
     align-items: center;
-
     width: 100%;
     flex-direction: row;
     overflow-x: scroll;
+  }
+  .navList::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .navList {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

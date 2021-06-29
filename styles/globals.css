@@ -3,12 +3,18 @@
   padding: 0;
 }
 
+* {
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
-
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -48,10 +54,24 @@ img {
 #__next {
   width: 100vw;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {
   width: 5px;
+}
+::-webkit-scrollbar-track {
+  padding: var(--space-1) 0;
+  background-color: black;
+}
+:-webkit-scrollbar {
+  width: 1px !important;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 6px var(--c-white-30);
+  background-color: var(--c-turk);
+  border: none;
 }
 
 .checkboxContainer {
