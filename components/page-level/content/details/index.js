@@ -81,8 +81,12 @@ function ContentComments({ comments }) {
         placeholder={"Type your comment here..."}
         buttonText={"Comment"}
       ></CommentInput>
-      {comments?.results.map((comment) => (
-        <Comment comment={comment} replies={comment?.replies}></Comment>
+      {comments?.results.map((comment, index) => (
+        <Comment
+          key={index}
+          comment={comment}
+          replies={comment?.replies}
+        ></Comment>
       ))}
     </div>
   );

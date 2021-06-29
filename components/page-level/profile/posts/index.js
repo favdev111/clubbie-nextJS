@@ -27,6 +27,7 @@ function ProfilePosts({ posts }) {
       <div className={styles.profileButtons}>
         {postsButtons.map((button, index) => (
           <OvalButton
+            key={index}
             status={activeTab === index}
             appearence={button.apperance}
             onClick={() => setActiveTab(index)}
@@ -36,11 +37,14 @@ function ProfilePosts({ posts }) {
         ))}
       </div>
       {Object.keys(posts).map((key, index) => (
-        <span className={cn(styles.hide, index === activeTab && styles.show)}>
+        <span
+          key={index}
+          className={cn(styles.hide, index === activeTab && styles.show)}
+        >
           {posts[key]?.length ? (
             <div className={styles.profilePhotos}>
-              {posts[key].map((post) => (
-                <PostCard post={post.content || post} /> // liked videos has post.content nested obj similar to post
+              {posts[key].map((post, index) => (
+                <PostCard key={index} post={post.content || post} /> // liked videos has post.content nested obj similar to post
               ))}
             </div>
           ) : (
