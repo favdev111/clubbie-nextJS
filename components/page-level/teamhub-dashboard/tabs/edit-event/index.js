@@ -172,8 +172,7 @@ function EditEvent({ user, activeTeam }) {
     `${dateIso.year}` + "-" + `${n(dateIso.month)}` + "-" + `${n(dateIso.day)}`;
 
   const deleteMedia = () => {
-    console.log("hi");
-    console.log(eventData);
+    setMedia(null);
   };
 
   return (
@@ -393,12 +392,12 @@ function EditEvent({ user, activeTeam }) {
                 </span>
               </div>
             </div>
-            {/*             <div className={styles.coverImage}>
+            <div className={styles.coverImage}>
               <div onClick={deleteMedia} className={styles.deleteImage}>
                 <DeleteMedia />
               </div>
-              {eventData?.coverImage && <img src={eventData?.coverImage} />}
-            </div> */}
+              {eventData?.coverImage && <img src={media?.src} />}
+            </div>
           </div>
           <div className={styles.formSubmit}>
             <button type="submit" className={styles.button}>
