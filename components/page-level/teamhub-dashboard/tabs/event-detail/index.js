@@ -7,6 +7,7 @@ import EditEvent from "@svg/edit-event";
 import ConfirmLineup from "@svg/confirm-lineup";
 import CancelEvent from "@svg/cancel-event";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import RightArrow from "@svg/right-arrow";
 
@@ -45,12 +46,14 @@ function EventDetail({ eventId, activeTeam, user }) {
       <div className={styles.twoRows}>
         <MatchDetail data={data} />
         {/*    <AvailablePlayers /> */}
-        <div className={styles.routeComponent}>
-          <div className={styles.center}>
-            <EditEvent /> Edit event
+        <Link href={`/teamhub/edit-event/${eventId}`}>
+          <div className={styles.routeComponent}>
+            <div className={styles.center}>
+              <EditEvent /> Edit event
+            </div>
+            <RightArrow />
           </div>
-          <RightArrow />
-        </div>
+        </Link>
         <div className={styles.routeComponent}>
           <div className={styles.center}>
             <ConfirmLineup /> Confirm Line-up
