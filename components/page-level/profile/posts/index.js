@@ -1,55 +1,53 @@
 import React, { useState, useEffect } from "react";
+import cn from "classNames";
 import styles from "./profile-posts.module.css";
 import OvalButton from "@sub/button-oval";
 import PostCard from "./card";
 
 function ProfilePosts({ posts }) {
-  const [displayPosts, setDisplayPosts] = useState();
+  const [activeTab, setActiveTab] = useState(0); // uploaded posts selected by default
+
   const postsButtons = [
     {
       name: "Uploaded",
       apperance: "uploaded",
-      postsData: posts?.uploaded || [],
     },
     {
       name: "Liked",
       apperance: "liked",
-      postsData: posts?.liked || [],
     },
     {
       name: "Reposts",
       apperance: "reposts",
-      postsData: posts?.reposted || [],
     },
   ];
-
-  useEffect(() => {
-    setDisplayPosts(posts?.uploaded); // uploaded videos selected as default
-  }, [posts]);
 
   return (
     <>
       <div className={styles.profileButtons}>
-        {postsButtons.map((button) => (
+        {postsButtons.map((button, index) => (
           <OvalButton
-            status={displayPosts === button.postsData}
+            status={activeTab === index}
             appearence={button.apperance}
-            onClick={() => setDisplayPosts(button.postsData)}
+            onClick={() => setActiveTab(index)}
           >
             {button.name}
           </OvalButton>
         ))}
       </div>
-
-      {displayPosts?.length ? (
-        <div className={styles.profilePhotos}>
-          {displayPosts.map((post) => (
-            <PostCard post={post.content || post} /> // liked videos has post.content nested obj similar to post
-          ))}
-        </div>
-      ) : (
-        <div className={styles.noPosts}>No Posts</div>
-      )}
+      {Object.keys(posts).map((key, index) => (
+        <span className={cn(styles.hide, index === activeTab && styles.show)}>
+          {posts[key]?.length ? (
+            <div className={styles.profilePhotos}>
+              {posts[key].map((post) => (
+                <PostCard post={post.content || post} /> // liked videos has post.content nested obj similar to post
+              ))}
+            </div>
+          ) : (
+            <div className={styles.noPosts}>No Posts</div>
+          )}
+        </span>
+      ))}
     </>
   );
 }
