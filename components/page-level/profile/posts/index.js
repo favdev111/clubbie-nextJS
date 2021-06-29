@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import cn from "classNames";
+import cn from "classnames";
 import styles from "./profile-posts.module.css";
 import OvalButton from "@sub/button-oval";
 import PostCard from "./card";
