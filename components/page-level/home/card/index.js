@@ -11,11 +11,11 @@ function HomeVideosCard({ data }) {
     <div className={styles.videoCard}>
       <Link href={`/content/${id}`}>
         <span>
-          {media?.mimetype?.includes("video") && (
-            <video className={styles.preview} src={media?.s3Url} controls />
+          {media?.includes("video") && (
+            <video className={styles.preview} src={media} controls />
           )}
-          {media?.mimetype?.includes("image") && (
-            <img className={styles.preview} src={media?.s3Url} />
+          {media?.includes("image") && (
+            <img className={styles.preview} src={media} />
           )}
         </span>
       </Link>

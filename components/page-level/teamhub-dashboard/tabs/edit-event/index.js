@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import styles from "./index.module.css";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import cn from "classnames";
+
 import Link from "next/link";
 import Event from "@api/services/Event";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { DateTime } from "luxon";
 
-import { useRouter } from "next/router";
 import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
-
-import { DateTime } from "luxon";
+import styles from "./index.module.css";
 
 const schema = yup.object().shape({
   title: yup.string().min(5),
@@ -25,13 +25,9 @@ const schema = yup.object().shape({
 
 function EditEvent({ user, activeTeam }) {
   const [eventData, setData] = useState(null);
-  const [teamId, setTeamId] = useState();
-  const [recurringEvent, setRecurring] = useState(0);
-  const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
   const [media, setMedia] = useState(null);
-  const [myDefaultValues, setDefaultValues] = useState();
   const {
     register,
     handleSubmit,
@@ -74,7 +70,6 @@ function EditEvent({ user, activeTeam }) {
       const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
       const allUserTeams = response.data;
       setUserTeams(allUserTeams);
-      setTeamId(allUserTeams[0].id);
     };
 
     fetchUserTeams();
@@ -98,6 +93,7 @@ function EditEvent({ user, activeTeam }) {
 
     fetchPromise
       .then((res) => {
+        console.log(DateTime.fromISO(res.data.eventDateTime, { zone: "utc" }));
         const values = {
           title: res.data?.title,
           location: res.data?.location,
@@ -283,92 +279,7 @@ function EditEvent({ user, activeTeam }) {
               />
             </div>
           </div>
-          <div className={styles.buttonOptions}>
-            Recuring event?
-            <div className={styles.buttons}>
-              {["Yes", "No "].map((button, index) => (
-                <button
-                  type="button"
-                  key={`${index}buttonforform`}
-                  onClick={() => {
-                    setValue("recurring", index);
-                    setRecurring(index);
-                  }}
-                  className={cn(
-                    recurringEvent == index ? styles.button : styles.passive
-                  )}
-                >
-                  {button}
-                </button>
-              ))}
-            </div>
-            {/* Hidden */}
-            <select className={styles.noShow}>
-              {recurringEvent == 0 ? (
-                <option value="yes" {...register("recurring")}>
-                  Yes
-                </option>
-              ) : (
-                <option value="no" {...register("recurring")}>
-                  Yes
-                </option>
-              )}
-            </select>
-          </div>
-          <div>
-            Interval
-            <div className={styles.buttons}>
-              {["Weekly", "Fortnight", "Monthly"].map((button, index) => (
-                <button
-                  type="button"
-                  key={`${index}buttonforform2`}
-                  onClick={() => intervalSet(index)}
-                  className={cn(
-                    interval == index ? styles.button : styles.passive
-                  )}
-                >
-                  {button}
-                </button>
-              ))}
-            </div>
-            {/* Hidden */}
-            <select className={styles.noShow}>
-              {interval == 0 && (
-                <option {...register("onEvery")} value="weekly">
-                  Weekly
-                </option>
-              )}
-              {interval == 1 && (
-                <option {...register("onEvery")} value="fortnight">
-                  Fortnight
-                </option>
-              )}
-              {interval == 2 && (
-                <option {...register("onEvery")} value="monthy">
-                  Monthly
-                </option>
-              )}
-            </select>
-          </div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
-              Start Date
-              <input
-                className={styles.inputStyle}
-                type="date"
-                {...register("firstEventStartDate", { required: false })}
-              />
-            </div>
-            <div className={styles.cell}>
-              Number of Events
-              <input
-                className={styles.inputStyle}
-                defaultValue="0"
-                type="number"
-                {...register("totalEvents")}
-              />
-            </div>
-          </div>
+
           <div className={styles.cell}>
             Change Cover Image
             <div className={styles.file}>
