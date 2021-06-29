@@ -1,0 +1,15 @@
+.actionButton {
+  padding: var(--space-16);
+  background-color: var(--c-white-10);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  margin-right: var(--space-12);
+  cursor: pointer;
+}
+.actionButton:hover {
+  background-color: var(--c-white-30);
+}
+.actionButton p {
+  margin-left: 5px;
+}
