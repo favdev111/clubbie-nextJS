@@ -93,12 +93,22 @@ function EditEvent({ user, activeTeam }) {
 
     fetchPromise
       .then((res) => {
-        console.log(DateTime.fromISO(res.data.eventDateTime, { zone: "utc" }));
+        const dateValue = DateTime.fromISO(res.data.eventDateTime, {
+          zone: "utc",
+        });
+        const date =
+          `${dateValue.year}` +
+          "-" +
+          `${n(dateValue.month)}` +
+          "-" +
+          `${n(dateValue.day)}`;
+
         const values = {
           title: res.data?.title,
           location: res.data?.location,
           message: res.data?.message,
           fee: res.data?.fee,
+          eventDate: date,
         };
         return values;
       })
