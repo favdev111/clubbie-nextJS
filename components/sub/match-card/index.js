@@ -1,52 +1,38 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import Teams from "@api/services/Teams";
-import Qs from "qs";
 
-function MatchCard({ data }) {
-  const [teams, setTeams] = useState(null);
-  const [query, setQuery] = useState("");
+import Event from "@api/services/Event";
+
+function MatchCard({ user, eventId, activeTeam }) {
+  const [data, setData] = useState(null);
 
   /* Not done yet */
-  useEffect(() => {
-    const fetchPromise = new Promise((resolve, reject) => {
-      const params = {
-        id: [data[0].teamId, data[1].teamId],
-      };
-      const paramSerialize = async (params) => {
-        const i = Qs.stringify(params, { arrayFormat: "repeat" });
-        return { params: i };
-      };
-      paramSerialize(params).then(async function (result) {
-        setQuery(result.params);
-        const response = query != "" && (await Teams.GetTeamsWithDetail(query));
-        setTeams(response.data);
-      });
-      resolve("success!");
-    });
 
-    fetchPromise.then((value) => {
-      console.log(value);
-    });
-  }, [data]);
+  useEffect(() => {
+    const teamId = user.teams[activeTeam].team;
+
+    const fetchEvents = async () => {
+      const response = await Event.FetchSingleEvent(eventId, teamId);
+      setData(response.data);
+    };
+    fetchEvents();
+  }, [activeTeam]);
 
   return (
     <div className={styles.score}>
       <div className={styles.teamCard}>
-        {teams && <img src={teams[0]?.crest} />}
-        {teams && teams[0].title}
+        {data && <img src={data?.teams[0].teamId.crest} />}
+        {data && data?.teams[0].teamId.title}
       </div>
 
-      {/* Middle */}
       <div className={styles.scoreMiddle}>
         <p className="opacity-50">Match</p>
         <h1>vs</h1>
       </div>
 
-      {/* Away Team */}
       <div className={styles.teamCard}>
-        {teams && <img src={teams[1].crest} />}
-        {teams && teams[1]?.title}
+        {data && <img src={data?.teams[1].teamId.crest} />}
+        {data && data?.teams[1].teamId.title}
       </div>
     </div>
   );
