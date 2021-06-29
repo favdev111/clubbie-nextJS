@@ -9,22 +9,17 @@ function ProfilePostCard({ post }) {
   //   contentType: "video",
   //   createdAt: "2021-06-14T21:07:10.087Z",
   //   id: "60c7c4fe0f599435d41b4e41",
-  //   thumbnail: {
-  //     s3Url:
-  //       "https://s3.amazonaws.com/com.clubbie.post.videos.d…9835dff9/b7f9ace8-dab6-4a19-8020-54b66c9fdb10.mp4",
-  //     mimetype: "video/mp4",
-  //     id: "60c7c4fd0f599435d41b4e40",
-  //   },
+  //   thumbnail: "https://s3.amazonaws.com/com.clubbie.post.videos.d…9835dff9/b7f9ace8-dab6-4a19-8020-54b66c9fdb10.mp4"
   //   title: "Football",
   // };
 
   return (
     <div className={styles.profilePhotosItem}>
       {post.contentType === "video" && (
-        <video src={post?.thumbnail?.s3Url || post?.media?.s3Url}></video>
+        <video src={post?.thumbnail || post?.media}></video>
       )}
       {post.contentType === "image" && (
-        <img src={post?.thumbnail?.s3Url || post?.media?.s3Url}></img>
+        <img src={post?.thumbnail || post?.media}></img>
       )}
       <div className={styles.profilePhotosOptions}>
         <a>

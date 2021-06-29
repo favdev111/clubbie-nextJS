@@ -5,17 +5,31 @@ import SocialButton from "@sub/social-button";
 import cn from "classnames";
 
 function HomeVideosCard({ data }) {
-  const { id, description, media, author, createdAt } = data;
+  const {
+    id,
+    description,
+    media,
+    thumbnail,
+    author,
+    createdAt,
+    views,
+    contentType,
+  } = data;
 
   return (
     <div className={styles.videoCard}>
       <Link href={`/content/${id}`}>
         <span>
-          {media?.includes("video") && (
-            <video className={styles.preview} src={media} controls />
-          )}
-          {media?.includes("image") && (
-            <img className={styles.preview} src={media} />
+          {contentType === "video" ? (
+            <video
+              className={styles.preview}
+              src={media || thumbnail}
+              controls
+            />
+          ) : contentType === "image" ? (
+            <img className={styles.preview} src={media || thumbnail} />
+          ) : (
+            <></>
           )}
         </span>
       </Link>
@@ -25,9 +39,7 @@ function HomeVideosCard({ data }) {
             src={author?.profile?.image || "/assets/person-placeholder.jpg"}
           />
           <div className={styles.avatarInfo}>
-            <p className="text-18">
-              {author?.profile?.fullName || "author name"}
-            </p>
+            <p className="text-18">{author?.name || "author name"}</p>
             <p className="opacity-50">{new Date(createdAt).toLocaleString()}</p>
           </div>
         </div>
@@ -35,7 +47,12 @@ function HomeVideosCard({ data }) {
       </div>
 
       <p className={styles.desc}> {description}</p>
-      <p className={cn("opacity-50", styles.viewCount)}> 255 views</p>
+      <p className={cn("opacity-50", styles.viewCount)}>
+        {" "}
+        {views || views === 0
+          ? `${views} View${views > 1 || views < 1 ? "s" : ""}`
+          : ""}
+      </p>
       {/* buttons */}
       <div className={styles.socialButtons}>
         <SocialButton type="fav">15</SocialButton>

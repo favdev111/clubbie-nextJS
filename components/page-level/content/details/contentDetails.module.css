@@ -46,6 +46,7 @@
 }
 .postAuthorInfo {
   padding-left: var(--space-12);
+  text-transform: capitalize;
 }
 .postAuthorName {
   cursor: pointer;

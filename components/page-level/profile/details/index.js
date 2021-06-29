@@ -16,7 +16,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
       <div className={styles.profilePlayerHeader}>
         <div className={styles.profilePlayerHeaderInnerLeft}>
           <ProfileInfo
-            image={profile?.image?.s3Url || "/assets/person-placeholder.jpg"}
+            image={profile?.image || "/assets/person-placeholder.jpg"}
             isPublic={isPublic}
             footballerName={profile?.fullName || profile?.id}
             playerTitle={profile?.playerTitle}

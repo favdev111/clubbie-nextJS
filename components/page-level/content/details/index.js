@@ -30,10 +30,10 @@ function ContentHeader({ author }) {
 function ContentMedia({ contentType, media }) {
   return (
     <div className={styles.contentMediaWrapper}>
-      {contentType?.includes("video") && (
+      {contentType === "video" && (
         <video className={styles.contentMedia} src={media} controls />
       )}
-      {contentType?.includes("image") && (
+      {contentType === "image" && (
         <img className={styles.contentMedia} src={media} />
       )}
     </div>
