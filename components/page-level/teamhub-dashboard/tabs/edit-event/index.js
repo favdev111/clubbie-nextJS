@@ -29,15 +29,18 @@ function EditEvent({ user, activeTeam }) {
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
-  const [checked, setChecked] = useState(true);
   const [media, setMedia] = useState(null);
-  const [defaultValues, setDefaultValues] = useState({
-    title: "Add Title",
-    location: "Add Location",
-    message: "Add message",
-    fee: 500,
+  const [myDefaultValues, setDefaultValues] = useState();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
-
   const router = useRouter();
 
   const onFileChange = (e) => {
@@ -76,40 +79,41 @@ function EditEvent({ user, activeTeam }) {
     fetchUserTeams();
   }, []);
 
-  useEffect(async () => {
-    const eventData = async () => {
-      const response = await Event.FetchSingleEvent(
-        router.query.eventId,
-        activeTeam
-      );
-      const data = response.data;
-      setData(data);
-    };
-    eventData();
-  }, [teamId]);
-
   useEffect(() => {
-    const defaultValues = {
-      title: eventData?.title,
-      location: eventData?.location,
-      message: eventData?.message,
-      fee: eventData?.fee,
-    };
-    const setValues = (defaultValues) => {
-      setDefaultValues(defaultValues);
-    };
-    setValues(defaultValues);
-  }, [eventData]);
+    const fetchPromise = new Promise((resolve, reject) => {
+      const eventData = async () => {
+        const response = await Event.FetchSingleEvent(
+          router.query.eventId,
+          activeTeam
+        );
+        return response;
+      };
+      eventData().then((response) => {
+        const data = response.data;
+        setData(data);
+      });
+      resolve(eventData());
+    });
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    fetchPromise
+      .then((res) => {
+        const values = {
+          title: res.data?.title,
+          location: res.data?.location,
+          message: res.data?.message,
+          fee: res.data?.fee,
+        };
+        return values;
+      })
+      .then((values) => {
+        setTimeout(() => {
+          reset(values);
+        }, 1000);
+      });
+
+    return;
+  }, [reset]);
+
   /* todo, object is nearly ready */
 
   const onSubmit = async (data) => {
@@ -171,11 +175,12 @@ function EditEvent({ user, activeTeam }) {
     console.log("hi");
     console.log(eventData);
   };
+
   return (
     <div className={styles.addEvent}>
       {/* Header */}
       <div className={styles.header}>
-        <h1> Create Event</h1>
+        <h1> Edit Event</h1>
         <Link href="./">Cancel</Link>
       </div>
       {/* Body */}
@@ -184,7 +189,6 @@ function EditEvent({ user, activeTeam }) {
           <input
             className={styles.formTitle}
             type="text"
-            defaultValue={defaultValues.title}
             placeholder={eventData?.title}
             {...register("title", { required: true, maxLength: 20 })}
           />
@@ -247,7 +251,6 @@ function EditEvent({ user, activeTeam }) {
               <input
                 className={styles.inputStyle}
                 type="text"
-                defaultValue={defaultValues.location}
                 placeholder={eventData?.location}
                 required
                 {...register("location", { required: true })}
@@ -257,7 +260,6 @@ function EditEvent({ user, activeTeam }) {
               Add Fee?
               <input
                 className={styles.inputStyle}
-                defaultValue={defaultValues.fee}
                 min="5000"
                 type="number"
                 {...register("fee")}
@@ -268,7 +270,6 @@ function EditEvent({ user, activeTeam }) {
               <input
                 className={styles.inputStyle}
                 type="text"
-                defaultValue={defaultValues.message}
                 placeholder={eventData?.message}
                 {...register("message")}
               />
