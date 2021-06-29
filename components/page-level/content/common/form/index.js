@@ -213,7 +213,7 @@ function ContentForm({
               name="sport"
               options={sports}
               placeholder="Sport"
-              value={_sport}
+              selected={_sport}
               onChange={(e) => setSport(e.target.value)}
             ></TemplateSelect>
           </div>

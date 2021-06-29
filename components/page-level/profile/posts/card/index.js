@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./postCard.module.css";
 
 function ProfilePostCard({ post }) {
   // TODO: add likes, comments, reposts, views count
+  const [contentItem, setContentItem] = useState(
+    post?.thumbnail || post?.media
+  );
 
   return (
     <Link href={`/content/${post?.id}`}>
       <div className={styles.profilePhotosItem}>
-        {post?.contentType === "video" && (
-          <video src={post?.thumbnail || post?.media}></video>
-        )}
-        {post?.contentType === "image" && (
-          <img src={post?.thumbnail || post?.media}></img>
-        )}
+        <>
+          {contentItem?.includes("video") && <video src={contentItem}></video>}
+          {contentItem?.includes("image") && <img src={contentItem}></img>}
+        </>
       </div>
     </Link>
   );

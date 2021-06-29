@@ -8,7 +8,7 @@ function ContentAdd() {
   return (
     <Layout>
       <Seo title="Add Content" desc="Lorem ipsum dolor sit amet" />
-      <Content addMode />
+      <Content mode="add" />
     </Layout>
   );
 }

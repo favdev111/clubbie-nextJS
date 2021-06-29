@@ -26,10 +26,8 @@ function CloseSVG() {
 function ParentMedia({ media, setMedia }) {
   return (
     <div className={styles.parentMediaItem}>
-      {media?.src?.includes("image") && <img src={media.src}></img>}
-      {media?.src?.includes("video") && (
-        <video src={media.src} controls></video>
-      )}
+      {media?.includes("image") && <img src={media}></img>}
+      {media?.includes("video") && <video src={media} controls></video>}
       <span className={styles.mediaCloseIcon} onClick={() => setMedia(null)}>
         <CloseSVG />
       </span>
@@ -41,10 +39,8 @@ function RelatedMedia({ media, setMedia }) {
   return media ? (
     <div className={styles.relatedMediaItem}>
       <>
-        {media?.src?.includes("image") && <img src={media.src}></img>}
-        {media?.src?.includes("video") && (
-          <video src={media.src} controls></video>
-        )}
+        {media?.includes("image") && <img src={media}></img>}
+        {media?.includes("video") && <video src={media} controls></video>}
         <span className={styles.mediaCloseIcon} onClick={() => setMedia(null)}>
           <CloseSVG />
         </span>
@@ -74,7 +70,10 @@ function ContentMediaCard({
 }) {
   return (
     (mode === "parent-media" && media && setMedia && (
-      <ParentMedia media={media} setMedia={setMedia}></ParentMedia>
+      <ParentMedia
+        media={media?.src || media}
+        setMedia={setMedia}
+      ></ParentMedia>
     )) ||
     (mode === "related-media" &&
       relatedMediaItems &&
@@ -82,7 +81,7 @@ function ContentMediaCard({
       relatedMediaItems.map((_media, index) => (
         <RelatedMedia
           key={index}
-          media={_media}
+          media={_media?.src || media}
           setMedia={() => {
             const newRelatedMedia = relatedMediaItems;
             newRelatedMedia[index] = null;

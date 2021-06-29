@@ -52,7 +52,10 @@ function ContentHeader({ contentId, author, isMyPost }) {
           {isMyPost && (
             <>
               <ActionButton type="delete" onClick={() => setOpenDialog(true)} />
-              <ActionButton type="edit" />
+              <ActionButton
+                type="edit"
+                onClick={() => router.push(`/content/${contentId}/edit`)}
+              />
             </>
           )}
           <SocialButton type="upload" />
@@ -62,13 +65,13 @@ function ContentHeader({ contentId, author, isMyPost }) {
   );
 }
 
-function ContentMedia({ contentType, media }) {
+function ContentMedia({ media }) {
   return (
     <div className={styles.contentMediaWrapper}>
-      {contentType === "video" && (
+      {media?.includes("video") && (
         <video className={styles.contentMedia} src={media} controls />
       )}
-      {contentType === "image" && (
+      {media?.includes("image") && (
         <img className={styles.contentMedia} src={media} />
       )}
     </div>
@@ -135,10 +138,7 @@ function ContentDetails({ content, user }) {
         author={content?.author}
         isMyPost={content?.author?.id === user?.id}
       ></ContentHeader>
-      <ContentMedia
-        contentType={content?.contentType}
-        media={content?.media}
-      ></ContentMedia>
+      <ContentMedia media={content?.media}></ContentMedia>
       <ContentBody
         title={content.title}
         description={content.description}
