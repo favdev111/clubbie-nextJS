@@ -13,7 +13,6 @@ import {
 const Pitch = ({ lineUp, addNameHandler }) => {
   const dispatch = useDispatch();
   let playerName;
-  // console.log('PitchHome!!!')
   const available_players = useSelector((state) => state.pitch.availPlayers);
   const unavailable_players = useSelector(
     (state) => state.pitch.unavailPlayers
