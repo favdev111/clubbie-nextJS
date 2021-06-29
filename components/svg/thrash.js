@@ -2,8 +2,8 @@ export default function Thrash() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="31.385"
+      width="16.974"
+      height="16.974"
       viewBox="0 0 24 31.385"
     >
       <g id="XMLID_1473_" transform="translate(-60)">
@@ -11,12 +11,12 @@ export default function Thrash() {
           id="XMLID_1476_"
           d="M94.169,183.6a2.763,2.763,0,0,0,2.766,2.631h11.228a2.762,2.762,0,0,0,2.766-2.631l1.617-18.6H92.552Zm11.149-13.984h1.846v10.154h-1.846Zm-3.692,0h1.846v10.154h-1.846Zm-3.692,0H99.78v10.154H97.933Z"
           transform="translate(-30.549 -154.846)"
-          fill="#c41d24"
+          fill={"#c41d24"}
         />
         <path
           id="XMLID_1481_"
           d="M76.615,4.615V2.769A2.772,2.772,0,0,0,73.846,0H70.154a2.772,2.772,0,0,0-2.769,2.769V4.615H60V8.308H84V4.615Zm-7.385,0V2.769a.924.924,0,0,1,.923-.923h3.692a.924.924,0,0,1,.923.923V4.615Z"
-          fill="#c41d24"
+          fill={"#c41d24"}
         />
       </g>
     </svg>
