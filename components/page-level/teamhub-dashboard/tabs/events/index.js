@@ -5,7 +5,6 @@ import DateTable from "./date-table";
 import EventCard from "./card";
 import Link from "next/link";
 import Event from "@api/services/Event";
-import HTTPClient from "@api/HTTPClient";
 
 function Events({ activeTeam, user }) {
   const [events, setEvents] = useState([]);
@@ -20,7 +19,7 @@ function Events({ activeTeam, user }) {
       setEvents(response.data.results);
     };
     fetchEvents();
-  }, [activeTeam]);
+  }, []);
 
   const date = new Date();
   const month = date.getMonth();
@@ -47,7 +46,12 @@ function Events({ activeTeam, user }) {
         {/* Cards */}
         <div className={styles.eventCardsRow}>
           {events.map((card) => (
-            <EventCard user={user} key={Math.random() + 12} data={card} />
+            <EventCard
+              activeTeam={activeTeam}
+              user={user}
+              key={Math.random() + 12}
+              data={card}
+            />
           ))}
         </div>
       </div>

@@ -8,50 +8,39 @@ import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Training from "@svg/training";
-import Match from "@svg/match";
+
 import { useRouter } from "next/router";
 import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
 
+import { DateTime } from "luxon";
+
 const schema = yup.object().shape({
-  title: yup.string().required(),
-  teamA: yup.string().required(),
-  eventDateTime: yup.string().required(),
+  title: yup.string().min(5),
+  eventDateTime: yup.string(),
   fee: yup.number(),
-  recurring: yup.string().required(),
-  firstEventStartDate: yup.string().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.string().required(),
-  }),
-  totalEvents: yup.number().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.number().min(1).required(),
-  }),
+  location: yup.string().min(5),
 });
 
-const now = new Date();
-let dd = now.getDate();
-let mm = now.getMonth() + 1;
-let yyyy = now.getFullYear();
-
-if (dd < 10) {
-  dd = "0" + dd;
-}
-if (mm < 10) {
-  mm = "0" + mm;
-}
-
-const today = yyyy + "-" + mm + "-" + dd;
-
-function AddEvent({ user }) {
+function EditEvent({ user, activeTeam }) {
+  const [eventData, setData] = useState(null);
+  const [teamId, setTeamId] = useState();
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
-  const [checked, setChecked] = useState(true);
   const [media, setMedia] = useState(null);
-
+  const [myDefaultValues, setDefaultValues] = useState();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const router = useRouter();
 
   const onFileChange = (e) => {
@@ -69,7 +58,6 @@ function AddEvent({ user }) {
     };
     reader.readAsDataURL(file);
   };
-
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -85,19 +73,47 @@ function AddEvent({ user }) {
       const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
       const allUserTeams = response.data;
       setUserTeams(allUserTeams);
+      setTeamId(allUserTeams[0].id);
     };
+
     fetchUserTeams();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  useEffect(() => {
+    const fetchPromise = new Promise((resolve, reject) => {
+      const eventData = async () => {
+        const response = await Event.FetchSingleEvent(
+          router.query.eventId,
+          activeTeam
+        );
+        return response;
+      };
+      eventData().then((response) => {
+        const data = response.data;
+        setData(data);
+      });
+      resolve(eventData());
+    });
+
+    fetchPromise
+      .then((res) => {
+        const values = {
+          title: res.data?.title,
+          location: res.data?.location,
+          message: res.data?.message,
+          fee: res.data?.fee,
+        };
+        return values;
+      })
+      .then((values) => {
+        setTimeout(() => {
+          reset(values);
+        }, 1000);
+      });
+
+    return;
+  }, [reset]);
+
   /* todo, object is nearly ready */
 
   const onSubmit = async (data) => {
@@ -124,49 +140,36 @@ function AddEvent({ user }) {
     const eventDateTime =
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
 
-    const teamA = data?.teamA;
-    const teamB = data?.teamB;
-    const teams = [];
-    teams.push(teamA);
-    teams.push(teamB);
-
-    const createRecurringObj = () => {
-      if (data?.recurring == 1) {
-        const obj = {
-          startDate: data?.firstEventStartDate,
-          onEvery: data?.onEvery,
-          totalEvents: data?.totalEvents,
-        };
-        return obj;
-      }
-    };
-
     const formBody = {
       title: data?.title,
-      eventType: data?.eventType,
       location: data?.location,
       eventDateTime: eventDateTime,
-      message: data?.message || null,
+      message: data?.message,
       fee: data?.fee || null,
-      teams: teams,
-      recurring: createRecurringObj(),
       coverImage: mediaIdToUpload,
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
-    await Event.CreateEvent(updateBody)
+    console.log(updateBody);
+
+    await Event.EditEventbyId(router.query.eventId, updateBody)
       .then((res) => {
         router.push(`/teamhub/event/${res.data.id}`);
         console.log(res.data);
-        setMessage("Succesfully Created");
       })
       .catch((err) => {
         console.log("err => ", err);
         setMessage("An error... Please check form");
       });
   };
+  function n(n) {
+    return n > 9 ? "" + n : "0" + n;
+  }
+  const dateIso = DateTime.fromISO(eventData?.eventDateTime, { zone: "utc" });
+  const minDate =
+    `${dateIso.year}` + "-" + `${n(dateIso.month)}` + "-" + `${n(dateIso.day)}`;
 
   const deleteMedia = () => {
     setMedia(null);
@@ -176,8 +179,8 @@ function AddEvent({ user }) {
     <div className={styles.addEvent}>
       {/* Header */}
       <div className={styles.header}>
-        <h1> Create Event</h1>
-        <Link href="./">Cancel</Link>
+        <h1> Edit Event</h1>
+        <Link href={`/teamhub/event/${router.query.eventId}`}>Cancel</Link>
       </div>
       {/* Body */}
       <div className={styles.content}>
@@ -185,57 +188,17 @@ function AddEvent({ user }) {
           <input
             className={styles.formTitle}
             type="text"
-            placeholder="Add title"
+            placeholder={eventData?.title}
             {...register("title", { required: true, maxLength: 20 })}
           />
           <p> {errors.title?.message} </p>
           {/* Todo - Like buttons below */}
-          <div className={styles.eventType}>
-            <div>
-              <input
-                checked={checked}
-                type="radio"
-                className={styles.eventTypeInput}
-                value="match"
-                {...register("eventType", { required: true })}
-              />
-              <label
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="match"
-                onClick={() => {
-                  setChecked(!checked);
-                  setValue("eventType", "match");
-                }}
-              >
-                <Match />
-                Match
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                value="train"
-                className={cn(styles.eventTypeInput)}
-                checked={!checked}
-                {...register("eventType", { required: true })}
-              />
-              <label
-                onClick={() => {
-                  setValue("eventType", "train");
-                  setChecked(!checked);
-                }}
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="train"
-              >
-                <Training />
-                Training
-              </label>
-            </div>
-          </div>
+          <div className={styles.eventType}></div>
           <div className={styles.formGrid}>
             <div className={styles.cell}>
               Team A
               <select
+                disabled
                 {...register("teamA", { required: true })}
                 className={styles.inputStyle}
               >
@@ -249,6 +212,7 @@ function AddEvent({ user }) {
             <div className={styles.cell}>
               Team B
               <select
+                disabled
                 {...register("teamB", { required: true })}
                 className={styles.inputStyle}
               >
@@ -261,7 +225,7 @@ function AddEvent({ user }) {
               <input
                 className={styles.inputStyle}
                 type="date"
-                min={today}
+                min={minDate}
                 required
                 {...register("eventDate", { required: true })}
               />
@@ -286,6 +250,7 @@ function AddEvent({ user }) {
               <input
                 className={styles.inputStyle}
                 type="text"
+                placeholder={eventData?.location}
                 required
                 {...register("location", { required: true })}
               />
@@ -294,7 +259,6 @@ function AddEvent({ user }) {
               Add Fee?
               <input
                 className={styles.inputStyle}
-                defaultValue="0"
                 min="5000"
                 type="number"
                 {...register("fee")}
@@ -305,6 +269,7 @@ function AddEvent({ user }) {
               <input
                 className={styles.inputStyle}
                 type="text"
+                placeholder={eventData?.message}
                 {...register("message")}
               />
             </div>
@@ -404,7 +369,7 @@ function AddEvent({ user }) {
             </div>
           </div>
           <div className={styles.cell}>
-            Cover Image
+            Change Cover Image
             <div className={styles.file}>
               <div className={styles.dragDropVideos}>
                 <input
@@ -446,4 +411,4 @@ function AddEvent({ user }) {
   );
 }
 
-export default AddEvent;
+export default EditEvent;

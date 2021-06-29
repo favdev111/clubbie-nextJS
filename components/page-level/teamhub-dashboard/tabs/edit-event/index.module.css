@@ -152,6 +152,7 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
 .coverImage {
   position: relative;
   display: flex;

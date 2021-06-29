@@ -14,9 +14,9 @@ export default function CancelEvent() {
           transform="translate(-3 -2)"
           fill="none"
           stroke="#ff000b"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_2590"
@@ -25,9 +25,9 @@ export default function CancelEvent() {
           transform="translate(-3 -2)"
           fill="none"
           stroke="#ff000b"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <line
           id="Line_73"
@@ -36,9 +36,9 @@ export default function CancelEvent() {
           transform="translate(7 9)"
           fill="none"
           stroke="#ff000b"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <line
           id="Line_74"
@@ -47,9 +47,9 @@ export default function CancelEvent() {
           transform="translate(11 9)"
           fill="none"
           stroke="#ff000b"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
       </g>
     </svg>
