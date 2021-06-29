@@ -2,4 +2,47 @@
   background-color: var(--c-primary);
   border-radius: var(--radius-lg);
   padding: 12px;
+  grid-row: span 3 / span 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.score {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.teamCard {
+  display: flex;
+  font-family: var(--ff-bold);
+  flex-direction: column;
+  justify-content: center;
+}
+.teamCard img {
+  height: 70px;
+  object-fit: contain;
+}
+.scoreMiddle {
+  display: flex;
+  padding-top: 12px;
+  flex-direction: column;
+  justify-content: center;
+}
+.scoreMiddle h1 {
+  line-height: 0px;
+  text-align: center;
+}
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+.infoInner {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+.infoInner p {
+  padding-left: 5px;
 }
