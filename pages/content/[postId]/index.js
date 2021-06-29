@@ -6,11 +6,11 @@ import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Content from "@page/content";
 
-function ContentDetails({ post }) {
+function ContentDetails({ post, user }) {
   return (
     <Layout>
       <Seo title="Content Details" desc="Lorem ipsum dolor sit amet" />
-      <Content content={post} />
+      <Content content={post} user={user} />
     </Layout>
   );
 }

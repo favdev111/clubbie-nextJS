@@ -44,6 +44,9 @@
   display: flex;
   align-items: center;
 }
+.postHeaderButtons {
+  display: flex;
+}
 .postAuthorInfo {
   padding-left: var(--space-12);
   text-transform: capitalize;
