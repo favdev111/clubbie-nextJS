@@ -20,6 +20,7 @@ const schema = yup.object().shape({
   eventDateTime: yup.string(),
   fee: yup.number(),
   location: yup.string().min(5),
+  message: yup.string().min(5),
 });
 
 function EditEvent({ user, activeTeam }) {
