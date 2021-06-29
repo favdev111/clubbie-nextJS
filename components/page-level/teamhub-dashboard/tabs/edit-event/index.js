@@ -181,7 +181,7 @@ function EditEvent({ user, activeTeam }) {
       {/* Header */}
       <div className={styles.header}>
         <h1> Edit Event</h1>
-        <Link href="./">Cancel</Link>
+        <Link href={`/teamhub/event/${router.query.eventId}`}>Cancel</Link>
       </div>
       {/* Body */}
       <div className={styles.content}>
