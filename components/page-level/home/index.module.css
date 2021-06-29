@@ -28,8 +28,8 @@
 }
 
 .sortSelect select:focus {
-  background-color: var(--c-white-10);
-  color: var(--c-black);
+  color: var(--c-white);
+  background-color: var(--c-nav);
 }
 
 .addContent {

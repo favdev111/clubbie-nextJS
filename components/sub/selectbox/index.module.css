@@ -8,6 +8,9 @@
   text-transform: capitalize;
 }
 .option {
-  color: var(--c-black);
   text-transform: capitalize;
+}
+.selectBox:focus {
+  color: var(--c-white);
+  background-color: var(--c-nav);
 }
