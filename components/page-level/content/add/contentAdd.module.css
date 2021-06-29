@@ -74,6 +74,7 @@
 }
 
 .addContentFooter {
+  margin-top: var(--space-10);
   display: flex;
   justify-content: space-between;
 }
@@ -149,4 +150,18 @@
     width: 150px;
     height: 150px;
   }
+}
+
+.mediaHolder {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

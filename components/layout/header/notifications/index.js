@@ -1,10 +1,22 @@
 import React from "react";
-import Link from "next/link";
-import styles from "./notifications.module.css";
+import Dropdown from "@sub/dropdown";
 import NotificationsSvg from "@svg/notifications";
 import Messages from "@svg/messages";
+import styles from "./notifications.module.css";
 
 function Notifications({ authUser }) {
+  const links = [
+    {
+      href: "/profile/self",
+      title: "Profile",
+    },
+    {
+      href: "/auth/logout",
+      title: "Logout",
+      seperator: true,
+    },
+  ];
+
   return (
     <div className={styles.notifications}>
       <a className={styles.notificationItem}>
@@ -14,15 +26,18 @@ function Notifications({ authUser }) {
       <a className={styles.notificationItem}>
         <NotificationsSvg />
       </a>
-
-      <Link href="/profile/self">
-        <img
-          className={styles.profileBubble}
-          src={
-            authUser?.profile?.image?.s3Url || "/assets/person-placeholder.jpg"
-          }
-        />
-      </Link>
+      <Dropdown
+        links={links}
+        Component={() => (
+          <img
+            className={styles.profileBubble}
+            src={
+              authUser?.profile?.image?.s3Url ||
+              "/assets/person-placeholder.jpg"
+            }
+          />
+        )}
+      ></Dropdown>
     </div>
   );
 }
