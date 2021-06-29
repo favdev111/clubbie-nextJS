@@ -42,7 +42,7 @@ function EventDetail({ eventId, activeTeam, user }) {
   return (
     <div className={styles.eventDetail}>
       <h1>{data?.title}</h1>
-      <DetailCover img={data?.coverImage} />
+      <DetailCover data={data} img={data?.coverImage} />
       <div className={styles.twoRows}>
         <MatchDetail data={data} />
         {/*    <AvailablePlayers /> */}

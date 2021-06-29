@@ -8,10 +8,10 @@ import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Training from "@svg/training";
-import Match from "@svg/match";
+
 import { useRouter } from "next/router";
 import UploadSVG from "@svg/upload";
+import DeleteMedia from "@svg/delete-media";
 
 import { DateTime } from "luxon";
 
@@ -167,6 +167,10 @@ function EditEvent({ user, activeTeam }) {
   const minDate =
     `${dateIso.year}` + "-" + `${n(dateIso.month)}` + "-" + `${n(dateIso.day)}`;
 
+  const deleteMedia = () => {
+    console.log("hi");
+    console.log(eventData);
+  };
   return (
     <div className={styles.addEvent}>
       {/* Header */}
@@ -186,47 +190,7 @@ function EditEvent({ user, activeTeam }) {
           />
           <p> {errors.title?.message} </p>
           {/* Todo - Like buttons below */}
-          <div className={styles.eventType}>
-            <div>
-              <input
-                checked={checked}
-                type="radio"
-                className={styles.eventTypeInput}
-                {...register("eventType", { required: true })}
-              />
-              <label
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="match"
-                onClick={() => {
-                  setChecked(!checked);
-                  setValue("eventType", "match");
-                }}
-              >
-                <Match />
-                Match
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                value="train"
-                className={cn(styles.eventTypeInput)}
-                checked={!checked}
-                {...register("eventType", { required: true })}
-              />
-              <label
-                onClick={() => {
-                  setValue("eventType", "train");
-                  setChecked(!checked);
-                }}
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="train"
-              >
-                <Training />
-                Training
-              </label>
-            </div>
-          </div>
+          <div className={styles.eventType}></div>
           <div className={styles.formGrid}>
             <div className={styles.cell}>
               Team A
@@ -405,7 +369,7 @@ function EditEvent({ user, activeTeam }) {
             </div>
           </div>
           <div className={styles.cell}>
-            Cover Image
+            Change Cover Image
             <div className={styles.file}>
               <div className={styles.dragDropVideos}>
                 <input
@@ -428,6 +392,12 @@ function EditEvent({ user, activeTeam }) {
                 </span>
               </div>
             </div>
+            {/*             <div className={styles.coverImage}>
+              <div onClick={deleteMedia} className={styles.deleteImage}>
+                <DeleteMedia />
+              </div>
+              {eventData?.coverImage && <img src={eventData?.coverImage} />}
+            </div> */}
           </div>
           <div className={styles.formSubmit}>
             <button type="submit" className={styles.button}>

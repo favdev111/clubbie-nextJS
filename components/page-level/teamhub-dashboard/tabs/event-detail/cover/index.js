@@ -2,7 +2,7 @@ import React from "react";
 import ThreeDots from "@svg/threedots";
 import styles from "./index.module.css";
 
-function DetailCover({ img }) {
+function DetailCover({ img, data }) {
   return (
     <div className={styles.detailCover}>
       <div className={styles.cover}>
@@ -11,7 +11,7 @@ function DetailCover({ img }) {
       <div className={styles.more}>
         <ThreeDots />
       </div>
-      <div className={styles.price}>£4.00</div>
+      <div className={styles.price}>£{data?.fee}</div>
     </div>
   );
 }
