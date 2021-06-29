@@ -12,6 +12,7 @@ import Training from "@svg/training";
 import Match from "@svg/match";
 import { useRouter } from "next/router";
 import UploadSVG from "@svg/upload";
+import DeleteMedia from "@svg/delete-media";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -165,6 +166,10 @@ function AddEvent({ user }) {
         console.log("err => ", err);
         setMessage("An error... Please check form");
       });
+  };
+
+  const deleteMedia = () => {
+    setMedia(null);
   };
 
   return (
@@ -421,6 +426,12 @@ function AddEvent({ user }) {
                   </a>
                 </span>
               </div>
+            </div>
+            <div className={styles.coverImage}>
+              <div onClick={deleteMedia} className={styles.deleteImage}>
+                <DeleteMedia />
+              </div>
+              {media?.src && <img src={media?.src} />}
             </div>
           </div>
           <div className={styles.formSubmit}>

@@ -396,7 +396,7 @@ function EditEvent({ user, activeTeam }) {
               <div onClick={deleteMedia} className={styles.deleteImage}>
                 <DeleteMedia />
               </div>
-              {eventData?.coverImage && <img src={media?.src} />}
+              {media?.src && <img src={media?.src} />}
             </div>
           </div>
           <div className={styles.formSubmit}>
