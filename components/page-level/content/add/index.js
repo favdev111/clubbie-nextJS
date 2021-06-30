@@ -1,6 +1,7 @@
 import React from "react";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
+import router from "next/router";
 
 function ContentAdd() {
   const handleOnSubmit = async (
@@ -118,6 +119,8 @@ function ContentAdd() {
       }
     }
     setStatus({ loading: false, msg: "Post Created", type: "success" });
+
+    router.push(`/?createdPost=${parentPost.id}`, "/");
   };
 
   return (

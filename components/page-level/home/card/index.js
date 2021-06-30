@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 import cn from "classnames";
 
-function HomeVideosCard({ data }) {
+function HomeVideosCard({ createdPost, data }) {
   const {
     id,
     description,
@@ -17,7 +17,12 @@ function HomeVideosCard({ data }) {
   } = data;
 
   return (
-    <div className={styles.videoCard}>
+    <div
+      className={cn(
+        styles.videoCard,
+        createdPost === id && styles.highLightPost
+      )}
+    >
       <Link href={`/content/${id}`}>
         <span>
           {contentType === "video" ? (
