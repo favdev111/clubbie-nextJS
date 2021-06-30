@@ -1,8 +1,10 @@
 import HTTPClient from "../HTTPClient";
 
 export default class CommentManagementRoutes {
-  static async GetComments(postId) {
-    return HTTPClient.get(`/comments/${postId}`);
+  static async GetComments(postId, query) {
+    return HTTPClient.get(
+      `/comments/${postId}?${new URLSearchParams(query).toString()}`
+    );
   }
 
   static async CreateComment(postId, payload) {

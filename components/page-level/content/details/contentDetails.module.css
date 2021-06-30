@@ -91,6 +91,28 @@
 .commentsWrapper {
   margin-top: var(--space-50);
 }
+.commentsLoadMoreWrapper {
+  display: flex;
+  justify-content: center;
+}
+.commentsLoadMoreButton {
+  cursor: pointer;
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  border-radius: var(--border-5);
+  margin-left: var(--space-8);
+  margin-right: var(--space-8);
+  padding: var(--space-8);
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+.commentsLoadMoreButton:hover {
+  background-color: var(--c-white-30);
+}
+.loader {
+  margin-left: 5px;
+}
+
 @media (max-width: 768px) {
   .postHeader {
     order: 1;

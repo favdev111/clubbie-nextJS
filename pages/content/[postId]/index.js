@@ -36,9 +36,11 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   }
 
   // get comments
-  const responsePostComments = await Comments.GetComments(postId).catch(
-    () => false
-  );
+  const responsePostComments = await Comments.GetComments(postId, {
+    limit: 10,
+    page: 1,
+    sortBy: "dateTime:desc",
+  }).catch(() => false);
   const comments = responsePostComments?.data;
 
   // validate all data found

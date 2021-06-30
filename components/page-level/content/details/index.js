@@ -6,7 +6,9 @@ import ActionButton from "@sub/action-button";
 import SocialButton from "@sub/social-button";
 import Chip from "@sub/chip";
 import ConfirmDialog from "@sub/confirm-dialog";
+import Loader from "@sub/loader";
 import Posts from "@api/services/Posts";
+import Comments from "@api/services/Comments";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
@@ -158,7 +160,31 @@ function ContentActions({ totalLikes, totalReposts }) {
   );
 }
 
-function ContentComments({ comments }) {
+function ContentComments({ comments, contentId }) {
+  const [_comments, setComments] = useState(comments);
+  const [loading, setLoading] = useState(false);
+
+  const loadMoreComments = async () => {
+    setLoading(true);
+
+    // get comments
+    const responsePostComments = await Comments.GetComments(contentId, {
+      limit: 10,
+      page: _comments?.page + 1,
+      sortBy: "dateTime:desc",
+    }).catch(() => false);
+    const moreComments = responsePostComments?.data;
+
+    // set in state
+    const commentsToSet = {
+      ...moreComments,
+      results: [...(_comments?.results || []), ...moreComments?.results],
+    };
+    setComments({ ...commentsToSet });
+
+    setLoading(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -166,13 +192,28 @@ function ContentComments({ comments }) {
         placeholder={"Type your comment here..."}
         buttonText={"Comment"}
       ></CommentInput>
-      {comments?.results.map((comment, index) => (
+      {_comments?.results.map((comment, index) => (
         <Comment
           key={index}
           comment={comment}
           replies={comment?.replies}
         ></Comment>
       ))}
+      {_comments?.page < _comments?.totalPages && (
+        <div className={styles.commentsLoadMoreWrapper}>
+          <span
+            className={styles.commentsLoadMoreButton}
+            onClick={() => loadMoreComments()}
+          >
+            Load More
+            {loading && (
+              <span className={styles.loader}>
+                <Loader></Loader>
+              </span>
+            )}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -207,7 +248,10 @@ function ContentDetails({ content, user }) {
         totalReposts={content?.reposts}
       ></ContentActions>
       {content?.comments?.results && (
-        <ContentComments comments={content.comments}></ContentComments>
+        <ContentComments
+          comments={content.comments}
+          contentId={content?.id}
+        ></ContentComments>
       )}
     </>
   );
