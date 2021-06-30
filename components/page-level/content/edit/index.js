@@ -1,10 +1,10 @@
 import React from "react";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
+import router from "next/router";
 
 function ContentEdit({ content }) {
   // Todo: handle child posts edit
-  console.log(content);
   const handleOnSubmit = async (
     e,
     _media,
@@ -85,7 +85,13 @@ function ContentEdit({ content }) {
       return;
     }
 
-    setStatus({ loading: false, msg: "Post Edited", type: "success" });
+    setStatus({
+      loading: false,
+      msg: "Post Edited",
+      type: "success",
+    });
+
+    router.push(`/content/${parentPost.id}`);
   };
 
   return (
