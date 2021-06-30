@@ -35,7 +35,7 @@ function ContentHeader({ contentId, author, isMyPost }) {
   const deleteContent = async (contentId) => {
     const response = await Posts.DeletePost(contentId).catch(() => undefined);
     if (response?.status !== 204) {
-      alert("Error Deleting Post"); // TODO: make queable notification snack
+      alert("Error Deleting Post"); // TODO: make queueable notification snack
       return;
     }
     alert("Content Deleted Successfully");
@@ -178,6 +178,11 @@ function ContentComments({ user, comments, contentId }) {
       sortBy: "dateTime:desc",
     }).catch(() => false);
     const moreComments = responsePostComments?.data;
+    if (!moreComments) {
+      console.log("error loading comments"); // Todo: error component
+      setLoadingComments(false);
+      return;
+    }
 
     // set in state
     const commentsToSet = {
@@ -199,6 +204,11 @@ function ContentComments({ user, comments, contentId }) {
       () => false
     );
     const createdComment = response?.data;
+    if (!createdComment) {
+      console.log("error creating comments"); // Todo: error component
+      setCreatingComment(false);
+      return;
+    }
 
     // set in state
     const commentsToSet = {
@@ -222,6 +232,7 @@ function ContentComments({ user, comments, contentId }) {
     const editedComment = response?.data;
     if (!editedComment) {
       console.log("Comment Not Edited"); // Todo: error component
+      setEditingComment(false);
       return;
     }
 
@@ -251,6 +262,7 @@ function ContentComments({ user, comments, contentId }) {
     const deleted = response?.status === 204;
     if (!deleted) {
       console.log("Comment Not Deleted"); // Todo: error component
+      setDeletingComment(false);
       return;
     }
 
