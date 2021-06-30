@@ -13,6 +13,7 @@ const TemplateInput = ({
   multiLine,
   rows,
   resizable,
+  onEnter,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -36,6 +37,7 @@ const TemplateInput = ({
             value={value}
             required={required}
             onChange={onChange}
+            onKeyDown={(e) => e.key === "Enter" && onEnter()}
           />
           {type === "password" ? (
             <a

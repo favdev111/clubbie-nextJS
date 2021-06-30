@@ -17,6 +17,7 @@ function CommentInput({ placeholder, buttonText, onSubmit, loading }) {
         name="commentInput"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
+        onEnter={() => !loading && handleOnClick()}
       ></TemplateInput>
       <span className={styles.spacing}></span>
       <Button loading={loading} onClick={handleOnClick}>
