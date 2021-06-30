@@ -24,7 +24,7 @@ function CommentBody({ author, commentText }) {
           {author?.profile?.fullName || author?.id}
         </span>
       </Link>
-      <p className={styles.commentText}>{commentText}t</p>
+      <p className={styles.commentText}>{commentText}</p>
     </div>
   );
 }

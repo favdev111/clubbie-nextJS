@@ -160,12 +160,13 @@ function ContentActions({ totalLikes, totalReposts }) {
   );
 }
 
-function ContentComments({ comments, contentId }) {
+function ContentComments({ user, comments, contentId }) {
   const [_comments, setComments] = useState(comments);
-  const [loading, setLoading] = useState(false);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [creatingComment, setCreatingComment] = useState(false);
 
   const loadMoreComments = async () => {
-    setLoading(true);
+    setLoadingComments(true);
 
     // get comments
     const responsePostComments = await Comments.GetComments(contentId, {
@@ -182,7 +183,28 @@ function ContentComments({ comments, contentId }) {
     };
     setComments({ ...commentsToSet });
 
-    setLoading(false);
+    setLoadingComments(false);
+  };
+
+  const createComment = async (commentText) => {
+    if (commentText.trim().length === 0) return;
+    setCreatingComment(true);
+
+    // create comment
+    const payload = { text: commentText.trim() };
+    const response = await Comments.CreateComment(contentId, payload).catch(
+      () => false
+    );
+    const createdComment = response?.data;
+
+    // set in state
+    const commentsToSet = {
+      ..._comments,
+      results: [{ ...createdComment, user: user }, ..._comments?.results],
+    };
+    setComments({ ...commentsToSet });
+
+    setCreatingComment(false);
   };
 
   return (
@@ -191,6 +213,8 @@ function ContentComments({ comments, contentId }) {
       <CommentInput
         placeholder={"Type your comment here..."}
         buttonText={"Comment"}
+        loading={creatingComment}
+        onSubmit={(comment) => createComment(comment)}
       ></CommentInput>
       {_comments?.results.map((comment, index) => (
         <Comment
@@ -206,7 +230,7 @@ function ContentComments({ comments, contentId }) {
             onClick={() => loadMoreComments()}
           >
             Load More
-            {loading && (
+            {loadingComments && (
               <span className={styles.loader}>
                 <Loader></Loader>
               </span>
@@ -249,6 +273,7 @@ function ContentDetails({ content, user }) {
       ></ContentActions>
       {content?.comments?.results && (
         <ContentComments
+          user={user}
           comments={content.comments}
           contentId={content?.id}
         ></ContentComments>
