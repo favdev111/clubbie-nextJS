@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import FavSVG from "@svg/social/fav";
 import CommentSVG from "@svg/social/comment";
+import ThrashSVG from "@svg/thrash";
 import styles from "./comments.module.css";
 import Reply from "./reply";
 import CommentInput from "../commentInput";
@@ -35,6 +36,7 @@ function CommentActions({
   hasCommented,
   likeBtnAction,
   commentBtnAction,
+  deleteBtnAction,
   dateTime,
 }) {
   return (
@@ -48,12 +50,17 @@ function CommentActions({
       >
         <CommentSVG></CommentSVG>
       </span>
+      {deleteBtnAction && (
+        <span onClick={deleteBtnAction}>
+          <ThrashSVG></ThrashSVG>
+        </span>
+      )}
       <span>{new Date(dateTime).toLocaleString()}</span>
     </div>
   );
 }
 
-function Comment({ comment, replies }) {
+function Comment({ comment, replies, isAuthor, onDeleteClick }) {
   const [addReply, setAddReply] = useState(false);
 
   return (
@@ -68,6 +75,7 @@ function Comment({ comment, replies }) {
         <CommentActions
           likeBtnAction={() => console.log("like clicked")}
           commentBtnAction={() => setAddReply(!addReply)}
+          deleteBtnAction={isAuthor ? () => onDeleteClick(comment?.id) : null}
           dateTime={comment?.dateTime}
         ></CommentActions>
         {addReply && (

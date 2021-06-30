@@ -15,8 +15,8 @@ export default class CommentManagementRoutes {
     return HTTPClient.put(`/comments/${id}`, payload);
   }
 
-  static async DeleteComment(id, payload) {
-    return HTTPClient.delete(`/comments/${id}`, payload);
+  static async DeleteComment(id) {
+    return HTTPClient.delete(`/comments/${id}`);
   }
 
   static async ReplyToComment(id, payload) {

@@ -1,3 +1,6 @@
+.commentInfo {
+  cursor: pointer;
+}
 .commentBoxWrapper {
   background: var(--c-white-10) 0% 0% no-repeat padding-box;
   padding: 0;

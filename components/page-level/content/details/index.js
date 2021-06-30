@@ -7,6 +7,7 @@ import SocialButton from "@sub/social-button";
 import Chip from "@sub/chip";
 import ConfirmDialog from "@sub/confirm-dialog";
 import Loader from "@sub/loader";
+import BackDropLoader from "@sub/backdrop-loader";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import CommentInput from "./commentInput";
@@ -164,6 +165,7 @@ function ContentComments({ user, comments, contentId }) {
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
+  const [deletingComment, setDeletingComment] = useState(false);
 
   const loadMoreComments = async () => {
     setLoadingComments(true);
@@ -207,6 +209,28 @@ function ContentComments({ user, comments, contentId }) {
     setCreatingComment(false);
   };
 
+  const deleteComment = async (commentId) => {
+    if (!commentId) return;
+    setDeletingComment(true);
+
+    // delete comment
+    const response = await Comments.DeleteComment(commentId).catch(() => false);
+    const deleted = response?.status === 204;
+    if (!deleted) {
+      console.log("Comment Not Deleted"); // Todo: error component
+      return;
+    }
+
+    // filter from state
+    const commentsToSet = {
+      ..._comments,
+      results: _comments.results.filter((x) => x.id !== commentId),
+    };
+    setComments({ ...commentsToSet });
+
+    setDeletingComment(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -221,6 +245,8 @@ function ContentComments({ user, comments, contentId }) {
           key={index}
           comment={comment}
           replies={comment?.replies}
+          isAuthor={user?.id === comment?.user?.id}
+          onDeleteClick={deleteComment}
         ></Comment>
       ))}
       {_comments?.page < _comments?.totalPages && (
@@ -238,6 +264,7 @@ function ContentComments({ user, comments, contentId }) {
           </span>
         </div>
       )}
+      {deletingComment && <BackDropLoader></BackDropLoader>}
     </div>
   );
 }
