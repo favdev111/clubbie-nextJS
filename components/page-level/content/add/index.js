@@ -13,7 +13,8 @@ function ContentAdd() {
     _tagSomeone,
     _relatedMediaItems,
     uploadMultiplePostMedia,
-    setStatus
+    setStatus,
+    deleteChildPosts = null
   ) => {
     e.preventDefault();
 

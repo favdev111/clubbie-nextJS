@@ -88,7 +88,8 @@ function ContentEdit({ content }) {
     // Add child posts
     const childPosts = await (async () => {
       if (_relatedMediaItems.length === 0) return false;
-      const uploadedFiles = await uploadMultiplePostMedia(_relatedMediaItems);
+      const mediaToUpload = _relatedMediaItems.filter((x) => !x.id);
+      const uploadedFiles = await uploadMultiplePostMedia(mediaToUpload);
 
       const posts = await Promise.all(
         uploadedFiles.map(async (file) => {
@@ -152,7 +153,7 @@ function ContentEdit({ content }) {
       media={content?.media}
       title={content?.title}
       description={content?.description}
-      relatedMediaItems={null} // TODO: child posts edit
+      relatedMediaItems={content?.childPosts} // TODO: child posts edit
       sport={content?.tags[0]?.type || null}
       tagSomeone={
         content?.tags.length > 0

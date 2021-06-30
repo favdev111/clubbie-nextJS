@@ -81,10 +81,10 @@ function ContentMediaCard({
       relatedMediaItems.map((_media, index) => (
         <RelatedMedia
           key={index}
-          media={_media?.src || media}
-          setMedia={() => {
+          media={_media?.src || _media?.media || media}
+          setMedia={(val) => {
             const newRelatedMedia = relatedMediaItems;
-            newRelatedMedia[index] = null;
+            newRelatedMedia[index] = val;
             const valuesToSet = newRelatedMedia.filter((x) => !!x);
             setRelatedMediaItems([...valuesToSet]);
           }}
