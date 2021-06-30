@@ -141,7 +141,7 @@ function ContentForm({
         <div className={styles.dragDropVideos}>
           <input
             hidden
-            accept="image/*,video/*"
+            accept="video/*" // TODO: make utility class for validations
             id="pick-parent-media"
             type="file"
             onChange={onParentMediaPicked}
