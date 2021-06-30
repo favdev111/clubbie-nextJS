@@ -165,6 +165,7 @@ function ContentComments({ user, comments, contentId }) {
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
+  const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
 
   const loadMoreComments = async () => {
@@ -209,6 +210,38 @@ function ContentComments({ user, comments, contentId }) {
     setCreatingComment(false);
   };
 
+  const editComment = async (commentId, commentText) => {
+    if (!commentId || !commentText) return;
+    setEditingComment(true);
+
+    // edit comment
+    const payload = { text: commentText.trim() };
+    const response = await Comments.UpdateComment(commentId, payload).catch(
+      () => false
+    );
+    const editedComment = response?.data;
+    if (!editedComment) {
+      console.log("Comment Not Edited"); // Todo: error component
+      return;
+    }
+
+    // find and update comment
+    const updatedCommentState = _comments.results;
+    const commentToUpdate = updatedCommentState.find(
+      (x) => x?.id === commentId
+    );
+    commentToUpdate.text = editedComment?.text;
+
+    // update state
+    const commentsToSet = {
+      ..._comments,
+      results: updatedCommentState,
+    };
+    setComments({ ...commentsToSet });
+
+    setEditingComment(false);
+  };
+
   const deleteComment = async (commentId) => {
     if (!commentId) return;
     setDeletingComment(true);
@@ -247,6 +280,8 @@ function ContentComments({ user, comments, contentId }) {
           replies={comment?.replies}
           isAuthor={user?.id === comment?.user?.id}
           onDeleteClick={deleteComment}
+          onSaveClick={editComment}
+          editingComment={editingComment}
         ></Comment>
       ))}
       {_comments?.page < _comments?.totalPages && (
@@ -264,7 +299,7 @@ function ContentComments({ user, comments, contentId }) {
           </span>
         </div>
       )}
-      {deletingComment && <BackDropLoader></BackDropLoader>}
+      {(editingComment || deletingComment) && <BackDropLoader></BackDropLoader>}
     </div>
   );
 }

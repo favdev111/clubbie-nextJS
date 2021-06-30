@@ -37,7 +37,7 @@ const TemplateInput = ({
             value={value}
             required={required}
             onChange={onChange}
-            onKeyDown={(e) => e.key === "Enter" && onEnter()}
+            onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
           />
           {type === "password" ? (
             <a

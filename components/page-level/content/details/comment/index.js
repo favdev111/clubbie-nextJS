@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import TemplateInput from "@sub/input";
 import FavSVG from "@svg/social/fav";
 import CommentSVG from "@svg/social/comment";
 import ThrashSVG from "@svg/thrash";
+import EditSVG from "@svg/edit";
+import SaveSVG from "@svg/save";
 import styles from "./comments.module.css";
 import Reply from "./reply";
 import CommentInput from "../commentInput";
@@ -17,7 +20,9 @@ function CommentInfo({ author }) {
   );
 }
 
-function CommentBody({ author, commentText }) {
+function CommentBody({ author, commentText, onSaveClick, loading }) {
+  const [editText, setEditText] = useState(commentText);
+
   return (
     <div className={styles.commentBody}>
       <Link href={`/profile/${author?.id}`}>
@@ -25,7 +30,23 @@ function CommentBody({ author, commentText }) {
           {author?.profile?.fullName || author?.id}
         </span>
       </Link>
-      <p className={styles.commentText}>{commentText}</p>
+      {!onSaveClick ? (
+        <p className={styles.commentText}>{commentText}</p>
+      ) : (
+        <div className={styles.editCommentWrapper}>
+          <TemplateInput
+            name="editComment"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onEnter={(e) => !loading && onSaveClick(editText)}
+          />
+          <div className={styles.saveComment}>
+            <span onClick={() => onSaveClick(editText)}>
+              <SaveSVG></SaveSVG>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -36,6 +57,7 @@ function CommentActions({
   hasCommented,
   likeBtnAction,
   commentBtnAction,
+  editBtnAction,
   deleteBtnAction,
   dateTime,
 }) {
@@ -50,6 +72,11 @@ function CommentActions({
       >
         <CommentSVG></CommentSVG>
       </span>
+      {editBtnAction && (
+        <span onClick={editBtnAction}>
+          <EditSVG></EditSVG>
+        </span>
+      )}
       {deleteBtnAction && (
         <span onClick={deleteBtnAction}>
           <ThrashSVG></ThrashSVG>
@@ -60,8 +87,22 @@ function CommentActions({
   );
 }
 
-function Comment({ comment, replies, isAuthor, onDeleteClick }) {
+function Comment({
+  comment,
+  replies,
+  isAuthor,
+  onDeleteClick,
+  onSaveClick,
+  editingComment,
+}) {
   const [addReply, setAddReply] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  const saveComment = (commentText) => {
+    if (commentText.trim().length === 0) return;
+    setEditMode(false);
+    onSaveClick(comment?.id, commentText);
+  };
 
   return (
     <div className={styles.commentBoxWrapper}>
@@ -70,11 +111,14 @@ function Comment({ comment, replies, isAuthor, onDeleteClick }) {
         <CommentBody
           author={comment?.user}
           commentText={comment?.text}
+          onSaveClick={editMode ? saveComment : null}
+          loading={editingComment}
         ></CommentBody>
         {/* Todo: action buttons api logic */}
         <CommentActions
           likeBtnAction={() => console.log("like clicked")}
           commentBtnAction={() => setAddReply(!addReply)}
+          editBtnAction={() => setEditMode(!editMode)}
           deleteBtnAction={isAuthor ? () => onDeleteClick(comment?.id) : null}
           dateTime={comment?.dateTime}
         ></CommentActions>
