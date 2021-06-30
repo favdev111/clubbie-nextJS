@@ -6,20 +6,19 @@ import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Content from "@page/content";
 
-function ContentDetails({ post, user }) {
+function ContentEdit({ post }) {
   return (
     <Layout>
-      <Seo title="Content Details" desc="Lorem ipsum dolor sit amet" />
-      <Content content={post} user={user} />
+      <Seo title="Edit Content" desc="Lorem ipsum dolor sit amet" />
+      <Content content={post} mode="edit" />
     </Layout>
   );
 }
 
-export default ContentDetails;
+export default ContentEdit;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const postId = ctx.params.postId;
-
   // get posts
   const responsePost = await Posts.GetPostById(postId).catch(() => false);
   let post = responsePost?.data;

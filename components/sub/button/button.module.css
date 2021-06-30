@@ -6,6 +6,9 @@
   border: none;
   cursor: pointer;
 }
+.danger {
+  background: var(--c-red);
+}
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;

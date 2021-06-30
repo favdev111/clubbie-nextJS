@@ -6,8 +6,8 @@ import EventDetails from "../../dashboard/upnext/details";
 function StatisticFixtures({ data }) {
   return (
     <div>
-      {data.map((item) => (
-        <>
+      {data.map((item, index) => (
+        <span key={index}>
           <h3> {item.eventDetails.date}</h3>
           <div className={styles.card}>
             {/* Home Team */}
@@ -19,7 +19,7 @@ function StatisticFixtures({ data }) {
             {/* Away Team */}
             <TeamCardForEvents data={item.awayTeam} />
           </div>
-        </>
+        </span>
       ))}
     </div>
   );

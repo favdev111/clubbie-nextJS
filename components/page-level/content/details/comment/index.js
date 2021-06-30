@@ -78,8 +78,8 @@ function Comment({ comment, replies }) {
             ></CommentInput>
           </div>
         )}
-        {replies.map((reply) => (
-          <Reply reply={reply}></Reply>
+        {replies.map((reply, index) => (
+          <Reply key={index} reply={reply}></Reply>
         ))}
       </div>
     </div>

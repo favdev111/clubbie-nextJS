@@ -41,8 +41,8 @@ function DropDown({ Component, links }) {
       </span>
       <div className={cn(styles.dropDownList, open && styles.openDropdown)}>
         {links?.length &&
-          links.map((link) => (
-            <Link href={link.href}>
+          links.map((link, index) => (
+            <Link key={index} href={link.href}>
               <span
                 className={cn(
                   styles.dropDownListItem,

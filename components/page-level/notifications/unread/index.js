@@ -39,8 +39,8 @@ function Unread() {
   return (
     <>
       <NotificationRow>
-        {notifications.map((notificaton) => (
-          <NotificationCard data={notificaton} />
+        {notifications.map((notificaton, index) => (
+          <NotificationCard key={index} data={notificaton} />
         ))}
       </NotificationRow>
     </>

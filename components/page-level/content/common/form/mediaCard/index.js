@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./contentMediaCard.module.css";
 import UploadSVG from "@svg/upload";
+import styles from "./contentMediaCard.module.css";
 
 // Todo: make a svg and replace this
 function CloseSVG() {
@@ -26,10 +26,8 @@ function CloseSVG() {
 function ParentMedia({ media, setMedia }) {
   return (
     <div className={styles.parentMediaItem}>
-      {media?.src?.includes("image") && <img src={media.src}></img>}
-      {media?.src?.includes("video") && (
-        <video src={media.src} controls></video>
-      )}
+      {media?.includes("image") && <img src={media}></img>}
+      {media?.includes("video") && <video src={media} controls></video>}
       <span className={styles.mediaCloseIcon} onClick={() => setMedia(null)}>
         <CloseSVG />
       </span>
@@ -41,10 +39,8 @@ function RelatedMedia({ media, setMedia }) {
   return media ? (
     <div className={styles.relatedMediaItem}>
       <>
-        {media?.src?.includes("image") && <img src={media.src}></img>}
-        {media?.src?.includes("video") && (
-          <video src={media.src} controls></video>
-        )}
+        {media?.includes("image") && <img src={media}></img>}
+        {media?.includes("video") && <video src={media} controls></video>}
         <span className={styles.mediaCloseIcon} onClick={() => setMedia(null)}>
           <CloseSVG />
         </span>
@@ -74,7 +70,10 @@ function ContentMediaCard({
 }) {
   return (
     (mode === "parent-media" && media && setMedia && (
-      <ParentMedia media={media} setMedia={setMedia}></ParentMedia>
+      <ParentMedia
+        media={media?.src || media}
+        setMedia={setMedia}
+      ></ParentMedia>
     )) ||
     (mode === "related-media" &&
       relatedMediaItems &&
@@ -82,13 +81,12 @@ function ContentMediaCard({
       relatedMediaItems.map((_media, index) => (
         <RelatedMedia
           key={index}
-          media={_media}
+          media={_media?.src || media}
           setMedia={() => {
             const newRelatedMedia = relatedMediaItems;
             newRelatedMedia[index] = null;
             const valuesToSet = newRelatedMedia.filter((x) => !!x);
             setRelatedMediaItems([...valuesToSet]);
-            console.log(valuesToSet, index); // TODO: remove this
           }}
         ></RelatedMedia>
       ))) ||

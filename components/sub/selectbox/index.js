@@ -20,8 +20,9 @@ function TemplateSelectBox({
         <option value="" className={styles.option}>
           {placeholder}
         </option>
-        {options.map((option) => (
+        {options.map((option, index) => (
           <option
+            key={index}
             className={styles.option}
             value={option}
             selected={option === selected}

@@ -1,35 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./postCard.module.css";
-import EditPhotoSVG from "@svg/edit-photo";
-import ThrashSVG from "@svg/thrash";
 
 function ProfilePostCard({ post }) {
-  // TODO: edit uploaded post + display info if needed
-  // post: {
-  //   contentType: "video",
-  //   createdAt: "2021-06-14T21:07:10.087Z",
-  //   id: "60c7c4fe0f599435d41b4e41",
-  //   thumbnail: "https://s3.amazonaws.com/com.clubbie.post.videos.d…9835dff9/b7f9ace8-dab6-4a19-8020-54b66c9fdb10.mp4"
-  //   title: "Football",
-  // };
+  // TODO: add likes, comments, reposts, views count
+  const [contentItem, setContentItem] = useState(
+    post?.thumbnail || post?.media
+  );
 
   return (
-    <div className={styles.profilePhotosItem}>
-      {post.contentType === "video" && (
-        <video src={post?.thumbnail || post?.media}></video>
-      )}
-      {post.contentType === "image" && (
-        <img src={post?.thumbnail || post?.media}></img>
-      )}
-      <div className={styles.profilePhotosOptions}>
-        <a>
-          <EditPhotoSVG />
-        </a>
-        <a>
-          <ThrashSVG />
-        </a>
+    <Link href={`/content/${post?.id}`}>
+      <div className={styles.profilePhotosItem}>
+        <>
+          {contentItem?.includes("video") && <video src={contentItem}></video>}
+          {contentItem?.includes("image") && <img src={contentItem}></img>}
+        </>
       </div>
-    </div>
+    </Link>
   );
 }
 

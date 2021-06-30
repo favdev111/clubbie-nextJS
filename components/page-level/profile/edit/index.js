@@ -206,8 +206,9 @@ function ProfileEdit({ profile, clubs }) {
           >
             <p>Clubs</p>
           </div>
-          {clubs.map((club) => (
+          {clubs.map((club, index) => (
             <div
+              key={index}
               className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
             >
               <Chip

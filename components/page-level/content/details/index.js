@@ -1,39 +1,77 @@
-import React from "react";
-import styles from "./contentDetails.module.css";
+import React, { useState } from "react";
+import router from "next/router";
 import Link from "next/link";
+import ActionButton from "@sub/action-button";
 import SocialButton from "@sub/social-button";
 import Chip from "@sub/chip";
+import ConfirmDialog from "@sub/confirm-dialog";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
+import Posts from "@api/services/Posts";
+import styles from "./contentDetails.module.css";
 
-function ContentHeader({ author }) {
+function ContentHeader({ contentId, author, isMyPost }) {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const deleteContent = async (contentId) => {
+    const response = await Posts.DeletePost(contentId).catch(() => undefined);
+    if (response?.status !== 204) {
+      alert("Error Deleting Post"); // TODO: make queable notification snack
+      return;
+    }
+    alert("Content Deleted Successfully");
+    router.push("/"); // Goto Home Page
+  };
+
   return (
-    <div className={styles.postHeader}>
-      <div className={styles.postAuthorProfile}>
-        <img src={author?.image || "/assets/person-placeholder.jpg"} />
-        <div className={styles.postAuthorInfo}>
-          <Link href={`/profile/${author?.id}`}>
-            <p className="text-18" className={styles.postAuthorName}>
-              {author?.name || author?.id}
-            </p>
-          </Link>
-          {author?.playerTitle && (
-            <p className="opacity-50">{author?.playerTitle}</p>
-          )}
+    <>
+      <ConfirmDialog
+        message="Are You Sure To Delete This Post?"
+        confirmText={"Delete"}
+        onConfirm={() => {
+          deleteContent(contentId);
+        }}
+        open={openDialog}
+        setOpen={setOpenDialog}
+      ></ConfirmDialog>
+      <div className={styles.postHeader}>
+        <div className={styles.postAuthorProfile}>
+          <img src={author?.image || "/assets/person-placeholder.jpg"} />
+          <div className={styles.postAuthorInfo}>
+            <Link href={`/profile/${author?.id}`}>
+              <p className="text-18" className={styles.postAuthorName}>
+                {author?.name || author?.id}
+              </p>
+            </Link>
+            {author?.playerTitle && (
+              <p className="opacity-50">{author?.playerTitle}</p>
+            )}
+          </div>
         </div>
+        <span className={styles.postHeaderButtons}>
+          {isMyPost && (
+            <>
+              <ActionButton type="delete" onClick={() => setOpenDialog(true)} />
+              <ActionButton
+                type="edit"
+                onClick={() => router.push(`/content/${contentId}/edit`)}
+              />
+            </>
+          )}
+          <SocialButton type="upload" />
+        </span>
       </div>
-      <SocialButton type="upload" />
-    </div>
+    </>
   );
 }
 
-function ContentMedia({ contentType, media }) {
+function ContentMedia({ media }) {
   return (
     <div className={styles.contentMediaWrapper}>
-      {contentType === "video" && (
+      {media?.includes("video") && (
         <video className={styles.contentMedia} src={media} controls />
       )}
-      {contentType === "image" && (
+      {media?.includes("image") && (
         <img className={styles.contentMedia} src={media} />
       )}
     </div>
@@ -81,21 +119,26 @@ function ContentComments({ comments }) {
         placeholder={"Type your comment here..."}
         buttonText={"Comment"}
       ></CommentInput>
-      {comments?.results.map((comment) => (
-        <Comment comment={comment} replies={comment?.replies}></Comment>
+      {comments?.results.map((comment, index) => (
+        <Comment
+          key={index}
+          comment={comment}
+          replies={comment?.replies}
+        ></Comment>
       ))}
     </div>
   );
 }
 
-function ContentDetails({ content }) {
+function ContentDetails({ content, user }) {
   return (
     <>
-      <ContentHeader author={content?.author}></ContentHeader>
-      <ContentMedia
-        contentType={content?.contentType}
-        media={content?.media}
-      ></ContentMedia>
+      <ContentHeader
+        contentId={content?.id}
+        author={content?.author}
+        isMyPost={content?.author?.id === user?.id}
+      ></ContentHeader>
+      <ContentMedia media={content?.media}></ContentMedia>
       <ContentBody
         title={content.title}
         description={content.description}

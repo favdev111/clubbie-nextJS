@@ -3,13 +3,17 @@ import cn from "classnames";
 import styles from "./button.module.css";
 
 const Button = (props) => {
-  const { variant = "login", children, onClick, type, loading } = props;
+  const { variant, children, onClick, type, loading } = props;
   return (
     <>
       <button
         type={type}
         onClick={onClick}
-        className={cn(styles.btn, loading && styles.btnDisabled)}
+        className={cn(
+          styles.btn,
+          loading && styles.btnDisabled,
+          variant === "danger" && styles.danger
+        )}
         disabled={loading}
       >
         <div className={styles.btnContent}>

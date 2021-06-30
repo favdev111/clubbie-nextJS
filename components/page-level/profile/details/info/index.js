@@ -17,8 +17,9 @@ function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
         {!isPublic && (
           <>
             <div className={styles.clubsCrest}>
-              {clubs.map((club) => (
+              {clubs.map((club, index) => (
                 <img
+                  key={index}
                   className={styles.playerClubImg}
                   src={club?.crest || "/assets/club-badge-placeholder.png"}
                 />
