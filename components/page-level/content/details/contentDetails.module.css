@@ -19,6 +19,26 @@
   width: 100%;
   object-fit: cover;
 }
+.contentRelatedMediaWrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.contentRelatedMedia {
+  height: 70px;
+  width: 70px;
+  margin-left: var(--space-12);
+  border-radius: var(--space-16);
+  object-fit: cover;
+  background-color: var(--c-nav);
+  cursor: pointer;
+}
+.activeRelatedMedia {
+  border: 3px solid var(--c-turk);
+}
+
 .contentBody {
   display: flex;
   flex-direction: row;

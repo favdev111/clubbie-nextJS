@@ -1,14 +1,30 @@
 import React, { useState } from "react";
+import cn from "classnames";
 import router from "next/router";
 import Link from "next/link";
 import ActionButton from "@sub/action-button";
 import SocialButton from "@sub/social-button";
 import Chip from "@sub/chip";
 import ConfirmDialog from "@sub/confirm-dialog";
+import Posts from "@api/services/Posts";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
-import Posts from "@api/services/Posts";
 import styles from "./contentDetails.module.css";
+
+function ContentMediaTag({ media, className, videoControls }) {
+  return (
+    <>
+      {media?.includes("video") && (
+        <video
+          className={className}
+          src={media}
+          controls={videoControls}
+        ></video>
+      )}
+      {media?.includes("image") && <img className={className} src={media} />}
+    </>
+  );
+}
 
 function ContentHeader({ contentId, author, isMyPost }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -68,12 +84,43 @@ function ContentHeader({ contentId, author, isMyPost }) {
 function ContentMedia({ media }) {
   return (
     <div className={styles.contentMediaWrapper}>
-      {media?.includes("video") && (
-        <video className={styles.contentMedia} src={media} controls />
-      )}
-      {media?.includes("image") && (
-        <img className={styles.contentMedia} src={media} />
-      )}
+      <ContentMediaTag
+        media={media}
+        className={styles.contentMedia}
+        videoControls
+      />
+    </div>
+  );
+}
+
+function ContentRelatedMedia({
+  parentMedia,
+  relatedMediaItems,
+  activeMedia,
+  setActiveMedia,
+}) {
+  return (
+    <div className={styles.contentRelatedMediaWrapper}>
+      <span onClick={() => setActiveMedia(parentMedia)}>
+        <ContentMediaTag
+          media={parentMedia}
+          className={cn(
+            styles.contentRelatedMedia,
+            activeMedia === parentMedia && styles.activeRelatedMedia
+          )}
+        />
+      </span>
+      {relatedMediaItems.map((x) => (
+        <span onClick={() => setActiveMedia(x.media)}>
+          <ContentMediaTag
+            media={x?.media}
+            className={cn(
+              styles.contentRelatedMedia,
+              activeMedia === x.media && styles.activeRelatedMedia
+            )}
+          />
+        </span>
+      ))}
     </div>
   );
 }
@@ -131,6 +178,8 @@ function ContentComments({ comments }) {
 }
 
 function ContentDetails({ content, user }) {
+  const [activeMedia, setActiveMedia] = useState(content?.media);
+
   return (
     <>
       <ContentHeader
@@ -138,7 +187,15 @@ function ContentDetails({ content, user }) {
         author={content?.author}
         isMyPost={content?.author?.id === user?.id}
       ></ContentHeader>
-      <ContentMedia media={content?.media}></ContentMedia>
+      <ContentMedia media={activeMedia}></ContentMedia>
+      {content?.childPosts.length > 0 && (
+        <ContentRelatedMedia
+          parentMedia={content?.media}
+          relatedMediaItems={content?.childPosts}
+          activeMedia={activeMedia}
+          setActiveMedia={setActiveMedia}
+        ></ContentRelatedMedia>
+      )}
       <ContentBody
         title={content.title}
         description={content.description}
