@@ -14,7 +14,7 @@ function CommentInfo({ author }) {
   return (
     <div className={styles.commentInfo}>
       <Link href={`/profile/${author?.id}`}>
-        <img src={author?.image || "/assets/person-placeholder.jpg"} />
+        <img src={author?.profile?.image || "/assets/person-placeholder.jpg"} />
       </Link>
     </div>
   );
