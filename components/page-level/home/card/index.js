@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
@@ -16,6 +16,8 @@ function HomeVideosCard({ createdPost, data }) {
     contentType,
   } = data;
 
+  const [content] = useState(media || thumbnail);
+
   return (
     <div
       className={cn(
@@ -25,14 +27,10 @@ function HomeVideosCard({ createdPost, data }) {
     >
       <Link href={`/content/${id}`}>
         <span>
-          {contentType === "video" ? (
-            <video
-              className={styles.preview}
-              src={media || thumbnail}
-              controls
-            />
-          ) : contentType === "image" ? (
-            <img className={styles.preview} src={media || thumbnail} />
+          {content.includes("video") ? (
+            <video className={styles.preview} src={content} controls />
+          ) : content.includes("image") ? (
+            <img className={styles.preview} src={content} />
           ) : (
             <></>
           )}
