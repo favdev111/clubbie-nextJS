@@ -4,7 +4,6 @@ import ContentForm from "../common/form";
 import router from "next/router";
 
 function ContentEdit({ content }) {
-  // Todo: handle child posts edit
   const handleOnSubmit = async (
     e,
     _media,
@@ -14,7 +13,8 @@ function ContentEdit({ content }) {
     _tagSomeone,
     _relatedMediaItems,
     uploadMultiplePostMedia,
-    setStatus
+    setStatus,
+    deleteChildPosts
   ) => {
     e.preventDefault();
 
@@ -86,9 +86,9 @@ function ContentEdit({ content }) {
     }
 
     // Add child posts
+    const mediaToUpload = _relatedMediaItems.filter((x) => !x.id);
     const childPosts = await (async () => {
       if (_relatedMediaItems.length === 0) return false;
-      const mediaToUpload = _relatedMediaItems.filter((x) => !x.id);
       const uploadedFiles = await uploadMultiplePostMedia(mediaToUpload);
 
       const posts = await Promise.all(
@@ -110,15 +110,14 @@ function ContentEdit({ content }) {
       );
       return posts?.length > 0 ? posts.filter((x) => x) : false;
     })();
-    if (!childPosts) {
+    if (mediaToUpload.length > 0 && !childPosts) {
       setStatus({
         loading: false,
-        msg: "Error Creating Post",
+        msg: "Error Updating Post",
         type: "error",
       });
       return;
     }
-    console.log("These child post were added => ", childPosts);
 
     if (childPosts?.length > 0) {
       const payload = { childPosts: childPosts.map((x) => x?.id) };
@@ -129,7 +128,26 @@ function ContentEdit({ content }) {
       if (!appendedPost) {
         setStatus({
           loading: false,
-          msg: "Error Creating Post",
+          msg: "Error Updating Post",
+          type: "error",
+        });
+        return;
+      }
+    }
+
+    // Delete child posts if done so
+    if (deleteChildPosts.length > 0) {
+      const delChildPosts = await Promise.all(
+        deleteChildPosts.map(async (id) => {
+          const _posts = await Posts.DeletePost(id).catch(() => undefined);
+          return _posts?.status === 204 ? true : false;
+        })
+      );
+      const postNotDeleted = delChildPosts.find((x) => x === false);
+      if (postNotDeleted) {
+        setStatus({
+          loading: false,
+          msg: "Error Removing Related Media",
           type: "error",
         });
         return;
@@ -153,7 +171,7 @@ function ContentEdit({ content }) {
       media={content?.media}
       title={content?.title}
       description={content?.description}
-      relatedMediaItems={content?.childPosts} // TODO: child posts edit
+      relatedMediaItems={content?.childPosts}
       sport={content?.tags[0]?.type || null}
       tagSomeone={
         content?.tags.length > 0
