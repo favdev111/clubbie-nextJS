@@ -85,6 +85,56 @@ function ContentEdit({ content }) {
       return;
     }
 
+    // Add child posts
+    const childPosts = await (async () => {
+      if (_relatedMediaItems.length === 0) return false;
+      const uploadedFiles = await uploadMultiplePostMedia(_relatedMediaItems);
+
+      const posts = await Promise.all(
+        uploadedFiles.map(async (file) => {
+          const _body = {
+            ...commonBody,
+            media: file.media,
+            thumbnail: file.contentType === "image" ? null : file.media,
+            contentType: file.contentType,
+          };
+          const payload = Object.fromEntries(
+            Object.entries(_body).filter(([_, v]) => v != null)
+          );
+          const _posts = await Posts.CreatePost(payload).catch(
+            (e) => undefined
+          );
+          return _posts?.data;
+        })
+      );
+      return posts?.length > 0 ? posts.filter((x) => x) : false;
+    })();
+    if (!childPosts) {
+      setStatus({
+        loading: false,
+        msg: "Error Creating Post",
+        type: "error",
+      });
+      return;
+    }
+    console.log("These child post were added => ", childPosts);
+
+    if (childPosts?.length > 0) {
+      const payload = { childPosts: childPosts.map((x) => x?.id) };
+      const appendedPost = await Posts.AppendChildPost(
+        parentPost?.id,
+        payload
+      ).catch(() => undefined);
+      if (!appendedPost) {
+        setStatus({
+          loading: false,
+          msg: "Error Creating Post",
+          type: "error",
+        });
+        return;
+      }
+    }
+
     setStatus({
       loading: false,
       msg: "Post Edited",
