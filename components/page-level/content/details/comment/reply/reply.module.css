@@ -37,10 +37,6 @@
   margin-right: var(--space-8);
   cursor: pointer;
 }
-.replyActions span:hover {
-  font-weight: 700;
-  color: var(--c-red);
-}
 .replyBoxWrapper img {
   border-radius: var(--radius-xl);
   height: var(--space-48);

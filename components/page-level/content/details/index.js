@@ -300,7 +300,7 @@ function ContentComments({ user, comments, contentId }) {
     );
     foundComment.replies.push({
       ...updatedComment.replies[updatedComment.replies.length - 1],
-      user: foundComment?.user,
+      user: user,
     });
     const commentsToSet = {
       ..._comments,
@@ -323,6 +323,7 @@ function ContentComments({ user, comments, contentId }) {
       {_comments?.results.map((comment, index) => (
         <Comment
           key={index}
+          user={user}
           isAuthor={user?.id === comment?.user?.id}
           comment={comment}
           onDeleteCommentClick={deleteComment}

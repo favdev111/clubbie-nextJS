@@ -53,6 +53,7 @@ function CommentBody({ author, commentText, onSaveClick, loading }) {
 
 // todo: update when api done
 function CommentActions({
+  isAuthor,
   hasLiked,
   hasCommented,
   likeBtnAction,
@@ -72,15 +73,19 @@ function CommentActions({
       >
         <CommentSVG></CommentSVG>
       </span>
-      {editBtnAction && (
-        <span onClick={editBtnAction}>
-          <EditSVG></EditSVG>
-        </span>
-      )}
-      {deleteBtnAction && (
-        <span onClick={deleteBtnAction}>
-          <ThrashSVG></ThrashSVG>
-        </span>
+      {isAuthor && (
+        <>
+          {editBtnAction && (
+            <span onClick={editBtnAction}>
+              <EditSVG></EditSVG>
+            </span>
+          )}
+          {deleteBtnAction && (
+            <span onClick={deleteBtnAction}>
+              <ThrashSVG></ThrashSVG>
+            </span>
+          )}
+        </>
       )}
       <span>{new Date(dateTime).toLocaleString()}</span>
     </div>
@@ -88,6 +93,7 @@ function CommentActions({
 }
 
 function Comment({
+  user,
   comment,
   replies,
   isAuthor,
@@ -123,6 +129,7 @@ function Comment({
         ></CommentBody>
         {/* Todo: action buttons api logic */}
         <CommentActions
+          isAuthor={isAuthor}
           likeBtnAction={() => console.log("like clicked")}
           commentBtnAction={() => setAddReply(!addReply)}
           editBtnAction={() => setEditMode(!editMode)}
@@ -142,7 +149,11 @@ function Comment({
           </div>
         )}
         {replies.map((reply, index) => (
-          <Reply key={index} reply={reply}></Reply>
+          <Reply
+            key={index}
+            isAuthor={user?.id === reply?.user?.id}
+            reply={reply}
+          ></Reply>
         ))}
       </div>
     </div>

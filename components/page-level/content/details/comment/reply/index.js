@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import ThrashSVG from "@svg/thrash";
+import EditSVG from "@svg/edit";
 import styles from "./reply.module.css";
 
 function ReplyInfo({ author }) {
@@ -25,7 +27,26 @@ function ReplyBody({ author, replyText }) {
   );
 }
 
-function Replies({ reply }) {
+function ReplyActions({ dateTime, isAuthor }) {
+  return (
+    <div className={styles.replyActions}>
+      {isAuthor && (
+        <>
+          <span>
+            <EditSVG></EditSVG>
+          </span>
+
+          <span>
+            <ThrashSVG></ThrashSVG>
+          </span>
+        </>
+      )}
+      <span>{new Date(dateTime).toLocaleString()}</span>
+    </div>
+  );
+}
+
+function Replies({ reply, isAuthor }) {
   return (
     <div className={styles.replyBoxWrapper}>
       <ReplyInfo author={reply?.user?.profile}></ReplyInfo>
@@ -34,6 +55,10 @@ function Replies({ reply }) {
           author={reply?.user?.profile}
           replyText={reply?.text}
         ></ReplyBody>
+        <ReplyActions
+          dateTime={reply?.dateTime}
+          isAuthor={isAuthor}
+        ></ReplyActions>
       </div>
     </div>
   );
