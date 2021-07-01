@@ -168,6 +168,7 @@ function ContentComments({ user, comments, contentId }) {
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
+  const [deletingReply, setDeletingReply] = useState(false);
 
   const loadMoreComments = async () => {
     setLoadingComments(true);
@@ -278,7 +279,7 @@ function ContentComments({ user, comments, contentId }) {
   };
 
   const createReply = async (commentId, replyText) => {
-    if (replyText.trim().length === 0) return;
+    if (!commentId || replyText.trim().length === 0) return;
     setCreatingReply(true);
 
     // create reply
@@ -311,6 +312,36 @@ function ContentComments({ user, comments, contentId }) {
     setCreatingReply(false);
   };
 
+  const deleteReply = async (commentId, replyId) => {
+    if (!commentId || !replyId) return;
+    setDeletingReply(true);
+
+    // delete comment reply
+    const response = await Comments.DeleteReply(commentId, replyId).catch(
+      () => false
+    );
+    const deleted = response?.status === 204;
+    if (!deleted) {
+      console.log("Reply Not Deleted"); // Todo: error component
+      setDeletingReply(false);
+      return;
+    }
+
+    // filter from state
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    foundComment.replies = foundComment.replies.filter(
+      (x) => x._id !== replyId
+    );
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setDeletingReply(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -329,9 +360,10 @@ function ContentComments({ user, comments, contentId }) {
           onDeleteCommentClick={deleteComment}
           onSaveCommentClick={editComment}
           editingComment={editingComment}
+          replies={comment?.replies}
           onCreateReply={createReply}
           creatingReply={creatingReply}
-          replies={comment?.replies}
+          onDeleteReplyClick={deleteReply}
         ></Comment>
       ))}
       {_comments?.page < _comments?.totalPages && (
@@ -349,7 +381,9 @@ function ContentComments({ user, comments, contentId }) {
           </span>
         </div>
       )}
-      {(editingComment || deletingComment) && <BackDropLoader></BackDropLoader>}
+      {(editingComment || deletingComment || deletingReply) && (
+        <BackDropLoader></BackDropLoader>
+      )}
     </div>
   );
 }

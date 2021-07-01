@@ -102,6 +102,7 @@ function Comment({
   editingComment,
   onCreateReply,
   creatingReply,
+  onDeleteReplyClick,
 }) {
   const [addReply, setAddReply] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -153,6 +154,9 @@ function Comment({
             key={index}
             isAuthor={user?.id === reply?.user?.id}
             reply={reply}
+            onDeleteReplyClick={() =>
+              onDeleteReplyClick(comment?.id, reply?._id)
+            }
           ></Reply>
         ))}
       </div>

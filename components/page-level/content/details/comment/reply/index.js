@@ -27,7 +27,7 @@ function ReplyBody({ author, replyText }) {
   );
 }
 
-function ReplyActions({ dateTime, isAuthor }) {
+function ReplyActions({ dateTime, isAuthor, deleteBtnAction }) {
   return (
     <div className={styles.replyActions}>
       {isAuthor && (
@@ -36,9 +36,11 @@ function ReplyActions({ dateTime, isAuthor }) {
             <EditSVG></EditSVG>
           </span>
 
-          <span>
-            <ThrashSVG></ThrashSVG>
-          </span>
+          {deleteBtnAction && (
+            <span onClick={deleteBtnAction}>
+              <ThrashSVG></ThrashSVG>
+            </span>
+          )}
         </>
       )}
       <span>{new Date(dateTime).toLocaleString()}</span>
@@ -46,7 +48,7 @@ function ReplyActions({ dateTime, isAuthor }) {
   );
 }
 
-function Replies({ reply, isAuthor }) {
+function Replies({ reply, isAuthor, onDeleteReplyClick }) {
   return (
     <div className={styles.replyBoxWrapper}>
       <ReplyInfo author={reply?.user?.profile}></ReplyInfo>
@@ -58,6 +60,7 @@ function Replies({ reply, isAuthor }) {
         <ReplyActions
           dateTime={reply?.dateTime}
           isAuthor={isAuthor}
+          deleteBtnAction={isAuthor ? () => onDeleteReplyClick() : null}
         ></ReplyActions>
       </div>
     </div>
