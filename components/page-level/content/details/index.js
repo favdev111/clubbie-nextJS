@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import router from "next/router";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
+import Interactions from "@api/services/Interactions";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
@@ -426,20 +427,28 @@ function ContentComments({ user, comments, contentId }) {
 }
 
 function ContentDetails({ content, user }) {
-  const [activeMedia, setActiveMedia] = useState(content?.media);
+  const [_content, setContent] = useState(content);
+  const [activeMedia, setActiveMedia] = useState(_content?.media);
+
+  // trying adding content view
+  useEffect(() => {
+    setTimeout(async function () {
+      await Interactions.ViewPost(_content?.id).catch(() => undefined);
+    }, 5000);
+  }, [_content]);
 
   return (
     <>
       <ContentHeader
-        contentId={content?.id}
-        author={content?.author}
-        isMyPost={content?.author?.id === user?.id}
+        contentId={_content?.id}
+        author={_content?.author}
+        isMyPost={_content?.author?.id === user?.id}
       ></ContentHeader>
       <ContentMedia media={activeMedia}></ContentMedia>
-      {content?.childPosts.length > 0 && (
+      {_content?.childPosts.length > 0 && (
         <ContentRelatedMedia
-          parentMedia={content?.media}
-          relatedMediaItems={content?.childPosts}
+          parentMedia={_content?.media}
+          relatedMediaItems={_content?.childPosts}
           activeMedia={activeMedia}
           setActiveMedia={setActiveMedia}
         ></ContentRelatedMedia>
@@ -451,14 +460,14 @@ function ContentDetails({ content, user }) {
         views={content.views}
       ></ContentBody>
       <ContentActions
-        totalLikes={content?.likes}
-        totalReposts={content?.reposts}
+        totalLikes={_content?.likes}
+        totalReposts={_content?.reposts}
       ></ContentActions>
-      {content?.comments?.results && (
+      {_content?.comments?.results && (
         <ContentComments
           user={user}
           comments={content.comments}
-          contentId={content?.id}
+          contentId={_content?.id}
         ></ContentComments>
       )}
     </>
