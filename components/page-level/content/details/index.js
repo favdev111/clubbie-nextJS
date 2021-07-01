@@ -167,6 +167,7 @@ function ContentComments({ user, comments, contentId }) {
   const [creatingComment, setCreatingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
+  const [creatingReply, setCreatingReply] = useState(false);
 
   const loadMoreComments = async () => {
     setLoadingComments(true);
@@ -276,6 +277,40 @@ function ContentComments({ user, comments, contentId }) {
     setDeletingComment(false);
   };
 
+  const createReply = async (commentId, replyText) => {
+    if (replyText.trim().length === 0) return;
+    setCreatingReply(true);
+
+    // create reply
+    const payload = { text: replyText.trim() };
+    const response = await Comments.ReplyToComment(commentId, payload).catch(
+      () => false
+    );
+    const updatedComment = response?.data;
+    if (!updatedComment) {
+      console.log("error creating reply to comment"); // Todo: error component
+      setCreatingReply(false);
+      return;
+    }
+
+    // set in state;
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find(
+      (x) => x.id === updatedComment?.id
+    );
+    foundComment.replies.push({
+      ...updatedComment.replies[updatedComment.replies.length - 1],
+      user: foundComment?.user,
+    });
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setCreatingReply(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -293,6 +328,8 @@ function ContentComments({ user, comments, contentId }) {
           onDeleteCommentClick={deleteComment}
           onSaveCommentClick={editComment}
           editingComment={editingComment}
+          onCreateReply={createReply}
+          creatingReply={creatingReply}
           replies={comment?.replies}
         ></Comment>
       ))}

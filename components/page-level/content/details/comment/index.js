@@ -94,6 +94,8 @@ function Comment({
   onDeleteCommentClick,
   onSaveCommentClick,
   editingComment,
+  onCreateReply,
+  creatingReply,
 }) {
   const [addReply, setAddReply] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -102,6 +104,11 @@ function Comment({
     if (commentText.trim().length === 0) return;
     setEditMode(false);
     onSaveCommentClick(comment?.id, commentText);
+  };
+
+  const createCommentReply = async (reply) => {
+    await onCreateReply(comment?.id, reply);
+    setAddReply(false);
   };
 
   return (
@@ -129,6 +136,8 @@ function Comment({
             <CommentInput
               placeholder={"Type your reply..."}
               buttonText={"Reply"}
+              loading={creatingReply}
+              onSubmit={createCommentReply}
             ></CommentInput>
           </div>
         )}
