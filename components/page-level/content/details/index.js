@@ -168,6 +168,7 @@ function ContentComments({ user, comments, contentId }) {
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
+  const [editingReply, setEditingReply] = useState(false);
   const [deletingReply, setDeletingReply] = useState(false);
 
   const loadMoreComments = async () => {
@@ -342,6 +343,40 @@ function ContentComments({ user, comments, contentId }) {
     setDeletingReply(false);
   };
 
+  const editReply = async (commentId, replyId, replyText) => {
+    if (!commentId || !replyId || !replyText) return;
+    setEditingReply(true);
+
+    // edit comment reply
+    const payload = { text: replyText.trim() };
+    const response = await Comments.UpdateCommentReply(
+      commentId,
+      replyId,
+      payload
+    ).catch(() => false);
+    const updatedComment = response?.data;
+    if (!updatedComment) {
+      console.log("Reply Not Edited"); // Todo: error component
+      setEditingReply(false);
+      return;
+    }
+
+    const editedReply = updatedComment.replies.find((x) => x._id === replyId);
+
+    // update reply in state
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    const foundReply = foundComment.replies.find((x) => x._id === replyId);
+    foundReply.text = editedReply.text;
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setEditingReply(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -363,6 +398,8 @@ function ContentComments({ user, comments, contentId }) {
           replies={comment?.replies}
           onCreateReply={createReply}
           creatingReply={creatingReply}
+          onSaveReplyClick={editReply}
+          editingReply={editingReply}
           onDeleteReplyClick={deleteReply}
         ></Comment>
       ))}
@@ -381,7 +418,7 @@ function ContentComments({ user, comments, contentId }) {
           </span>
         </div>
       )}
-      {(editingComment || deletingComment || deletingReply) && (
+      {(editingComment || deletingComment || editingReply || deletingReply) && (
         <BackDropLoader></BackDropLoader>
       )}
     </div>

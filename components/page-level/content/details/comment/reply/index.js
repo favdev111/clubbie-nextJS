@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import TemplateInput from "@sub/input";
 import ThrashSVG from "@svg/thrash";
 import EditSVG from "@svg/edit";
+import SaveSVG from "@svg/save";
 import styles from "./reply.module.css";
 
 function ReplyInfo({ author }) {
@@ -14,7 +16,9 @@ function ReplyInfo({ author }) {
   );
 }
 
-function ReplyBody({ author, replyText }) {
+function ReplyBody({ author, replyText, onSaveClick, loading }) {
+  const [editText, setEditText] = useState(replyText);
+
   return (
     <div className={styles.replyBody}>
       <Link href={`/profile/${author?.id}`}>
@@ -22,19 +26,42 @@ function ReplyBody({ author, replyText }) {
           {author?.fullName || author?.id}
         </span>
       </Link>
-      <p className={styles.replyText}>{replyText}</p>
+      {!onSaveClick ? (
+        <p className={styles.replyText}>{replyText}</p>
+      ) : (
+        <div className={styles.editReplyWrapper}>
+          <TemplateInput
+            name="editReply"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onEnter={(e) => !loading && onSaveClick(editText)}
+          />
+          <div className={styles.saveReply}>
+            <span onClick={() => onSaveClick(editText)}>
+              <SaveSVG></SaveSVG>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function ReplyActions({ dateTime, isAuthor, deleteBtnAction }) {
+function ReplyActions({
+  dateTime,
+  isAuthor,
+  editButtonAction,
+  deleteBtnAction,
+}) {
   return (
     <div className={styles.replyActions}>
       {isAuthor && (
         <>
-          <span>
-            <EditSVG></EditSVG>
-          </span>
+          {editButtonAction && (
+            <span onClick={editButtonAction}>
+              <EditSVG></EditSVG>
+            </span>
+          )}
 
           {deleteBtnAction && (
             <span onClick={deleteBtnAction}>
@@ -48,7 +75,21 @@ function ReplyActions({ dateTime, isAuthor, deleteBtnAction }) {
   );
 }
 
-function Replies({ reply, isAuthor, onDeleteReplyClick }) {
+function Replies({
+  reply,
+  isAuthor,
+  onDeleteReplyClick,
+  editingReply,
+  onSaveReplyClick,
+}) {
+  const [editMode, setEditMode] = useState(false);
+
+  const saveReply = (replyText) => {
+    if (replyText.trim().length === 0) return;
+    setEditMode(false);
+    onSaveReplyClick(reply?._id, replyText);
+  };
+
   return (
     <div className={styles.replyBoxWrapper}>
       <ReplyInfo author={reply?.user?.profile}></ReplyInfo>
@@ -56,10 +97,13 @@ function Replies({ reply, isAuthor, onDeleteReplyClick }) {
         <ReplyBody
           author={reply?.user?.profile}
           replyText={reply?.text}
+          onSaveClick={editMode ? saveReply : null}
+          loading={editingReply}
         ></ReplyBody>
         <ReplyActions
           dateTime={reply?.dateTime}
           isAuthor={isAuthor}
+          editButtonAction={() => setEditMode(!editMode)}
           deleteBtnAction={isAuthor ? () => onDeleteReplyClick() : null}
         ></ReplyActions>
       </div>

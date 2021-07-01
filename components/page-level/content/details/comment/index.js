@@ -103,6 +103,8 @@ function Comment({
   onCreateReply,
   creatingReply,
   onDeleteReplyClick,
+  editingReply,
+  onSaveReplyClick,
 }) {
   const [addReply, setAddReply] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -156,6 +158,10 @@ function Comment({
             reply={reply}
             onDeleteReplyClick={() =>
               onDeleteReplyClick(comment?.id, reply?._id)
+            }
+            editingReply={editingReply}
+            onSaveReplyClick={(replyId, replyText) =>
+              onSaveReplyClick(comment?.id, replyId, replyText)
             }
           ></Reply>
         ))}

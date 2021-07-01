@@ -25,6 +25,22 @@
   padding: var(--space-8);
   padding-left: var(--space-16);
 }
+.editReplyWrapper {
+  margin-top: 10px;
+  display: flex;
+}
+.saveReply {
+  height: 100%;
+  padding: var(--space-8);
+  display: flex;
+}
+.saveReply span {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  margin-right: var(--space-8);
+  cursor: pointer;
+}
 .replyActions {
   margin: var(--space-8);
   padding: var(--space-8);
