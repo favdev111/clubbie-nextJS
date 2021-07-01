@@ -1,8 +1,10 @@
 import HTTPClient from "../HTTPClient";
 
 export default class CommentManagementRoutes {
-  static async GetComments(postId) {
-    return HTTPClient.get(`/comments/${postId}`);
+  static async GetComments(postId, query) {
+    return HTTPClient.get(
+      `/comments/${postId}?${new URLSearchParams(query).toString()}`
+    );
   }
 
   static async CreateComment(postId, payload) {
@@ -13,8 +15,8 @@ export default class CommentManagementRoutes {
     return HTTPClient.put(`/comments/${id}`, payload);
   }
 
-  static async DeleteComment(id, payload) {
-    return HTTPClient.delete(`/comments/${id}`, payload);
+  static async DeleteComment(id) {
+    return HTTPClient.delete(`/comments/${id}`);
   }
 
   static async ReplyToComment(id, payload) {

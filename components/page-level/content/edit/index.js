@@ -1,10 +1,9 @@
 import React from "react";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
+import router from "next/router";
 
 function ContentEdit({ content }) {
-  // Todo: handle child posts edit
-  console.log(content);
   const handleOnSubmit = async (
     e,
     _media,
@@ -14,7 +13,8 @@ function ContentEdit({ content }) {
     _tagSomeone,
     _relatedMediaItems,
     uploadMultiplePostMedia,
-    setStatus
+    setStatus,
+    deleteChildPosts
   ) => {
     e.preventDefault();
 
@@ -85,7 +85,82 @@ function ContentEdit({ content }) {
       return;
     }
 
-    setStatus({ loading: false, msg: "Post Edited", type: "success" });
+    // Add child posts
+    const mediaToUpload = _relatedMediaItems.filter((x) => !x.id);
+    const childPosts = await (async () => {
+      if (_relatedMediaItems.length === 0) return false;
+      const uploadedFiles = await uploadMultiplePostMedia(mediaToUpload);
+
+      const posts = await Promise.all(
+        uploadedFiles.map(async (file) => {
+          const _body = {
+            ...commonBody,
+            media: file.media,
+            thumbnail: file.contentType === "image" ? null : file.media,
+            contentType: file.contentType,
+          };
+          const payload = Object.fromEntries(
+            Object.entries(_body).filter(([_, v]) => v != null)
+          );
+          const _posts = await Posts.CreatePost(payload).catch(
+            (e) => undefined
+          );
+          return _posts?.data;
+        })
+      );
+      return posts?.length > 0 ? posts.filter((x) => x) : false;
+    })();
+    if (mediaToUpload.length > 0 && !childPosts) {
+      setStatus({
+        loading: false,
+        msg: "Error Updating Post",
+        type: "error",
+      });
+      return;
+    }
+
+    if (childPosts?.length > 0) {
+      const payload = { childPosts: childPosts.map((x) => x?.id) };
+      const appendedPost = await Posts.AppendChildPost(
+        parentPost?.id,
+        payload
+      ).catch(() => undefined);
+      if (!appendedPost) {
+        setStatus({
+          loading: false,
+          msg: "Error Updating Post",
+          type: "error",
+        });
+        return;
+      }
+    }
+
+    // Delete child posts if done so
+    if (deleteChildPosts.length > 0) {
+      const delChildPosts = await Promise.all(
+        deleteChildPosts.map(async (id) => {
+          const _posts = await Posts.DeletePost(id).catch(() => undefined);
+          return _posts?.status === 204 ? true : false;
+        })
+      );
+      const postNotDeleted = delChildPosts.find((x) => x === false);
+      if (postNotDeleted) {
+        setStatus({
+          loading: false,
+          msg: "Error Removing Related Media",
+          type: "error",
+        });
+        return;
+      }
+    }
+
+    setStatus({
+      loading: false,
+      msg: "Post Edited",
+      type: "success",
+    });
+
+    router.push(`/content/${parentPost.id}`);
   };
 
   return (
@@ -96,7 +171,7 @@ function ContentEdit({ content }) {
       media={content?.media}
       title={content?.title}
       description={content?.description}
-      relatedMediaItems={null} // TODO: child posts edit
+      relatedMediaItems={content?.childPosts}
       sport={content?.tags[0]?.type || null}
       tagSomeone={
         content?.tags.length > 0

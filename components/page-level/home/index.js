@@ -6,9 +6,14 @@ import HomeVideosCard from "./card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
 import YouShouldSignUp from "@sub/sign-up-warn";
+import { useRouter } from "next/router";
 
 function Home({ posts }) {
   const [activeTag, setActiveTag] = useState(0);
+  const router = useRouter();
+
+  // highlight a post if it was created
+  const createdPost = router?.query?.createdPost;
 
   return (
     <div className={styles.homePage}>
@@ -64,7 +69,11 @@ function Home({ posts }) {
 
       {posts &&
         posts.map((post, index) => (
-          <HomeVideosCard key={post + index} data={post} />
+          <HomeVideosCard
+            key={post + index}
+            data={post}
+            createdPost={createdPost}
+          />
         ))}
     </div>
   );

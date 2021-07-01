@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 import cn from "classnames";
 
-function HomeVideosCard({ data }) {
+function HomeVideosCard({ createdPost, data }) {
   const {
     id,
     description,
@@ -16,18 +16,21 @@ function HomeVideosCard({ data }) {
     contentType,
   } = data;
 
+  const [content] = useState(media || thumbnail);
+
   return (
-    <div className={styles.videoCard}>
+    <div
+      className={cn(
+        styles.videoCard,
+        createdPost === id && styles.highLightPost
+      )}
+    >
       <Link href={`/content/${id}`}>
         <span>
-          {contentType === "video" ? (
-            <video
-              className={styles.preview}
-              src={media || thumbnail}
-              controls
-            />
-          ) : contentType === "image" ? (
-            <img className={styles.preview} src={media || thumbnail} />
+          {content.includes("video") ? (
+            <video className={styles.preview} src={content} controls />
+          ) : content.includes("image") ? (
+            <img className={styles.preview} src={content} />
           ) : (
             <></>
           )}

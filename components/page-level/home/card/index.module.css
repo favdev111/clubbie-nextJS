@@ -67,3 +67,17 @@
     order: 4;
   }
 }
+
+.highLightPost {
+  animation: highLightPost 5s;
+}
+@keyframes highLightPost {
+  0% {
+    background: var(--c-yellow);
+    box-shadow: 0px 10px 50px var(--c-turk);
+  }
+  100% {
+    background: none;
+    box-shadow: none;
+  }
+}

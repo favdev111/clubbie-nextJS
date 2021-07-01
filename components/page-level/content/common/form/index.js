@@ -31,6 +31,7 @@ function ContentForm({
   const [_description, setDescription] = useState(description || null);
   const [_sport, setSport] = useState(sport || null);
   const [_tagSomeone, setTagSomeone] = useState(tagSomeone || null);
+  const [deleteChildPosts, setDeleteChildPosts] = useState([]);
   const [status, setStatus] = useState({
     loading: false,
     msg: null,
@@ -129,7 +130,8 @@ function ContentForm({
       _tagSomeone,
       _relatedMediaItems,
       uploadMultiplePostMedia,
-      setStatus
+      setStatus,
+      deleteChildPosts
     );
   };
 
@@ -139,7 +141,7 @@ function ContentForm({
         <div className={styles.dragDropVideos}>
           <input
             hidden
-            accept="image/*,video/*"
+            accept="video/*" // TODO: make utility class for validations
             id="pick-parent-media"
             type="file"
             onChange={onParentMediaPicked}
@@ -181,6 +183,8 @@ function ContentForm({
               <MediaCard
                 relatedMediaItems={_relatedMediaItems}
                 setRelatedMediaItems={setRelatedMediaItems}
+                deleteChildPosts={deleteChildPosts}
+                setDeleteChildPosts={setDeleteChildPosts}
                 mode="related-media"
               />
             )}

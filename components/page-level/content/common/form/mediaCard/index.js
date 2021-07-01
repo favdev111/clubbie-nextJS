@@ -67,6 +67,8 @@ function ContentMediaCard({
   mode,
   relatedMediaItems,
   setRelatedMediaItems,
+  deleteChildPosts,
+  setDeleteChildPosts,
 }) {
   return (
     (mode === "parent-media" && media && setMedia && (
@@ -81,12 +83,15 @@ function ContentMediaCard({
       relatedMediaItems.map((_media, index) => (
         <RelatedMedia
           key={index}
-          media={_media?.src || media}
-          setMedia={() => {
+          media={_media?.src || _media?.media || media}
+          setMedia={(val) => {
             const newRelatedMedia = relatedMediaItems;
-            newRelatedMedia[index] = null;
+            newRelatedMedia[index] = val;
             const valuesToSet = newRelatedMedia.filter((x) => !!x);
             setRelatedMediaItems([...valuesToSet]);
+            if (_media?.id) {
+              setDeleteChildPosts([...(deleteChildPosts || []), _media.id]);
+            }
           }}
         ></RelatedMedia>
       ))) ||

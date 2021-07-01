@@ -19,9 +19,21 @@ export default ContentEdit;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const postId = ctx.params.postId;
-  // get posts
+
+  // get post
   const responsePost = await Posts.GetPostById(postId).catch(() => false);
   let post = responsePost?.data;
+
+  // get child posts
+  if (post?.childPosts) {
+    const childPosts = await Promise.all(
+      post.childPosts.map(async (id) => {
+        const responsePost = await Posts.GetPostById(id).catch(() => false);
+        return responsePost?.data;
+      })
+    );
+    post.childPosts = childPosts;
+  }
 
   // get comments
   const responsePostComments = await Comments.GetComments(postId).catch(
@@ -29,9 +41,8 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   );
   const comments = responsePostComments?.data;
 
-  // validate both are found
+  // validate all data is found
   const notFound = !post || !comments;
-
   if (!notFound) post.comments = comments;
 
   return {
