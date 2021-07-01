@@ -7,6 +7,7 @@ import SaveSVG from "@svg/save";
 import styles from "./reply.module.css";
 
 function ReplyInfo({ author }) {
+  console.log(author);
   return (
     <div className={styles.replyInfo}>
       <Link href={`/profile/${author?.id}`}>
@@ -92,10 +93,12 @@ function Replies({
 
   return (
     <div className={styles.replyBoxWrapper}>
-      <ReplyInfo author={reply?.user?.profile}></ReplyInfo>
+      <ReplyInfo
+        author={{ ...reply?.user?.profile, id: reply?.user?.id }}
+      ></ReplyInfo>
       <div className={styles.replyContent}>
         <ReplyBody
-          author={reply?.user?.profile}
+          author={{ ...reply?.user?.profile, id: reply?.user?.id }}
           replyText={reply?.text}
           onSaveClick={editMode ? saveReply : null}
           loading={editingReply}
