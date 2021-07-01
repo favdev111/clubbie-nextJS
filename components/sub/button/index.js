@@ -12,7 +12,8 @@ const Button = (props) => {
         className={cn(
           styles.btn,
           loading && styles.btnDisabled,
-          variant === "danger" && styles.danger
+          variant === "danger" && styles.danger,
+          variant === "cancel" && styles.cancel
         )}
         disabled={loading}
       >

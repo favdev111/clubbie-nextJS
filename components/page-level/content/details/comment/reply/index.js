@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
+import ConfirmDialog from "@sub/confirm-dialog";
 import ThrashSVG from "@svg/thrash";
 import EditSVG from "@svg/edit";
 import SaveSVG from "@svg/save";
@@ -54,25 +55,38 @@ function ReplyActions({
   editButtonAction,
   deleteBtnAction,
 }) {
-  return (
-    <div className={styles.replyActions}>
-      {isAuthor && (
-        <>
-          {editButtonAction && (
-            <span onClick={editButtonAction}>
-              <EditSVG></EditSVG>
-            </span>
-          )}
+  const [confirmAndDelete, setConfirmAndDelete] = useState(false);
 
-          {deleteBtnAction && (
-            <span onClick={deleteBtnAction}>
-              <ThrashSVG></ThrashSVG>
-            </span>
-          )}
-        </>
-      )}
-      <span>{new Date(dateTime).toLocaleString()}</span>
-    </div>
+  return (
+    <>
+      <ConfirmDialog
+        message="Are You Sure To Delete This Reply?"
+        confirmText={"Delete"}
+        onConfirm={() => {
+          deleteBtnAction();
+        }}
+        open={confirmAndDelete}
+        setOpen={setConfirmAndDelete}
+      ></ConfirmDialog>
+      <div className={styles.replyActions}>
+        {isAuthor && (
+          <>
+            {editButtonAction && (
+              <span onClick={editButtonAction}>
+                <EditSVG></EditSVG>
+              </span>
+            )}
+
+            {deleteBtnAction && (
+              <span onClick={() => setConfirmAndDelete(true)}>
+                <ThrashSVG></ThrashSVG>
+              </span>
+            )}
+          </>
+        )}
+        <span>{new Date(dateTime).toLocaleString()}</span>
+      </div>
+    </>
   );
 }
 
