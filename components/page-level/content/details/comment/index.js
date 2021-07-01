@@ -91,8 +91,8 @@ function Comment({
   comment,
   replies,
   isAuthor,
-  onDeleteClick,
-  onSaveClick,
+  onDeleteCommentClick,
+  onSaveCommentClick,
   editingComment,
 }) {
   const [addReply, setAddReply] = useState(false);
@@ -101,7 +101,7 @@ function Comment({
   const saveComment = (commentText) => {
     if (commentText.trim().length === 0) return;
     setEditMode(false);
-    onSaveClick(comment?.id, commentText);
+    onSaveCommentClick(comment?.id, commentText);
   };
 
   return (
@@ -119,7 +119,9 @@ function Comment({
           likeBtnAction={() => console.log("like clicked")}
           commentBtnAction={() => setAddReply(!addReply)}
           editBtnAction={() => setEditMode(!editMode)}
-          deleteBtnAction={isAuthor ? () => onDeleteClick(comment?.id) : null}
+          deleteBtnAction={
+            isAuthor ? () => onDeleteCommentClick(comment?.id) : null
+          }
           dateTime={comment?.dateTime}
         ></CommentActions>
         {addReply && (

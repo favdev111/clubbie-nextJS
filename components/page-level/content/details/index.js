@@ -288,12 +288,12 @@ function ContentComments({ user, comments, contentId }) {
       {_comments?.results.map((comment, index) => (
         <Comment
           key={index}
-          comment={comment}
-          replies={comment?.replies}
           isAuthor={user?.id === comment?.user?.id}
-          onDeleteClick={deleteComment}
-          onSaveClick={editComment}
+          comment={comment}
+          onDeleteCommentClick={deleteComment}
+          onSaveCommentClick={editComment}
           editingComment={editingComment}
+          replies={comment?.replies}
         ></Comment>
       ))}
       {_comments?.page < _comments?.totalPages && (
