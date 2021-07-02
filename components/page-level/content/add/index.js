@@ -18,42 +18,58 @@ function ContentAdd() {
   ) => {
     e.preventDefault();
 
-    if (
-      !_media ||
-      !_title ||
-      !_description ||
-      !_sport ||
-      !_tagSomeone ||
-      !_relatedMediaItems
-    ) {
+    if (!_media || !_title) {
       alert("All fields are required"); // Todo: handle these properly
       return;
     }
 
     // Common Body for parent and child post
-    const tags = _tagSomeone?.split(",").map((tag) => {
-      return {
-        type: _sport?.trim(),
-        value: tag?.trim(),
-      };
-    });
     const commonBody = {
       title: _title?.trim(),
-      description: _description?.trim(),
-      tags,
+      description: _description?.trim() || null,
+      tags:
+        _tagSomeone && _sport
+          ? _tagSomeone?.split(",").map((tag) => {
+              return {
+                type: _sport?.trim(),
+                value: tag?.trim(),
+              };
+            })
+          : null,
     };
+
+    // upload files
+    const parentMedia = (await uploadMultiplePostMedia([_media]))[0] || null;
+    if (!parentMedia) {
+      setStatus({
+        loading: false,
+        msg: "Error Uploading Media",
+        type: "error",
+      });
+      return;
+    }
+    let relatedMedia = null;
+    if (_relatedMediaItems.length >= 0) {
+      relatedMedia = await uploadMultiplePostMedia(_relatedMediaItems);
+      relatedMedia = relatedMedia.filter((x) => x);
+      if (relatedMedia.length !== _relatedMediaItems.length) {
+        setStatus({
+          loading: false,
+          msg: "Error Uploading Media",
+          type: "error",
+        });
+        return;
+      }
+    }
 
     // Make Parent Post
     const parentPost = await (async () => {
-      const uploadedFiles = await uploadMultiplePostMedia([_media]);
       const body = {
         ...commonBody,
-        media: uploadedFiles[0]?.media,
+        media: parentMedia?.media,
         thumbnail:
-          uploadedFiles[0]?.contentType === "image"
-            ? null
-            : uploadedFiles[0]?.media,
-        contentType: uploadedFiles[0]?.contentType,
+          parentMedia?.contentType === "image" ? null : parentMedia?.media,
+        contentType: parentMedia?.contentType,
       };
       const payload = Object.fromEntries(
         Object.entries(body).filter(([_, v]) => v != null)
@@ -71,45 +87,24 @@ function ContentAdd() {
       return;
     }
 
-    // Make child posts
-    const childPosts = await (async () => {
-      if (_relatedMediaItems.length === 0) return false;
-      const uploadedFiles = await uploadMultiplePostMedia(_relatedMediaItems);
-
-      const posts = await Promise.all(
-        uploadedFiles.map(async (file) => {
-          const _body = {
-            ...commonBody,
-            media: file.media,
-            thumbnail: file.contentType === "image" ? null : file.media,
-            contentType: file.contentType,
-          };
-          const payload = Object.fromEntries(
-            Object.entries(_body).filter(([_, v]) => v != null)
-          );
-          const _posts = await Posts.CreatePost(payload).catch(
-            (e) => undefined
-          );
-          return _posts?.data;
-        })
-      );
-      return posts?.length > 0 ? posts.filter((x) => x) : false;
-    })();
-    if (!childPosts) {
-      setStatus({
-        loading: false,
-        msg: "Error Creating Post",
-        type: "error",
+    // Append child posts
+    const childPostsBody = (() => {
+      return relatedMedia.map((item) => {
+        const _body = {
+          media: item?.media,
+          thumbnail: item?.contentType === "image" ? null : item?.media,
+          contentType: item?.contentType,
+        };
+        return Object.fromEntries(
+          Object.entries(_body).filter(([_, v]) => v != null)
+        );
       });
-      return;
-    }
+    })();
 
-    if (childPosts?.length > 0) {
-      const payload = { childPosts: childPosts.map((x) => x?.id) };
-      const appendedPost = await Posts.AppendChildPost(
-        parentPost?.id,
-        payload
-      ).catch(() => undefined);
+    if (relatedMedia && childPostsBody.length > 0) {
+      const appendedPost = await Posts.AppendChildPost(parentPost?.id, {
+        childPosts: childPostsBody,
+      }).catch(() => undefined);
       if (!appendedPost) {
         setStatus({
           loading: false,
