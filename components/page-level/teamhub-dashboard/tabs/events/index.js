@@ -6,6 +6,8 @@ import EventCard from "./card";
 import Link from "next/link";
 import Event from "@api/services/Event";
 
+import ProgressBar from "@sub/progress";
+
 import { DateTime } from "luxon";
 
 const newDate = new Date();
@@ -17,7 +19,6 @@ function Events({ activeTeam, user }) {
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    /* Not done yet */
     setDataLoaded(false);
     const fetchEvents = async () => {
       const teamQuery = {
@@ -58,7 +59,9 @@ function Events({ activeTeam, user }) {
 
         {/* Cards */}
         <div className={styles.eventCardsRow}>
-          {dataLoaded &&
+          {!dataLoaded ? (
+            <ProgressBar />
+          ) : (
             filteredEvents.map((card) => (
               <EventCard
                 activeTeam={activeTeam}
@@ -66,7 +69,8 @@ function Events({ activeTeam, user }) {
                 key={Math.random() + 12}
                 data={card}
               />
-            ))}
+            ))
+          )}
         </div>
       </div>
     </>
