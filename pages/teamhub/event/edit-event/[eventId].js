@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../../../../components/layout/index";
-import Seo from "@layout/seo";
-import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import auth from "@utils/helpers/auth";
-import EditEvent from "@page/teamhub-dashboard/tabs/edit-event";
+import Seo from "../../../../components/layout/seo";
+import { requiresPageAuth } from "../../../../utils/middlewares/requiresPageAuth";
+import auth from "../../../../utils/helpers/auth";
+import EditEvent from "../../../../components/page-level/teamhub-dashboard/tabs/edit-event";
 
 function EditEventPage({ activeTeam }) {
   const authUser = auth.getUser();
