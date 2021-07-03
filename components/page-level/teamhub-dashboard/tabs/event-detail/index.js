@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import DetailCover from "./cover";
 import MatchDetail from "./match-detail";
+import SocialDetail from "./social-detail";
 import AvailablePlayers from "./players";
 import EditEvent from "@svg/edit-event";
 import ConfirmLineup from "@svg/confirm-lineup";
@@ -84,13 +85,7 @@ function EventDetail({ eventId, activeTeam, user }) {
       <div className={styles.twoRows}>
         {data?.eventType == "match" && <MatchDetail data={data} />}
         {data?.eventType == "training" && <h1> Training </h1>}
-        {data?.eventType == "social" && <h1> social </h1>}
-        {isError && <MessageToUser message={responseMessage} err={isError} />}
-
-        {isSuccess && (
-          <MessageToUser message={responseMessage} err={isSuccess} />
-        )}
-
+        {data?.eventType == "social" && <SocialDetail data={data} />}
         {/*    <AvailablePlayers /> */}
         {/* Edit Event */}
         {userRole == "teamLead" && data?.eventType == "match" && (
@@ -141,6 +136,9 @@ function EventDetail({ eventId, activeTeam, user }) {
           </button>
         )}
       </div>
+      {isError && <MessageToUser message={responseMessage} err={isError} />}
+
+      {isSuccess && <MessageToUser message={responseMessage} err={isSuccess} />}
     </div>
   );
 }
