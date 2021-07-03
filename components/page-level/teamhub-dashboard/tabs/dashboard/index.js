@@ -41,6 +41,8 @@ function Dashboard({ user, activeTeam, setTeam }) {
     fetchSelectedTeam();
   }, [activeTeam]);
 
+  /* Todo : send data into components dinamicly when fake data added */
+
   const dashboard = {
     upnext: {
       homeTeam: { name: "Shottery United", src: "./assets/team1.png" },

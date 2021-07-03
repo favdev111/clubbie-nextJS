@@ -46,7 +46,7 @@ function EventDetail({ eventId, activeTeam, user }) {
       <div className={styles.twoRows}>
         <MatchDetail data={data} />
         {/*    <AvailablePlayers /> */}
-        <Link href={`/teamhub/edit-event/${eventId}`}>
+        <Link href={`/teamhub/event/edit-event/${eventId}`}>
           <div className={styles.routeComponent}>
             <div className={styles.center}>
               <EditEvent /> Edit event
@@ -55,7 +55,7 @@ function EventDetail({ eventId, activeTeam, user }) {
           </div>
         </Link>
         {/* todo */}
-        <Link href={`/teamhub/confirm-lineup/${eventId}`}>
+        <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
           <div className={styles.routeComponent}>
             <div className={styles.center}>
               <ConfirmLineup /> Confirm Line-up

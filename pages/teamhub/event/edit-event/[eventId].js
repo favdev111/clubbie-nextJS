@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "@layout";
+import Layout from "../../../../components/layout/index";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
