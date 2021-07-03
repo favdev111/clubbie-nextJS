@@ -18,6 +18,8 @@ function Events({ activeTeam, user }) {
   const [filteredEvents, setFiltered] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
+  const userRole = user.teams[activeTeam].role;
+
   useEffect(() => {
     setDataLoaded(false);
     const fetchEvents = async () => {
@@ -28,12 +30,26 @@ function Events({ activeTeam, user }) {
 
       setFiltered(
         response.data.results.filter((item) => {
-          return (
-            DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
-            selectedMonth + 1
-          );
+          if (userRole == "teamLead")
+            return (
+              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
+              selectedMonth + 1
+            );
+          else
+            return (
+              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
+                selectedMonth + 1 && item.status == "published"
+            );
         })
       );
+
+      /*       userRole == "player" &&
+        setFiltered(
+          filteredEvents.filter((item) => {
+            return item.status == "published";
+          })
+        ); */
+
       setDataLoaded(true);
     };
     fetchEvents();

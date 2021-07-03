@@ -11,7 +11,7 @@ import MatchInfo from "@sub/match-info";
 
 function EventCard({ data, user, activeTeam }) {
   const { id, location, eventDateTime, teams, eventType } = data;
-  /* Not done yet */
+  const userRole = user.teams[activeTeam].role;
 
   return (
     <Link href={`/teamhub/event/${id}`}>
@@ -45,9 +45,14 @@ function EventCard({ data, user, activeTeam }) {
               data?.status !== "published" && styles.unavailable
             )}
           >
-            {data?.status == "published" && "Available?"}
-            {data?.status == "draft" && "Draft"}
-            {data?.status == "canceled" && "Canceled"}
+            {userRole == "teamLead" &&
+              "hey" &&
+              data?.status == "published" &&
+              "Published"}
+            {userRole == "teamLead" && data?.status == "draft" && "Draft"}
+            {userRole == "teamLead" && data?.status == "canceled" && "Canceled"}
+
+            {/* Todo available, unavailable for player */}
           </div>
         </div>
       </div>

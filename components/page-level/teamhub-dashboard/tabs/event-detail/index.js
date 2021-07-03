@@ -15,10 +15,10 @@ import Event from "@api/services/Event";
 
 function EventDetail({ eventId, activeTeam, user }) {
   const [data, setData] = useState();
-  const [cancelMessage, setMessage] = useState();
-  const router = useRouter();
+  /*   const [cancelMessage, setMessage] = useState();
+   */
 
-  console.log(data);
+  const router = useRouter();
 
   useEffect(() => {
     const teamId = user.teams[activeTeam].team;
@@ -48,23 +48,31 @@ function EventDetail({ eventId, activeTeam, user }) {
       <div className={styles.twoRows}>
         <MatchDetail data={data} />
         {/*    <AvailablePlayers /> */}
-        <Link href={`/teamhub/event/edit-event/${eventId}`}>
-          <div className={styles.routeComponent}>
-            <div className={styles.center}>
-              <EditEvent /> Edit event
+
+        {/* Edit Event */}
+        {userRole == "teamLead" && (
+          <Link href={`/teamhub/event/edit-event/${eventId}`}>
+            <div className={styles.routeComponent}>
+              <div className={styles.center}>
+                <EditEvent /> Edit event
+              </div>
+              <RightArrow />
             </div>
-            <RightArrow />
-          </div>
-        </Link>
-        {/* todo */}
-        <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
-          <div className={styles.routeComponent}>
-            <div className={styles.center}>
-              <ConfirmLineup /> Confirm Line-up
+          </Link>
+        )}
+
+        {/* Confirm Line Up */}
+        {userRole == "teamLead" && (
+          <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
+            <div className={styles.routeComponent}>
+              <div className={styles.center}>
+                <ConfirmLineup /> Confirm Line-up
+              </div>
+              <RightArrow />
             </div>
-            <RightArrow />
-          </div>
-        </Link>
+          </Link>
+        )}
+
         <button
           disabled={data?.status == "draft"}
           onClick={cancelEvent}
