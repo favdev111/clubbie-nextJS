@@ -13,6 +13,7 @@ function Dashboard({ user, activeTeam, setTeam }) {
   const [selectedTeam, setSelectedTeam] = useState([]);
   const [userTeams, setUserTeams] = useState([]);
   const [dashboardData, setDashData] = useState([]);
+
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -41,6 +42,8 @@ function Dashboard({ user, activeTeam, setTeam }) {
     fetchSelectedTeam();
   }, [activeTeam]);
 
+  /*   console.log(dashboardData?.nextMatch[0]);
+   */
   /* Todo : send data into components dinamicly when fake data added */
 
   const dashboard = {
@@ -80,7 +83,9 @@ function Dashboard({ user, activeTeam, setTeam }) {
         {/* recent videos */}
         <RecentVideos />
         {/* up next */}
-        <UpNext data={dashboard.upnext} />
+        {dashboardData?.nextMatch?.length > 0 && (
+          <UpNext data={dashboardData.nextMatch} />
+        )}
         {/* last result */}
         <LastResult data={dashboard.lastresult} />
         {/* League table */}
