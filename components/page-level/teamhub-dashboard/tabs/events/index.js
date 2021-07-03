@@ -43,13 +43,6 @@ function Events({ activeTeam, user }) {
         })
       );
 
-      /*       userRole == "player" &&
-        setFiltered(
-          filteredEvents.filter((item) => {
-            return item.status == "published";
-          })
-        ); */
-
       setDataLoaded(true);
     };
     fetchEvents();

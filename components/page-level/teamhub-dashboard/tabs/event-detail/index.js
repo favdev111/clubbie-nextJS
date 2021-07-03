@@ -7,14 +7,24 @@ import EditEvent from "@svg/edit-event";
 import ConfirmLineup from "@svg/confirm-lineup";
 import CancelEvent from "@svg/cancel-event";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import Save from "@svg/save";
 
+import Link from "next/link";
 import RightArrow from "@svg/right-arrow";
 
 import Event from "@api/services/Event";
 
+import MessageToUser from "@sub/messageAnimation";
+
 function EventDetail({ eventId, activeTeam, user }) {
   const [data, setData] = useState();
+  const [responseMessage, setResponseMessage] = useState();
+  const [isError, setError] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
+
+  console.log(data);
+  const playerUnavailable =
+    data?.teams[0].attendees.filter((i) => i.user == user.id).length < 1;
 
   const userRole = user.teams[activeTeam].role;
   const router = useRouter();
@@ -36,8 +46,36 @@ function EventDetail({ eventId, activeTeam, user }) {
       console.log(response);
     };
     patch()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setResponseMessage("Succesfully changed.");
+        setSuccess(true);
+      })
+      .catch((err) => {
+        setResponseMessage(err.response.data.message);
+        setError(true);
+      });
+  };
+
+  const setAvailability = (e) => {
+    e.preventDefault();
+
+    const patchAvailability = async () => {
+      const res = await Event.SetAvailability(data.id, {
+        available: !playerUnavailable,
+      });
+      console.log("res", res);
+    };
+    patchAvailability()
+      .then((res) => {
+        setResponseMessage("Succesfully changed.");
+        setSuccess(true);
+      })
+      .catch((err) => {
+        setResponseMessage(err.response.data.message);
+        setError(true);
+      });
+    setError(false);
+    setSuccess(false);
   };
 
   return (
@@ -48,6 +86,11 @@ function EventDetail({ eventId, activeTeam, user }) {
         {data?.eventType == "match" && <MatchDetail data={data} />}
         {data?.eventType == "training" && <h1> Training </h1>}
         {data?.eventType == "social" && <h1> social </h1>}
+        {isError && <MessageToUser message={responseMessage} err={isError} />}
+
+        {isSuccess && (
+          <MessageToUser message={responseMessage} err={isSuccess} />
+        )}
 
         {/*    <AvailablePlayers /> */}
         {/* Edit Event */}
@@ -74,12 +117,26 @@ function EventDetail({ eventId, activeTeam, user }) {
         )}
         {userRole == "teamLead" && (
           <button
-            disabled={data?.status == "draft" || "cancelled"}
+            disabled={data?.status !== "published"}
             onClick={cancelEvent}
             className={styles.routeComponent}
           >
             <div className={styles.center}>
               <CancelEvent /> Cancel event
+            </div>
+            <RightArrow />
+          </button>
+        )}
+
+        {userRole == "player" && (
+          <button
+            disabled={data?.status !== "published"}
+            onClick={setAvailability}
+            className={styles.routeComponent}
+          >
+            <div className={styles.center}>
+              <Save />
+              {playerUnavailable ? "Be available" : "Be unavailable"}
             </div>
             <RightArrow />
           </button>

@@ -12,7 +12,6 @@ import MatchInfo from "@sub/match-info";
 function EventCard({ data, user, activeTeam }) {
   const { id, location, eventDateTime, teams, eventType } = data;
   const userRole = user.teams[activeTeam].role;
-
   return (
     <Link href={`/teamhub/event/${id}`}>
       <div className={styles.card}>
@@ -42,17 +41,30 @@ function EventCard({ data, user, activeTeam }) {
           <div
             className={cn(
               styles.availableCard,
-              data?.status !== "published" && styles.unavailable
+              userRole == "teamLead" &&
+                data?.status !== "published" &&
+                styles.unavailable,
+              userRole == "player" &&
+                data?.eventType != "match" &&
+                data?.teams[0].attendees.filter((i) => i.user == user.id)
+                  .length < 1 &&
+                styles.unavailable
             )}
           >
+            {/* Teamleader */}
             {userRole == "teamLead" &&
-              "hey" &&
               data?.status == "published" &&
               "Published"}
             {userRole == "teamLead" && data?.status == "draft" && "Draft"}
             {userRole == "teamLead" && data?.status == "canceled" && "Canceled"}
 
-            {/* Todo available, unavailable for player */}
+            {/* Player */}
+            {data?.eventType != "match" && userRole == "player"
+              ? data?.teams[0].attendees.filter((i) => i.user == user.id)
+                  .length < 1
+                ? "Unavailable"
+                : "Available"
+              : null}
           </div>
         </div>
       </div>
