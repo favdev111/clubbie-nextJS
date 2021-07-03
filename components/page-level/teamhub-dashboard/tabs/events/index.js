@@ -61,7 +61,7 @@ function Events({ activeTeam, user }) {
         <div className={styles.eventCardsRow}>
           {!dataLoaded ? (
             <ProgressBar />
-          ) : (
+          ) : filteredEvents.length > 0 ? (
             filteredEvents.map((card) => (
               <EventCard
                 activeTeam={activeTeam}
@@ -70,6 +70,8 @@ function Events({ activeTeam, user }) {
                 data={card}
               />
             ))
+          ) : (
+            <p> There is no event in selected month. </p>
           )}
         </div>
       </div>
