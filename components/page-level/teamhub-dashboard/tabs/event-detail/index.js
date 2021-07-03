@@ -17,11 +17,14 @@ function EventDetail({ eventId, activeTeam, user }) {
   const [data, setData] = useState();
   /*   const [cancelMessage, setMessage] = useState();
    */
+  const userRole = user.teams[activeTeam].role;
 
+  /*   console.log(activeTeam);
+  console.log(user.teams[activeTeam].team); */
   const router = useRouter();
 
   useEffect(() => {
-    const teamId = user.teams[activeTeam].team;
+    const teamId = user?.teams[activeTeam].team;
 
     const fetchEvents = async () => {
       const response = await Event.FetchSingleEvent(eventId, teamId);
@@ -46,11 +49,13 @@ function EventDetail({ eventId, activeTeam, user }) {
       <h1>{data?.title}</h1>
       <DetailCover data={data} img={data?.coverImage} />
       <div className={styles.twoRows}>
-        <MatchDetail data={data} />
-        {/*    <AvailablePlayers /> */}
+        {data?.eventType == "match" && <MatchDetail data={data} />}
+        {data?.eventType == "training" && <h1> Training </h1>}
+        {data?.eventType == "social" && <h1> social </h1>}
 
+        {/*    <AvailablePlayers /> */}
         {/* Edit Event */}
-        {userRole == "teamLead" && (
+        {userRole == "teamLead" && data?.eventType == "match" && (
           <Link href={`/teamhub/event/edit-event/${eventId}`}>
             <div className={styles.routeComponent}>
               <div className={styles.center}>
@@ -60,9 +65,8 @@ function EventDetail({ eventId, activeTeam, user }) {
             </div>
           </Link>
         )}
-
         {/* Confirm Line Up */}
-        {userRole == "teamLead" && (
+        {userRole == "teamLead" && data?.eventType == "match" && (
           <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
             <div className={styles.routeComponent}>
               <div className={styles.center}>
@@ -72,17 +76,18 @@ function EventDetail({ eventId, activeTeam, user }) {
             </div>
           </Link>
         )}
-
-        <button
-          disabled={data?.status == "draft"}
-          onClick={cancelEvent}
-          className={styles.routeComponent}
-        >
-          <div className={styles.center}>
-            <CancelEvent /> Cancel event
-          </div>
-          <RightArrow />
-        </button>
+        {userRole == "teamLead" && (
+          <button
+            disabled={data?.status == "draft"}
+            onClick={cancelEvent}
+            className={styles.routeComponent}
+          >
+            <div className={styles.center}>
+              <CancelEvent /> Cancel event
+            </div>
+            <RightArrow />
+          </button>
+        )}
       </div>
     </div>
   );

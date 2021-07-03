@@ -5,8 +5,7 @@ import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import DashboardContent from "@page/teamhub-dashboard";
 
-function EventDetailPage({ user }) {
-  const [activeTeam, setTeam] = useState(0);
+function EventDetailPage({ user, activeTeam, setTeam }) {
   const [eventId, setEventId] = useState();
   const router = useRouter();
 
