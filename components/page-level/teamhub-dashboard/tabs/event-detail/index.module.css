@@ -16,6 +16,12 @@
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  outline: none;
+  border: none;
+  color: var(--c--white);
+}
+.routeComponent:disabled {
+  opacity: 0.5;
 }
 .routeComponent:hover {
   background-color: var(--c-black-50);

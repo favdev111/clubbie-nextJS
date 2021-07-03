@@ -15,8 +15,10 @@ import Event from "@api/services/Event";
 
 function EventDetail({ eventId, activeTeam, user }) {
   const [data, setData] = useState();
-
+  const [cancelMessage, setMessage] = useState();
   const router = useRouter();
+
+  console.log(data);
 
   useEffect(() => {
     const teamId = user.teams[activeTeam].team;
@@ -63,12 +65,16 @@ function EventDetail({ eventId, activeTeam, user }) {
             <RightArrow />
           </div>
         </Link>
-        <div onClick={cancelEvent} className={styles.routeComponent}>
+        <button
+          disabled={data?.status == "draft"}
+          onClick={cancelEvent}
+          className={styles.routeComponent}
+        >
           <div className={styles.center}>
             <CancelEvent /> Cancel event
           </div>
           <RightArrow />
-        </div>
+        </button>
       </div>
     </div>
   );
