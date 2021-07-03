@@ -4,7 +4,6 @@ import EventDetails from "./details";
 import styles from "./index.module.css";
 
 function UpNext({ data }) {
-  console.log(data[0]);
   return (
     <div className={styles.upNext}>
       <h3> Up Next</h3>

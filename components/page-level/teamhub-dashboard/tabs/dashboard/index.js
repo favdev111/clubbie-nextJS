@@ -42,8 +42,6 @@ function Dashboard({ user, activeTeam, setTeam }) {
     fetchSelectedTeam();
   }, [activeTeam]);
 
-  /*   console.log(dashboardData?.nextMatch[0]);
-   */
   /* Todo : send data into components dinamicly when fake data added */
 
   const dashboard = {
@@ -87,7 +85,10 @@ function Dashboard({ user, activeTeam, setTeam }) {
           <UpNext data={dashboardData.nextMatch} />
         )}
         {/* last result */}
-        <LastResult data={dashboard.lastresult} />
+        {dashboardData?.lastMatchResult && (
+          <LastResult data={dashboardData.lastMatchResult} />
+        )}
+
         {/* League table */}
         <LeagueTable />
         {/* Payments overview */}

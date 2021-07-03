@@ -16,8 +16,12 @@
 .score {
   width: 200px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.score h1 {
+  line-height: 0px;
 }
 .scorers {
   display: flex;
