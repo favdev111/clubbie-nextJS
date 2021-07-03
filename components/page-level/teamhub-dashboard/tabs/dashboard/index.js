@@ -12,7 +12,7 @@ import HTTPClient from "@api/HTTPClient";
 function Dashboard({ user, activeTeam, setTeam }) {
   const [selectedTeam, setSelectedTeam] = useState([]);
   const [userTeams, setUserTeams] = useState([]);
-
+  const [dashboardData, setDashData] = useState([]);
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -31,18 +31,16 @@ function Dashboard({ user, activeTeam, setTeam }) {
     };
 
     const fetchSelectedTeam = async () => {
-      /* Ibrar will change endpoint for that, so 
-      we can fetch another endpoint to get Recent videos,
-      up next, last result, etc for the team */
-      const response = await Teams.GetTeamsWithDetail(
-        `id=${user.teams[activeTeam].team}`
+      const dashboardResponse = await Teams.GetTeamDashboard(
+        user.teams[activeTeam].team
       );
-      const team = response.data;
-      setSelectedTeam(team);
+      setSelectedTeam(dashboardResponse.data.team);
+      setDashData(dashboardResponse.data);
     };
     fetchUserTeams();
     fetchSelectedTeam();
   }, [activeTeam]);
+
   const dashboard = {
     upnext: {
       homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
