@@ -14,7 +14,6 @@ function TeamhubNav({ nav, selectedIndex, setIndex }) {
               index == selectedIndex && styles.selected
             )}
             onClick={() => {
-              setIndex(index);
               index == 0 && router.push("/teamhub");
               index == 1 && router.push("/teamhub/event");
               index == 2 && router.push("/teamhub/payments");
