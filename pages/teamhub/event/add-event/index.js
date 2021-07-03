@@ -3,7 +3,7 @@ import Layout from "@layout";
 import Seo from "@layout/seo";
 import AddEvent from "@page/teamhub-dashboard/tabs/add-event";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import auth from "@utils/helpers/auth";
+import auth from "../../../../utils/helpers/auth";
 
 function AddNewEvent() {
   const authUser = auth.getUser();
