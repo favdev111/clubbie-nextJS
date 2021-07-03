@@ -55,12 +55,14 @@ function Events({ activeTeam, user }) {
           <h1> Events</h1>
 
           {/* Drafts, Add event etc */}
-          <Link href="/teamhub/event/add-event/">
-            <div className={styles.draft}>
-              <EditIcon />
-              <p>Add new event </p>
-            </div>
-          </Link>
+          {userRole == "teamLead" && (
+            <Link href="/teamhub/event/add-event/">
+              <div className={styles.draft}>
+                <EditIcon />
+                <p>Add new event </p>
+              </div>
+            </Link>
+          )}
         </div>
 
         {/* Date */}

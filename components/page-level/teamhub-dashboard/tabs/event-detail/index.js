@@ -22,7 +22,6 @@ function EventDetail({ eventId, activeTeam, user }) {
   const [isError, setError] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
 
-  console.log(data);
   const playerUnavailable =
     data?.teams[0].attendees.filter((i) => i.user == user.id).length < 1;
 
