@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "@layout";
-import Seo from "@layout/seo";
-import AddEvent from "@page/teamhub-dashboard/tabs/add-event";
-import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
+import Layout from "../../../../components/layout/index";
+import Seo from "../../../../components/layout/seo";
+import AddEvent from "../../../../components/page-level/teamhub-dashboard/tabs/add-event";
+import { requiresPageAuth } from "../../../../utils/middlewares/requiresPageAuth";
 import auth from "../../../../utils/helpers/auth";
 
 function AddNewEvent() {
