@@ -34,7 +34,13 @@ function EventCard({ data, user, activeTeam }) {
             <MatchCard user={user} activeTeam={activeTeam} eventId={id} />
           )}
 
-          {eventType == "social" && <div> Social </div>}
+          {eventType == "social" && (
+            <p className="opacity-50 text-center"> Social </p>
+          )}
+          {eventType == "training" && (
+            <p className="opacity-50 text-center"> Training </p>
+          )}
+
           {/* Info */}
           <MatchInfo data={{ eventDateTime, eventDateTime, location }} />
           {/* Avaibility */}
