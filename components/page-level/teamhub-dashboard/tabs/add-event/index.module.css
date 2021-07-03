@@ -178,3 +178,7 @@
 .coverImage:hover .deleteImage {
   display: flex !important;
 }
+.err {
+  color: var(--c-red);
+  padding: 12px;
+}

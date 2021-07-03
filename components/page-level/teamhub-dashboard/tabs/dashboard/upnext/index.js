@@ -4,19 +4,18 @@ import EventDetails from "./details";
 import styles from "./index.module.css";
 
 function UpNext({ data }) {
-  const { homeTeam, awayTeam, eventDetails } = data;
   return (
     <div className={styles.upNext}>
       <h3> Up Next</h3>
       <div className={styles.card}>
         {/* Home Team */}
-        <TeamCardForEvents data={homeTeam} />
+        <TeamCardForEvents data={data[0].teams.team1} />
 
         {/* Details */}
-        <EventDetails data={eventDetails} />
+        <EventDetails data={data[0]} />
 
         {/* Away Team */}
-        <TeamCardForEvents data={awayTeam} />
+        <TeamCardForEvents data={data[0].teams.team2} />
       </div>
     </div>
   );

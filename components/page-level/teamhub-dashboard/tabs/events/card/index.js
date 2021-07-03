@@ -11,8 +11,7 @@ import MatchInfo from "@sub/match-info";
 
 function EventCard({ data, user, activeTeam }) {
   const { id, location, eventDateTime, teams, eventType } = data;
-  /* Not done yet */
-
+  const userRole = user.teams[activeTeam].role;
   return (
     <Link href={`/teamhub/event/${id}`}>
       <div className={styles.card}>
@@ -35,19 +34,43 @@ function EventCard({ data, user, activeTeam }) {
             <MatchCard user={user} activeTeam={activeTeam} eventId={id} />
           )}
 
-          {eventType == "social" && <div> Social </div>}
+          {eventType == "social" && (
+            <p className="opacity-50 text-center"> Social </p>
+          )}
+          {eventType == "training" && (
+            <p className="opacity-50 text-center"> Training </p>
+          )}
+
           {/* Info */}
           <MatchInfo data={{ eventDateTime, eventDateTime, location }} />
           {/* Avaibility */}
           <div
             className={cn(
               styles.availableCard,
-              data?.status !== "published" && styles.unavailable
+              userRole == "teamLead" &&
+                data?.status !== "published" &&
+                styles.unavailable,
+              userRole == "player" &&
+                data?.eventType != "match" &&
+                data?.teams[0].attendees.filter((i) => i.user == user.id)
+                  .length < 1 &&
+                styles.unavailable
             )}
           >
-            {data?.status == "published" && "Available?"}
-            {data?.status == "draft" && "Draft"}
-            {data?.status == "canceled" && "Canceled"}
+            {/* Teamleader */}
+            {userRole == "teamLead" &&
+              data?.status == "published" &&
+              "Published"}
+            {userRole == "teamLead" && data?.status == "draft" && "Draft"}
+            {userRole == "teamLead" && data?.status == "canceled" && "Canceled"}
+
+            {/* Player */}
+            {data?.eventType != "match" && userRole == "player"
+              ? data?.teams[0].attendees.filter((i) => i.user == user.id)
+                  .length < 1
+                ? "Unavailable"
+                : "Available"
+              : null}
           </div>
         </div>
       </div>
