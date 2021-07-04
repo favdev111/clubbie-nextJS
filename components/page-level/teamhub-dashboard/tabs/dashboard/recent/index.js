@@ -8,8 +8,10 @@ function RecentVideos({ data }) {
   const [pageIndex, setPageIndex] = useState(0);
 
   useEffect(() => {
-    data.length > 2 && setPaginationData(data.slice(0, 2));
-  }, [data]);
+    pageIndex == 0 && setPaginationData(data.slice(0, 2));
+    pageIndex == 1 && setPaginationData(data.slice(2, 4));
+    pageIndex == 2 && setPaginationData(data.slice(4, 6));
+  }, [pageIndex]);
 
   return (
     <div className={styles.recent}>
@@ -19,7 +21,7 @@ function RecentVideos({ data }) {
         <BackForward
           length={data?.length}
           index={pageIndex}
-          setIndex={pageIndex}
+          setIndex={setPageIndex}
         />
       </div>
       {/* Recents */}
