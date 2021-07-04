@@ -15,6 +15,8 @@ import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
 import styles from "./index.module.css";
 
+import MessageToUser from "@sub/messageAnimation";
+
 const schema = yup.object().shape({
   title: yup.string().min(5),
   eventDateTime: yup.string(),
@@ -24,6 +26,9 @@ const schema = yup.object().shape({
 });
 
 function EditEvent({ user, activeTeam }) {
+  const [responseMessage, setResponseMessage] = useState();
+  const [isError, setError] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
   const [eventData, setData] = useState(null);
   const [userTeams, setUserTeams] = useState([]);
   const [formMessage, setMessage] = useState();
@@ -159,16 +164,18 @@ function EditEvent({ user, activeTeam }) {
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
 
-    console.log(updateBody);
-
     await Event.EditEventbyId(router.query.eventId, updateBody)
       .then((res) => {
-        router.push(`/teamhub/event/${res.data.id}`);
-        console.log(res.data);
+        setResponseMessage("Succesfully changed.");
+        setSuccess(true);
+        setTimeout(() => {
+          router.push(`/teamhub/event/${res.data.id}`);
+        }, 3000);
       })
       .catch((err) => {
         console.log("err => ", err);
-        setMessage("An error... Please check form");
+        setResponseMessage(err.response.data.message);
+        setError(true);
       });
   };
   function n(n) {
@@ -326,9 +333,13 @@ function EditEvent({ user, activeTeam }) {
               Post
             </button>
           </div>
-          {formMessage}
         </form>
       </div>
+      {isError && <MessageToUser message={responseMessage} err={isError} />}
+
+      {isSuccess && (
+        <MessageToUser message={responseMessage} err={!isSuccess} />
+      )}
     </div>
   );
 }

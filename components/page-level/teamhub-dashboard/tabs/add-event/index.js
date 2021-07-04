@@ -13,6 +13,7 @@ import Match from "@svg/match";
 import { useRouter } from "next/router";
 import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
+import MessageToUser from "@sub/messageAnimation";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -45,10 +46,12 @@ if (mm < 10) {
 const today = yyyy + "-" + mm + "-" + dd;
 
 function AddEvent({ user }) {
+  const [responseMessage, setResponseMessage] = useState();
+  const [isError, setError] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
-  const [formMessage, setMessage] = useState();
   const [checked, setChecked] = useState(true);
   const [media, setMedia] = useState(null);
 
@@ -158,13 +161,18 @@ function AddEvent({ user }) {
 
     await Event.CreateEvent(updateBody)
       .then((res) => {
-        router.push(`/teamhub/event/${res.data.id}`);
-        console.log(res.data);
-        setMessage("Succesfully Created");
+        setResponseMessage("Succesfully created.");
+        setSuccess(true);
+        setTimeout(() => {
+          router.push(`/teamhub/event/${res.data.id}`);
+        }, 3000);
       })
       .catch((err) => {
-        console.log("err => ", err);
-        setMessage("An error... Please check form");
+        setResponseMessage(err.response.data.message);
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       });
   };
 
@@ -339,12 +347,12 @@ function AddEvent({ user }) {
             {/* Hidden */}
             <select className={styles.noShow}>
               {recurringEvent == 0 ? (
-                <option value="yes" {...register("recurring")}>
+                <option value="0" {...register("recurring")}>
                   Yes
                 </option>
               ) : (
-                <option value="no" {...register("recurring")}>
-                  Yes
+                <option value="1" {...register("recurring")}>
+                  No
                 </option>
               )}
             </select>
@@ -439,9 +447,13 @@ function AddEvent({ user }) {
               Post
             </button>
           </div>
-          {formMessage}
         </form>
       </div>
+      {isError && <MessageToUser message={responseMessage} err={isError} />}
+
+      {isSuccess && (
+        <MessageToUser message={responseMessage} err={!isSuccess} />
+      )}
     </div>
   );
 }

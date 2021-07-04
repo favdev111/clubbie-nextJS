@@ -25,6 +25,13 @@ function EventDetail({ eventId, activeTeam, user }) {
 
   const userTeam = user.teams[activeTeam].team;
 
+  /* For team leader */
+
+  const availablePlayersForEvent = data?.teams?.filter(
+    (t) => t.teamId.id == userTeam
+  )[0].attendees;
+
+  /* For player */
   const playerUnavailable =
     data?.teams[0].attendees.filter((i) => i.user == user.id).length < 1;
 
@@ -34,6 +41,7 @@ function EventDetail({ eventId, activeTeam, user }) {
       .attendees?.filter((i) => i.user.id == user.id).length < 1;
 
   const userRole = user.teams[activeTeam].role;
+
   const router = useRouter();
 
   useEffect(() => {
@@ -60,6 +68,9 @@ function EventDetail({ eventId, activeTeam, user }) {
       .catch((err) => {
         setResponseMessage(err.response.data.message);
         setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       });
   };
 
@@ -80,6 +91,9 @@ function EventDetail({ eventId, activeTeam, user }) {
       .catch((err) => {
         setResponseMessage(err.response.data.message);
         setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       });
     setError(false);
     setSuccess(false);
@@ -90,7 +104,13 @@ function EventDetail({ eventId, activeTeam, user }) {
       <h1>{data?.title}</h1>
       <DetailCover data={data} img={data?.coverImage} />
       <div className={styles.twoRows}>
-        {data?.eventType == "match" && <MatchDetail data={data} />}
+        {data?.eventType == "match" && (
+          <MatchDetail
+            players={availablePlayersForEvent}
+            userRole={userRole}
+            data={data}
+          />
+        )}
         {data?.eventType == "training" && <h1> Training </h1>}
         {data?.eventType == "social" && <SocialDetail data={data} />}
         {/*    <AvailablePlayers /> */}
@@ -151,7 +171,9 @@ function EventDetail({ eventId, activeTeam, user }) {
       </div>
       {isError && <MessageToUser message={responseMessage} err={isError} />}
 
-      {isSuccess && <MessageToUser message={responseMessage} err={isSuccess} />}
+      {isSuccess && (
+        <MessageToUser message={responseMessage} err={!isSuccess} />
+      )}
     </div>
   );
 }
