@@ -48,4 +48,15 @@ export default class EventManagementRoutes {
   static async RequestPayment(id) {
     return HTTPClient.patch(`/event/${id}/request-payment`);
   }
+
+  static async GetPlayerStatistics(id) {
+    return HTTPClient.get(`/event/player-statistics?teamId=${id}`);
+  }
+  static async GetTeamStatistics(id) {
+    return HTTPClient.get(`/event/team-statistics?teamId=${id}`);
+  }
+
+  static async GetAllTeamStatistics(id) {
+    return HTTPClient.get(`/event/all-team-statistics`);
+  }
 }

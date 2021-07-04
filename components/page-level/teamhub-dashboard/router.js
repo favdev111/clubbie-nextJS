@@ -13,7 +13,7 @@ function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, eventId }) {
       )}
       {selectedIndex == 1 && <Events activeTeam={activeTeam} user={user} />}
       {selectedIndex == 2 && <Payments />}
-      {selectedIndex == 3 && <Statistics />}
+      {selectedIndex == 3 && <Statistics activeTeam={activeTeam} user={user} />}
       {selectedIndex == 4 && (
         <EventDetail activeTeam={activeTeam} user={user} eventId={eventId} />
       )}
