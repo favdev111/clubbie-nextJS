@@ -23,8 +23,15 @@ function EventDetail({ eventId, activeTeam, user }) {
   const [isError, setError] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
 
+  const userTeam = user.teams[activeTeam].team;
+
   const playerUnavailable =
     data?.teams[0].attendees.filter((i) => i.user == user.id).length < 1;
+
+  const playerUnavailableForMatch =
+    data?.teams
+      .filter((t) => t.teamId.id == userTeam)[0]
+      .attendees?.filter((i) => i.user.id == user.id).length < 1;
 
   const userRole = user.teams[activeTeam].role;
   const router = useRouter();
@@ -130,7 +137,13 @@ function EventDetail({ eventId, activeTeam, user }) {
           >
             <div className={styles.center}>
               <Save />
-              {playerUnavailable ? "Be available" : "Be unavailable"}
+              {data?.eventType == "match"
+                ? playerUnavailableForMatch
+                  ? "Be available"
+                  : "Be unavailable"
+                : playerUnavailable
+                ? "Be available"
+                : "Be unavailable"}
             </div>
             <RightArrow />
           </button>
