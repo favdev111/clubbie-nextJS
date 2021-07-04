@@ -10,14 +10,19 @@ import Teams from "@api/services/Teams";
 import Training from "@svg/training";
 import Match from "@svg/match";
 import { useRouter } from "next/router";
-import UploadSVG from "@svg/upload";
-import DeleteMedia from "@svg/delete-media";
 import MessageToUser from "@sub/messageAnimation";
 
 import { schema } from "@utils/schemas/addEvent";
 import { today } from "@utils/helpers/day";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+
+import FormSubmit from "../edit-event/submit";
+import UploadMedia from "@sub/upload";
+import FormCell from "@sub/event-form-cell";
+import EventFormGrid from "@sub/event-form-grid";
+
+/* Todo -> Display validate errors */
 
 function AddEvent({ user }) {
   const [responseMessage, setResponseMessage] = useState();
@@ -28,9 +33,18 @@ function AddEvent({ user }) {
   const [userTeams, setUserTeams] = useState([]);
   const [checked, setChecked] = useState(true);
   const [media, setMedia] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const router = useRouter();
 
+  /* Media  */
   const onFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -46,7 +60,10 @@ function AddEvent({ user }) {
     };
     reader.readAsDataURL(file);
   };
-
+  const deleteMedia = () => {
+    setMedia(null);
+  };
+  /* Get teams for team selectbox */
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -66,17 +83,7 @@ function AddEvent({ user }) {
     fetchUserTeams();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-  /* todo, object is nearly ready */
-
+  /* Form submit */
   const onSubmit = async (data) => {
     let mediaIdToUpload = null;
     if (media?.src && media?.file) {
@@ -151,12 +158,6 @@ function AddEvent({ user }) {
       });
   };
 
-  const deleteMedia = () => {
-    setMedia(null);
-  };
-
-  /* Todo display errors  */
-
   return (
     <div className={styles.addEvent}>
       {/* Header */}
@@ -173,7 +174,6 @@ function AddEvent({ user }) {
             placeholder="Add title"
             {...register("title", { required: true, maxLength: 20 })}
           />
-          {/* Todo - Like buttons below */}
           <div className={styles.eventType}>
             <div>
               <input
@@ -216,8 +216,8 @@ function AddEvent({ user }) {
               </label>
             </div>
           </div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
+          <EventFormGrid>
+            <FormCell>
               Team A
               <select
                 {...register("teamA", { required: true })}
@@ -229,8 +229,8 @@ function AddEvent({ user }) {
                   </option>
                 ))}
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Team B
               <select
                 {...register("teamB", { required: true })}
@@ -242,9 +242,9 @@ function AddEvent({ user }) {
                   </option>
                 ))}
               </select>
-            </div>
+            </FormCell>
 
-            <div className={styles.cell}>
+            <FormCell>
               When?
               <input
                 className={styles.inputStyle}
@@ -253,8 +253,8 @@ function AddEvent({ user }) {
                 required
                 {...register("eventDate", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               What time?
               <input
                 className={styles.inputStyle}
@@ -262,14 +262,14 @@ function AddEvent({ user }) {
                 required
                 {...register("eventDateTime", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Who?
               <select className={styles.inputStyle}>
                 <option {...register("createdBy")}>1</option>
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Where?
               <input
                 className={styles.inputStyle}
@@ -277,8 +277,8 @@ function AddEvent({ user }) {
                 required
                 {...register("location", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Fee?
               <input
                 className={styles.inputStyle}
@@ -287,24 +287,24 @@ function AddEvent({ user }) {
                 type="number"
                 {...register("fee")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Message?
               <input
                 className={styles.inputStyle}
                 type="text"
                 {...register("message")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Cost Of Event
               <input
                 className={styles.inputStyle}
                 type="number"
                 {...register("cost")}
               />
-            </div>
-          </div>
+            </FormCell>
+          </EventFormGrid>
           <div className={styles.buttonOptions}>
             Recuring event?
             <div className={styles.buttons}>
@@ -372,16 +372,16 @@ function AddEvent({ user }) {
               )}
             </select>
           </div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
+          <EventFormGrid>
+            <FormCell>
               Start Date
               <input
                 className={styles.inputStyle}
                 type="date"
                 {...register("firstEventStartDate", { required: false })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Number of Events
               <input
                 className={styles.inputStyle}
@@ -389,44 +389,21 @@ function AddEvent({ user }) {
                 type="number"
                 {...register("totalEvents")}
               />
-            </div>
-          </div>
-          <div className={styles.cell}>
+            </FormCell>
+          </EventFormGrid>
+          <FormCell>
             Cover Image
-            <div className={styles.file}>
-              <div className={styles.dragDropVideos}>
-                <input
-                  hidden
-                  accept="image/*,video/*"
-                  id="icon-button-file"
-                  type="file"
-                  onChange={onFileChange}
-                />
-                <label htmlFor="icon-button-file">
-                  <UploadSVG />
-                </label>
-                <span className={styles.marginTop}>
-                  {/* Todo: make span drag/dropable */}
-                  <span>Drag and drop a video or</span>
-                  &ensp;
-                  <a className={styles.dragDropVideosBrowseFiles}>
-                    <label htmlFor="icon-button-file">Browser Files</label>
-                  </a>
-                </span>
-              </div>
-            </div>
-            <div className={styles.coverImage}>
-              <div onClick={deleteMedia} className={styles.deleteImage}>
-                <DeleteMedia />
-              </div>
-              {media?.src && <img src={media?.src} />}
-            </div>
-          </div>
-          <div className={styles.formSubmit}>
+            <UploadMedia
+              onFileChange={onFileChange}
+              deleteMedia={deleteMedia}
+              media={media}
+            />
+          </FormCell>
+          <FormSubmit>
             <button type="submit" className={styles.button}>
               Post
             </button>
-          </div>
+          </FormSubmit>
         </form>
       </div>
       {isError && <MessageToUser message={responseMessage} err={isError} />}

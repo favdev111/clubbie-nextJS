@@ -7,8 +7,6 @@ import Event from "@api/services/Event";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 
-import UploadSVG from "@svg/upload";
-import DeleteMedia from "@svg/delete-media";
 import styles from "./index.module.css";
 
 import MessageToUser from "@sub/messageAnimation";
@@ -16,6 +14,13 @@ import MessageToUser from "@sub/messageAnimation";
 import { schema } from "@utils/schemas/editEvent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateTime } from "luxon";
+
+import FormSubmit from "./submit";
+import UploadMedia from "@sub/upload";
+import FormCell from "@sub/event-form-cell";
+import EventFormGrid from "@sub/event-form-grid";
+
+/* Todo -> Display validate errors */
 
 function EditEvent({ user, activeTeam }) {
   const [responseMessage, setResponseMessage] = useState();
@@ -27,8 +32,6 @@ function EditEvent({ user, activeTeam }) {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     reset,
     formState: { errors },
   } = useForm({
@@ -177,6 +180,7 @@ function EditEvent({ user, activeTeam }) {
       });
   };
 
+  /* Get min date */
   function n(n) {
     return n > 9 ? "" + n : "0" + n;
   }
@@ -191,6 +195,7 @@ function EditEvent({ user, activeTeam }) {
         <h1> Edit Event</h1>
         <Link href={`/teamhub/event/${router.query.eventId}`}>Cancel</Link>
       </div>
+
       {/* Body */}
       <div className={styles.content}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -201,10 +206,9 @@ function EditEvent({ user, activeTeam }) {
             {...register("title", { required: true, maxLength: 20 })}
           />
           <p> {errors.title?.message} </p>
-          {/* Todo - Like buttons below */}
-          <div className={styles.eventType}></div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
+          <div className={styles.eventType} /> {/*  Space */}
+          <EventFormGrid>
+            <FormCell>
               Team A
               <select
                 disabled
@@ -217,8 +221,8 @@ function EditEvent({ user, activeTeam }) {
                   </option>
                 ))}
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Team B
               <select
                 disabled
@@ -227,9 +231,8 @@ function EditEvent({ user, activeTeam }) {
               >
                 <option value="60d371268ffc8b40e175fb4b">Team 2</option>
               </select>
-            </div>
-
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               When?
               <input
                 className={styles.inputStyle}
@@ -238,8 +241,8 @@ function EditEvent({ user, activeTeam }) {
                 required
                 {...register("eventDate", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               What time?
               <input
                 className={styles.inputStyle}
@@ -247,14 +250,14 @@ function EditEvent({ user, activeTeam }) {
                 required
                 {...register("eventDateTime", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Who?
               <select className={styles.inputStyle}>
                 <option {...register("createdBy")}>1</option>
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Where?
               <input
                 className={styles.inputStyle}
@@ -263,8 +266,8 @@ function EditEvent({ user, activeTeam }) {
                 required
                 {...register("location", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Fee?
               <input
                 className={styles.inputStyle}
@@ -272,8 +275,8 @@ function EditEvent({ user, activeTeam }) {
                 type="number"
                 {...register("fee")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Message?
               <input
                 className={styles.inputStyle}
@@ -281,55 +284,32 @@ function EditEvent({ user, activeTeam }) {
                 placeholder={eventData?.message}
                 {...register("message")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Cost Of Event
               <input
                 className={styles.inputStyle}
                 type="number"
                 {...register("cost")}
               />
-            </div>
-          </div>
-
-          <div className={styles.cell}>
+            </FormCell>
+          </EventFormGrid>
+          <FormCell>
             Change Cover Image
-            <div className={styles.file}>
-              <div className={styles.dragDropVideos}>
-                <input
-                  hidden
-                  accept="image/*,video/*"
-                  id="icon-button-file"
-                  type="file"
-                  onChange={onFileChange}
-                />
-                <label htmlFor="icon-button-file">
-                  <UploadSVG />
-                </label>
-                <span className={styles.marginTop}>
-                  {/* Todo: make span drag/dropable */}
-                  <span>Drag and drop a video or</span>
-                  &ensp;
-                  <a className={styles.dragDropVideosBrowseFiles}>
-                    <label htmlFor="icon-button-file">Browser Files</label>
-                  </a>
-                </span>
-              </div>
-            </div>
-            <div className={styles.coverImage}>
-              <div onClick={deleteMedia} className={styles.deleteImage}>
-                <DeleteMedia />
-              </div>
-              {media?.src && <img src={media?.src} />}
-            </div>
-          </div>
-          <div className={styles.formSubmit}>
+            <UploadMedia
+              onFileChange={onFileChange}
+              deleteMedia={deleteMedia}
+              media={media}
+            />
+          </FormCell>
+          <FormSubmit>
             <button type="submit" className={styles.button}>
               Post
             </button>
-          </div>
+          </FormSubmit>
         </form>
       </div>
+      {/* Form success/error messages */}
       {isError && <MessageToUser message={responseMessage} err={isError} />}
 
       {isSuccess && (
