@@ -5,16 +5,22 @@ export default class UserManagementRoutes {
     return HTTPClient.get(`/users/${id}/profile`);
   }
 
-  static async GetUsersPosts(id) {
-    return HTTPClient.get(`/users/${id}/uploaded-posts`);
+  static async GetUploadedPosts(id, query) {
+    return HTTPClient.get(
+      `/users/${id}/uploaded-posts/?${new URLSearchParams(query).toString()}`
+    );
   }
 
-  static async GetLikedPosts(id) {
-    return HTTPClient.get(`/users/${id}/liked-posts`);
+  static async GetLikedPosts(id, query) {
+    return HTTPClient.get(
+      `/users/${id}/liked-posts/?${new URLSearchParams(query).toString()}`
+    );
   }
 
-  static async GetRepostedPosts(id) {
-    return HTTPClient.get(`/users/${id}/reposted-posts`);
+  static async GetRepostedPosts(id, query) {
+    return HTTPClient.get(
+      `/users/${id}/reposted-posts/?${new URLSearchParams(query).toString()}`
+    );
   }
 
   static async UpdateProfile(payload) {

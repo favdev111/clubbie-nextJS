@@ -36,14 +36,14 @@ function ProfilePosts({ posts }) {
           </OvalButton>
         ))}
       </div>
-      {Object.keys(posts).map((key, index) => (
+      {Object.keys(_posts).map((key, index) => (
         <span
           key={index}
           className={cn(styles.hide, index === activeTab && styles.show)}
         >
-          {posts[key]?.length ? (
+          {_posts[key]?.results?.length ? (
             <div className={styles.profilePhotos}>
-              {posts[key].map((post, index) => (
+              {_posts[key]?.results?.map((post, index) => (
                 <PostCard key={index} post={post.content || post} /> // liked videos has post.content nested obj similar to post
               ))}
             </div>
