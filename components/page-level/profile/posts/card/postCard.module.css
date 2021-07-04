@@ -45,17 +45,17 @@
   position: absolute;
 }
 
-.profilePhotosItem .profilePhotosOptions a {
-  margin-right: var(--space-16);
-  background-color: var(--c-black-50);
-  border-radius: var(--radius-full);
-  padding: var(--space-16);
-  width: var(--space-64);
-  height: var(--space-64);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.profilePhotosItem img:hover {
+  opacity: 0.5;
 }
-.profilePhotosItem .profilePhotosOptions img:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+.profilePhotosItem video:hover {
+  opacity: 0.5;
+}
+
+.profilePhotosItem .profilePhotosOptions span {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 5px;
+  align-items: center;
+  margin: 10px;
 }
