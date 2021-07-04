@@ -1,9 +1,12 @@
 import React from "react";
+import styles from "./index.module.css";
 
-function RecentVideoCard() {
+function RecentVideoCard({ videoSrc }) {
   return (
     <div>
-      <img src="/assets/teamleader.png" />
+      <video className={styles.video} controls>
+        <source src={videoSrc} type="video/mp4" />
+      </video>
     </div>
   );
 }
