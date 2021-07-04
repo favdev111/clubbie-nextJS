@@ -11,7 +11,7 @@ const HomePage = ({ posts }) => {
         title="Clubbie"
         desc="Clubbie - Raising The Bar For Amateur Sports"
       />
-      <Home posts={posts.results} />
+      <Home posts={posts} />
     </Layout>
   );
 };
@@ -23,8 +23,8 @@ export const getServerSideProps = async (ctx) => {
     limit: 10,
     page: 1,
     sortBy: "createdAt:desc",
-  });
-  const posts = response.data;
+  }).catch(() => undefined);
+  const posts = response?.data;
 
   return {
     props: {
