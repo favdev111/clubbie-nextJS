@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ThickRight from "@svg/thick-right-arrow";
 import ThickLeft from "@svg/thick-left-arrow";
 import styles from "./index.module.css";
+import cn from "classnames";
 
 function BackForward({ length, setIndex, index }) {
   return (
@@ -10,7 +11,7 @@ function BackForward({ length, setIndex, index }) {
         onClick={() => {
           setIndex(index > 0 ? index - 1 : 0);
         }}
-        className={styles.left}
+        className={cn(styles.left, index == 0 && styles.disabled)}
       >
         <ThickLeft />
       </div>
@@ -18,7 +19,10 @@ function BackForward({ length, setIndex, index }) {
         onClick={() => {
           setIndex(index == Math.ceil(length / 2 - 1) ? index : index + 1);
         }}
-        className={styles.right}
+        className={cn(
+          styles.right,
+          index == Math.ceil(length / 2 - 1) && styles.disabled
+        )}
       >
         <ThickRight />
       </div>
