@@ -156,6 +156,7 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
 .coverImage {
   position: relative;
   display: flex;
@@ -177,8 +178,4 @@
 }
 .coverImage:hover .deleteImage {
   display: flex !important;
-}
-.err {
-  color: var(--c-red);
-  padding: 12px;
 }

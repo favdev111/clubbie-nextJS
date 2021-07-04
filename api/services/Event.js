@@ -9,8 +9,8 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/edit`, payload);
   }
 
-  static async CancelEventbyId(id, payload) {
-    return HTTPClient.patch(`/event/${id}/cancel`, payload);
+  static async CancelEventbyId(id) {
+    return HTTPClient.patch(`/event/${id}/cancel`);
   }
 
   static async SetAvailability(id, payload) {
@@ -29,7 +29,7 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/create-lineup`, payload);
   }
 
-  static async FetchSingleEvent(teamId, eventId) {
+  static async FetchSingleEvent(eventId, teamId) {
     return HTTPClient.get(`/event/${eventId}?teamId=${teamId}`);
   }
 

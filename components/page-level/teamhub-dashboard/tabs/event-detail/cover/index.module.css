@@ -1,6 +1,16 @@
 .detailCover {
   position: relative;
   margin-bottom: 24px;
+  display: flex;
+}
+.cover {
+  display: block;
+  width: 1400px;
+}
+.detailCover img {
+  object-fit: contain;
+  min-width: 100%;
+  max-height: 487px;
 }
 .more {
   display: none;

@@ -1,5 +1,13 @@
 .myTeamFlex {
   display: flex;
+  overflow-x: scroll;
+}
+.myTeamFlex::-webkit-scrollbar {
+  display: none;
+}
+.myTeamFlex {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .teamhubInitial {
   margin-left: 15px;

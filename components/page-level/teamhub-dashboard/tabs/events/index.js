@@ -5,26 +5,48 @@ import DateTable from "./date-table";
 import EventCard from "./card";
 import Link from "next/link";
 import Event from "@api/services/Event";
-import HTTPClient from "@api/HTTPClient";
+
+import ProgressBar from "@sub/progress";
+
+import { DateTime } from "luxon";
+
+const newDate = new Date();
+const currentMonth = newDate.getMonth();
 
 function Events({ activeTeam, user }) {
-  const [events, setEvents] = useState([]);
+  const [selectedMonth, setSelected] = useState(currentMonth);
+  const [filteredEvents, setFiltered] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  const userRole = user.teams[activeTeam].role;
 
   useEffect(() => {
-    /* Not done yet */
+    setDataLoaded(false);
     const fetchEvents = async () => {
       const teamQuery = {
         teamId: user.teams[activeTeam].team,
       };
       const response = await Event.GetQueryEvents(teamQuery);
-      setEvents(response.data.results);
+
+      setFiltered(
+        response.data.results.filter((item) => {
+          if (userRole == "teamLead")
+            return (
+              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
+              selectedMonth + 1
+            );
+          else
+            return (
+              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
+                selectedMonth + 1 && item.status == "published"
+            );
+        })
+      );
+
+      setDataLoaded(true);
     };
     fetchEvents();
-  }, [activeTeam]);
-
-  const date = new Date();
-  const month = date.getMonth();
-  const [selectedMonth, setSelected] = useState(month);
+  }, [user, selectedMonth]);
 
   return (
     <>
@@ -33,12 +55,14 @@ function Events({ activeTeam, user }) {
           <h1> Events</h1>
 
           {/* Drafts, Add event etc */}
-          <Link href="/teamhub/add-event">
-            <div className={styles.draft}>
-              <EditIcon />
-              <p>Add new event </p>
-            </div>
-          </Link>
+          {userRole == "teamLead" && (
+            <Link href="/teamhub/event/add-event/">
+              <div className={styles.draft}>
+                <EditIcon />
+                <p>Add new event </p>
+              </div>
+            </Link>
+          )}
         </div>
 
         {/* Date */}
@@ -46,9 +70,20 @@ function Events({ activeTeam, user }) {
 
         {/* Cards */}
         <div className={styles.eventCardsRow}>
-          {events.map((card) => (
-            <EventCard user={user} key={Math.random() + 12} data={card} />
-          ))}
+          {!dataLoaded ? (
+            <ProgressBar />
+          ) : filteredEvents.length > 0 ? (
+            filteredEvents.map((card) => (
+              <EventCard
+                activeTeam={activeTeam}
+                user={user}
+                key={Math.random() + 12}
+                data={card}
+              />
+            ))
+          ) : (
+            <p> There is no event in selected month. </p>
+          )}
         </div>
       </div>
     </>

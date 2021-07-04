@@ -4,8 +4,9 @@ import { DateTime } from "luxon";
 import Date from "@svg/date";
 import KickOff from "@svg/kickoff";
 import Place from "@svg/place";
+import Comment from "@svg/social/comment";
 
-function MatchDetail({ data }) {
+function SocialDetail({ data }) {
   return (
     <div className={styles.matchDetail}>
       <div className={styles.score}>
@@ -14,20 +15,9 @@ function MatchDetail({ data }) {
 
           {data && data?.teams[0].teamId.title}
         </div>
-
         {/* Middle */}
-        <div className={styles.scoreMiddle}>
-          <p className="opacity-50">Match</p>
-          <h1>vs</h1>
-        </div>
-
-        {/* Away Team */}
-        <div className={styles.teamCard}>
-          {data && <img src={data?.teams[1].teamId.crest} />}
-
-          {data && data?.teams[1].teamId.title}
-        </div>
       </div>
+
       <div className={styles.cardInfo}>
         <div className={styles.infoInner}>
           <Date />
@@ -49,9 +39,14 @@ function MatchDetail({ data }) {
           <Place />
           <p> {data?.location}</p>
         </div>
+
+        <div className={styles.infoInner}>
+          <Comment />
+          <p> {data?.message}</p>
+        </div>
       </div>
     </div>
   );
 }
 
-export default MatchDetail;
+export default SocialDetail;

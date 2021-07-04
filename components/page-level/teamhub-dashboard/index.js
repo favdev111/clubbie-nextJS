@@ -29,6 +29,7 @@ function DashboardContent({ activeTeam, setTeam, user, eventId }) {
   return (
     <div className={styles.dashboard}>
       <TeamhubNav nav={nav} selectedIndex={selectedIndex} setIndex={setIndex} />
+
       <TeamhubRouter
         activeTeam={activeTeam}
         setTeam={setTeam}

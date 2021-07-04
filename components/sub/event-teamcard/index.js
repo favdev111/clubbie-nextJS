@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./index.module.css";
 
 function TeamCardForEvents({ data }) {
-  const { name, src } = data;
+  const { title, crest } = data;
   return (
     <div className={styles.card}>
-      <img src={src} />
-      <span>{name}</span>
+      <img src={crest} />
+      <span>{title}</span>
     </div>
   );
 }
