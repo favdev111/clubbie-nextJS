@@ -18,6 +18,13 @@ import MessageToUser from "@sub/messageAnimation";
 const schema = yup.object().shape({
   title: yup.string().required(),
   teamA: yup.string().required(),
+  teamB: yup.string().when("eventType", {
+    is: (eventT) => eventT == "match",
+    then: yup
+      .string()
+      .notOneOf([yup.ref("teamA")], "Should be different")
+      .required(),
+  }),
   eventDateTime: yup.string().required(),
   fee: yup.number(),
   recurring: yup.string().required(),
@@ -128,10 +135,11 @@ function AddEvent({ user }) {
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
 
     const teamA = data?.teamA;
+
     const teamB = data?.teamB;
     const teams = [];
     teams.push(teamA);
-    teams.push(teamB);
+    data?.eventType != "training" && teams.push(teamB);
 
     const createRecurringObj = () => {
       if (data?.recurring == "yes") {
@@ -222,18 +230,18 @@ function AddEvent({ user }) {
             <div>
               <input
                 type="radio"
-                value="train"
+                value="training"
                 className={cn(styles.eventTypeInput)}
                 defaultChecked={!checked}
                 {...register("eventType", { required: true })}
               />
               <label
                 onClick={() => {
-                  setValue("eventType", "train");
+                  setValue("eventType", "training");
                   setChecked(!checked);
                 }}
                 className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="train"
+                htmlFor="training"
               >
                 <Training />
                 Training
@@ -260,7 +268,11 @@ function AddEvent({ user }) {
                 {...register("teamB", { required: true })}
                 className={styles.inputStyle}
               >
-                <option value="60d371268ffc8b40e175fb4b">Team 2</option>
+                {userTeams.map((i) => (
+                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
+                    {i.title}
+                  </option>
+                ))}
               </select>
             </div>
 
