@@ -42,30 +42,6 @@ function Dashboard({ user, activeTeam, setTeam }) {
     fetchSelectedTeam();
   }, [activeTeam]);
 
-  /* Todo : send data into components dinamicly when fake data added */
-
-  const dashboard = {
-    upnext: {
-      homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
-      awayTeam: { name: "Men's FC", src: "./assets/team2.png" },
-      eventDetails: {
-        date: "07.01.12",
-        kickoff: "02.00 PM",
-        adress: "Lorem Upsum Street,",
-        state: "Lorem, 01277",
-      },
-    },
-    lastresult: {
-      homeTeam: { name: "Shottery United", src: "./assets/team1.png" },
-      awayTeam: { name: "Men's FC", src: "./assets/team2.png" },
-      score: "3 - 0",
-      scorers: [
-        { name: "Kevin Sullivan", min: 21 },
-        { name: "Richard Murphy", min: 62 },
-        { name: "Johnny Ross", min: 82 },
-      ],
-    },
-  };
   return (
     <div className={styles.dashboardContent}>
       <div className={styles.dashboard}>
@@ -79,7 +55,9 @@ function Dashboard({ user, activeTeam, setTeam }) {
           active={activeTeam}
         />
         {/* recent videos */}
-        <RecentVideos />
+        {dashboardData?.recentPosts?.length > 0 && (
+          <RecentVideos data={dashboardData.recentPosts} />
+        )}
         {/* up next */}
         {dashboardData?.nextMatch?.length > 0 && (
           <UpNext data={dashboardData.nextMatch} />
