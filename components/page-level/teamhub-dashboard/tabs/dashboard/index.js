@@ -68,7 +68,9 @@ function Dashboard({ user, activeTeam, setTeam }) {
         )}
 
         {/* League table */}
-        <LeagueTable />
+        {dashboardData?.leagueTable && (
+          <LeagueTable data={dashboardData.leagueTable} />
+        )}
         {/* Payments overview */}
         <PaymentOverview />
       </div>
