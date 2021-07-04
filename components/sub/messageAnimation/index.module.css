@@ -38,6 +38,6 @@
 .err {
   background-color: var(--c-red);
 }
-.succes {
+.success {
   background-color: var(--c-green);
 }
