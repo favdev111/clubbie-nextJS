@@ -7,7 +7,9 @@ function ProfilePostCard({ post }) {
   const [contentItem, setContentItem] = useState(
     post?.thumbnail || post?.media
   );
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(
+    contentItem?.includes("video") ? true : false
+  );
 
   return (
     <>
@@ -15,7 +17,7 @@ function ProfilePostCard({ post }) {
         <div className={styles.profilePhotosItem}>
           <span className={!loaded && styles.hidden}>
             {contentItem?.includes("video") && (
-              <video src={contentItem} onLoad={() => setLoaded(true)}></video>
+              <video src={contentItem}></video>
             )}
             {contentItem?.includes("image") && (
               <img src={contentItem} onLoad={() => setLoaded(true)}></img>
