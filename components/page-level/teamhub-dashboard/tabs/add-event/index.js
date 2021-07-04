@@ -22,7 +22,7 @@ const schema = yup.object().shape({
     is: (eventT) => eventT == "match",
     then: yup
       .string()
-      .notOneOf([yup.ref("teamA")], "Should be different")
+      .notOneOf([yup.ref("teamA")], "Teams must be different")
       .required(),
   }),
   eventDateTime: yup.string().required(),
@@ -30,7 +30,7 @@ const schema = yup.object().shape({
   recurring: yup.string().required(),
   firstEventStartDate: yup.string().when("recurring", {
     is: (val) => val == "0",
-    then: yup.string().required(),
+    then: yup.string().required("You must pick a date for recurring events"),
   }),
   totalEvents: yup.number().when("recurring", {
     is: (val) => val == "0",
@@ -188,6 +188,8 @@ function AddEvent({ user }) {
     setMedia(null);
   };
 
+  /* Todo display errors  */
+
   return (
     <div className={styles.addEvent}>
       {/* Header */}
@@ -204,7 +206,6 @@ function AddEvent({ user }) {
             placeholder="Add title"
             {...register("title", { required: true, maxLength: 20 })}
           />
-          <p> {errors.title?.message} </p>
           {/* Todo - Like buttons below */}
           <div className={styles.eventType}>
             <div>
