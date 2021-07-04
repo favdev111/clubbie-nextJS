@@ -5,8 +5,8 @@
   width: 200px;
 }
 .card img {
-  min-width: 70px;
-  max-height: 150px;
+  min-width: 60px;
+  max-height: 80px;
 }
 .card span {
   font-family: var(--ff-bold);

@@ -13,6 +13,8 @@ function Dashboard({ user, activeTeam, setTeam }) {
   const [userTeams, setUserTeams] = useState([]);
   const [dashboardData, setDashData] = useState([]);
 
+  console.log(dashboardData);
+
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
