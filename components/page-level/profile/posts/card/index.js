@@ -7,16 +7,24 @@ function ProfilePostCard({ post }) {
   const [contentItem, setContentItem] = useState(
     post?.thumbnail || post?.media
   );
+  const [loaded, setLoaded] = useState(false);
 
   return (
-    <Link href={`/content/${post?.id}`}>
-      <div className={styles.profilePhotosItem}>
-        <>
-          {contentItem?.includes("video") && <video src={contentItem}></video>}
-          {contentItem?.includes("image") && <img src={contentItem}></img>}
-        </>
-      </div>
-    </Link>
+    <>
+      <Link href={`/content/${post?.id}`}>
+        <div className={styles.profilePhotosItem}>
+          <span className={!loaded && styles.hidden}>
+            {contentItem?.includes("video") && (
+              <video src={contentItem} onLoad={() => setLoaded(true)}></video>
+            )}
+            {contentItem?.includes("image") && (
+              <img src={contentItem} onLoad={() => setLoaded(true)}></img>
+            )}
+          </span>
+          <div className={!loaded && styles.loadingPost}></div>
+        </div>
+      </Link>
+    </>
   );
 }
 
