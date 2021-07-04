@@ -15,7 +15,7 @@ function ProfileSelf({ isPublic, profile, editMode, posts, clubs }) {
           <ProfileDetails profile={profile} isPublic={isPublic} clubs={clubs} />
         )}
       </div>
-      {!editMode && <ProfilePosts posts={posts} />}
+      {!editMode && <ProfilePosts userId={profile?.id} posts={posts} />}
     </div>
   );
 }
