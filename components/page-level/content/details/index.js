@@ -457,7 +457,7 @@ function ContentDetails({ content, user }) {
         title={content.title}
         description={content.description}
         createdAt={content.createdAt}
-        views={content.views}
+        views={content.counts.views}
       ></ContentBody>
       <ContentActions
         totalLikes={_content?.likes}
