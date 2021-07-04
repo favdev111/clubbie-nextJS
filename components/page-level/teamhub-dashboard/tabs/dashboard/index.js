@@ -7,7 +7,6 @@ import UpNext from "./upnext";
 import LeagueTable from "./league-table";
 import PaymentOverview from "./pay-overview";
 import Teams from "@api/services/Teams";
-import HTTPClient from "@api/HTTPClient";
 
 function Dashboard({ user, activeTeam, setTeam }) {
   const [selectedTeam, setSelectedTeam] = useState([]);
@@ -71,8 +70,10 @@ function Dashboard({ user, activeTeam, setTeam }) {
         {dashboardData?.leagueTable && (
           <LeagueTable data={dashboardData.leagueTable} />
         )}
+
+        {/* No data yet */}
         {/* Payments overview */}
-        <PaymentOverview />
+        {dashboardData?.payment && <PaymentOverview />}
       </div>
     </div>
   );
