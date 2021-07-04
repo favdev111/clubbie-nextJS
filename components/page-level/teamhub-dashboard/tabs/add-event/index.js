@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
-import { useForm } from "react-hook-form";
 import cn from "classnames";
 import Link from "next/link";
+
 import Event from "@api/services/Event";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import Training from "@svg/training";
 import Match from "@svg/match";
 import { useRouter } from "next/router";
@@ -15,42 +14,10 @@ import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
 import MessageToUser from "@sub/messageAnimation";
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  teamA: yup.string().required(),
-  teamB: yup.string().when("eventType", {
-    is: (eventT) => eventT == "match",
-    then: yup
-      .string()
-      .notOneOf([yup.ref("teamA")], "Teams must be different")
-      .required(),
-  }),
-  eventDateTime: yup.string().required(),
-  fee: yup.number(),
-  recurring: yup.string().required(),
-  firstEventStartDate: yup.string().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.string().required("You must pick a date for recurring events"),
-  }),
-  totalEvents: yup.number().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.number().min(1).required(),
-  }),
-});
-
-const now = new Date();
-let dd = now.getDate();
-let mm = now.getMonth() + 1;
-let yyyy = now.getFullYear();
-
-if (dd < 10) {
-  dd = "0" + dd;
-}
-if (mm < 10) {
-  mm = "0" + mm;
-}
-
-const today = yyyy + "-" + mm + "-" + dd;
+import { schema } from "@utils/schemas/addEvent";
+import { today } from "@utils/helpers/day";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 function AddEvent({ user }) {
   const [responseMessage, setResponseMessage] = useState();

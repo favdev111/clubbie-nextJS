@@ -7,23 +7,15 @@ import Event from "@api/services/Event";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { DateTime } from "luxon";
-
 import UploadSVG from "@svg/upload";
 import DeleteMedia from "@svg/delete-media";
 import styles from "./index.module.css";
 
 import MessageToUser from "@sub/messageAnimation";
 
-const schema = yup.object().shape({
-  title: yup.string().min(5),
-  eventDateTime: yup.string(),
-  fee: yup.number(),
-  location: yup.string().min(5),
-  message: yup.string().min(5),
-});
+import { schema } from "@utils/schemas/editEvent";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DateTime } from "luxon";
 
 function EditEvent({ user, activeTeam }) {
   const [responseMessage, setResponseMessage] = useState();
@@ -31,7 +23,6 @@ function EditEvent({ user, activeTeam }) {
   const [isSuccess, setSuccess] = useState(false);
   const [eventData, setData] = useState(null);
   const [userTeams, setUserTeams] = useState([]);
-  const [formMessage, setMessage] = useState();
   const [media, setMedia] = useState(null);
   const {
     register,
@@ -45,6 +36,7 @@ function EditEvent({ user, activeTeam }) {
   });
   const router = useRouter();
 
+  /* Media */
   const onFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -60,6 +52,12 @@ function EditEvent({ user, activeTeam }) {
     };
     reader.readAsDataURL(file);
   };
+
+  const deleteMedia = () => {
+    setMedia(null);
+  };
+
+  /* Fetch teams for selectbox */
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -80,6 +78,7 @@ function EditEvent({ user, activeTeam }) {
     fetchUserTeams();
   }, []);
 
+  /* Fetch current values for form */
   useEffect(() => {
     const fetchPromise = new Promise((resolve, reject) => {
       const eventData = async () => {
@@ -126,8 +125,7 @@ function EditEvent({ user, activeTeam }) {
     return;
   }, [reset]);
 
-  /* todo, object is nearly ready */
-
+  /* Submit */
   const onSubmit = async (data) => {
     let mediaIdToUpload = null;
     if (media?.src && media?.file) {
@@ -178,16 +176,13 @@ function EditEvent({ user, activeTeam }) {
         setError(true);
       });
   };
+
   function n(n) {
     return n > 9 ? "" + n : "0" + n;
   }
   const dateIso = DateTime.fromISO(eventData?.eventDateTime, { zone: "utc" });
   const minDate =
     `${dateIso.year}` + "-" + `${n(dateIso.month)}` + "-" + `${n(dateIso.day)}`;
-
-  const deleteMedia = () => {
-    setMedia(null);
-  };
 
   return (
     <div className={styles.addEvent}>
