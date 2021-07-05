@@ -25,7 +25,7 @@ function EndFeedMessage() {
       <a>
         <div className={styles.addContent}>
           <p className={styles.endFeedMessage}>
-            You are all catched up with the video fee. Care to make a post of
+            You are all catched up with the video feed. Care to make a post of
             your own?
           </p>
           <div className={styles.addButton}>
@@ -120,7 +120,7 @@ function Home({ posts }) {
       </span>
 
       <InfiniteScroll
-        dataLength={_posts?.results?.length}
+        dataLength={_posts?.totalResults}
         getMore={fetchMorePosts}
         hasMore={_posts?.page < _posts?.totalPages}
         loader={<LoadingPosts />}
