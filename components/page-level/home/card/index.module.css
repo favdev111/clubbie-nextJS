@@ -67,7 +67,18 @@
     order: 4;
   }
 }
-
+.postDate {
+  margin-top: var(--space-5);
+}
+.postAuthorImage {
+  cursor: pointer;
+}
+.postAuthorName {
+  cursor: pointer;
+}
+.postAuthorName:hover {
+  font-weight: bold;
+}
 .highLightPost {
   animation: highLightPost 5s;
 }

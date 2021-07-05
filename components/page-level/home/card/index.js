@@ -12,8 +12,8 @@ function HomeVideosCard({ createdPost, data }) {
     thumbnail,
     author,
     createdAt,
-    views,
     contentType,
+    counts,
   } = data;
 
   const [content] = useState(media || thumbnail);
@@ -38,12 +38,23 @@ function HomeVideosCard({ createdPost, data }) {
       </Link>
       <div className={styles.cardInfoHeader}>
         <div className={styles.cardInfoProfile}>
-          <img
-            src={author?.profile?.image || "/assets/person-placeholder.jpg"}
-          />
+          <Link href={`/profile/${author?.id}`}>
+            <img
+              className={styles.postAuthorImage}
+              src={author?.image || "/assets/person-placeholder.jpg"}
+            />
+          </Link>
           <div className={styles.avatarInfo}>
-            <p className="text-18">{author?.name || "author name"}</p>
-            <p className="opacity-50">{new Date(createdAt).toLocaleString()}</p>
+            <p className="text-18">
+              <Link href={`/profile/${author?.id}`}>
+                <p className="text-18" className={styles.postAuthorName}>
+                  {author?.name || author?.id}
+                </p>
+              </Link>
+            </p>
+            <p className={cn("opacity-50", styles.postDate)}>
+              {new Date(createdAt).toLocaleString()}
+            </p>
           </div>
         </div>
         <SocialButton type="upload" />
@@ -51,17 +62,18 @@ function HomeVideosCard({ createdPost, data }) {
 
       <p className={styles.desc}> {description}</p>
       <p className={cn("opacity-50", styles.viewCount)}>
-        {" "}
-        {views || views === 0
-          ? `${views} View${views > 1 || views < 1 ? "s" : ""}`
+        {counts?.views || counts?.views === 0
+          ? `${counts?.views} View${
+              counts?.views > 1 || counts?.views < 1 ? "s" : ""
+            }`
           : ""}
       </p>
       {/* buttons */}
       <div className={styles.socialButtons}>
-        <SocialButton type="fav">15</SocialButton>
-        <SocialButton type="repost">5</SocialButton>
+        <SocialButton type="fav">{counts?.likes || "0"}</SocialButton>
+        <SocialButton type="repost">{counts?.reposts || "0"}</SocialButton>
         <SocialButton type="send" />
-        <SocialButton type="comment" />
+        <SocialButton type="comment">{counts?.comments || "0"}</SocialButton>
       </div>
     </div>
   );
