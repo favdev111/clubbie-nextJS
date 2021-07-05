@@ -140,3 +140,8 @@
 .show {
   display: block;
 }
+.loadingPosts {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

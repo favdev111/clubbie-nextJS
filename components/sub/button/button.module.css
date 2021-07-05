@@ -9,6 +9,9 @@
 .danger {
   background: var(--c-red);
 }
+.cancel {
+  background: var(--c-white-30);
+}
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;

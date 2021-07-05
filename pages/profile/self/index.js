@@ -24,14 +24,24 @@ export default ProfilePage;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const user = ctx.user;
 
-  const resUploadedPosts = await Users.GetUsersPosts(user.id).catch(
+  const postsFilter = {
+    limit: 10,
+    page: 1,
+    sortBy: "createdAt:desc",
+  };
+
+  const resUploadedPosts = await Users.GetUploadedPosts(
+    user.id,
+    postsFilter
+  ).catch(() => false); // avoid page error for now
+  const userUploadedPosts = resUploadedPosts?.data;
+  const resLikedPosts = await Users.GetLikedPosts(user.id, postsFilter).catch(
     () => false
   ); // avoid page error for now
-  const userUploadedPosts = resUploadedPosts?.data;
-  const resLikedPosts = await Users.GetLikedPosts(user.id).catch(() => false); // avoid page error for now
   const userLikedPosts = resLikedPosts?.data;
   const resRepostedPosts = await Users.GetRepostedPosts(user.id).catch(
-    () => false
+    () => false,
+    postsFilter
   ); // avoid page error for now
   const userRepostedPosts = resRepostedPosts?.data;
   const posts = {

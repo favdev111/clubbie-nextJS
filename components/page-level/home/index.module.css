@@ -34,7 +34,9 @@
 
 .addContent {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: var(--space-32) 0 var(--space-32) 0;
   border: 1px solid var(--c-white-10);
   padding: 46px 46px;
@@ -49,6 +51,16 @@
 }
 .addButton a {
   padding: 0 var(--space-12);
+}
+
+.loadingPosts {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.endFeedMessage {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {

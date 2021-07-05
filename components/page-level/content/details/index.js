@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import router from "next/router";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
+import Interactions from "@api/services/Interactions";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
@@ -167,6 +168,9 @@ function ContentComments({ user, comments, contentId }) {
   const [creatingComment, setCreatingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
+  const [creatingReply, setCreatingReply] = useState(false);
+  const [editingReply, setEditingReply] = useState(false);
+  const [deletingReply, setDeletingReply] = useState(false);
 
   const loadMoreComments = async () => {
     setLoadingComments(true);
@@ -276,6 +280,104 @@ function ContentComments({ user, comments, contentId }) {
     setDeletingComment(false);
   };
 
+  const createReply = async (commentId, replyText) => {
+    if (!commentId || replyText.trim().length === 0) return;
+    setCreatingReply(true);
+
+    // create reply
+    const payload = { text: replyText.trim() };
+    const response = await Comments.ReplyToComment(commentId, payload).catch(
+      () => false
+    );
+    const updatedComment = response?.data;
+    if (!updatedComment) {
+      console.log("error creating reply to comment"); // Todo: error component
+      setCreatingReply(false);
+      return;
+    }
+
+    // set in state;
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find(
+      (x) => x.id === updatedComment?.id
+    );
+    foundComment.replies.push({
+      ...updatedComment.replies[updatedComment.replies.length - 1],
+      user: user,
+    });
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setCreatingReply(false);
+  };
+
+  const deleteReply = async (commentId, replyId) => {
+    if (!commentId || !replyId) return;
+    setDeletingReply(true);
+
+    // delete comment reply
+    const response = await Comments.DeleteReply(commentId, replyId).catch(
+      () => false
+    );
+    const deleted = response?.status === 204;
+    if (!deleted) {
+      console.log("Reply Not Deleted"); // Todo: error component
+      setDeletingReply(false);
+      return;
+    }
+
+    // filter from state
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    foundComment.replies = foundComment.replies.filter(
+      (x) => x._id !== replyId
+    );
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setDeletingReply(false);
+  };
+
+  const editReply = async (commentId, replyId, replyText) => {
+    if (!commentId || !replyId || !replyText) return;
+    setEditingReply(true);
+
+    // edit comment reply
+    const payload = { text: replyText.trim() };
+    const response = await Comments.UpdateCommentReply(
+      commentId,
+      replyId,
+      payload
+    ).catch(() => false);
+    const updatedComment = response?.data;
+    if (!updatedComment) {
+      console.log("Reply Not Edited"); // Todo: error component
+      setEditingReply(false);
+      return;
+    }
+
+    const editedReply = updatedComment.replies.find((x) => x._id === replyId);
+
+    // update reply in state
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    const foundReply = foundComment.replies.find((x) => x._id === replyId);
+    foundReply.text = editedReply.text;
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setEditingReply(false);
+  };
+
   return (
     <div className={styles.commentsWrapper}>
       <h2>Comments</h2>
@@ -288,12 +390,18 @@ function ContentComments({ user, comments, contentId }) {
       {_comments?.results.map((comment, index) => (
         <Comment
           key={index}
-          comment={comment}
-          replies={comment?.replies}
+          user={user}
           isAuthor={user?.id === comment?.user?.id}
-          onDeleteClick={deleteComment}
-          onSaveClick={editComment}
+          comment={comment}
+          onDeleteCommentClick={deleteComment}
+          onSaveCommentClick={editComment}
           editingComment={editingComment}
+          replies={comment?.replies}
+          onCreateReply={createReply}
+          creatingReply={creatingReply}
+          onSaveReplyClick={editReply}
+          editingReply={editingReply}
+          onDeleteReplyClick={deleteReply}
         ></Comment>
       ))}
       {_comments?.page < _comments?.totalPages && (
@@ -311,26 +419,36 @@ function ContentComments({ user, comments, contentId }) {
           </span>
         </div>
       )}
-      {(editingComment || deletingComment) && <BackDropLoader></BackDropLoader>}
+      {(editingComment || deletingComment || editingReply || deletingReply) && (
+        <BackDropLoader></BackDropLoader>
+      )}
     </div>
   );
 }
 
 function ContentDetails({ content, user }) {
-  const [activeMedia, setActiveMedia] = useState(content?.media);
+  const [_content, setContent] = useState(content);
+  const [activeMedia, setActiveMedia] = useState(_content?.media);
+
+  // trying adding content view
+  useEffect(() => {
+    setTimeout(async function () {
+      await Interactions.ViewPost(_content?.id).catch(() => undefined);
+    }, 5000);
+  }, [_content]);
 
   return (
     <>
       <ContentHeader
-        contentId={content?.id}
-        author={content?.author}
-        isMyPost={content?.author?.id === user?.id}
+        contentId={_content?.id}
+        author={_content?.author}
+        isMyPost={_content?.author?.id === user?.id}
       ></ContentHeader>
       <ContentMedia media={activeMedia}></ContentMedia>
-      {content?.childPosts.length > 0 && (
+      {_content?.childPosts.length > 0 && (
         <ContentRelatedMedia
-          parentMedia={content?.media}
-          relatedMediaItems={content?.childPosts}
+          parentMedia={_content?.media}
+          relatedMediaItems={_content?.childPosts}
           activeMedia={activeMedia}
           setActiveMedia={setActiveMedia}
         ></ContentRelatedMedia>
@@ -339,17 +457,17 @@ function ContentDetails({ content, user }) {
         title={content.title}
         description={content.description}
         createdAt={content.createdAt}
-        views={content.views}
+        views={content.counts.views}
       ></ContentBody>
       <ContentActions
-        totalLikes={content?.likes}
-        totalReposts={content?.reposts}
+        totalLikes={_content?.likes}
+        totalReposts={_content?.reposts}
       ></ContentActions>
-      {content?.comments?.results && (
+      {_content?.comments?.results && (
         <ContentComments
           user={user}
           comments={content.comments}
-          contentId={content?.id}
+          contentId={_content?.id}
         ></ContentComments>
       )}
     </>

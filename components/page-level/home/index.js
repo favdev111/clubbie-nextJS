@@ -7,13 +7,65 @@ import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
 import YouShouldSignUp from "@sub/sign-up-warn";
 import { useRouter } from "next/router";
+import Loader from "@sub/loader";
+import InfiniteScroll from "@sub/infinite-scroll";
+import Posts from "@api/services/Posts";
 
+function LoadingPosts() {
+  return (
+    <div className={styles.loadingPosts}>
+      <Loader size="large" padded={true} />
+    </div>
+  );
+}
+
+function EndFeedMessage() {
+  return (
+    <Link href="/content">
+      <a>
+        <div className={styles.addContent}>
+          <p className={styles.endFeedMessage}>
+            You are all catched up with the video fee. Care to make a post of
+            your own?
+          </p>
+          <div className={styles.addButton}>
+            <a>
+              <PlusTurk />
+            </a>
+            Add Content
+          </div>
+        </div>
+      </a>
+    </Link>
+  );
+}
 function Home({ posts }) {
-  const [activeTag, setActiveTag] = useState(0);
   const router = useRouter();
+  const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
-  // highlight a post if it was created
-  const createdPost = router?.query?.createdPost;
+  const [activeTag, setActiveTag] = useState(0);
+  const [_posts, setPosts] = useState(posts);
+
+  const fetchMorePosts = async () => {
+    const response = await Posts.GetPosts({
+      limit: 10,
+      page: _posts.page + 1,
+      sortBy: "createdAt:desc",
+    }).catch(() => undefined);
+    const newPosts = response?.data;
+
+    if (!newPosts) {
+      console.log("Error fetching new posts"); // console for now
+      return;
+    }
+
+    const updatedPostState = {
+      ...newPosts,
+      results: [..._posts.results, ...newPosts.results],
+    };
+
+    setPosts({ ...updatedPostState });
+  };
 
   return (
     <div className={styles.homePage}>
@@ -67,14 +119,22 @@ function Home({ posts }) {
         </Link>
       </span>
 
-      {posts &&
-        posts.map((post, index) => (
-          <HomeVideosCard
-            key={post + index}
-            data={post}
-            createdPost={createdPost}
-          />
-        ))}
+      <InfiniteScroll
+        dataLength={_posts?.results?.length}
+        getMore={fetchMorePosts}
+        hasMore={_posts?.page < _posts?.totalPages}
+        loader={<LoadingPosts />}
+        endingMessage={<EndFeedMessage />}
+      >
+        {_posts?.results &&
+          _posts?.results.map((post, index) => (
+            <HomeVideosCard
+              key={post + index}
+              data={post}
+              createdPost={createdPost}
+            />
+          ))}
+      </InfiniteScroll>
     </div>
   );
 }

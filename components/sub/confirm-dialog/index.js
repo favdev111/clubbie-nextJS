@@ -35,12 +35,14 @@ function ConfirmDialog({
         <p>{message}</p>
         <div className={styles.buttons}>
           <Button
-            variant="danger"
+            variant="cancel"
             onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
           >
             Cancel
           </Button>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <Button variant="danger" onClick={onConfirm}>
+            {confirmText}
+          </Button>
         </div>
       </div>
     </div>
