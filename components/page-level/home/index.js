@@ -110,6 +110,7 @@ function Home({ posts }) {
           )}
           <Tag
             activeTag={false}
+            endingTag
             onClick={() => setExpandedSports(!expandedSports)}
           >
             {!expandedSports ? "More..." : "...Less"}
