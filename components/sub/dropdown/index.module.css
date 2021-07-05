@@ -5,10 +5,11 @@
 .dropDownList {
   display: none;
   position: absolute;
-  background-color: var(--c-primary);
+  background-color: var(--c-nav);
   right: 0;
   min-width: 160px;
   margin-top: 15px;
+  border-radius: var(--radius-md);
   /* box-shadow: 0px 0.1px 5px 0.1px var(--c-white-50); */
   z-index: 1;
 }
@@ -16,7 +17,7 @@
   content: "\A";
   border-style: solid;
   border-width: 10px 10px 0px 10px;
-  border-color: var(--c-primary) transparent transparent transparent;
+  border-color: var(--c-nav) transparent transparent transparent;
   transform: rotateX(180deg);
   position: absolute;
   top: -10px;
@@ -24,7 +25,7 @@
 }
 .dropDownListItem {
   cursor: pointer;
-  color: var(--c-yellow);
+  color: var(--c-white);
   padding: 20px 16px;
   margin-left: 10px;
   margin-right: 10px;
@@ -34,5 +35,5 @@
   display: block;
 }
 .seperator {
-  border-top: 2px solid var(--c-yellow);
+  border-top: 2px solid var(--c-white);
 }

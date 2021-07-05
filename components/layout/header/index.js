@@ -9,10 +9,9 @@ import auth from "@utils/helpers/auth";
 
 function Header() {
   const user = auth.getUser();
-  const accessToken = auth.getAccessToken();
   const refreshToken = auth.getRefreshToken();
 
-  const isLoggedIn = user && accessToken && refreshToken;
+  const isLoggedIn = user && refreshToken;
 
   return (
     <header className={styles.header}>
