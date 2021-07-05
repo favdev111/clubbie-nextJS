@@ -1,59 +1,50 @@
 import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
-import { useForm } from "react-hook-form";
 import cn from "classnames";
 import Link from "next/link";
+
 import Event from "@api/services/Event";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import Training from "@svg/training";
 import Match from "@svg/match";
 import { useRouter } from "next/router";
-import UploadSVG from "@svg/upload";
-import DeleteMedia from "@svg/delete-media";
+import MessageToUser from "@sub/messageAnimation";
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  teamA: yup.string().required(),
-  eventDateTime: yup.string().required(),
-  fee: yup.number(),
-  recurring: yup.string().required(),
-  firstEventStartDate: yup.string().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.string().required(),
-  }),
-  totalEvents: yup.number().when("recurring", {
-    is: (val) => val == "0",
-    then: yup.number().min(1).required(),
-  }),
-});
+import { schema } from "@utils/schemas/addEvent";
+import { today } from "@utils/helpers/day";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
-const now = new Date();
-let dd = now.getDate();
-let mm = now.getMonth() + 1;
-let yyyy = now.getFullYear();
+import FormSubmit from "../edit-event/submit";
+import UploadMedia from "@sub/upload";
+import FormCell from "@sub/event-form-cell";
+import EventFormGrid from "@sub/event-form-grid";
 
-if (dd < 10) {
-  dd = "0" + dd;
-}
-if (mm < 10) {
-  mm = "0" + mm;
-}
-
-const today = yyyy + "-" + mm + "-" + dd;
+/* Todo -> Display validate errors */
 
 function AddEvent({ user }) {
+  const [responseMessage, setResponseMessage] = useState();
+  const [isError, setError] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
   const [recurringEvent, setRecurring] = useState(0);
   const [interval, intervalSet] = useState(0);
   const [userTeams, setUserTeams] = useState([]);
-  const [formMessage, setMessage] = useState();
   const [checked, setChecked] = useState(true);
   const [media, setMedia] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const router = useRouter();
 
+  /* Media  */
   const onFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -69,7 +60,10 @@ function AddEvent({ user }) {
     };
     reader.readAsDataURL(file);
   };
-
+  const deleteMedia = () => {
+    setMedia(null);
+  };
+  /* Get teams for team selectbox */
   useEffect(() => {
     const fetchUserTeams = async () => {
       /* queries */
@@ -89,17 +83,7 @@ function AddEvent({ user }) {
     fetchUserTeams();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-  /* todo, object is nearly ready */
-
+  /* Form submit */
   const onSubmit = async (data) => {
     let mediaIdToUpload = null;
     if (media?.src && media?.file) {
@@ -125,10 +109,11 @@ function AddEvent({ user }) {
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
 
     const teamA = data?.teamA;
+
     const teamB = data?.teamB;
     const teams = [];
     teams.push(teamA);
-    teams.push(teamB);
+    data?.eventType != "training" && teams.push(teamB);
 
     const createRecurringObj = () => {
       if (data?.recurring == "yes") {
@@ -158,18 +143,19 @@ function AddEvent({ user }) {
 
     await Event.CreateEvent(updateBody)
       .then((res) => {
-        router.push(`/teamhub/event/${res.data.id}`);
-        console.log(res.data);
-        setMessage("Succesfully Created");
+        setResponseMessage("Succesfully created.");
+        setSuccess(true);
+        setTimeout(() => {
+          router.push(`/teamhub/event/${res.data.id}`);
+        }, 3000);
       })
       .catch((err) => {
-        console.log("err => ", err);
-        setMessage("An error... Please check form");
+        setResponseMessage(err.response.data.message);
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       });
-  };
-
-  const deleteMedia = () => {
-    setMedia(null);
   };
 
   return (
@@ -188,8 +174,6 @@ function AddEvent({ user }) {
             placeholder="Add title"
             {...register("title", { required: true, maxLength: 20 })}
           />
-          <p> {errors.title?.message} </p>
-          {/* Todo - Like buttons below */}
           <div className={styles.eventType}>
             <div>
               <input
@@ -214,26 +198,26 @@ function AddEvent({ user }) {
             <div>
               <input
                 type="radio"
-                value="train"
+                value="training"
                 className={cn(styles.eventTypeInput)}
                 defaultChecked={!checked}
                 {...register("eventType", { required: true })}
               />
               <label
                 onClick={() => {
-                  setValue("eventType", "train");
+                  setValue("eventType", "training");
                   setChecked(!checked);
                 }}
                 className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="train"
+                htmlFor="training"
               >
                 <Training />
                 Training
               </label>
             </div>
           </div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
+          <EventFormGrid>
+            <FormCell>
               Team A
               <select
                 {...register("teamA", { required: true })}
@@ -245,18 +229,22 @@ function AddEvent({ user }) {
                   </option>
                 ))}
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Team B
               <select
                 {...register("teamB", { required: true })}
                 className={styles.inputStyle}
               >
-                <option value="60d371268ffc8b40e175fb4b">Team 2</option>
+                {userTeams.map((i) => (
+                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
+                    {i.title}
+                  </option>
+                ))}
               </select>
-            </div>
+            </FormCell>
 
-            <div className={styles.cell}>
+            <FormCell>
               When?
               <input
                 className={styles.inputStyle}
@@ -265,8 +253,8 @@ function AddEvent({ user }) {
                 required
                 {...register("eventDate", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               What time?
               <input
                 className={styles.inputStyle}
@@ -274,14 +262,14 @@ function AddEvent({ user }) {
                 required
                 {...register("eventDateTime", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Who?
               <select className={styles.inputStyle}>
                 <option {...register("createdBy")}>1</option>
               </select>
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Where?
               <input
                 className={styles.inputStyle}
@@ -289,8 +277,8 @@ function AddEvent({ user }) {
                 required
                 {...register("location", { required: true })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Fee?
               <input
                 className={styles.inputStyle}
@@ -299,24 +287,24 @@ function AddEvent({ user }) {
                 type="number"
                 {...register("fee")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Add Message?
               <input
                 className={styles.inputStyle}
                 type="text"
                 {...register("message")}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Cost Of Event
               <input
                 className={styles.inputStyle}
                 type="number"
                 {...register("cost")}
               />
-            </div>
-          </div>
+            </FormCell>
+          </EventFormGrid>
           <div className={styles.buttonOptions}>
             Recuring event?
             <div className={styles.buttons}>
@@ -339,12 +327,12 @@ function AddEvent({ user }) {
             {/* Hidden */}
             <select className={styles.noShow}>
               {recurringEvent == 0 ? (
-                <option value="yes" {...register("recurring")}>
+                <option value="0" {...register("recurring")}>
                   Yes
                 </option>
               ) : (
-                <option value="no" {...register("recurring")}>
-                  Yes
+                <option value="1" {...register("recurring")}>
+                  No
                 </option>
               )}
             </select>
@@ -384,16 +372,16 @@ function AddEvent({ user }) {
               )}
             </select>
           </div>
-          <div className={styles.formGrid}>
-            <div className={styles.cell}>
+          <EventFormGrid>
+            <FormCell>
               Start Date
               <input
                 className={styles.inputStyle}
                 type="date"
                 {...register("firstEventStartDate", { required: false })}
               />
-            </div>
-            <div className={styles.cell}>
+            </FormCell>
+            <FormCell>
               Number of Events
               <input
                 className={styles.inputStyle}
@@ -401,47 +389,28 @@ function AddEvent({ user }) {
                 type="number"
                 {...register("totalEvents")}
               />
-            </div>
-          </div>
-          <div className={styles.cell}>
+            </FormCell>
+          </EventFormGrid>
+          <FormCell>
             Cover Image
-            <div className={styles.file}>
-              <div className={styles.dragDropVideos}>
-                <input
-                  hidden
-                  accept="image/*,video/*"
-                  id="icon-button-file"
-                  type="file"
-                  onChange={onFileChange}
-                />
-                <label htmlFor="icon-button-file">
-                  <UploadSVG />
-                </label>
-                <span className={styles.marginTop}>
-                  {/* Todo: make span drag/dropable */}
-                  <span>Drag and drop a video or</span>
-                  &ensp;
-                  <a className={styles.dragDropVideosBrowseFiles}>
-                    <label htmlFor="icon-button-file">Browser Files</label>
-                  </a>
-                </span>
-              </div>
-            </div>
-            <div className={styles.coverImage}>
-              <div onClick={deleteMedia} className={styles.deleteImage}>
-                <DeleteMedia />
-              </div>
-              {media?.src && <img src={media?.src} />}
-            </div>
-          </div>
-          <div className={styles.formSubmit}>
+            <UploadMedia
+              onFileChange={onFileChange}
+              deleteMedia={deleteMedia}
+              media={media}
+            />
+          </FormCell>
+          <FormSubmit>
             <button type="submit" className={styles.button}>
               Post
             </button>
-          </div>
-          {formMessage}
+          </FormSubmit>
         </form>
       </div>
+      {isError && <MessageToUser message={responseMessage} err={isError} />}
+
+      {isSuccess && (
+        <MessageToUser message={responseMessage} err={!isSuccess} />
+      )}
     </div>
   );
 }

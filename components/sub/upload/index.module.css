@@ -1,0 +1,47 @@
+.dragDropVideos {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.dragDropVideosBrowseFiles {
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-turk) !important;
+  margin-bottom: var(--space-32);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.coverImage {
+  position: relative;
+  display: flex;
+  margin-top: 30px;
+  max-width: max-content;
+}
+.coverImage img {
+  width: 200px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+.deleteImage {
+  position: absolute;
+  display: none;
+  top: -15px;
+  right: -15px;
+  cursor: pointer;
+}
+.coverImage:hover .deleteImage {
+  display: flex !important;
+}
