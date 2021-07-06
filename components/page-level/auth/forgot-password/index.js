@@ -31,9 +31,13 @@ const ForgotPassword = () => {
         setStatusMsg({
           type: "success",
           text: "We have sent you an email for password recovery.",
+          animateText: true,
         });
         setTimeout(function () {
-          // router.push("/auth/reset-password");
+          router.push(
+            `/auth/reset-password/?email=${email}`,
+            "/auth/reset-password"
+          );
           console.log("redirecting after 5 seconds");
         }, 5000);
       })
@@ -66,7 +70,11 @@ const ForgotPassword = () => {
           placeholder="Your Email Address"
         />
         {statusMsg?.text && (
-          <Alert variant={statusMsg.type} text={statusMsg.text} />
+          <Alert
+            variant={statusMsg.type}
+            text={statusMsg.text}
+            animateText={statusMsg?.animateText}
+          />
         )}
         <div className={styles.formSubmit}>
           <Button loading={loading}>Submit</Button>

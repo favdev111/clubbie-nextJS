@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TemplateInput from "@sub/input";
 import Alert from "@sub/alert";
 import Button from "@sub/button";
 import Link from "next/link";
 import Auth from "@api/services/Auth";
 import styles from "./resetPassword.module.css";
-import router from "next/router";
+import { useRouter } from "next/router";
 
 const ResetPassword = () => {
+  const router = useRouter();
+  const email = router?.query?.email;
+
+  const [_email, setEmail] = useState(email || "");
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState({
     type: null,
     text: null,
   });
+
+  useEffect(() => {
+    setEmail(email);
+  }, [email]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +66,8 @@ const ResetPassword = () => {
         <TemplateInput
           type="email"
           name="email"
+          value={_email}
+          onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="Your Email Address"
         />
