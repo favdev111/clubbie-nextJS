@@ -11,22 +11,26 @@ import styles from "./accountVerif.module.css";
 // TODO: redirect if not logged in
 const AccountVerif = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const activationCode = e.target.activationCode.value;
     if (activationCode.length < 6) {
       setError("Invalid Activation Code");
+      setLoading(false);
       return;
     }
     setError("");
 
     // make api call
-    Auth.ActivateAccount({ activationCode })
+    await Auth.ActivateAccount({ activationCode })
       .then((res) => {
         authUser.setUser(res.data.user); // Todo: make this cookie to not expire
         setError("");
-        Router.push("/"); // redirect to home
+        setLoading(false);
+        // Router.push("/"); // redirect to home
       })
       .catch((err) => {
         setError(
@@ -36,6 +40,7 @@ const AccountVerif = () => {
             "Some Error Occured"
         );
       });
+    setLoading(false);
   };
 
   return (
@@ -65,9 +70,7 @@ const AccountVerif = () => {
           </Alert>
         )}
         <div className={styles.btnVerif}>
-          <Button width="142px" height="52px">
-            Verify
-          </Button>
+          <Button loading={loading}>Verify</Button>
         </div>
       </form>
     </div>

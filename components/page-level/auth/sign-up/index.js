@@ -13,24 +13,31 @@ import styles from "./signup.module.css";
 // TODO: redirect if already logged in
 const SignUp = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     // handle client side errors
     e.preventDefault();
+    setLoading(true);
+
     const email = e.target.email.value.trim();
     const password = e.target.password.value;
     const passwordConfirm = e.target.passwordConfirm.value;
     if (!/.+@.+\..+/.test(email)) {
       setError("Invalid Email Address");
+      setLoading(false);
+
       return;
     }
     if (password !== passwordConfirm) {
       setError("Passwords Don't Match");
+      setLoading(false);
+
       return;
     }
 
     // make api call
-    Auth.SignUp({
+    await Auth.SignUp({
       email,
       password,
     })
@@ -45,6 +52,7 @@ const SignUp = () => {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
+        setLoading(false);
         Router.push("/auth/account-verification"); // redirect to verification
       })
       .catch((err) => {
@@ -55,6 +63,7 @@ const SignUp = () => {
             "Some Error Occured"
         );
       });
+    setLoading(false);
   };
 
   return (
@@ -85,7 +94,7 @@ const SignUp = () => {
           </Alert>
         )}
         <div className={styles.signupButton}>
-          <Button>Sign Up</Button>
+          <Button loading={loading}>Sign Up</Button>
         </div>
       </form>
 

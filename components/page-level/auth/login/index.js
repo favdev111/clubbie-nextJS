@@ -14,19 +14,22 @@ import styles from "./login.module.css";
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     if (!/.+@.+\..+/.test(email)) {
       setError("Invalid Email Address");
+      setLoading(false);
       return;
     }
     setError("");
 
     // make api call
-    Auth.Login({
+    await Auth.Login({
       email,
       password,
     })
@@ -41,6 +44,7 @@ const Login = () => {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
+        setLoading(false);
         router.push("/");
       })
       .catch((err) => {
@@ -51,6 +55,7 @@ const Login = () => {
             "Some Error Occured"
         );
       });
+    setLoading(false);
   };
 
   return (
@@ -79,7 +84,7 @@ const Login = () => {
           <Link href="/auth/recovery-pass">
             <span className={styles.whiteColor}>Forgot Password?</span>
           </Link>
-          <Button>Login</Button>
+          <Button loading={loading}>Login</Button>
         </div>
       </form>
 
