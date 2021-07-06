@@ -95,8 +95,8 @@ const Login = () => {
       </div>
 
       <Link href="/auth/sign-up">
-        <div className="signupContent">
-          <a className="signUp">Don’t have an Account? Sign Up</a>
+        <div className={styles.signUpMsg}>
+          Don’t have an Account? <a className="signUp">&ensp;Sign Up</a>
         </div>
       </Link>
     </div>

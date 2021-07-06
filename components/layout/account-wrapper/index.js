@@ -10,19 +10,6 @@ const Wrap = ({ children }) => {
             <img className={styles.logo} src="/assets/logo.png" alt="logo" />
             <p className={styles.logoText}>Raising the bar for amateur sport</p>
           </div>
-
-          <div className={styles.picBlock}>
-            <img
-              className={styles.picture}
-              src="/assets/sportmen.png"
-              alt="sportsmen"
-            />
-            <img
-              className={styles.shadowPic}
-              src="/assets/shadow.svg"
-              alt="shadow"
-            />
-          </div>
         </div>
         <div className={styles.dynamicBlock}>{children}</div>
       </div>
