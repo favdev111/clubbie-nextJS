@@ -32,4 +32,8 @@ export default class AuthManagementRoutes {
   static async RefreshTokens(payload) {
     return HTTPClient.post(`/auth/refresh-tokens`, payload);
   }
+
+  static async ResendActivationCode(payload) {
+    return HTTPClient.post(`/auth/resend-activate-account`, payload);
+  }
 }
