@@ -1,4 +1,5 @@
 import React from "react";
+import router from "next/router";
 import styles from "./wrap.module.css";
 
 const Wrap = ({ children }) => {
@@ -7,7 +8,12 @@ const Wrap = ({ children }) => {
       <div className={styles.wrapper}>
         <div className={styles.staticBlock}>
           <div className={styles.logoBlock}>
-            <img className={styles.logo} src="/assets/logo.png" alt="logo" />
+            <img
+              className={styles.logo}
+              src="/assets/logo.png"
+              alt="logo"
+              onClick={() => router.push("/")}
+            />
             <p className={styles.logoText}>Raising the bar for amateur sport</p>
           </div>
         </div>

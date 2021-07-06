@@ -12,6 +12,9 @@
 .cancel {
   background: var(--c-white-30);
 }
+.success {
+  background: var(--c-green);
+}
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;

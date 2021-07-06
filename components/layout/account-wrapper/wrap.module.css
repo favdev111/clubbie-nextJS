@@ -30,6 +30,7 @@
 .logo {
   display: block;
   width: 320px; /*16vw*/
+  cursor: pointer;
 }
 .logoText {
   font-weight: normal;

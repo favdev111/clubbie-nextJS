@@ -13,7 +13,8 @@ const Button = (props) => {
           styles.btn,
           loading && styles.btnDisabled,
           variant === "danger" && styles.danger,
-          variant === "cancel" && styles.cancel
+          variant === "cancel" && styles.cancel,
+          variant === "success" && styles.success
         )}
         disabled={loading}
       >

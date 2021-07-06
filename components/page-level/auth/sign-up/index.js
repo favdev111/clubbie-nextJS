@@ -53,7 +53,7 @@ const SignUp = () => {
         });
         setError("");
         setLoading(false);
-        Router.push("/auth/account-verification"); // redirect to verification
+        Router.push("/auth/account-confirmation"); // redirect to confirmation
       })
       .catch((err) => {
         setError(
@@ -105,11 +105,12 @@ const SignUp = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/auth/login">
-        <div className={styles.signUp}>
-          Already have an account?<a className="signUp">&ensp;Login Here</a>
-        </div>
-      </Link>
+      <div className={styles.signUp}>
+        Already have an account?
+        <Link href="/auth/login">
+          <a className="signUp">&ensp;Login Here</a>
+        </Link>
+      </div>
     </div>
   );
 };

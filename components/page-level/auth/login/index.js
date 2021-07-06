@@ -95,11 +95,12 @@ const Login = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/auth/sign-up">
-        <div className={styles.signUpMsg}>
-          Don’t have an Account? <a className="signUp">&ensp;Sign Up</a>
-        </div>
-      </Link>
+      <div className={styles.signUpMsg}>
+        Don’t have an Account?{" "}
+        <Link href="/auth/sign-up">
+          <a className="signUp">&ensp;Sign Up</a>
+        </Link>
+      </div>
     </div>
   );
 };
