@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@sub/alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import GoogleLogin from "@sub/button-google-auth/index";
 import TemplateInput from "@sub/input";
@@ -88,11 +88,7 @@ const SignUp = () => {
           name="passwordConfirm"
           required
         />
-        {error && (
-          <Alert variant="filled" severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert variant="error" text={error} />}
         <div className={styles.signupButton}>
           <Button loading={loading}>Sign Up</Button>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Router from "next/router";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@sub/alert";
 import Button from "@sub/button";
 import TemplateInput from "@sub/input";
 import Auth from "@api/services/Auth";
@@ -30,7 +30,7 @@ const AccountVerif = () => {
         authUser.setUser(res.data.user); // Todo: make this cookie to not expire
         setError("");
         setLoading(false);
-        // Router.push("/"); // redirect to home
+        Router.push("/"); // redirect to home
       })
       .catch((err) => {
         setError(
@@ -64,11 +64,7 @@ const AccountVerif = () => {
           required
         />
 
-        {error && (
-          <Alert variant="filled" severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert variant="error" text={error} />}
         <div className={styles.btnVerif}>
           <Button loading={loading}>Verify</Button>
         </div>

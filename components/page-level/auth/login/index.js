@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@sub/alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import TemplateInput from "@sub/input";
 import GoogleLogin from "@sub/button-google-auth/index";
@@ -75,11 +75,7 @@ const Login = () => {
           name="password"
           required
         />
-        {error && (
-          <Alert variant="filled" severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert variant="error" text={error} />}
         <div className={styles.formAct}>
           <Link href="/auth/recovery-pass">
             <span className={styles.whiteColor}>Forgot Password?</span>
