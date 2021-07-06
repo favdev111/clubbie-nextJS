@@ -77,7 +77,7 @@ const Login = () => {
         />
         {error && <Alert variant="error" text={error} />}
         <div className={styles.formAct}>
-          <Link href="/auth/recovery-pass">
+          <Link href="/auth/forgot-password">
             <span className={styles.whiteColor}>Forgot Password?</span>
           </Link>
           <Button loading={loading}>Login</Button>
