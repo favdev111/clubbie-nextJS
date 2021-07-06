@@ -1,22 +1,25 @@
 .score {
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .teamCard {
   display: flex;
   font-family: var(--ff-bold);
   flex-direction: column;
+  text-align: center;
   justify-content: center;
 }
 .teamCard img {
   height: 70px;
   object-fit: contain;
+  margin-bottom: 10px;
 }
 .scoreMiddle {
   display: flex;
   padding-top: 12px;
   flex-direction: column;
+  text-align: center;
   justify-content: center;
 }
 .scoreMiddle h1 {

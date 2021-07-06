@@ -15,3 +15,16 @@
   border-radius: var(--radius);
   cursor: pointer;
 }
+
+.left:hover {
+  background-color: var(--c-turk);
+}
+.right:hover {
+  background-color: var(--c-turk);
+}
+.disabled {
+  opacity: 0.5;
+}
+.disabled:hover {
+  background-color: var(--c-white-20);
+}

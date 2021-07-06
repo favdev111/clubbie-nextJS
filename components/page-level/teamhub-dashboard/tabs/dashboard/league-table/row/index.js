@@ -4,20 +4,20 @@ import cn from "classnames";
 
 function LeagueTableRow({
   data = {
-    teamname: "Team",
-    p: "P",
-    w: "W",
-    d: "D",
-    l: "L",
-    f: "F",
-    a: "A",
+    title: "Team",
+    played: "P",
+    won: "W",
+    drawn: "D",
+    lose: "L",
+    for: "F",
+    against: "A",
     gd: "GD",
-    pts: "PTS",
+    points: "PTS",
   },
   tableHead,
   index,
 }) {
-  const { teamname, p, w, d, l, f, a, gd, pts } = data;
+  const { title, played, won, drawn, lose, against, gd, points } = data;
   return (
     <div
       className={cn(
@@ -27,16 +27,18 @@ function LeagueTableRow({
       )}
     >
       <div className={cn(styles.teamCell, index == 0 && styles.first)}>
-        {teamname}
+        {title}
       </div>
-      <div className={styles.cell}> {p}</div>
-      <div className={styles.cell}> {w}</div>
-      <div className={styles.cell}> {d}</div>
-      <div className={styles.cell}> {l}</div>
-      <div className={styles.cell}> {f}</div>
-      <div className={styles.cell}> {a}</div>
-      <div className={styles.cell}> {gd}</div>
-      <div className={cn(styles.cell, !tableHead && styles.pts)}> {pts}</div>
+      <div className={styles.cell}> {played}</div>
+      <div className={styles.cell}> {won}</div>
+      <div className={styles.cell}> {drawn}</div>
+      <div className={styles.cell}> {lose}</div>
+      <div className={styles.cell}> {data?.for}</div>
+      <div className={styles.cell}> {against}</div>
+      <div className={styles.cell}>
+        {gd} {index > -1 && data?.for - against}
+      </div>
+      <div className={cn(styles.cell, !tableHead && styles.pts)}> {points}</div>
     </div>
   );
 }

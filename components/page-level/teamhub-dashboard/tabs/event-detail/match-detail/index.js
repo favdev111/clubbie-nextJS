@@ -4,8 +4,9 @@ import { DateTime } from "luxon";
 import Date from "@svg/date";
 import KickOff from "@svg/kickoff";
 import Place from "@svg/place";
+import Available from "@svg/available";
 
-function MatchDetail({ data }) {
+function MatchDetail({ data, players, userRole }) {
   return (
     <div className={styles.matchDetail}>
       <div className={styles.score}>
@@ -49,6 +50,12 @@ function MatchDetail({ data }) {
           <Place />
           <p> {data?.location}</p>
         </div>
+        {userRole == "teamLead" && (
+          <div className={styles.infoInner}>
+            <Available />
+            <p> {players?.length} players available</p>
+          </div>
+        )}
       </div>
     </div>
   );

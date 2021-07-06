@@ -22,6 +22,7 @@
 .teamCard img {
   height: 70px;
   object-fit: contain;
+  margin-bottom: 10px;
 }
 .scoreMiddle {
   display: flex;

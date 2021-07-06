@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import RouteButton from "../../route-button";
 import StatisticResults from "./results";
 import StatisticFixtures from "./fixtures";
 import LeagueTables from "./league-tables";
 import PlayerStats from "./player-stats";
+import Event from "@api/services/Event";
 
-function Statistics() {
+function Statistics({ activeTeam, user }) {
   const [activeButton, setActive] = useState(0);
+  /*         user?.teams[activeTeam].team */
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      const response = await Event.GetAllTeamStatistics();
+      console.log(response);
+    };
+    /*     fetchStatistics();
+     */
+  }, []);
+
   const route = ["Results", "Fixtures", "League Tables", "Player Stats"];
   const results = [
     {

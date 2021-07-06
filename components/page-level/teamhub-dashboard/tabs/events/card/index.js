@@ -10,8 +10,10 @@ import MatchCard from "@sub/match-card";
 import MatchInfo from "@sub/match-info";
 
 function EventCard({ data, user, activeTeam }) {
-  const { id, location, eventDateTime, teams, eventType } = data;
+  const { id, location, eventDateTime, fee, eventType } = data;
   const userRole = user.teams[activeTeam].role;
+  const userTeam = user.teams[activeTeam].team;
+
   return (
     <Link href={`/teamhub/event/${id}`}>
       <div className={styles.card}>
@@ -19,7 +21,7 @@ function EventCard({ data, user, activeTeam }) {
         <div className={styles.cardImg}>
           {data.coverImage && <img src={data?.coverImage} />}
           <div className={styles.price}>
-            <p> £ </p>
+            <p> {fee}£ </p>
           </div>
           <div className={styles.more}>
             <ThreeDots />
@@ -57,17 +59,25 @@ function EventCard({ data, user, activeTeam }) {
                 styles.unavailable
             )}
           >
+            {/* Owner */}
+            {userRole == "owner" && data?.status == "published" && "Published"}
             {/* Teamleader */}
             {userRole == "teamLead" &&
               data?.status == "published" &&
               "Published"}
             {userRole == "teamLead" && data?.status == "draft" && "Draft"}
             {userRole == "teamLead" && data?.status == "canceled" && "Canceled"}
-
             {/* Player */}
             {data?.eventType != "match" && userRole == "player"
               ? data?.teams[0].attendees.filter((i) => i.user == user.id)
                   .length < 1
+                ? "Unavailable"
+                : "Available"
+              : null}
+            {data?.eventType == "match" && userRole == "player"
+              ? data?.teams
+                  .filter((t) => t.teamId == userTeam)[0]
+                  .attendees?.filter((i) => i.user == user.id).length < 1
                 ? "Unavailable"
                 : "Available"
               : null}
