@@ -36,4 +36,8 @@ export default class AuthManagementRoutes {
   static async ResendActivationCode(payload) {
     return HTTPClient.post(`/auth/resend-activate-account`, payload);
   }
+
+  static async ForgotPassword(payload) {
+    return HTTPClient.post(`/auth/forgot-password`, payload);
+  }
 }

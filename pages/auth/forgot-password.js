@@ -2,19 +2,19 @@ import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import Wrap from "@layout/account-wrapper/";
-import RecoverPass from "@page/auth/recover-pass/";
+import ForgotPassword from "@page/auth/forgot-password/";
 
-const RecoverPassPage = () => {
+const ForgotPasswordPage = () => {
   return (
     <Layout hideHeader>
-      <Seo title="Recover pass" desc="Lorem ipsum dolor sit amet" />
+      <Seo title="Forgot Password" desc="Lorem ipsum dolor sit amet" />
       <main className="main">
         <Wrap>
-          <RecoverPass />
+          <ForgotPassword />
         </Wrap>
       </main>
     </Layout>
   );
 };
 
-export default RecoverPassPage;
+export default ForgotPasswordPage;
