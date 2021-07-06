@@ -4,6 +4,7 @@ import Alert from "@sub/alert";
 import Button from "@sub/button";
 import Link from "next/link";
 import Auth from "@api/services/Auth";
+import authUser from "@utils/helpers/auth";
 import styles from "./resetPassword.module.css";
 import { useRouter } from "next/router";
 
@@ -21,6 +22,17 @@ const ResetPassword = () => {
   useEffect(() => {
     setEmail(email);
   }, [email]);
+
+  useEffect(async () => {
+    if (statusMsg.type === "success") {
+      await Auth.Logout({ refreshToken: authUser.getRefreshToken() })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      authUser.deleteUser();
+      authUser.deleteAccessToken();
+      authUser.deleteRefreshToken();
+    }
+  }, [statusMsg]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -41,11 +53,11 @@ const ResetPassword = () => {
         setLoading(false);
         setStatusMsg({
           type: "success",
-          text: "Password Reset Successfull",
+          text: "Password Reset Successfull.! Redirecting",
+          animateText: true,
         });
         setTimeout(function () {
-          // router.push("/auth/reset-password");
-          console.log("redirecting after 5 seconds");
+          router.push("/auth/login");
         }, 5000);
       })
       .catch((err) => {
@@ -84,7 +96,11 @@ const ResetPassword = () => {
           placeholder="Your New Password"
         />
         {statusMsg?.text && (
-          <Alert variant={statusMsg.type} text={statusMsg.text} />
+          <Alert
+            variant={statusMsg.type}
+            text={statusMsg.text}
+            animateText={statusMsg?.animateText}
+          />
         )}
         <div className={styles.formSubmit}>
           <Button loading={loading}>Reset</Button>

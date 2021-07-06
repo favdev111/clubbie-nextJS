@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         setLoading(false);
         setStatusMsg({
           type: "success",
-          text: "We have sent you an email for password recovery.",
+          text: "We have sent you an email for password recovery.! Redirecting",
           animateText: true,
         });
         setTimeout(function () {
