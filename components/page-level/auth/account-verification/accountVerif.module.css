@@ -18,8 +18,13 @@
   width: 100%;
 }
 .btnVerif {
-  display: block;
-  width: 142px;
-  margin: 24px auto 0px;
-  outline: none;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+.resendCodeMsg {
+  display: flex;
+  justify-content: center;
+  padding-top: 72px;
 }

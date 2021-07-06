@@ -19,7 +19,7 @@ const AccountVerifPage = ({ user }) => {
       />
       <main className="main">
         <Wrap>
-          <AccountVerif />
+          <AccountVerif user={user} />
         </Wrap>
       </main>
     </Layout>
