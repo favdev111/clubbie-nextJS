@@ -17,6 +17,7 @@ function Navbar() {
     {
       link: "/teamhub",
       title: "Teamhub",
+      image: "/assets/teamhub-logo.png",
       active: router.route.includes("/teamhub"),
     },
   ];
@@ -34,7 +35,11 @@ function Navbar() {
                   nav.active && styles.navbarListItemLinkActive
                 )}
               >
-                {nav.title}
+                {!!nav?.image ? (
+                  <img src={nav?.image} className={styles.navImage} />
+                ) : (
+                  nav.title
+                )}
               </div>
             </Link>
           </li>
