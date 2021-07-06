@@ -1,4 +1,5 @@
 import Axios from "axios";
+import router from "next/router";
 import { API_BASE_URL } from "./config";
 
 let baseURL = API_BASE_URL;
@@ -56,4 +57,21 @@ export default class HTTPClient {
   static setBaseURL(url) {
     client.defaults.baseURL = url;
   }
+}
+
+// middleware to check if user acc is activated
+// check on client side
+if (process.browser) {
+  client.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async function (error) {
+      // user's account is not activated
+      if (error.response.status === 406) {
+        router.push("/auth/account-verification");
+      }
+      return Promise.reject(error);
+    }
+  );
 }
