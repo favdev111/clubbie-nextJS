@@ -10,7 +10,6 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./signup.module.css";
 
-// TODO: redirect if already logged in
 const SignUp = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

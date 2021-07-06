@@ -10,8 +10,7 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./login.module.css";
 
-// TODO: redirect if already logged in
-const Login = () => {
+const Login = ({ previousURL }) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,7 +44,7 @@ const Login = () => {
         });
         setError("");
         setLoading(false);
-        router.push("/");
+        router.push(previousURL || "/");
       })
       .catch((err) => {
         setError(
