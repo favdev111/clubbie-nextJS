@@ -7,7 +7,7 @@ function ContentAdd() {
   const handleOnSubmit = async (
     e,
     _media,
-    _title,
+    _caption,
     _description,
     _sport,
     _tagSomeone,
@@ -18,14 +18,14 @@ function ContentAdd() {
   ) => {
     e.preventDefault();
 
-    if (!_media || !_title) {
+    if (!_media || !_caption) {
       alert("All fields are required"); // Todo: handle these properly
       return;
     }
 
     // Common Body for parent and child post
     const commonBody = {
-      title: _title?.trim(),
+      title: _caption?.trim(),
       description: _description?.trim() || null,
       tags:
         _tagSomeone && _sport

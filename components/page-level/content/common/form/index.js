@@ -14,7 +14,7 @@ import Alert from "@sub/alert";
 function ContentForm({
   media,
   relatedMediaItems,
-  title,
+  caption,
   description,
   sport,
   tagSomeone,
@@ -27,7 +27,7 @@ function ContentForm({
   const [_relatedMediaItems, setRelatedMediaItems] = useState(
     relatedMediaItems || []
   );
-  const [_title, setTitle] = useState(title || null);
+  const [_caption, setCaption] = useState(caption || null);
   const [_description, setDescription] = useState(description || null);
   const [_sport, setSport] = useState(sport || null);
   const [_tagSomeone, setTagSomeone] = useState(tagSomeone || null);
@@ -124,7 +124,7 @@ function ContentForm({
     await onSubmitForm(
       e,
       _media,
-      _title,
+      _caption,
       _description,
       _sport,
       _tagSomeone,
@@ -194,13 +194,14 @@ function ContentForm({
           <div className={cn(styles.span2, styles.contentItem)}>
             <TemplateInput
               type="text"
-              name="title"
-              placeholder="Title"
-              value={_title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="caption"
+              placeholder="Caption"
+              value={_caption}
+              onChange={(e) => setCaption(e.target.value)}
             />
           </div>
-          <div className={cn(styles.span2, styles.contentItem)}>
+          {/* If want to add description in future, uncomment this block */}
+          {/* <div className={cn(styles.span2, styles.contentItem)}>
             <TemplateInput
               type="text"
               name="description"
@@ -211,7 +212,7 @@ function ContentForm({
               resizable
               onChange={(e) => setDescription(e.target.value)}
             />
-          </div>
+          </div> */}
           <div className={cn(styles.span1, styles.contentItem)}>
             <TemplateSelect
               name="sport"
