@@ -10,6 +10,7 @@ import styles from "./contentForm.module.css";
 import UploadSVG from "@svg/upload";
 import MediaCard from "./mediaCard";
 import Alert from "@sub/alert";
+import useForm from "@sub/hook-form";
 
 function ContentForm({
   media,
@@ -20,17 +21,19 @@ function ContentForm({
   tagSomeone,
   onSubmitForm,
   actionText,
+  validationSchema,
 }) {
   const router = useRouter();
-
+  console.log(caption);
   const [_media, setMedia] = useState(media || null);
+  const [mediaRequired, setMediaRequired] = useState(false);
   const [_relatedMediaItems, setRelatedMediaItems] = useState(
     relatedMediaItems || []
   );
-  const [_caption, setCaption] = useState(caption || null);
-  const [_description, setDescription] = useState(description || null);
-  const [_sport, setSport] = useState(sport || null);
-  const [_tagSomeone, setTagSomeone] = useState(tagSomeone || null);
+  // const [_caption, setCaption] = useState(caption || null);
+  // const [_description, setDescription] = useState(description || null);
+  // const [_sport, setSport] = useState(sport || null);
+  // const [_tagSomeone, setTagSomeone] = useState(tagSomeone || null);
   const [deleteChildPosts, setDeleteChildPosts] = useState([]);
   const [status, setStatus] = useState({
     loading: false,
@@ -120,6 +123,10 @@ function ContentForm({
     return URLs;
   };
 
+  const { register, handleSubmit, errors } = useForm({
+    schema: validationSchema,
+  });
+
   const handleOnSubmit = async (e) => {
     await onSubmitForm(
       e,
@@ -135,29 +142,71 @@ function ContentForm({
     );
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    /* 
+      this block validates media, Joi does not validate input media filelist, 
+      for better ux using it in 2 places. TODO: Find a better solution
+    */
+    if (typeof e.target?.media === "object") {
+      setMediaRequired(true);
+    } else {
+      setMediaRequired(false);
+    }
+    await handleSubmit(async (data) => {
+      if (typeof e.target?.media === "object") {
+        setMediaRequired(true);
+        return;
+      } else {
+        setMediaRequired(false);
+      }
+      await onSubmitForm({
+        _caption: data?.caption,
+        _sport: data?.sport,
+        _tagSomeone: data?.tagSomeone,
+        _media,
+        _relatedMediaItems,
+        uploadMultiplePostMedia,
+        setStatus,
+        deleteChildPosts,
+      });
+    })(e);
+  };
+
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={onSubmit}>
       {!_media ? (
-        <div className={styles.dragDropVideos}>
-          <input
-            hidden
-            accept="video/*" // TODO: make utility class for validations
-            id="pick-parent-media"
-            type="file"
-            onChange={onParentMediaPicked}
-          />
-          <label htmlFor="pick-parent-media">
-            <UploadSVG></UploadSVG>
-          </label>
-          <span className={styles.marginTop}>
-            {/* Todo: make span drag/dropable */}
-            <span>Drag and drop a video or</span>
-            &ensp;
-            <a className={styles.dragDropVideosBrowseFiles}>
-              <label htmlFor="pick-parent-media">Browse Files</label>
-            </a>
-          </span>
-        </div>
+        <>
+          <div
+            className={cn(
+              styles.dragDropVideos,
+              mediaRequired && styles.errorInput
+            )}
+          >
+            <input
+              hidden
+              name="media"
+              accept="video/*"
+              id="pick-parent-media"
+              type="file"
+              onChange={onParentMediaPicked}
+            />
+            <label htmlFor="pick-parent-media">
+              <UploadSVG></UploadSVG>
+            </label>
+            <span className={styles.marginTop}>
+              {/* Todo: make span drag/dropable */}
+              <span>Drag and drop a video or</span>
+              &ensp;
+              <a className={styles.dragDropVideosBrowseFiles}>
+                <label htmlFor="pick-parent-media">Browse Files</label>
+              </a>
+            </span>
+          </div>
+          {mediaRequired && (
+            <p className={styles.errorMsg}>Media is required</p>
+          )}
+        </>
       ) : (
         <MediaCard
           mode="parent-media"
@@ -196,11 +245,19 @@ function ContentForm({
               type="text"
               name="caption"
               placeholder="Caption"
-              value={_caption}
-              onChange={(e) => setCaption(e.target.value)}
+              // value={_caption}
+              // onChange={(e) => setCaption(e.target.value)}
+              customProps={{ ...register("caption") }}
+              hint={
+                errors?.caption && {
+                  type: "error",
+                  msg: errors?.caption?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
-          {/* If want to add description in future, uncomment this block */}
+          {/* If want to add description in future, uncomment this block, plus update accordingly */}
           {/* <div className={cn(styles.span2, styles.contentItem)}>
             <TemplateInput
               type="text"
@@ -218,8 +275,16 @@ function ContentForm({
               name="sport"
               options={sports}
               placeholder="Sport"
-              selected={_sport}
-              onChange={(e) => setSport(e.target.value)}
+              // selected={_sport}
+              // onChange={(e) => setSport(e.target.value)}
+              customProps={{ ...register("sport") }}
+              hint={
+                errors?.sport && {
+                  type: "error",
+                  msg: errors?.sport?.message,
+                  inputBorder: true,
+                }
+              }
             ></TemplateSelect>
           </div>
           <div className={cn(styles.span1, styles.contentItem)}>
@@ -227,8 +292,16 @@ function ContentForm({
               type="text"
               name="tagSomeone"
               placeholder="Tag Someone (Team, Club, Individual)"
-              value={_tagSomeone}
-              onChange={(e) => setTagSomeone(e.target.value)}
+              // value={_tagSomeone}
+              // onChange={(e) => setTagSomeone(e.target.value)}
+              customProps={{ ...register("tagSomeone") }}
+              hint={
+                errors?.tagSomeone && {
+                  type: "error",
+                  msg: errors?.tagSomeone?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
         </div>
