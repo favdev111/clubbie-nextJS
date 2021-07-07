@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import cn from "classnames";
 import TemplateInput from "@sub/input";
@@ -24,16 +24,11 @@ function ContentForm({
   validationSchema,
 }) {
   const router = useRouter();
-  console.log(caption);
   const [_media, setMedia] = useState(media || null);
   const [mediaRequired, setMediaRequired] = useState(false);
   const [_relatedMediaItems, setRelatedMediaItems] = useState(
     relatedMediaItems || []
   );
-  // const [_caption, setCaption] = useState(caption || null);
-  // const [_description, setDescription] = useState(description || null);
-  // const [_sport, setSport] = useState(sport || null);
-  // const [_tagSomeone, setTagSomeone] = useState(tagSomeone || null);
   const [deleteChildPosts, setDeleteChildPosts] = useState([]);
   const [status, setStatus] = useState({
     loading: false,
@@ -123,24 +118,14 @@ function ContentForm({
     return URLs;
   };
 
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm({
     schema: validationSchema,
   });
-
-  const handleOnSubmit = async (e) => {
-    await onSubmitForm(
-      e,
-      _media,
-      _caption,
-      _description,
-      _sport,
-      _tagSomeone,
-      _relatedMediaItems,
-      uploadMultiplePostMedia,
-      setStatus,
-      deleteChildPosts
-    );
-  };
+  useEffect(() => {
+    caption && setValue("caption", caption);
+    sport && setValue("sport", sport);
+    tagSomeone && setValue("tagSomeone", tagSomeone);
+  }, [caption, sport, tagSomeone]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -245,8 +230,6 @@ function ContentForm({
               type="text"
               name="caption"
               placeholder="Caption"
-              // value={_caption}
-              // onChange={(e) => setCaption(e.target.value)}
               customProps={{ ...register("caption") }}
               hint={
                 errors?.caption && {
@@ -275,8 +258,6 @@ function ContentForm({
               name="sport"
               options={sports}
               placeholder="Sport"
-              // selected={_sport}
-              // onChange={(e) => setSport(e.target.value)}
               customProps={{ ...register("sport") }}
               hint={
                 errors?.sport && {
@@ -292,8 +273,6 @@ function ContentForm({
               type="text"
               name="tagSomeone"
               placeholder="Tag Someone (Team, Club, Individual)"
-              // value={_tagSomeone}
-              // onChange={(e) => setTagSomeone(e.target.value)}
               customProps={{ ...register("tagSomeone") }}
               hint={
                 errors?.tagSomeone && {
