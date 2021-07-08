@@ -14,6 +14,9 @@ const TemplateInput = ({
   rows,
   resizable,
   onEnter,
+  customProps,
+  hint,
+  className,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -26,43 +29,85 @@ const TemplateInput = ({
   };
 
   return (
-    <div className={styles.inputCont}>
+    <div className={cn(styles.inputCont, className)}>
       {!multiLine ? (
         <>
-          <input
-            className={styles.inputBlock}
-            type={typeInput}
+          <span className={cn(styles.inputBox)}>
+            <input
+              className={cn(
+                styles.inputBlock,
+                hint?.type === "error" &&
+                  hint?.inputBorder &&
+                  styles.errorInput,
+                hint?.type === "info" && hint?.inputBorder && styles.infoInput,
+                hint?.type === "success" &&
+                  hint?.inputBorder &&
+                  styles.successInput
+              )}
+              type={typeInput}
+              placeholder={placeholder}
+              name={name}
+              value={value}
+              required={required}
+              onChange={onChange}
+              onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
+              {...customProps}
+            />
+            {type === "password" ? (
+              <a
+                href="#"
+                onClick={showPasswordHandler}
+                className={styles.showPassword}
+              >
+                <Eye />
+              </a>
+            ) : null}
+          </span>
+          {hint?.type && hint?.msg && (
+            <p
+              className={cn(
+                hint?.type === "error" && styles.errorMsg,
+                hint?.type === "info" && styles.infoMsg,
+                hint?.type === "success" && styles.successMsg
+              )}
+            >
+              {hint?.msg}
+            </p>
+          )}
+        </>
+      ) : (
+        <>
+          <textarea
+            className={cn(
+              styles.inputBlock,
+              styles.textArea,
+              resizable && styles.resizableTextArea,
+              hint?.type === "error" && hint?.inputBorder && styles.errorInput,
+              hint?.type === "info" && hint?.inputBorder && styles.infoInput,
+              hint?.type === "success" &&
+                hint?.inputBorder &&
+                styles.successInput
+            )}
             placeholder={placeholder}
             name={name}
             value={value}
             required={required}
             onChange={onChange}
-            onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
-          />
-          {type === "password" ? (
-            <a
-              href="#"
-              onClick={showPasswordHandler}
-              className={styles.showPassword}
+            rows={rows || 2}
+            {...customProps}
+          ></textarea>
+          {hint?.type && hint?.msg && (
+            <p
+              className={cn(
+                hint?.type === "error" && styles.errorMsg,
+                hint?.type === "info" && styles.infoMsg,
+                hint?.type === "success" && styles.successMsg
+              )}
             >
-              <Eye />
-            </a>
-          ) : null}
-        </>
-      ) : (
-        <textarea
-          className={cn(
-            styles.inputBlock,
-            styles.textArea,
-            resizable && styles.resizableTextArea
+              {hint?.msg}
+            </p>
           )}
-          placeholder={placeholder}
-          name={name}
-          value={value}
-          required={required}
-          onChange={onChange}
-          rows={rows || 2}
-        ></textarea>
+        </>
       )}
     </div>
   );

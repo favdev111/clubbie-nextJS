@@ -6,6 +6,7 @@
   border-radius: var(--radius-lg);
   outline: none;
   text-transform: capitalize;
+  margin: 0px auto var(--space-5);
 }
 .option {
   text-transform: capitalize;
@@ -13,4 +14,25 @@
 .selectBox:focus {
   color: var(--c-white);
   background-color: var(--c-nav);
+}
+.errorMsg {
+  color: var(--c-red);
+  padding-left: var(--space-5);
+}
+.infoMsg {
+  color: var(--c-white-30);
+  padding-left: var(--space-5);
+}
+.successMsg {
+  color: var(--c-green);
+  padding-left: var(--space-5);
+}
+.errorInput {
+  border: 2px solid var(--c-red) !important;
+}
+.infoInput {
+  border: 2px solid var(--c-white-30) !important;
+}
+.successInput {
+  border: 2px solid var(--c-green) !important;
 }

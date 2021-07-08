@@ -17,7 +17,7 @@
   text-align: left;
   color: var(--c-white-50);
   padding: var(--space-16) var(--space-16) var(--space-16) var(--space-16);
-  margin: 0px auto var(--space-24);
+  margin: 0px auto var(--space-5);
 }
 .inputCont:focus {
   color: var(--c-white);
@@ -33,14 +33,16 @@
   padding-left: 14px;
   padding-right: 14px;
 }
-.inputCont .showPassword {
-  display: inline-block;
+.inputBox {
   position: relative;
-  top: -58px;
-  right: -413px;
-  width: 24var (--space-24);
-  height: var(--space-16);
-  font-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.inputCont .showPassword {
+  position: absolute;
+  right: var(--space-10);
 }
 .inputCont .showPassword img {
   width: 100%;
@@ -52,4 +54,25 @@
 }
 .resizableTextArea {
   resize: both;
+}
+.errorMsg {
+  color: var(--c-red);
+  padding-left: var(--space-5);
+}
+.infoMsg {
+  color: var(--c-white-30);
+  padding-left: var(--space-5);
+}
+.successMsg {
+  color: var(--c-green);
+  padding-left: var(--space-5);
+}
+.errorInput {
+  border: 2px solid var(--c-red) !important;
+}
+.infoInput {
+  border: 2px solid var(--c-white-30) !important;
+}
+.successInput {
+  border: 2px solid var(--c-green) !important;
 }

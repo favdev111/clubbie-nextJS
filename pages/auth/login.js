@@ -7,8 +7,8 @@ import Login from "@page/auth/login";
 import auth from "@utils/helpers/auth";
 
 const LoginPage = ({ previousURL }) => {
-  const authUser = auth.getUser();
-  if (authUser) {
+  const authUserAccess = auth.getAccessToken();
+  if (authUserAccess) {
     router.push("/");
   }
 
@@ -33,7 +33,7 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      previousURL: !previousURL.includes("auth/") ? previousURL : false,
+      previousURL: !previousURL?.includes("auth/") || false,
     },
   };
 };

@@ -20,6 +20,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: var(--space-5);
 }
 .marginTop {
   margin-top: var(--space-24);
@@ -76,6 +77,13 @@
   padding: 15px;
   color: var(--c-white-30);
   margin-right: 15px;
+}
+
+.errorInput {
+  border: 2px solid var(--c-red);
+}
+.errorMsg {
+  color: var(--c-red);
 }
 
 @media (max-width: 760px) {

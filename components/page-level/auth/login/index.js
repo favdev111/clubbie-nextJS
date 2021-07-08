@@ -9,23 +9,22 @@ import Button from "@sub/button";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./login.module.css";
+import useForm from "@sub/hook-form";
+import { loginWithLocal } from "@utils/schemas/auth.schema";
 
 const Login = ({ previousURL }) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, errors } = useForm({
+    schema: loginWithLocal,
+  });
+
+  const onSubmit = async (data) => {
     setLoading(true);
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    if (!/.+@.+\..+/.test(email)) {
-      setError("Invalid Email Address");
-      setLoading(false);
-      return;
-    }
     setError("");
+    const { email, password } = data;
 
     // make api call
     await Auth.Login({
@@ -61,18 +60,33 @@ const Login = ({ previousURL }) => {
     <div className={styles.loginBlock}>
       <h1 className={styles.title}>Login</h1>
 
-      <form onSubmit={handleOnSubmit} className={styles.formLogin}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formLogin}>
         <TemplateInput
           type="text"
           placeholder="Your Email Address"
           name="email"
-          required
+          customProps={{ ...register("email") }}
+          hint={
+            errors?.email && {
+              type: "error",
+              msg: errors?.email?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.inputMargin}
         />
         <TemplateInput
           type="password"
           placeholder="Password"
           name="password"
-          required
+          customProps={{ ...register("password") }}
+          hint={
+            errors?.password && {
+              type: "error",
+              msg: errors?.password?.message,
+              inputBorder: true,
+            }
+          }
         />
         {error && <Alert variant="error" text={error} />}
         <div className={styles.formAct}>

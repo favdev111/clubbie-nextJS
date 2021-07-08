@@ -2,30 +2,23 @@ import React from "react";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
 import router from "next/router";
+import { createPost } from "@utils/schemas/post.schema";
 
 function ContentAdd() {
-  const handleOnSubmit = async (
-    e,
+  const handleOnSubmit = async ({
     _media,
-    _title,
+    _caption,
     _description,
     _sport,
     _tagSomeone,
     _relatedMediaItems,
     uploadMultiplePostMedia,
     setStatus,
-    deleteChildPosts = null
-  ) => {
-    e.preventDefault();
-
-    if (!_media || !_title) {
-      alert("All fields are required"); // Todo: handle these properly
-      return;
-    }
-
+    deleteChildPosts = null,
+  }) => {
     // Common Body for parent and child post
     const commonBody = {
-      title: _title?.trim(),
+      title: _caption?.trim(),
       description: _description?.trim() || null,
       tags:
         _tagSomeone && _sport
@@ -120,7 +113,11 @@ function ContentAdd() {
   };
 
   return (
-    <ContentForm actionText="Post" onSubmitForm={handleOnSubmit}></ContentForm>
+    <ContentForm
+      actionText="Post"
+      onSubmitForm={handleOnSubmit}
+      validationSchema={createPost}
+    ></ContentForm>
   );
 }
 

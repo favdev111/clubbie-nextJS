@@ -7,12 +7,17 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./resetPassword.module.css";
 import { useRouter } from "next/router";
+import useForm from "@sub/hook-form";
+import { resetPassword as resetPasswordSchema } from "@utils/schemas/auth.schema";
 
 const ResetPassword = () => {
   const router = useRouter();
   const email = router?.query?.email;
 
-  const [_email, setEmail] = useState(email || "");
+  const { register, handleSubmit, errors, setValue } = useForm({
+    schema: resetPasswordSchema,
+  });
+
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState({
     type: null,
@@ -20,7 +25,7 @@ const ResetPassword = () => {
   });
 
   useEffect(() => {
-    setEmail(email);
+    setValue("email", email);
   }, [email]);
 
   useEffect(async () => {
@@ -34,22 +39,13 @@ const ResetPassword = () => {
     }
   }, [statusMsg]);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
 
-    const email = e.target.email.value.trim();
-    const resetPasswordCode = e.target.resetPasswordCode.value.trim();
-    const password = e.target.password.value.trim();
-    if (!/.+@.+\..+/.test(email)) {
-      setStatusMsg({ type: "error", text: "Invalid Email Address" });
-      setLoading(false);
-      return;
-    }
+    const { email, resetPasswordCode, password } = data;
 
     await Auth.ResetPassword({ email, resetPasswordCode, password })
       .then((res) => {
-        console.log("res => ", res);
         setLoading(false);
         setStatusMsg({
           type: "success",
@@ -74,26 +70,48 @@ const ResetPassword = () => {
   return (
     <div className={styles.recoverBlock}>
       <h1 className={styles.title}>Reset Password</h1>
-      <form onSubmit={handleOnSubmit} className={styles.formRecover}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formRecover}>
         <TemplateInput
-          type="email"
+          type="text"
           name="email"
-          value={_email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
           placeholder="Your Email Address"
+          customProps={{ ...register("email") }}
+          hint={
+            errors?.email && {
+              type: "error",
+              msg: errors?.email?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.inputBox}
         />
         <TemplateInput
           type="text"
           name="resetPasswordCode"
-          required
           placeholder="Reset Password Code"
+          customProps={{ ...register("resetPasswordCode") }}
+          hint={
+            errors?.resetPasswordCode && {
+              type: "error",
+              msg: errors?.resetPasswordCode?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.inputBox}
         />
         <TemplateInput
           type="password"
           name="password"
-          required
           placeholder="Your New Password"
+          customProps={{ ...register("password") }}
+          hint={
+            errors?.password && {
+              type: "error",
+              msg: errors?.password?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.inputBox}
         />
         {statusMsg?.text && (
           <Alert
