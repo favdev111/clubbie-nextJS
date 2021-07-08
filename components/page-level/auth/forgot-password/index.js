@@ -6,6 +6,8 @@ import Link from "next/link";
 import Auth from "@api/services/Auth";
 import styles from "./forgotPassword.module.css";
 import router from "next/router";
+import useForm from "@sub/hook-form";
+import { forgotPassword as forgotPasswordSchema } from "@utils/schemas/auth.schema";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -14,16 +16,14 @@ const ForgotPassword = () => {
     text: null,
   });
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, errors } = useForm({
+    schema: forgotPasswordSchema,
+  });
+
+  const onSubmit = async (data) => {
     setLoading(true);
 
-    const email = e.target.email.value.trim();
-    if (!/.+@.+\..+/.test(email)) {
-      setStatusMsg({ type: "error", text: "Invalid Email Address" });
-      setLoading(false);
-      return;
-    }
+    const { email } = data;
 
     await Auth.ForgotPassword({ email })
       .then((res) => {
@@ -62,19 +62,28 @@ const ForgotPassword = () => {
           recover your account
         </p>
       </div>
-      <form onSubmit={handleOnSubmit} className={styles.formRecover}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formRecover}>
         <TemplateInput
-          type="email"
+          type="text"
           name="email"
-          required
           placeholder="Your Email Address"
+          customProps={{ ...register("email") }}
+          hint={
+            errors?.email && {
+              type: "error",
+              msg: errors?.email?.message,
+              inputBorder: true,
+            }
+          }
         />
         {statusMsg?.text && (
-          <Alert
-            variant={statusMsg.type}
-            text={statusMsg.text}
-            animateText={statusMsg?.animateText}
-          />
+          <div className={styles.alertBox}>
+            <Alert
+              variant={statusMsg.type}
+              text={statusMsg.text}
+              animateText={statusMsg?.animateText}
+            />
+          </div>
         )}
         <div className={styles.formSubmit}>
           <Button loading={loading}>Submit</Button>
