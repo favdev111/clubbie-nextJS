@@ -33,14 +33,16 @@
   padding-left: 14px;
   padding-right: 14px;
 }
-.inputCont .showPassword {
-  display: inline-block;
+.inputBox {
   position: relative;
-  top: -58px;
-  right: -413px;
-  width: 24var (--space-24);
-  height: var(--space-16);
-  font-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.inputCont .showPassword {
+  position: absolute;
+  right: var(--space-10);
 }
 .inputCont .showPassword img {
   width: 100%;

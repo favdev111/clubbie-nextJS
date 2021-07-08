@@ -45,3 +45,6 @@
   justify-content: center;
   padding-top: 72px;
 }
+.inputMargin {
+  margin-bottom: var(--space-5);
+}

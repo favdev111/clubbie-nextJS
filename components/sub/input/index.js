@@ -16,6 +16,7 @@ const TemplateInput = ({
   onEnter,
   customProps,
   hint,
+  className,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -28,36 +29,40 @@ const TemplateInput = ({
   };
 
   return (
-    <div className={styles.inputCont}>
+    <div className={cn(styles.inputCont, className)}>
       {!multiLine ? (
         <>
-          <input
-            className={cn(
-              styles.inputBlock,
-              hint?.type === "error" && hint?.inputBorder && styles.errorInput,
-              hint?.type === "info" && hint?.inputBorder && styles.infoInput,
-              hint?.type === "success" &&
-                hint?.inputBorder &&
-                styles.successInput
-            )}
-            type={typeInput}
-            placeholder={placeholder}
-            name={name}
-            value={value}
-            required={required}
-            onChange={onChange}
-            onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
-            {...customProps}
-          />
-          {type === "password" ? (
-            <a
-              href="#"
-              onClick={showPasswordHandler}
-              className={styles.showPassword}
-            >
-              <Eye />
-            </a>
-          ) : null}
+          <span className={cn(styles.inputBox)}>
+            <input
+              className={cn(
+                styles.inputBlock,
+                hint?.type === "error" &&
+                  hint?.inputBorder &&
+                  styles.errorInput,
+                hint?.type === "info" && hint?.inputBorder && styles.infoInput,
+                hint?.type === "success" &&
+                  hint?.inputBorder &&
+                  styles.successInput
+              )}
+              type={typeInput}
+              placeholder={placeholder}
+              name={name}
+              value={value}
+              required={required}
+              onChange={onChange}
+              onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
+              {...customProps}
+            />
+            {type === "password" ? (
+              <a
+                href="#"
+                onClick={showPasswordHandler}
+                className={styles.showPassword}
+              >
+                <Eye />
+              </a>
+            ) : null}
+          </span>
           {hint?.type && hint?.msg && (
             <p
               className={cn(
