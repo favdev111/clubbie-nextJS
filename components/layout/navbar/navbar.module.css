@@ -28,6 +28,10 @@
   border-color: var(--c-yellow);
   font-family: var(--ff-bold);
 }
+.navImage {
+  width: 120px;
+  height: 27px;
+}
 
 @media screen and (max-width: 768px) and (min-width: 360px) {
   .navbar .navbarList {

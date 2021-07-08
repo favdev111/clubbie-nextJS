@@ -54,7 +54,7 @@ function InfoSVG() {
   );
 }
 
-function Alert({ variant, text, animateText }) {
+function Alert({ variant, text, children, animateText }) {
   return (
     <>
       <div
@@ -74,7 +74,7 @@ function Alert({ variant, text, animateText }) {
         </div>
         <div className={styles.alertBodyWrapper}>
           <span className={animateText && styles.threeDotsAnimation}>
-            {text}
+            {text || children}
           </span>
         </div>
       </div>

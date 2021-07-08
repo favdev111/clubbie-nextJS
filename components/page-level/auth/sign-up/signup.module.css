@@ -1,7 +1,7 @@
 .signupBlock {
   display: block;
   width: var(--container-md);
-  margin: var(--space-95) auto 0px;
+  margin: var(--space-95) auto;
 }
 .title {
   text-align: center;

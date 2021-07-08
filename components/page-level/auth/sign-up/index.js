@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@sub/alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import GoogleLogin from "@sub/button-google-auth/index";
 import TemplateInput from "@sub/input";
@@ -10,27 +10,33 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./signup.module.css";
 
-// TODO: redirect if already logged in
 const SignUp = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     // handle client side errors
     e.preventDefault();
+    setLoading(true);
+
     const email = e.target.email.value.trim();
     const password = e.target.password.value;
     const passwordConfirm = e.target.passwordConfirm.value;
     if (!/.+@.+\..+/.test(email)) {
       setError("Invalid Email Address");
+      setLoading(false);
+
       return;
     }
     if (password !== passwordConfirm) {
       setError("Passwords Don't Match");
+      setLoading(false);
+
       return;
     }
 
     // make api call
-    Auth.SignUp({
+    await Auth.SignUp({
       email,
       password,
     })
@@ -45,7 +51,8 @@ const SignUp = () => {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
-        Router.push("/auth/account-verification"); // redirect to verification
+        setLoading(false);
+        Router.push("/auth/account-confirmation"); // redirect to confirmation
       })
       .catch((err) => {
         setError(
@@ -55,6 +62,7 @@ const SignUp = () => {
             "Some Error Occured"
         );
       });
+    setLoading(false);
   };
 
   return (
@@ -79,13 +87,9 @@ const SignUp = () => {
           name="passwordConfirm"
           required
         />
-        {error && (
-          <Alert variant="filled" severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert variant="error" text={error} />}
         <div className={styles.signupButton}>
-          <Button>Sign Up</Button>
+          <Button loading={loading}>Sign Up</Button>
         </div>
       </form>
 
@@ -100,11 +104,12 @@ const SignUp = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/auth/login">
-        <div className={styles.signUp}>
-          Already have an account?<a className="signUp">&ensp;Login Here</a>
-        </div>
-      </Link>
+      <div className={styles.signUp}>
+        Already have an account?
+        <Link href="/auth/login">
+          <a className="signUp">&ensp;Login Here</a>
+        </Link>
+      </div>
     </div>
   );
 };

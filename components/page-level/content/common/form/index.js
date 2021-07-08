@@ -154,7 +154,7 @@ function ContentForm({
             <span>Drag and drop a video or</span>
             &ensp;
             <a className={styles.dragDropVideosBrowseFiles}>
-              <label htmlFor="pick-parent-media">Browser Files</label>
+              <label htmlFor="pick-parent-media">Browse Files</label>
             </a>
           </span>
         </div>

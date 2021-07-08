@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@sub/alert";
 import FacebookLogin from "@sub/button-facebook-auth/index";
 import TemplateInput from "@sub/input";
 import GoogleLogin from "@sub/button-google-auth/index";
@@ -10,23 +10,25 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./login.module.css";
 
-// TODO: redirect if already logged in
-const Login = () => {
+const Login = ({ previousURL }) => {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     if (!/.+@.+\..+/.test(email)) {
       setError("Invalid Email Address");
+      setLoading(false);
       return;
     }
     setError("");
 
     // make api call
-    Auth.Login({
+    await Auth.Login({
       email,
       password,
     })
@@ -41,7 +43,8 @@ const Login = () => {
           expires: new Date(res.data.tokens.refresh.expiry),
         });
         setError("");
-        router.push("/");
+        setLoading(false);
+        router.push(previousURL || "/");
       })
       .catch((err) => {
         setError(
@@ -51,6 +54,7 @@ const Login = () => {
             "Some Error Occured"
         );
       });
+    setLoading(false);
   };
 
   return (
@@ -70,16 +74,12 @@ const Login = () => {
           name="password"
           required
         />
-        {error && (
-          <Alert variant="filled" severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert variant="error" text={error} />}
         <div className={styles.formAct}>
-          <Link href="/auth/recovery-pass">
+          <Link href="/auth/forgot-password">
             <span className={styles.whiteColor}>Forgot Password?</span>
           </Link>
-          <Button>Login</Button>
+          <Button loading={loading}>Login</Button>
         </div>
       </form>
 
@@ -94,11 +94,12 @@ const Login = () => {
         <GoogleLogin />
       </div>
 
-      <Link href="/auth/sign-up">
-        <div className="signupContent">
-          <a className="signUp">Don’t have an Account? Sign Up</a>
-        </div>
-      </Link>
+      <div className={styles.signUpMsg}>
+        Don’t have an Account?{" "}
+        <Link href="/auth/sign-up">
+          <a className="signUp">&ensp;Sign Up</a>
+        </Link>
+      </div>
     </div>
   );
 };

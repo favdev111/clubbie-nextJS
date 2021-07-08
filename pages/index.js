@@ -18,7 +18,6 @@ const HomePage = ({ posts }) => {
 export default HomePage;
 
 export const getServerSideProps = async (ctx) => {
-  // TODO: pagination
   const response = await Posts.GetPosts({
     limit: 10,
     page: 1,

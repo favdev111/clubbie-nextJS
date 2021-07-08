@@ -1,10 +1,17 @@
 import React from "react";
+import router from "next/router";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import Wrap from "@layout/account-wrapper/";
 import SignUp from "@page/auth/sign-up";
+import auth from "@utils/helpers/auth";
 
 const SignUpPage = () => {
+  const authUser = auth.getUser();
+  if (authUser) {
+    router.push("/");
+  }
+
   return (
     <Layout hideHeader>
       <Seo
