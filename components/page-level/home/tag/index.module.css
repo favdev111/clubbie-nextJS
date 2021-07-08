@@ -12,6 +12,10 @@
   background-color: var(--c-turk);
 }
 
+.endingTag {
+  background-color: var(--c-white-50);
+}
+
 @media (max-width: 768px) {
   .tag {
     font-size: var(--fs-small);

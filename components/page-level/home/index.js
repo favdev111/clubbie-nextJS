@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Loader from "@sub/loader";
 import InfiniteScroll from "@sub/infinite-scroll";
 import Posts from "@api/services/Posts";
+import sports from "@utils/fixedValues/sports";
 
 function LoadingPosts() {
   return (
@@ -25,7 +26,7 @@ function EndFeedMessage() {
       <a>
         <div className={styles.addContent}>
           <p className={styles.endFeedMessage}>
-            You are all catched up with the video fee. Care to make a post of
+            You are all catched up with the video feed. Care to make a post of
             your own?
           </p>
           <div className={styles.addButton}>
@@ -43,14 +44,28 @@ function Home({ posts }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
-  const [activeTag, setActiveTag] = useState(0);
   const [_posts, setPosts] = useState(posts);
+  const [expandedSports, setExpandedSports] = useState(false);
+  const [displaySports, setDisplaySports] = useState([
+    ...new Set([
+      "All Sports",
+      "Football",
+      "Cricket",
+      "Netball",
+      "Boxing",
+      ...sports,
+    ]),
+  ]);
+  const [activeTag, setActiveTag] = useState(0);
+  const [filter, setFilter] = useState({
+    sortBy: "createdAt:desc",
+  });
 
   const fetchMorePosts = async () => {
     const response = await Posts.GetPosts({
       limit: 10,
       page: _posts.page + 1,
-      sortBy: "createdAt:desc",
+      ...filter,
     }).catch(() => undefined);
     const newPosts = response?.data;
 
@@ -81,7 +96,7 @@ function Home({ posts }) {
       </div>
       <div className={styles.tagContent}>
         <div className={styles.tagInner}>
-          {["All Sports", "Football", "Cricket", "Netball", "Boxing"].map(
+          {(expandedSports ? displaySports : displaySports.slice(0, 5)).map(
             (tag, index) => (
               <Tag
                 activeTag={activeTag}
@@ -93,6 +108,13 @@ function Home({ posts }) {
               </Tag>
             )
           )}
+          <Tag
+            activeTag={false}
+            endingTag
+            onClick={() => setExpandedSports(!expandedSports)}
+          >
+            {!expandedSports ? "More..." : "...Less"}
+          </Tag>
         </div>
 
         <div className={styles.sortSelect}>
@@ -120,7 +142,7 @@ function Home({ posts }) {
       </span>
 
       <InfiniteScroll
-        dataLength={_posts?.results?.length}
+        dataLength={_posts?.totalResults}
         getMore={fetchMorePosts}
         hasMore={_posts?.page < _posts?.totalPages}
         loader={<LoadingPosts />}

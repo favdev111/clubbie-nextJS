@@ -1,0 +1,19 @@
+.scrollEnd {
+  display: flex;
+  flex-direction: row;
+  color: var(--c-yellow);
+  margin: 25px;
+}
+.scrollEnd:before,
+.scrollEnd:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid;
+  margin: auto;
+}
+.scrollEnd:before {
+  margin-right: 10px;
+}
+.scrollEnd:after {
+  margin-left: 10px;
+}
