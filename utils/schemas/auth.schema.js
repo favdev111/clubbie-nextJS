@@ -37,7 +37,6 @@ const loginWithLocal = Joi.object().keys({
   }),
 });
 
-
 const forgotPassword = Joi.object().keys({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -48,9 +47,27 @@ const forgotPassword = Joi.object().keys({
     }),
 });
 
+const resetPassword = Joi.object().keys({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      "string.empty": "Email is required",
+      "string.email": "Email must be valid",
+    }),
+  resetPasswordCode: Joi.string().min(6).required().messages({
+    "string.empty": "Reset code is required",
+    "string.min": "Reset code must be 6 digits long",
+  }),
+  password: Joi.string().required().custom(password).messages({
+    "string.empty": "Password is required",
+  }),
+});
+
 module.exports = {
   signup,
   activateAccount,
   loginWithLocal,
   forgotPassword,
+  resetPassword,
 };
