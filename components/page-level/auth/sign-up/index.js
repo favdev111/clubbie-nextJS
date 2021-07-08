@@ -9,31 +9,22 @@ import Button from "@sub/button";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./signup.module.css";
+import useForm from "@sub/hook-form";
+import { signup as signupSchema } from "@utils/schemas/auth.schema";
 
 const SignUp = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleOnSubmit = async (e) => {
-    // handle client side errors
-    e.preventDefault();
+  const { register, handleSubmit, errors } = useForm({
+    schema: signupSchema,
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
     setLoading(true);
 
-    const email = e.target.email.value.trim();
-    const password = e.target.password.value;
-    const passwordConfirm = e.target.passwordConfirm.value;
-    if (!/.+@.+\..+/.test(email)) {
-      setError("Invalid Email Address");
-      setLoading(false);
-
-      return;
-    }
-    if (password !== passwordConfirm) {
-      setError("Passwords Don't Match");
-      setLoading(false);
-
-      return;
-    }
+    const { email, password } = data;
 
     // make api call
     await Auth.SignUp({
@@ -68,26 +59,49 @@ const SignUp = () => {
   return (
     <div className={styles.signupBlock}>
       <h1 className={styles.title}>Sign Up</h1>
-      <form onSubmit={handleOnSubmit} className={styles.formSignup}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formSignup}>
         <TemplateInput
           type="email"
           placeholder="Your Email Address"
           name="email"
-          required
+          customProps={{ ...register("email") }}
+          hint={
+            errors?.email && {
+              type: "error",
+              msg: errors?.email?.message,
+              inputBorder: true,
+            }
+          }
         />
         <TemplateInput
           type="password"
           placeholder="Choose a password"
           name="password"
-          required
+          customProps={{ ...register("password") }}
+          hint={
+            errors?.password && {
+              type: "error",
+              msg: errors?.password?.message,
+              inputBorder: true,
+            }
+          }
         />
         <TemplateInput
           type="password"
           placeholder="Repeat password"
           name="passwordConfirm"
-          required
+          customProps={{ ...register("passwordConfirm") }}
+          hint={
+            errors?.passwordConfirm && {
+              type: "error",
+              msg: errors?.passwordConfirm?.message,
+              inputBorder: true,
+            }
+          }
         />
-        {error && <Alert variant="error" text={error} />}
+        <div className={styles.alertbox}>
+          {error && <Alert variant="error" text={error} />}
+        </div>
         <div className={styles.signupButton}>
           <Button loading={loading}>Sign Up</Button>
         </div>

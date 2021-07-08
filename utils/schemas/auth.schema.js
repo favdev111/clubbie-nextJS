@@ -1,5 +1,21 @@
 import Joi from "joi";
 import { password } from "./customValidations";
+
+const signup = Joi.object().keys({
+  email: Joi.string()
+    .required()
+    .email({ tlds: { allow: false } })
+    .messages({
+      "string.empty": "Email is required",
+    }),
+  password: Joi.string().required().custom(password).messages({
+    "string.empty": "Password is required",
+  }),
+  passwordConfirm: Joi.string().equal(Joi.ref("password")).required().messages({
+    "any.only": "Passwords don't match",
+  }),
+});
+
 const loginWithLocal = Joi.object().keys({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -13,6 +29,8 @@ const loginWithLocal = Joi.object().keys({
   }),
 });
 
+
 module.exports = {
+  signup,
   loginWithLocal,
 };
