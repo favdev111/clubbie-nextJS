@@ -6,6 +6,8 @@ import TemplateInput from "@sub/input";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import styles from "./accountVerif.module.css";
+import useForm from "@sub/hook-form";
+import { activateAccount as activateAccountSchema } from "@utils/schemas/auth.schema";
 
 const AccountVerif = ({ user }) => {
   const [loading, setLoading] = useState(false);
@@ -19,16 +21,15 @@ const AccountVerif = ({ user }) => {
   });
   const [countDown, setCountDown] = useState(0);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, errors } = useForm({
+    schema: activateAccountSchema,
+  });
+
+  const onSubmit = async (data) => {
     setLoading(true);
-    const activationCode = e.target.activationCode.value;
-    if (activationCode.length < 6) {
-      setActivationStatus({ type: "error", text: "Invalid Activation Code" });
-      setLoading(false);
-      return;
-    }
     setActivationStatus({ type: null, text: null });
+
+    const { activationCode } = data;
 
     // make api call
     await Auth.ActivateAccount({ activationCode })
@@ -105,16 +106,28 @@ const AccountVerif = ({ user }) => {
         </p>
       </div>
 
-      <form onSubmit={handleOnSubmit} className={styles.formVerif}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formVerif}>
         <TemplateInput
           type="text"
           placeholder="Enter Verification Code"
           name="activationCode"
-          required
+          customProps={{ ...register("activationCode") }}
+          hint={
+            errors?.activationCode && {
+              type: "error",
+              msg: errors?.activationCode?.message,
+              inputBorder: true,
+            }
+          }
         />
 
         {activationStatus?.text && (
-          <Alert variant={activationStatus.type} text={activationStatus.text} />
+          <div className={styles.alertBox}>
+            <Alert
+              variant={activationStatus.type}
+              text={activationStatus.text}
+            />
+          </div>
         )}
         <div className={styles.btnVerif}>
           <Button loading={loading}>Verify</Button>

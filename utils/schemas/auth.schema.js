@@ -16,6 +16,12 @@ const signup = Joi.object().keys({
   }),
 });
 
+const activateAccount = Joi.object().keys({
+  activationCode: Joi.string().min(6).required().messages({
+    "string.empty": "Activation code is required",
+    "string.min": "Activation code must be 6 digits long",
+  }),
+});
 const loginWithLocal = Joi.object().keys({
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -32,5 +38,6 @@ const loginWithLocal = Joi.object().keys({
 
 module.exports = {
   signup,
+  activateAccount,
   loginWithLocal,
 };

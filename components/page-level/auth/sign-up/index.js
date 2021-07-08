@@ -21,7 +21,6 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     setLoading(true);
 
     const { email, password } = data;
@@ -99,9 +98,11 @@ const SignUp = () => {
             }
           }
         />
-        <div className={styles.alertbox}>
-          {error && <Alert variant="error" text={error} />}
-        </div>
+        {error && (
+          <div className={styles.alertbox}>
+            <Alert variant="error" text={error} />
+          </div>
+        )}
         <div className={styles.signupButton}>
           <Button loading={loading}>Sign Up</Button>
         </div>
