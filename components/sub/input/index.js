@@ -17,6 +17,7 @@ const TemplateInput = ({
   customProps,
   hint,
   className,
+  disabled,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -42,8 +43,10 @@ const TemplateInput = ({
                 hint?.type === "info" && hint?.inputBorder && styles.infoInput,
                 hint?.type === "success" &&
                   hint?.inputBorder &&
-                  styles.successInput
+                  styles.successInput,
+                disabled && styles.disabledInput
               )}
+              disabled={disabled}
               type={typeInput}
               placeholder={placeholder}
               name={name}
@@ -86,8 +89,10 @@ const TemplateInput = ({
               hint?.type === "info" && hint?.inputBorder && styles.infoInput,
               hint?.type === "success" &&
                 hint?.inputBorder &&
-                styles.successInput
+                styles.successInput,
+              disabled && styles.disabledInput
             )}
+            disabled={disabled}
             placeholder={placeholder}
             name={name}
             value={value}

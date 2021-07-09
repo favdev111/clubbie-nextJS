@@ -86,6 +86,7 @@ function ProfileEdit({ profile, clubs }) {
     const {
       fullName,
       playerTitle,
+      // email,
       telephone,
       address,
       city,
@@ -98,6 +99,7 @@ function ProfileEdit({ profile, clubs }) {
       fullName: fullName?.length > 0 ? fullName?.trim() : fullName || null,
       playerTitle:
         playerTitle?.length > 0 ? playerTitle?.trim() : playerTitle || null,
+      // email: email?.length > 0 ? email?.trim() : email || null,
       telephone: telephone?.length > 0 ? telephone?.trim() : telephone || null,
       address: address?.length > 0 ? address?.trim() : address || null,
       city: city?.length > 0 ? city?.trim() : city || null,
@@ -194,6 +196,7 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="email"
+              disabled
               customProps={{ ...register("email") }}
               hint={
                 errors?.email && {
