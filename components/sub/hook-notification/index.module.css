@@ -1,0 +1,121 @@
+.notification-container {
+  --gap: 25px;
+  --notification-size: 350px;
+  --animation-duration: 0.35s;
+  --animation-easing: cubic-bezier(0, 0, 0.6, 1.46);
+  --transition-easing: ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--notification-size);
+}
+
+.close-btn {
+  height: 20px;
+  width: 20px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notification-message {
+  color: #fff;
+  background: #222;
+  padding: 15px 20px;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background: #222;
+  position: absolute;
+  left: 0;
+  top: var(--gap);
+  width: var(--notification-size);
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 15px;
+  opacity: 0;
+  transform: translateX(calc(var(--notification-size) * -1));
+  transition: top calc(var(--animation-duration) - 0.1s)
+      var(--transition-easing),
+    bottom calc(var(--animation-duration) - 0.1s) var(--transition-easing);
+  animation: slide-from-left var(--animation-duration) var(--animation-easing)
+    forwards;
+}
+
+.notification-message span {
+  width: calc(100% - 30px);
+}
+
+/* TOP & BOTTOM */
+.notification-container.bottom,
+.notification-container.top {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.notification-container.bottom .notification-message,
+.notification-container.top .notification-message {
+  animation: slide-vertically var(--animation-duration) var(--animation-easing)
+    forwards;
+}
+
+.notification-container.top .notification-message {
+  transform: translate(0, calc(-100% - var(--gap)));
+}
+
+.notification-container.bottom .notification-message {
+  transform: translateY(calc(100% + var(--gap)));
+}
+
+/* TOP RIGHT && BOTTOM RIGHT */
+.notification-container.bottom-right,
+.notification-container.top-right {
+  left: auto;
+  right: 0;
+}
+
+.notification-container.bottom-right .notification-message,
+.notification-container.top-right .notification-message {
+  flex-direction: row-reverse;
+  transform: translateX(var(--notification-size));
+  animation: slide-from-right var(--animation-duration) var(--animation-easing)
+    forwards;
+}
+
+/* BOTTOM && BOTTOM LEFT */
+.notification-container.bottom,
+.notification-container.bottom-left,
+.notification-container.bottom-right {
+  top: auto;
+  bottom: 0;
+}
+
+.notification-container.bottom .notification-message,
+.notification-container.bottom-left .notification-message,
+.notification-container.bottom-right .notification-message {
+  top: auto;
+  bottom: var(--gap);
+}
+
+/* KEYFRAMES */
+
+@keyframes slide-from-left {
+  100% {
+    transform: translateX(var(--gap));
+    opacity: 1;
+  }
+}
+
+@keyframes slide-from-right {
+  100% {
+    transform: translateX(calc(var(--gap) * -1));
+    opacity: 1;
+  }
+}
+
+@keyframes slide-vertically {
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
