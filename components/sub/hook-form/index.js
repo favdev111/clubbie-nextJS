@@ -7,6 +7,7 @@ function useForm({ schema }) {
     register,
     handleSubmit,
     setValue,
+    getValues,
     setError,
     formState: { errors },
   } = _useForm(
@@ -19,6 +20,7 @@ function useForm({ schema }) {
     register,
     handleSubmit,
     setValue,
+    getValues,
     setError,
     errors,
   };
