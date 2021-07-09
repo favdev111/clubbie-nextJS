@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cn from "classnames";
@@ -14,22 +14,38 @@ import auth from "@utils/helpers/auth";
 import playerTitles from "@utils/fixedValues/playerTitles";
 import countries from "@utils/fixedValues/countries";
 import styles from "./profileedit.module.css";
+import useForm from "@sub/hook-form";
+import { editProfile } from "@utils/schemas/user.schema";
 
 function ProfileEdit({ profile, clubs }) {
   // TODO: edit email, delete clubs , handle image display, show errors
   const router = useRouter();
 
+  const { register, handleSubmit, errors, setValue } = useForm({
+    schema: editProfile,
+  });
+
+  useEffect(() => {
+    setValue("fullName", profile?.fullName || "");
+    setValue("playerTitle", profile?.playerTitle || "");
+    setValue("telephone", profile?.telephone || "");
+    setValue("address", profile?.address || "");
+    setValue("city", profile?.city || "");
+    setValue("country", profile?.country || "");
+    setValue("postCode", profile?.postCode || "");
+    setValue("bio", profile?.bio || "");
+    setValue("email", profile?.email || "");
+  }, [profile]);
+
   const defaultImage = "/assets/person-placeholder.jpg";
 
   const [image, setImage] = useState(() => profile?.image || defaultImage);
-  const [fullName, setFullName] = useState(() => profile?.fullName);
-  const [playerTitle, setPlayerTitle] = useState(() => profile?.playerTitle);
-  const [telephone, setTelephone] = useState(() => profile?.telephone);
-  const [address, setAddress] = useState(() => profile?.address);
-  const [city, setCity] = useState(() => profile?.city);
-  const [country, setCountry] = useState(() => profile?.country);
-  const [postCode, setPostCode] = useState(() => profile?.postCode);
-  const [bio, setBio] = useState(() => profile?.bio);
+  const [status, setStatus] = useState({
+    loading: false,
+    msg: null,
+    type: null,
+    animateText: false,
+  });
   const [clubsToRemove, setClubsToRemove] = useState([]);
 
   const removeClub = (id) => {
@@ -37,13 +53,25 @@ function ProfileEdit({ profile, clubs }) {
     setClubsToRemove(x);
   };
   const onImagePicked = (image) => setImage(image);
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    setStatus({
+      loading: true,
+      msg: "Updating Profile",
+      type: "info",
+      animateText: true,
+    });
+
     console.log("Remove these clubs => ", clubsToRemove);
 
     // POST: files/upload
     let imageUploaded = null;
     if (image.src && image.file) {
+      setStatus({
+        loading: true,
+        msg: "Uploading Profile Pic",
+        type: "info",
+        animateText: true,
+      });
       const imageForm = new FormData();
       imageForm.append("files", image.file);
       await Files.UploadFile("userImg", imageForm)
@@ -52,40 +80,68 @@ function ProfileEdit({ profile, clubs }) {
           imageUploaded = res?.data[0]?.s3Url;
         })
         .catch((err) => {
+          setStatus({
+            loading: false,
+            msg: "Error Uploading Profile Pic",
+            type: "error",
+          });
           console.log("image err => ", err);
           alert(err.response.data.message); // TODO: error comp
         });
     }
 
+    const {
+      fullName,
+      playerTitle,
+      telephone,
+      address,
+      city,
+      country,
+      postCode,
+      bio,
+    } = data;
+
     // POST: users/profile
     const formBody = {
-      fullName: fullName?.trim() || null,
       image: imageUploaded || null,
-      playerTitle: playerTitle?.trim() || null,
-      telephone: telephone?.trim() || null,
-      address: address?.trim() || null,
-      city: city?.trim() || null,
-      country: country?.trim() || null,
-      postCode: postCode?.trim() || null,
-      bio: bio?.trim() || null,
+      fullName: fullName?.length > 0 ? fullName?.trim() : fullName || null,
+      playerTitle:
+        playerTitle?.length > 0 ? playerTitle?.trim() : playerTitle || null,
+      telephone: telephone?.length > 0 ? telephone?.trim() : telephone || null,
+      address: address?.length > 0 ? address?.trim() : address || null,
+      city: city?.length > 0 ? city?.trim() : city || null,
+      country: country?.length > 0 ? country?.trim() : country || null,
+      postCode: postCode?.length > 0 ? postCode?.trim() : postCode || null,
+      bio: bio?.length > 0 ? bio?.trim() : bio || null,
     };
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
     await Users.UpdateProfile(updateBody)
       .then((res) => {
+        setStatus({
+          loading: false,
+          msg: "Profile Updated.! Redirecting",
+          type: "success",
+          animateText: true,
+        });
         console.log("res => ", res);
         auth.setUser(res.data); // TODO: make this cookies to not expire
         router.push("/profile/self");
       })
       .catch((err) => {
+        setStatus({
+          loading: false,
+          msg: "Error Updating Profile",
+          type: "error",
+        });
         console.log("err => ", err);
         alert(err.response.data.message); // TODO: error comp
       });
   };
 
   return (
-    <form onSubmit={handleOnSubmit} className={styles.formLogin}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.formLogin}>
       <div className={styles.profilePlayerHeader}>
         <div className={styles.profilePlayerHeaderInnerLeft}>
           <Avatar
@@ -97,7 +153,9 @@ function ProfileEdit({ profile, clubs }) {
         </div>
         <div className={styles.profilePlayerHeaderInnerRight}>
           <div>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit" loading={status?.loading}>
+              Save Changes
+            </Button>
           </div>
         </div>
       </div>
@@ -110,8 +168,14 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="fullName"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              customProps={{ ...register("fullName") }}
+              hint={
+                errors?.fullName && {
+                  type: "error",
+                  msg: errors?.fullName?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
           <div
@@ -120,16 +184,34 @@ function ProfileEdit({ profile, clubs }) {
             <p>Title</p>
             <TemplateSelect
               name="playerTitle"
+              placeholder="Select Title"
               options={playerTitles}
-              selected={playerTitle}
-              onChange={(e) => setPlayerTitle(e.target.value)}
+              customProps={{ ...register("playerTitle") }}
+              hint={
+                errors?.playerTitle && {
+                  type: "error",
+                  msg: errors?.playerTitle?.message,
+                  inputBorder: true,
+                }
+              }
             ></TemplateSelect>
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
           >
             <p>Email</p>
-            <TemplateInput type="text" name="email" value={profile?.email} />
+            <TemplateInput
+              type="text"
+              name="email"
+              customProps={{ ...register("email") }}
+              hint={
+                errors?.email && {
+                  type: "error",
+                  msg: errors?.email?.message,
+                  inputBorder: true,
+                }
+              }
+            />
           </div>
           <div
             className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
@@ -138,8 +220,14 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="telephone"
-              value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
+              customProps={{ ...register("telephone") }}
+              hint={
+                errors?.telephone && {
+                  type: "error",
+                  msg: errors?.telephone?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
           <div
@@ -149,8 +237,14 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              customProps={{ ...register("address") }}
+              hint={
+                errors?.address && {
+                  type: "error",
+                  msg: errors?.address?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
           <div
@@ -160,8 +254,14 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              customProps={{ ...register("city") }}
+              hint={
+                errors?.city && {
+                  type: "error",
+                  msg: errors?.city?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
           <div
@@ -170,9 +270,16 @@ function ProfileEdit({ profile, clubs }) {
             <p>Country</p>
             <TemplateSelect
               name="country"
+              placeholder="Select Country"
               options={countries}
-              selected={country}
-              onChange={(e) => setCountry(e.target.value)}
+              customProps={{ ...register("country") }}
+              hint={
+                errors?.country && {
+                  type: "error",
+                  msg: errors?.country?.message,
+                  inputBorder: true,
+                }
+              }
             ></TemplateSelect>
           </div>
           <div
@@ -182,8 +289,14 @@ function ProfileEdit({ profile, clubs }) {
             <TemplateInput
               type="text"
               name="postCode"
-              value={postCode}
-              onChange={(e) => setPostCode(e.target.value)}
+              customProps={{ ...register("postCode") }}
+              hint={
+                errors?.postCode && {
+                  type: "error",
+                  msg: errors?.postCode?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
           <div
@@ -194,9 +307,15 @@ function ProfileEdit({ profile, clubs }) {
               type="text"
               name="bio"
               multiLine
-              value={bio}
               rows={2}
-              onChange={(e) => setBio(e.target.value)}
+              customProps={{ ...register("bio") }}
+              hint={
+                errors?.bio && {
+                  type: "error",
+                  msg: errors?.bio?.message,
+                  inputBorder: true,
+                }
+              }
             />
           </div>
         </div>
