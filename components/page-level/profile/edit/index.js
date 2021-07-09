@@ -15,6 +15,7 @@ import playerTitles from "@utils/fixedValues/playerTitles";
 import countries from "@utils/fixedValues/countries";
 import styles from "./profileedit.module.css";
 import useForm from "@sub/hook-form";
+import useNotifications from "@sub/hook-notification";
 import { editProfile } from "@utils/schemas/user.schema";
 
 function ProfileEdit({ profile, clubs }) {
@@ -48,48 +49,40 @@ function ProfileEdit({ profile, clubs }) {
   });
   const [clubsToRemove, setClubsToRemove] = useState([]);
 
+  const { showNotificationMsg, hideNotificationMsg } = useNotifications();
+
   const removeClub = (id) => {
     const x = new Set([...clubsToRemove, id]);
     setClubsToRemove(x);
   };
   const onImagePicked = (image) => setImage(image);
   const onSubmit = async (data) => {
-    setStatus({
-      loading: true,
-      msg: "Updating Profile",
-      type: "info",
-      animateText: true,
-    });
+    // console.log("Remove these clubs => ", clubsToRemove);
+    setStatus({ loading: true });
 
-    console.log("Remove these clubs => ", clubsToRemove);
-
-    // POST: files/upload
-    let imageUploaded = null;
-    if (image.src && image.file) {
-      setStatus({
-        loading: true,
-        msg: "Uploading Profile Pic",
-        type: "info",
-        animateText: true,
+    // upload profile image if any
+    const imageUploaded = await (async () => {
+      if (image.src && image.file) {
+        const imageForm = new FormData();
+        imageForm.append("files", image.file);
+        const response = await Files.UploadFile("userImg", imageForm).catch(
+          () => null
+        );
+        if (!response) return null;
+        return response?.data[0]?.s3Url;
+      }
+      return undefined;
+    })();
+    if (imageUploaded === null) {
+      showNotificationMsg("Error Uploading Profile Pic", {
+        variant: "error",
+        displayIcon: true,
       });
-      const imageForm = new FormData();
-      imageForm.append("files", image.file);
-      await Files.UploadFile("userImg", imageForm)
-        .then((res) => {
-          console.log("image res => ", res);
-          imageUploaded = res?.data[0]?.s3Url;
-        })
-        .catch((err) => {
-          setStatus({
-            loading: false,
-            msg: "Error Uploading Profile Pic",
-            type: "error",
-          });
-          console.log("image err => ", err);
-          alert(err.response.data.message); // TODO: error comp
-        });
+      setStatus({ loading: false });
+      return;
     }
 
+    // update profile data
     const {
       fullName,
       playerTitle,
@@ -100,8 +93,6 @@ function ProfileEdit({ profile, clubs }) {
       postCode,
       bio,
     } = data;
-
-    // POST: users/profile
     const formBody = {
       image: imageUploaded || null,
       fullName: fullName?.length > 0 ? fullName?.trim() : fullName || null,
@@ -117,27 +108,27 @@ function ProfileEdit({ profile, clubs }) {
     const updateBody = Object.fromEntries(
       Object.entries(formBody).filter(([_, v]) => v != null)
     );
-    await Users.UpdateProfile(updateBody)
-      .then((res) => {
-        setStatus({
-          loading: false,
-          msg: "Profile Updated.! Redirecting",
-          type: "success",
-          animateText: true,
-        });
-        console.log("res => ", res);
-        auth.setUser(res.data); // TODO: make this cookies to not expire
-        router.push("/profile/self");
-      })
-      .catch((err) => {
-        setStatus({
-          loading: false,
-          msg: "Error Updating Profile",
-          type: "error",
-        });
-        console.log("err => ", err);
-        alert(err.response.data.message); // TODO: error comp
+    const response = await Users.UpdateProfile(updateBody).catch(() => null);
+    if (!response) {
+      setStatus({
+        loading: false,
+        msg: "Error Updating Profile",
+        type: "error",
       });
+      showNotificationMsg("Error Updating Profile", {
+        variant: "error",
+        displayIcon: true,
+      });
+      return;
+    }
+    showNotificationMsg("Profile Updated Successfully", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setStatus({ loading: false });
+    // update auth user cookie
+    auth.setUser(response.data); // TODO: make this cookies to not expire
+    router.push("/profile/self");
   };
 
   return (
