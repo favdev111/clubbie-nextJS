@@ -1,26 +1,41 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
-import NotificationSnack from "@sub/notification-snack";
+import useNotification from "@sub/hook-notification";
 import Auth from "@api/services/Auth";
 import Google from "@svg/social/google";
 
 const GoogleButton = () => {
   // TODO: redirect after login
-  const [error, setError] = React.useState("");
+  const { showNotificationMsg } = useNotification();
 
-  const handleResponse = (res) => {
+  const handleResponse = async (res) => {
     const { tokenId } = res;
     const payload = {
       id_token: tokenId,
     };
     // auth.GoogleLogin here
-    Auth.GoogleLogin(payload)
-      .then((res) => console.log("res google => ", res.response))
-      .catch((err) => console.log("err google => ", err.response));
+    await Auth.GoogleLogin(payload)
+      .then((res) => {
+        console.log("res google => ", res.response);
+        showNotificationMsg(res.response, {
+          variant: "success",
+          displayIcon: true,
+        });
+      })
+      .catch((err) => {
+        console.log("err google => ", err.response);
+        showNotificationMsg(err.response, {
+          variant: "error",
+          displayIcon: true,
+        });
+      });
   };
 
   const handleError = (err) => {
-    setError(err.error);
+    showNotificationMsg(err.error, {
+      variant: "error",
+      displayIcon: true,
+    });
   };
 
   return (
@@ -37,12 +52,6 @@ const GoogleButton = () => {
           </div>
         )}
       />
-      {error && (
-        <NotificationSnack
-          message={error}
-          onFinished={() => error && setError("")}
-        />
-      )}
     </>
   );
 };
