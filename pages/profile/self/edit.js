@@ -10,7 +10,7 @@ function ProfilePage({ user, clubs }) {
     <Layout>
       <Seo title="Edit Profile" desc="Edit Your Public Profile on Clubbie" />
       <ProfileSelf
-        profile={{ ...user?.profile, id: user?.id }}
+        profile={{ ...user?.profile, id: user?.id, email: user?.local?.email }}
         clubs={clubs}
         editMode
       />

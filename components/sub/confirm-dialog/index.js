@@ -40,7 +40,13 @@ function ConfirmDialog({
           >
             Cancel
           </Button>
-          <Button variant="danger" onClick={onConfirm}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              onConfirm();
+              setOpen(false);
+            }}
+          >
             {confirmText}
           </Button>
         </div>
