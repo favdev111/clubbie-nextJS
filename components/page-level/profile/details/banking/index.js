@@ -80,6 +80,7 @@ function Banking({ user }) {
             </div>
             <div className={styles.bankingContentItem}>
               <StripeDashboardButton />
+              <ToolTip text="Update your stripe account or get latest details about payouts to your bank" />
             </div>
           </>
         ) : (
