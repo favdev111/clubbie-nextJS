@@ -66,7 +66,7 @@ function ConnectedBanks() {
         <div className={styles.connectedbanksButton}>
           <OvalButton
             theme="bank"
-            loading={loading} // todo add loader
+            loading={loading}
             onClick={handleAddNewPayMethod}
           >
             Add New
