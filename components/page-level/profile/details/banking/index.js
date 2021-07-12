@@ -97,7 +97,7 @@ function Banking({ user }) {
       )}
       <div className={styles.bankingContentItem}>
         <div className={styles.connectedBankAcc}>
-          <Link href="/connected-banks">
+          <Link href="/profile/self/connected-banks">
             <a>
               <DirectedButton direction="forward">
                 Connected Bank Accounts
