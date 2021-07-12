@@ -12,10 +12,7 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
     setLoading(true);
 
     const response = await Auth.SetDefaultPaymentMethod(payMethod?.id).catch(
-      (e) => {
-        console.log(e.response);
-        return null;
-      }
+      () => null
     );
     if (!response) {
       showNotificationMsg("Failed to set payment method as default", {
@@ -32,6 +29,30 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
     setUser(response?.data);
     setLoading(false);
   };
+
+  const handleRemovePayMethodClick = async () => {
+    setLoading(true);
+
+    const response = await Auth.RemovePaymentMethod(payMethod?.id).catch(
+      () => null
+    );
+    if (!response) {
+      showNotificationMsg("Failed to remove payment method", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+    showNotificationMsg("Pay Method removed successfully", {
+      variant: "success",
+      displayIcon: true,
+    });
+
+    setUser(response?.data);
+    setLoading(false);
+  };
+
   return (
     <>
       {loading && <BackDropLoader />}
@@ -60,6 +81,7 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
               Set Default
             </DirectedButton>
           )}
+          <span onClick={handleRemovePayMethodClick}>delete</span>
         </div>
       </div>
     </>

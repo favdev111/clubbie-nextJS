@@ -56,7 +56,7 @@ function ConnectedBanks() {
         <h1> Connected Bank Accounts</h1>
       </div>
       <div className={styles.connectedbanksBody}>
-        {stripeCustomer ? (
+        {stripeCustomer && stripeCustomer?.paymentMethods?.length > 0 ? (
           <>
             <div className={styles.connectedbanksBodyInner}>
               {stripeCustomer.paymentMethods.map((payMethod, index) => (
