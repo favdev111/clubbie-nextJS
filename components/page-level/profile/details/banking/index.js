@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import DirectedButton from "@sub/button-directed";
-import StripeConnectButton from "@sub/button-stripe-connect";
-import StripeDisconnectButton from "@sub/button-stripe-disconnect";
-import StripeDashboardButton from "@sub/button-stripe-dashboard";
+import StripeConnectButton from "@sub/button-stripe/connect";
+import StripeDisconnectButton from "@sub/button-stripe/disconnect";
+import StripeDashboardButton from "@sub/button-stripe/dashboard";
 import ToolTip from "@sub/tooltip";
 import useNotification from "@sub/hook-notification";
 import BackDropLoader from "@sub/backdrop-loader";
@@ -92,6 +92,12 @@ function Banking() {
           <ToolTip text="Want to receive payments from Clubbie? Connect with stripe" />
         </div>
       )}
+      <div className={styles.bankingContentItem}>
+        <StripeDisconnectButton />
+      </div>
+      <div className={styles.bankingContentItem}>
+        <StripeDashboardButton />
+      </div>
       <div className={styles.bankingContentItem}>
         <div className={styles.connectedBankAcc}>
           <Link href="/connected-banks">

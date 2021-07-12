@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import cn from "classnames";
 import ConfirmDialog from "@sub/confirm-dialog";
 import useNotification from "@sub/hook-notification";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
-import StripeSVG from "@svg/stripe";
-import styles from "./button.module.css";
+import StripeBaseButton from "./base";
 
 const StripeDisconnectButton = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +11,7 @@ const StripeDisconnectButton = () => {
 
   const { showNotificationMsg } = useNotification();
 
-  const handleDisconnectClick = async () => {
+  const handleClick = async () => {
     setLoading(true);
 
     const response = await Auth.StripeDisconnect().catch((e) => {
@@ -49,24 +47,14 @@ const StripeDisconnectButton = () => {
         setOpen={setShowConfirmDialog}
         message="Are you sure to disconnect your Stripe account from Clubbie? You will still retain your account but will not be able to receive further payments."
         confirmText="Yes, Disconnect"
-        onConfirm={handleDisconnectClick}
+        onConfirm={handleClick}
       />
-      <button
-        type="button"
-        onClick={() => setShowConfirmDialog(!showConfirmDialog)}
-        className={cn(styles.btn, loading && styles.btnDisabled)}
-        disabled={loading}
-      >
-        <div className={styles.btnContent}>
-          {loading && <div className={styles.loading}></div>}
-          <span className={styles.btnBody}>
-            <span className={styles.btnText}>{"Disconnect"}</span>
-            <span className={styles.btnIcon}>
-              <StripeSVG variant="light" />
-            </span>
-          </span>
-        </div>
-      </button>
+      <StripeBaseButton
+        btnText="Disconnect"
+        variant="danger"
+        loading={loading}
+        handleClick={() => setShowConfirmDialog(!showConfirmDialog)}
+      ></StripeBaseButton>
     </>
   );
 };
