@@ -1,0 +1,112 @@
+
+.messageTime{
+  float: right;
+  color: rgba(255, 255, 255, 0.5)
+}
+
+.titleMenu{
+  display: flex;
+  top: 0;
+  margin-top: -25px;
+}
+
+.cardImg {
+  max-height: 45px;
+  float: left;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.i{
+  fill:#5fc4ee;
+}
+
+.iBtn{ 
+  margin-left: 300px;
+}
+
+.iBtn:hover{
+  cursor: pointer;
+}
+
+.padBottom{
+  padding-top: 8px;
+}
+
+.scroll{
+  overflow-y: scroll;
+  height: 70vh;
+}
+
+.flexCol{
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  padding-top: 10px;
+}
+
+.time{
+  padding: 5px;
+  border-radius: var(--radius-lg);
+  background-color: var(--c-white-05);
+  display: inline-flex;
+}
+
+
+.contentCenter{
+  text-align: center;
+}
+.messageSend {
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background-color: var(--c-nav);
+  float: right;
+  width: 60%;
+  border-bottom-right-radius: 0;
+}
+
+.messageRec {
+  margin-top: 10px;
+  width:60%;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background-color: var(--c-white-10);
+  margin-bottom: 24px;
+  float: left;
+  border-bottom-left-radius: 0;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+
+  .iBtn{ 
+  margin-left: 120px;
+}
+  
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .messageRec .messageSend {
+    padding: 15px;
+    width: auto;
+  }
+
+   .iBtn{ 
+  margin-left: 90px;
+}
+
+.titleMenu{
+  display: flex;
+  top: 0;
+  margin-top: 0px;
+}
+
+}
+
+@media screen and (max-width: 760px) and (min-width: 360px) {
+  .iBtn{ 
+  margin-left: 10px;
+}
+ 
+}
+

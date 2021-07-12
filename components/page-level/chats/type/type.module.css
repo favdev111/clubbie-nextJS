@@ -1,0 +1,73 @@
+
+.m{
+    fill:#5fc4ee;
+}
+
+.plus{
+    fill:#5fc4ee;
+}
+
+.inputDiv{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    background-color: #1d2e52;
+    color: white;
+    border: none;
+    width: 100%;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-top: 6px;
+}
+
+.input{
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 5px 15px 4px 15px;
+}
+.input:focus{
+    outline: none;
+}
+
+.addBtn{
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 20px;
+    color:#5fc4ee;
+}
+
+.sendBtn{
+    cursor: pointer;
+    margin-left: 10px;
+    color:#5fc4ee;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+    .input{
+      width: 70%;
+  }
+  .sendBtn{
+      margin-left: 8px;
+  }
+  .addBtn{
+      margin-right: 8px;
+  }  
+
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .input{
+      width: 60%;
+  }
+  .sendBtn{
+      margin-left: 5px;
+  }
+  .addBtn{
+      margin-right: 5px;
+  }
+}

@@ -1,0 +1,73 @@
+
+.inputMessage{
+  text-align: center;
+}
+
+.edtBtn{
+  float:right;
+  background-color: transparent;
+  border: none;
+  color : #5fc4ee;
+  font-family: initial;
+  font-size: initial;
+  margin-top:8px;
+  margin-right: 5px;
+}
+
+.edtBtn:hover{
+  cursor: pointer;
+}
+
+.lastResult {
+  display: flex;
+  flex-direction: column;
+}
+.eventCard:first-child{
+  padding: 10px 20px;
+}
+
+.eventCard {
+  position: relative;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  margin-top: 24px;
+  background-color: var(--c-primary);
+}
+
+.eventCard:last-child  {
+  margin-left: 20px;
+  width: 80%;
+} 
+
+
+.teamhub {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-lg);
+  float: center;
+  display: flex;
+}
+
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .teamhub {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 30px;
+  }
+  .eventCard {
+    margin-top: -20px;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .eventCard {
+    padding: 16px;
+    margin-top: -40px;
+  }
+  
+  .teamhub {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 10px;
+    margin-top: 30px;
+  }
+}
