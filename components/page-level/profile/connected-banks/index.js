@@ -6,19 +6,22 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import BankCard from "./card";
 import styles from "./connectedbanks.module.css";
-
+// Now:
+// set as default
+// update state when connected with a bank account
+// remove a connected bank
 function ConnectedBanks() {
   const [user, setUser] = useState(authUser.getUser());
+  const [loading, setLoading] = useState(false);
   const [stripeCustomer, setStripeCustomer] = useState(null);
+
+  const { showNotificationMsg } = useNotification();
 
   useEffect(() => {
     if (user?.stripe?.customer) {
       setStripeCustomer(user?.stripe?.customer);
     }
   }, [user]);
-
-  const [loading, setLoading] = useState(false);
-  const { showNotificationMsg } = useNotification();
 
   const handleAddNewPayMethod = async () => {
     setLoading(true);
@@ -59,6 +62,8 @@ function ConnectedBanks() {
               {stripeCustomer.paymentMethods.map((payMethod, index) => (
                 <BankCard
                   key={"bankcard" + index}
+                  setUser={setUser}
+                  showNotificationMsg={showNotificationMsg}
                   payMethod={{
                     ...payMethod,
                     isDefault:

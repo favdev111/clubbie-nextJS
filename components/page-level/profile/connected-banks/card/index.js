@@ -1,59 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./bankcard.module.css";
 import DirectedButton from "@sub/button-directed";
+import BackDropLoader from "@sub/backdrop-loader";
 import Mastercard from "@svg/mastercard";
+import Auth from "@api/services/Auth";
 
-function BankCard({ payMethod }) {
+function BankCard({ payMethod, setUser, showNotificationMsg }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleSetDefaultClick = async () => {
+    setLoading(true);
+
+    const response = await Auth.SetDefaultPaymentMethod(payMethod?.id).catch(
+      (e) => {
+        console.log(e.response);
+        return null;
+      }
+    );
+    if (!response) {
+      showNotificationMsg("Failed to set payment method as default", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+    showNotificationMsg("Pay Method set as default", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setUser(response?.data);
+    setLoading(false);
+  };
   return (
-    <div className={styles.bankcard}>
-      <div className={styles.bankcardInner}>
-        <p className={styles.bankcardNo}>
-          {"**** **** **** " + payMethod?.card?.last4}
-        </p>
-        <div className={styles.bankcardExp}>
-          <p className="opacity-50">EXP</p>
-          <p>
-            {payMethod?.card?.exp_month}/{payMethod?.card?.exp_year}
+    <>
+      {loading && <BackDropLoader />}
+      <div className={styles.bankcard}>
+        <div className={styles.bankcardInner}>
+          <p className={styles.bankcardNo}>
+            {"**** **** **** " + payMethod?.card?.last4}
           </p>
+          <div className={styles.bankcardExp}>
+            <p className="opacity-50">EXP</p>
+            <p>
+              {payMethod?.card?.exp_month}/{payMethod?.card?.exp_year}
+            </p>
+          </div>
+          {payMethod?.card?.brand === "visa" && <Mastercard />}
         </div>
-        {payMethod?.card?.brand === "visa" && <Mastercard />}
+        <div className={styles.bankcardDefault}>
+          {payMethod?.isDefault ? (
+            <p className="opacity-50">Default</p>
+          ) : (
+            <DirectedButton
+              appearence="bank"
+              direction="forward"
+              onClick={handleSetDefaultClick}
+            >
+              Set Default
+            </DirectedButton>
+          )}
+        </div>
       </div>
-      <div className={styles.bankcardDefault}>
-        {payMethod?.isDefault ? (
-          <p className="opacity-50">Default</p>
-        ) : (
-          <DirectedButton appearence="bank" direction="forward">
-            Set Default
-          </DirectedButton>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
-
-// function BankCard({ data }) {
-//   console.log("data => ", data);
-//   return (
-//     <div className={styles.bankcard}>
-//       <div className={styles.bankcardInner}>
-//         <p className={styles.bankcardNo}>{data.card}</p>
-//         <div className={styles.bankcardExp}>
-//           <p className="opacity-50">EXP</p>
-//           <p>{data.exp}</p>
-//         </div>
-//         <Mastercard />
-//       </div>
-//       <div className={styles.bankcardDefault}>
-//         {data.default ? (
-//           <p className="opacity-50">Default</p>
-//         ) : (
-//           <DirectedButton appearence="bank" direction="forward">
-//             Set Default
-//           </DirectedButton>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
 
 export default BankCard;

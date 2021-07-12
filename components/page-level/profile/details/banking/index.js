@@ -23,7 +23,7 @@ function Banking({ user }) {
     if (connectStatus === "success" && !isOnboard) {
       const response = await Users.GetUserProfile(_user?.id).catch(() => null);
       if (!response) {
-        showNotificationMsg("Stripe Onboarding Failed. Please Try Again 1.", {
+        showNotificationMsg("Stripe Onboarding Failed. Please Try Again.", {
           variant: "error",
           displayIcon: true,
           duration: 10000, // 10 sec
