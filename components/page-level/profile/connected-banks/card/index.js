@@ -4,6 +4,7 @@ import DirectedButton from "@sub/button-directed";
 import BackDropLoader from "@sub/backdrop-loader";
 import ConfirmDialog from "@sub/confirm-dialog";
 import Mastercard from "@svg/mastercard";
+import TrashSVG from "@svg/thrash";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 
@@ -93,7 +94,12 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
               Set Default
             </DirectedButton>
           )}
-          <span onClick={() => setAskForConfirmation(true)}>delete</span>
+          <div
+            className={styles.deleteIcon}
+            onClick={() => setAskForConfirmation(true)}
+          >
+            <TrashSVG />
+          </div>
         </div>
       </div>
     </>
