@@ -2,6 +2,7 @@ import Link from "next/link";
 import DirectedButton from "@sub/button-directed";
 import StripeConnectButton from "@sub/button-stripe-connect";
 import StripeDisconnectButton from "@sub/button-stripe-disconnect";
+import StripeDashboardButton from "@sub/button-stripe-dashboard";
 import ToolTip from "@sub/tooltip";
 import styles from "./banking.module.css";
 
@@ -15,6 +16,9 @@ function Banking() {
       </div>
       <div className={styles.bankingContentItem}>
         <StripeDisconnectButton />
+      </div>
+      <div className={styles.bankingContentItem}>
+        <StripeDashboardButton />
       </div>
       <div className={styles.bankingContentItem}>
         <div className={styles.connectedBankAcc}>

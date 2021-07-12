@@ -53,4 +53,7 @@ export default class AuthManagementRoutes {
     return HTTPClient.delete(`/auth/stripe-remove`);
   }
 
+  static async StripeDashboard() {
+    return HTTPClient.get(`/auth/stripe-login-link`);
+  }
 }
