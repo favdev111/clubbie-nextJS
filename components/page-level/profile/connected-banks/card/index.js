@@ -4,6 +4,7 @@ import DirectedButton from "@sub/button-directed";
 import BackDropLoader from "@sub/backdrop-loader";
 import Mastercard from "@svg/mastercard";
 import Auth from "@api/services/Auth";
+import authUser from "@utils/helpers/auth";
 
 function BankCard({ payMethod, setUser, showNotificationMsg }) {
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
       displayIcon: true,
     });
     setUser(response?.data);
+    authUser.setUser(response?.data);
     setLoading(false);
   };
 
@@ -50,6 +52,7 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
     });
 
     setUser(response?.data);
+    authUser.setUser(response?.data);
     setLoading(false);
   };
 
