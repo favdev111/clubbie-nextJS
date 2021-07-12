@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import router from "next/router";
 import OvalButton from "@sub/button-oval";
 import useNotification from "@sub/hook-notification";
 import Auth from "@api/services/Auth";
+import authUser from "@utils/helpers/auth";
 import BankCard from "./card";
 import styles from "./connectedbanks.module.css";
 
 function ConnectedBanks() {
-  const data = [
-    {
-      id: 0,
-      exp: "10/12",
-      card: "**** **** **** 6574",
-      default: true,
-    },
-    {
-      id: 0,
-      exp: "10/12",
-      card: "**** **** **** 5433",
-      default: false,
-    },
-  ];
+  const [user, setUser] = useState(authUser.getUser());
+  const [stripeCustomer, setStripeCustomer] = useState(null);
+
+  useEffect(() => {
+    if (user?.stripe?.customer) {
+      setStripeCustomer(user?.stripe?.customer);
+    }
+  }, [user]);
 
   const [loading, setLoading] = useState(false);
   const { showNotificationMsg } = useNotification();
@@ -58,11 +53,31 @@ function ConnectedBanks() {
         <h1> Connected Bank Accounts</h1>
       </div>
       <div className={styles.connectedbanksBody}>
-        <div className={styles.connectedbanksBodyInner}>
-          {data.map((card, index) => (
-            <BankCard key={"bankcard" + index} data={card} />
-          ))}
-        </div>
+        {stripeCustomer ? (
+          <>
+            <div className={styles.connectedbanksBodyInner}>
+              {stripeCustomer.paymentMethods.map((payMethod, index) => (
+                <BankCard
+                  key={"bankcard" + index}
+                  payMethod={{
+                    ...payMethod,
+                    isDefault:
+                      stripeCustomer?.defaultPayMethodId === payMethod?.id
+                        ? true
+                        : false,
+                  }}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className={styles.noBankAccounts}>
+            <p>
+              You dont have any bank accounts connected. Add a new one from the
+              button below
+            </p>
+          </div>
+        )}
         <div className={styles.connectedbanksButton}>
           <OvalButton
             theme="bank"

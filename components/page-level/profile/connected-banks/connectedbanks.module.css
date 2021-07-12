@@ -21,6 +21,22 @@
   padding-top: var(--space-20);
   justify-content: flex-end;
 }
+.noBankAccounts {
+  background: var(--c-white-05) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  color: var(--c-white);
+}
 
 @media screen and (max-width: 900px) and (min-width: 640px) {
   .connectedbanks {
