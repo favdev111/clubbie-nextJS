@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import router from "next/router";
-import cn from "classnames";
 import useNotification from "@sub/hook-notification";
 import Auth from "@api/services/Auth";
-import StripeSVG from "@svg/stripe";
-import styles from "./button.module.css";
+import StripeBaseButton from "./base";
 
 const StripeConnectButton = ({ btnText, refreshURLPath, returnURLPath }) => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +11,7 @@ const StripeConnectButton = ({ btnText, refreshURLPath, returnURLPath }) => {
   const url = (path, type) =>
     `${window.location.origin}${path}?stripeConnect=${type}`;
 
-  const handleConnectClick = async () => {
+  const handleClick = async () => {
     setLoading(true);
 
     const response = await Auth.StripeConnect({
@@ -45,24 +43,11 @@ const StripeConnectButton = ({ btnText, refreshURLPath, returnURLPath }) => {
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={handleConnectClick}
-        className={cn(styles.btn, loading && styles.btnDisabled)}
-        disabled={loading}
-      >
-        <div className={styles.btnContent}>
-          {loading && <div className={styles.loading}></div>}
-          <span className={styles.btnBody}>
-            <span className={styles.btnText}>{btnText || "Connect with"}</span>
-            <span className={styles.btnIcon}>
-              <StripeSVG variant="light" />
-            </span>
-          </span>
-        </div>
-      </button>
-    </>
+    <StripeBaseButton
+      btnText={btnText || "Connect with"}
+      loading={loading}
+      handleClick={handleClick}
+    />
   );
 };
 export default StripeConnectButton;

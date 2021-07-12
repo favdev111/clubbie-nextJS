@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import router from "next/router";
-import cn from "classnames";
 import useNotification from "@sub/hook-notification";
 import Auth from "@api/services/Auth";
-import StripeSVG from "@svg/stripe";
-import styles from "./button.module.css";
+import StripeBaseButton from "./base";
 
 const StripeDashboardButton = () => {
   const [loading, setLoading] = useState(false);
 
   const { showNotificationMsg } = useNotification();
 
-  const handleDashboardClick = async () => {
+  const handleClick = async () => {
     setLoading(true);
 
     const response = await Auth.StripeDashboard().catch((e) => {
@@ -43,24 +41,11 @@ const StripeDashboardButton = () => {
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={handleDashboardClick}
-        className={cn(styles.btn, loading && styles.btnDisabled)}
-        disabled={loading}
-      >
-        <div className={styles.btnContent}>
-          {loading && <div className={styles.loading}></div>}
-          <span className={styles.btnBody}>
-            <span className={styles.btnText}>{"Dashboard"}</span>
-            <span className={styles.btnIcon}>
-              <StripeSVG variant="light" />
-            </span>
-          </span>
-        </div>
-      </button>
-    </>
+    <StripeBaseButton
+      btnText="Dashboard"
+      loading={loading}
+      handleClick={handleClick}
+    ></StripeBaseButton>
   );
 };
 export default StripeDashboardButton;
