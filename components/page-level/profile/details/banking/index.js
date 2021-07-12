@@ -12,17 +12,16 @@ import Users from "@api/services/Users";
 import authUser from "@utils/helpers/auth";
 import styles from "./banking.module.css";
 
-function Banking() {
-  const user = authUser.getUser();
-
+function Banking({ user }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [_user, setUser] = useState(user);
   const { showNotificationMsg } = useNotification();
 
   const getUpdatedStripeInfo = async (connectStatus) => {
-    const isOnboard = user?.stripe?.connectedAccount?.isOnboard;
+    const isOnboard = _user?.stripe?.connectedAccount?.isOnboard;
     if (connectStatus === "success" && !isOnboard) {
-      const response = await Users.GetUserProfile(user?.id).catch(() => null);
+      const response = await Users.GetUserProfile(_user?.id).catch(() => null);
       if (!response) {
         showNotificationMsg("Stripe Onboarding Failed. Please Try Again 1.", {
           variant: "error",
@@ -41,8 +40,9 @@ function Banking() {
         });
         console.log("now update cookie");
         authUser.setUser(updatedUser);
+        setUser(updatedUser);
       } else {
-        showNotificationMsg("Stripe Onboarding Failed. Please Try Again 2.", {
+        showNotificationMsg("Stripe Onboarding Failed. Please Try Again.", {
           variant: "error",
           displayIcon: true,
           duration: 10000, // 10 sec
@@ -70,11 +70,13 @@ function Banking() {
   return (
     <div className={styles.bankingContent}>
       {loading && <BackDropLoader />}
-      {!loading && user?.stripe ? (
-        user?.stripe?.connectedAccount?.isOnboard ? (
+      {!loading && _user?.stripe ? (
+        _user?.stripe?.connectedAccount?.isOnboard ? (
           <>
             <div className={styles.bankingContentItem}>
-              <StripeDisconnectButton />
+              <StripeDisconnectButton
+                onSuccess={(_updatedUser) => setUser(_updatedUser)}
+              />
             </div>
             <div className={styles.bankingContentItem}>
               <StripeDashboardButton />
@@ -92,12 +94,6 @@ function Banking() {
           <ToolTip text="Want to receive payments from Clubbie? Connect with stripe" />
         </div>
       )}
-      <div className={styles.bankingContentItem}>
-        <StripeDisconnectButton />
-      </div>
-      <div className={styles.bankingContentItem}>
-        <StripeDashboardButton />
-      </div>
       <div className={styles.bankingContentItem}>
         <div className={styles.connectedBankAcc}>
           <Link href="/connected-banks">

@@ -5,10 +5,12 @@ import OvalButton from "@sub/button-oval";
 import EditProfileSVG from "@svg/edit-profile";
 import BankingInfo from "./banking";
 import ProfileInfo from "./info";
+import authUser from "@utils/helpers/auth";
 import styles from "./profiledetails.module.css";
 
 function ProfileDetails({ profile, isPublic, clubs }) {
   const router = useRouter();
+  const user = authUser.getUser();
 
   return (
     <>
@@ -131,7 +133,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                 </div>
               )}
             </div>
-            <BankingInfo />
+            <BankingInfo user={user} />
           </>
         ) : (
           <div className={styles.profilePlayerBodyContent}>

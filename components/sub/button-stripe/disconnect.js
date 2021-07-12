@@ -5,7 +5,7 @@ import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 import StripeBaseButton from "./base";
 
-const StripeDisconnectButton = () => {
+const StripeDisconnectButton = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
@@ -37,6 +37,7 @@ const StripeDisconnectButton = () => {
     // update user with response
     console.log("update user => ", response);
     authUser.setUser(response?.data);
+    await onSuccess(response?.data);
     setLoading(false);
   };
 
