@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./profiledetails.module.css";
+import { useRouter } from "next/router";
 import cn from "classnames";
-import BankingInfo from "./banking";
-import ProfileInfo from "./info";
 import OvalButton from "@sub/button-oval";
 import EditProfileSVG from "@svg/edit-profile";
-import { useRouter } from "next/router";
+import BankingInfo from "./banking";
+import ProfileInfo from "./info";
+import styles from "./profiledetails.module.css";
 
 function ProfileDetails({ profile, isPublic, clubs }) {
   const router = useRouter();
