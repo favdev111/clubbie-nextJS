@@ -1,7 +1,7 @@
 import React from "react";
 import BankCard from "./card";
-import OvalButton from "@sub/button-oval";
 import styles from "./connectedbanks.module.css";
+import OvalButton from "@sub/button-oval";
 
 function ConnectedBanks({ data }) {
   return (

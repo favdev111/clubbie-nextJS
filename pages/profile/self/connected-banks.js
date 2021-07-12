@@ -1,7 +1,7 @@
 import React from "react";
 import Seo from "@layout/seo";
 import Layout from "@layout";
-import ConnectedBanks from "@page/connected-banks/";
+import ConnectedBanks from "@page/profile/connected-banks/";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 function ConnectedBanksPage({ cardData }) {

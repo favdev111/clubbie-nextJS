@@ -1,6 +1,6 @@
 import React from "react";
-import DirectedButton from "@sub/button-directed";
 import styles from "./bankcard.module.css";
+import DirectedButton from "@sub/button-directed";
 import Mastercard from "@svg/mastercard";
 
 function BankCard({ data }) {
