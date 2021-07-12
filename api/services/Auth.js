@@ -49,4 +49,8 @@ export default class AuthManagementRoutes {
     return HTTPClient.post(`/auth/stripe-connect`, payload);
   }
 
+  static async StripeDisconnect() {
+    return HTTPClient.delete(`/auth/stripe-remove`);
+  }
+
 }
