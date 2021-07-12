@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styles from "./bankcard.module.css";
 import DirectedButton from "@sub/button-directed";
 import BackDropLoader from "@sub/backdrop-loader";
+import ConfirmDialog from "@sub/confirm-dialog";
 import Mastercard from "@svg/mastercard";
 import Auth from "@api/services/Auth";
 import authUser from "@utils/helpers/auth";
 
 function BankCard({ payMethod, setUser, showNotificationMsg }) {
   const [loading, setLoading] = useState(false);
+  const [askForConfirmation, setAskForConfirmation] = useState(false);
 
   const handleSetDefaultClick = async () => {
     setLoading(true);
@@ -58,6 +60,13 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
 
   return (
     <>
+      <ConfirmDialog
+        open={askForConfirmation}
+        setOpen={setAskForConfirmation}
+        message="Are you sure to remove this payment method? Don't worry you can still add it later."
+        confirmText="Yes, Remove"
+        onConfirm={handleRemovePayMethodClick}
+      ></ConfirmDialog>
       {loading && <BackDropLoader />}
       <div className={styles.bankcard}>
         <div className={styles.bankcardInner}>
@@ -84,7 +93,7 @@ function BankCard({ payMethod, setUser, showNotificationMsg }) {
               Set Default
             </DirectedButton>
           )}
-          <span onClick={handleRemovePayMethodClick}>delete</span>
+          <span onClick={() => setAskForConfirmation(true)}>delete</span>
         </div>
       </div>
     </>
