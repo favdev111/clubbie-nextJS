@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./profiledetails.module.css";
 import cn from "classnames";
-import Link from "next/link";
-import DirectedButton from "@sub/button-directed";
+import BankingInfo from "./banking";
 import ProfileInfo from "./info";
 import OvalButton from "@sub/button-oval";
 import EditProfileSVG from "@svg/edit-profile";
@@ -132,13 +131,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                 </div>
               )}
             </div>
-            <Link href="/connected-banks">
-              <a>
-                <DirectedButton direction="forward">
-                  Connected Bank Accounts
-                </DirectedButton>
-              </a>
-            </Link>
+            <BankingInfo />
           </>
         ) : (
           <div className={styles.profilePlayerBodyContent}>
