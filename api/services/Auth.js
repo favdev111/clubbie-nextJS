@@ -44,4 +44,9 @@ export default class AuthManagementRoutes {
   static async ResetPassword(payload) {
     return HTTPClient.patch(`/auth/reset-password`, payload);
   }
+
+  static async StripeConnect(payload) {
+    return HTTPClient.post(`/auth/stripe-connect`, payload);
+  }
+
 }

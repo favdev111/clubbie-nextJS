@@ -1,0 +1,29 @@
+.bankingContent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.bankingContentItem {
+  margin-bottom: var(--space-16);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.connectedBankAcc {
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-10);
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span3 {
+  grid-column: span 3 / span 3;
+}
+
+@media (max-width: 760px) {
+  .span1 {
+    grid-column: span 3 / span 3;
+  }
+  .span3 {
+    grid-column: span 3 / span 3;
+  }
+}
