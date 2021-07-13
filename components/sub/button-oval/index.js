@@ -58,7 +58,7 @@ function OvalButton({
               <Repost />
             </a>
           )}
-          {children}
+          <span>{children}</span>
         </span>
       </div>
     </button>
