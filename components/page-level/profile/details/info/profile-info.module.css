@@ -1,6 +1,7 @@
 .profileInfo {
   display: block;
   padding-left: var(--space-16);
+  max-width: 530px;
 }
 .profileInfo .playerName {
   margin-top: var(--space-6);
@@ -15,6 +16,11 @@
 .profileInfo .playerClubImg {
   margin-right: var(--space-16);
   border-radius: 50%;
+}
+.profileInfo .clubsCrest {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .profileInfo .clubsCrest img {
   width: 40px;
