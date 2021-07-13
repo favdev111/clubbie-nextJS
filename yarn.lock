@@ -8891,6 +8891,11 @@ react-inspector@^5.1.0:
     is-dom "^1.0.0"
     prop-types "^15.0.0"
 
+react-inview-monitor@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-inview-monitor/-/react-inview-monitor-2.3.0.tgz#88f6add61f0db34bc93473ef65d1e9f7ee0abeb0"
+  integrity sha512-ljHhg8gLQnp753XXparU5MdPAfUWv3pRyo7Rwd2scdyB8zy1VgfvNxKAM8ZM2ueH03pvGmbeLA4ain+iFyYfPA==
+
 react-is@16.13.1, react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

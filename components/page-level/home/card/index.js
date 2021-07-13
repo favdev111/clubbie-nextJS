@@ -3,6 +3,8 @@ import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 import cn from "classnames";
+import InViewMonitor from 'react-inview-monitor';
+import Video from './Video';
 
 function HomeVideosCard({ createdPost, data }) {
   const {
@@ -28,7 +30,12 @@ function HomeVideosCard({ createdPost, data }) {
       <Link href={`/content/${id}`}>
         <span>
           {content.includes("video") ? (
-            <video className={styles.preview} src={content} controls />
+          <InViewMonitor
+            childPropsInView={{isPlaying: true, sTyling: styles.preview}}
+            toggleChildPropsOnInView={true}
+          >
+            <Video src={content} />
+          </InViewMonitor>
           ) : content.includes("image") ? (
             <img className={styles.preview} src={content} />
           ) : (
