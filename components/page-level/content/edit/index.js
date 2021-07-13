@@ -29,7 +29,19 @@ function ContentEdit({ content }) {
       tags,
     };
 
-    // Todo: upload all media if any
+    // delete all related media if any
+    if (deleteChildPosts.length > 0) {
+      console.log("Posts to delete => ", deleteChildPosts);
+      const deletedPosts = await Posts.RemoveChildPost(
+        content?.id,
+        deleteChildPosts
+      ).catch(() => null);
+      console.log("Deleted posts => ", deletedPosts);
+      // show error if not deleted and return
+      return;
+    }
+
+    // upload all media if any
     const parentMedia = await (async () => {
       let uploadedMedia;
       if (_media?.src) {
@@ -123,8 +135,6 @@ function ContentEdit({ content }) {
     });
 
     router.push(`/content/${parentPost.id}`);
-
-    // Todo: delete all related media if any
   };
 
   return (
