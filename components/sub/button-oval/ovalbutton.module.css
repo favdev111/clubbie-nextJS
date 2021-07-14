@@ -34,6 +34,9 @@
   font-family: var(--ff-bold);
   text-align: center;
   color: var(--c-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 640px) {

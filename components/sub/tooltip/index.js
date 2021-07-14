@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import cn from "classnames";
+import ToolTipSVG from "@svg/tooltip";
 import styles from "./tooltip.module.css";
 
 function useOutsideAlerter(ref, setOpen) {
@@ -28,7 +29,7 @@ function ToolTip({ text, children }) {
   return (
     <div className={styles.dropDownWrapper}>
       <span ref={wrapperRef} className={styles.tipHover}>
-        {children || "?"}
+        {children || <ToolTipSVG />}
       </span>
       <div className={cn(styles.dropDownList, open && styles.openDropdown)}>
         {text || "ToolTip Text"}

@@ -7,8 +7,9 @@ import Login from "@page/auth/login";
 import auth from "@utils/helpers/auth";
 
 const LoginPage = ({ previousURL }) => {
+  const authUser = auth.getUser();
   const authUserAccess = auth.getAccessToken();
-  if (authUserAccess) {
+  if (authUser && authUserAccess) {
     router.push("/");
   }
 

@@ -1,0 +1,8 @@
+.background {
+  height: 20px;
+  width: 20px;
+  fill: var(--c-yellow);
+}
+.questionMark {
+  fill: var(--c-nav);
+}
