@@ -10,7 +10,13 @@ function ProfilePage({ user, clubs }) {
     <Layout>
       <Seo title="Edit Profile" desc="Edit Your Public Profile on Clubbie" />
       <ProfileSelf
-        profile={{ ...user?.profile, id: user?.id, email: user?.local?.email }}
+        profileInfo={{
+          profile: {
+            ...user?.profile,
+            id: user?.id,
+            email: user?.local?.email,
+          },
+        }}
         clubs={clubs}
         editMode
       />
@@ -28,7 +34,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const clubs = userClubs?.data || [];
 
   const notFound = !user;
-  console.log(clubs);
+
   return {
     props: {
       user,
