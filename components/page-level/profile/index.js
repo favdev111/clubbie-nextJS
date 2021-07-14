@@ -10,7 +10,12 @@ function ProfileSelf({ isPublic, profileInfo, editMode, posts, clubs }) {
       <h1 className={styles.profileTitle}>{editMode && "Edit "}Profile</h1>
       <div className={styles.profilePlayer}>
         {editMode && !isPublic ? (
-          <ProfileEdit profile={profileInfo?.profile} clubs={clubs} />
+          <ProfileEdit
+            profile={{
+              ...profileInfo?.profile,
+            }}
+            clubs={clubs}
+          />
         ) : (
           <ProfileDetails
             profileInfo={profileInfo}
