@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileSelf from "@page/profile";
+import Profile from "@page/profile";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
@@ -10,8 +10,8 @@ function ProfilePage({ user, posts, clubs }) {
   return (
     <Layout>
       <Seo title="My Profile" desc="Lorem ipsum dolor sit amet" />
-      <ProfileSelf
-        profile={{ ...user?.profile, id: user?.id }}
+      <Profile
+        profileInfo={{ ...user, id: user?.id }}
         posts={posts}
         clubs={clubs}
       />

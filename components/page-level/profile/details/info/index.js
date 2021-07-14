@@ -15,29 +15,29 @@ function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
       <div className={styles.profileInfo}>
         <h2 className={styles.playerName}> {footballerName} </h2>
         <h6 className={styles.playerRole}> {playerTitle} </h6>
+        {clubs.length > 0 && (
+          <div className={styles.clubsCrest}>
+            {clubs.map((club, index) => (
+              <ToolTip text={club.title}>
+                <span>
+                  <img
+                    key={index}
+                    className={styles.playerClubImg}
+                    src={club?.crest || "/assets/club-badge-placeholder.png"}
+                  />
+                </span>
+              </ToolTip>
+            ))}
+          </div>
+        )}
         {!isPublic && (
-          <>
-            <div className={styles.clubsCrest}>
-              {clubs.map((club, index) => (
-                <ToolTip text={club.title}>
-                  <span>
-                    <img
-                      key={index}
-                      className={styles.playerClubImg}
-                      src={club?.crest || "/assets/club-badge-placeholder.png"}
-                    />
-                  </span>
-                </ToolTip>
-              ))}
-            </div>
-            <Link href="/teamhub/join-club">
-              <a>
-                <DirectedButton direction="forward">
-                  <span className={styles.btnChipPadding}>Join Club</span>
-                </DirectedButton>
-              </a>
-            </Link>
-          </>
+          <Link href="/teamhub/join-club">
+            <a>
+              <DirectedButton direction="forward">
+                <span className={styles.btnChipPadding}>Join Club</span>
+              </DirectedButton>
+            </a>
+          </Link>
         )}
       </div>
     </>

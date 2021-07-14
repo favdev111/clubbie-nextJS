@@ -8,7 +8,7 @@ import ProfileInfo from "./info";
 import authUser from "@utils/helpers/auth";
 import styles from "./profiledetails.module.css";
 
-function ProfileDetails({ profile, isPublic, clubs }) {
+function ProfileDetails({ profileInfo, isPublic, clubs }) {
   const router = useRouter();
   const user = authUser.getUser();
 
@@ -17,10 +17,12 @@ function ProfileDetails({ profile, isPublic, clubs }) {
       <div className={styles.profilePlayerHeader}>
         <div className={styles.profilePlayerHeaderInnerLeft}>
           <ProfileInfo
-            image={profile?.image || "/assets/person-placeholder.jpg"}
+            image={
+              profileInfo?.profile?.image || "/assets/person-placeholder.jpg"
+            }
             isPublic={isPublic}
-            footballerName={profile?.fullName || profile?.id}
-            playerTitle={profile?.playerTitle}
+            footballerName={profileInfo?.profile?.fullName || profileInfo?.id}
+            playerTitle={profileInfo?.profile?.playerTitle}
             clubs={clubs}
           />
         </div>
@@ -55,7 +57,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
         {!isPublic ? (
           <>
             <div className={styles.profilePlayerBodyContent}>
-              {profile?.bio && (
+              {profileInfo?.profile?.bio && (
                 <div
                   className={cn(
                     styles.span3,
@@ -63,10 +65,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Bio
-                  <p> {profile?.bio} </p>
+                  <p> {profileInfo?.profile?.bio} </p>
                 </div>
               )}
-              {profile?.email && (
+              {profileInfo?.profile?.email && (
                 <div
                   className={cn(
                     styles.span1,
@@ -74,10 +76,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Email
-                  <p> {profile?.email}</p>
+                  <p> {profileInfo?.profile?.email}</p>
                 </div>
               )}
-              {profile?.telephone && (
+              {profileInfo?.profile?.telephone && (
                 <div
                   className={cn(
                     styles.span1,
@@ -85,10 +87,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Telephone
-                  <p> {profile?.telephone}</p>
+                  <p> {profileInfo?.profile?.telephone}</p>
                 </div>
               )}
-              {profile?.address && (
+              {profileInfo?.profile?.address && (
                 <div
                   className={cn(
                     styles.span1,
@@ -96,10 +98,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Address
-                  <p> {profile?.address}</p>
+                  <p> {profileInfo?.profile?.address}</p>
                 </div>
               )}
-              {profile?.city && (
+              {profileInfo?.profile?.city && (
                 <div
                   className={cn(
                     styles.span1,
@@ -107,10 +109,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   City
-                  <p> {profile?.city}</p>
+                  <p> {profileInfo?.profile?.city}</p>
                 </div>
               )}
-              {profile?.country && (
+              {profileInfo?.profile?.country && (
                 <div
                   className={cn(
                     styles.span1,
@@ -118,10 +120,10 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Country
-                  <p> {profile?.country}</p>
+                  <p> {profileInfo?.profile?.country}</p>
                 </div>
               )}
-              {profile?.postCode && (
+              {profileInfo?.profile?.postCode && (
                 <div
                   className={cn(
                     styles.span1,
@@ -129,7 +131,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                   )}
                 >
                   Post code
-                  <p> {profile?.postCode}</p>
+                  <p> {profileInfo?.profile?.postCode}</p>
                 </div>
               )}
             </div>
@@ -137,7 +139,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
           </>
         ) : (
           <div className={styles.profilePlayerBodyContent}>
-            {profile?.bio && (
+            {profileInfo?.profile?.bio && (
               <div
                 className={cn(
                   styles.span3,
@@ -145,7 +147,7 @@ function ProfileDetails({ profile, isPublic, clubs }) {
                 )}
               >
                 Bio
-                <p> {profile?.bio} </p>
+                <p> {profileInfo?.profile?.bio} </p>
               </div>
             )}
           </div>
