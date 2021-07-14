@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import DirectedButton from "@sub/button-directed";
 import Avatar from "@sub/avatar";
+import ToolTip from "@sub/tooltip";
 import styles from "./profile-info.module.css";
 
 function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
@@ -18,11 +19,15 @@ function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
           <>
             <div className={styles.clubsCrest}>
               {clubs.map((club, index) => (
-                <img
-                  key={index}
-                  className={styles.playerClubImg}
-                  src={club?.crest || "/assets/club-badge-placeholder.png"}
-                />
+                <ToolTip text={club.title}>
+                  <span>
+                    <img
+                      key={index}
+                      className={styles.playerClubImg}
+                      src={club?.crest || "/assets/club-badge-placeholder.png"}
+                    />
+                  </span>
+                </ToolTip>
               ))}
             </div>
             <Link href="/teamhub/join-club">

@@ -23,7 +23,7 @@ function Banking({ user }) {
     if (connectStatus === "success" && !isOnboard) {
       const response = await Users.GetUserProfile(_user?.id).catch(() => null);
       if (!response) {
-        showNotificationMsg("Stripe Onboarding Failed. Please Try Again 1.", {
+        showNotificationMsg("Stripe Onboarding Failed. Please Try Again.", {
           variant: "error",
           displayIcon: true,
           duration: 10000, // 10 sec
@@ -80,6 +80,7 @@ function Banking({ user }) {
             </div>
             <div className={styles.bankingContentItem}>
               <StripeDashboardButton />
+              <ToolTip text="Update your stripe account or get latest details about payouts to your bank" />
             </div>
           </>
         ) : (
@@ -96,7 +97,7 @@ function Banking({ user }) {
       )}
       <div className={styles.bankingContentItem}>
         <div className={styles.connectedBankAcc}>
-          <Link href="/connected-banks">
+          <Link href="/profile/self/connected-banks">
             <a>
               <DirectedButton direction="forward">
                 Connected Bank Accounts

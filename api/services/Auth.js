@@ -56,4 +56,16 @@ export default class AuthManagementRoutes {
   static async StripeDashboard() {
     return HTTPClient.get(`/auth/stripe-login-link`);
   }
+
+  static async AddPaymentMethod(payload) {
+    return HTTPClient.post(`/auth/payment-methods`, payload);
+  }
+
+  static async SetDefaultPaymentMethod(id) {
+    return HTTPClient.patch(`/auth/payment-methods/${id}/set-default`);
+  }
+
+  static async RemovePaymentMethod(id) {
+    return HTTPClient.delete(`/auth/payment-methods/${id}/remove`);
+  }
 }

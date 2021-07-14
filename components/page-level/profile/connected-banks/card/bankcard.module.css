@@ -1,5 +1,5 @@
 .bankcard {
-  background: #ffffff0d 0% 0% no-repeat padding-box;
+  background: var(--c-white-05) 0% 0% no-repeat padding-box;
   border-radius: var(--radius-md);
   padding: var(--space-16);
   font-size: var(--fs-small);
@@ -14,4 +14,10 @@
 }
 .bankcardExp p {
   padding-left: 2px;
+}
+.deleteIcon {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-8);
+  cursor: pointer;
 }

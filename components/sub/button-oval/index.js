@@ -16,12 +16,14 @@ function OvalButton({
   theme,
   classes,
   onClick,
+  loading,
 }) {
   return (
     <button
       className={cn(
         classes,
         styles.ovalButton,
+        loading && styles.btnDisabled,
         appearence !== "edit" && "secondary",
         theme === "bank" && styles.buttonBank,
         status | (status === "active") && "active",
@@ -29,29 +31,36 @@ function OvalButton({
       )}
       onClick={onClick}
     >
-      {appearence === "edit" && <a>{isPublic ? <Send /> : <EditProfile />}</a>}
-      {appearence === "message" && (
-        <a>
-          <Messages />
-        </a>
-      )}
+      <div className={styles.btnContent}>
+        {loading && <div className={styles.loading}></div>}
+        <span className={styles.contTxt}>
+          {appearence === "edit" && (
+            <a>{isPublic ? <Send /> : <EditProfile />}</a>
+          )}
+          {appearence === "message" && (
+            <a>
+              <Messages />
+            </a>
+          )}
 
-      {appearence === "uploaded" && (
-        <a>
-          <Uploaded />
-        </a>
-      )}
-      {appearence === "tagged" && (
-        <a>
-          <Tag />
-        </a>
-      )}
-      {appearence === "reposts" && (
-        <a>
-          <Repost />
-        </a>
-      )}
-      {children}
+          {appearence === "uploaded" && (
+            <a>
+              <Uploaded />
+            </a>
+          )}
+          {appearence === "tagged" && (
+            <a>
+              <Tag />
+            </a>
+          )}
+          {appearence === "reposts" && (
+            <a>
+              <Repost />
+            </a>
+          )}
+          {children}
+        </span>
+      </div>
     </button>
   );
 }

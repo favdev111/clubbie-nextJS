@@ -1,11 +1,9 @@
 .connectedbanks {
   max-width: var(--container-lg);
   padding-top: var(--space-50);
+  padding-bottom: var(--space-64);
   margin-left: auto;
   margin-right: auto;
-}
-.connectedbanksTitle h1 {
-  margin-bottom: var(--space-48);
 }
 .connectedbanksBody {
   background: var(--c-primary) 0% 0% no-repeat padding-box;
@@ -20,8 +18,24 @@
 }
 .connectedbanksButton {
   display: flex;
-  padding-top: 224px;
+  padding-top: var(--space-20);
   justify-content: flex-end;
+}
+.noBankAccounts {
+  background: var(--c-white-05) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  color: var(--c-white);
 }
 
 @media screen and (max-width: 900px) and (min-width: 640px) {
@@ -34,9 +48,6 @@
   .connectedbanksBody .connectedbanksBodyInner {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-  .connectedbanksButton {
-    padding-top: var(--space-50);
-  }
 }
 @media (max-width: 640px) {
   .connectedbanks {
@@ -44,8 +55,5 @@
   }
   .connectedbanksBodyInner {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .connectedbanksButton {
-    padding-top: var(--space-50);
   }
 }
