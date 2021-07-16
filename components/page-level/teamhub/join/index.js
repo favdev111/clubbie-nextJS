@@ -10,7 +10,7 @@ import styles from "./join.module.css";
 
 function Join({ title, clubs, teams, selectedClub, register }) {
   const router = useRouter();
-  console.log(clubs);
+
   const [listItems, setlistItems] = useState(clubs || teams);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);

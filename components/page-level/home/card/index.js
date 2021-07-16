@@ -6,12 +6,50 @@ import BackDropLoader from "@sub/backdrop-loader";
 import useNotifications from "@sub/hook-notification";
 import DropDown from "@sub/dropdown";
 import Posts from "@api/services/Posts";
+import Teams from "@api/services/Teams";
 import Interactions from "@api/services/interactions";
 import cn from "classnames";
 import InViewMonitor from "react-inview-monitor";
 import Video from "./Video";
+import ContentDialog from "@sub/content-dialog";
 
-function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
+function TeamList({ teams, selectedTeam, setSelectedTeam }) {
+  const handleItemClick = (item) => {
+    setSelectedTeam(item);
+  };
+
+  return (
+    <div className={styles.teamListContent}>
+      <ul className="join__list">
+        {teams &&
+          teams.map((item, index) => (
+            <li
+              key={item + index}
+              className={cn(
+                styles.teamListItem,
+                item?.id === selectedTeam?.id && styles.teamListItemSelectedTeam
+              )}
+              onClick={(e) => handleItemClick(item)}
+            >
+              <img
+                src={item?.crest || "/assets/club-badge-placeholder.png"}
+                className={styles.crestImage}
+              />
+              {item?.title}
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+}
+
+function HomeVideosCard({
+  createdPost,
+  data,
+  isLoggedIn,
+  user,
+  setShowLoginPopup,
+}) {
   const {
     id,
     title,
@@ -24,9 +62,6 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
     myInteractions,
   } = data;
 
-  // console.log(data);
-  console.log("interactions => ", myInteractions);
-
   const { showNotificationMsg } = useNotifications();
 
   const [content] = useState(media || thumbnail);
@@ -36,10 +71,16 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
   const [repostProfileCount, setRepostProfileCount] = useState(
     myInteractions?.repostedInProfile || 0
   );
-  const [isRepostedInProfile, setIsRepostedInProfile] = useState(
+  const [repostTeamCount, setRepostTeamCount] = useState(
+    myInteractions?.repostedInTeam || 0
+  );
+  const [isReposted, setIsReposted] = useState(
     !!myInteractions?.repostedInProfile
   );
   const [loading, setLoading] = useState(false);
+  const [teamsList, setTeamsList] = useState([]);
+  const [openContentDialog, setOpenContentDialog] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
   const verifyLoggedIn = () => {
     if (isLoggedIn) return true;
@@ -87,9 +128,62 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
       variant: "success",
       displayIcon: true,
     });
-    setIsRepostedInProfile(true);
+    setIsReposted(true);
     setRepostCount((count) => count + 1);
     setRepostProfileCount((count) => count + 1);
+    setLoading(false);
+  };
+
+  const handleTeamRepostClick = async () => {
+    if (!verifyLoggedIn()) return;
+    setLoading(true);
+    const ids = user?.teams?.map((x) => x?.team);
+    if (!(ids?.length > 0)) {
+      showNotificationMsg("You are not a member of any team", {
+        variant: "error",
+        displayIcon: true,
+      });
+      return;
+    }
+    const response = await Teams.GetTeamsWithDetails(ids).catch(() => null);
+    if (!response) {
+      showNotificationMsg("Error fetching latest team data", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    setTeamsList(response?.data);
+    setOpenContentDialog(true);
+  };
+
+  const respostInTeam = async () => {
+    if (!verifyLoggedIn()) return;
+    setLoading(true);
+    const response = await Posts.Repost(id, {
+      repostIn: "team",
+      teamId: selectedTeam?.id,
+    }).catch((e) => {
+      console.log(e.response);
+      return null;
+    });
+    if (!response) {
+      showNotificationMsg("Error Reposting In Team", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+    showNotificationMsg(`Reposted In ${selectedTeam?.title || "Team"}`, {
+      variant: "success",
+      displayIcon: true,
+    });
+    setIsReposted(true);
+    setRepostCount((count) => count + 1);
+    setRepostTeamCount((count) => count + 1);
     setLoading(false);
   };
 
@@ -101,6 +195,21 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
       )}
     >
       {loading && <BackDropLoader />}
+      <ContentDialog
+        open={openContentDialog}
+        setOpen={setOpenContentDialog}
+        title="Select a Team"
+        Body={() => (
+          <TeamList
+            teams={teamsList}
+            selectedTeam={selectedTeam}
+            setSelectedTeam={setSelectedTeam}
+          />
+        )}
+        confirmText="Repost"
+        onConfirm={respostInTeam}
+        type="info"
+      />
       <Link href={`/content/${id}`}>
         <span>
           {content.includes("video") ? (
@@ -140,7 +249,6 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
         </div>
         <SocialButton type="upload" />
       </div>
-
       <p className={styles.desc}> {title}</p>
       <p className={cn("opacity-50", styles.viewCount)}>
         {counts?.views || counts?.views === 0
@@ -156,7 +264,7 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
         </SocialButton>
         <DropDown
           Component={() => (
-            <SocialButton type="repost" highlight={isRepostedInProfile}>
+            <SocialButton type="repost" highlight={isReposted}>
               {repostCount + ""}
             </SocialButton>
           )}
@@ -169,8 +277,10 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
                 (repostProfileCount > 0 ? " (" + repostProfileCount + ")" : ""),
             },
             {
-              onClick: () => alert("repost in teams"),
-              title: "Team",
+              onClick: handleTeamRepostClick,
+              title:
+                "Team" +
+                (repostTeamCount > 0 ? " (" + repostTeamCount + ")" : ""),
               seperator: true,
             },
           ]}
