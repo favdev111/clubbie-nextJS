@@ -48,9 +48,9 @@ const Login = ({ previousURL }) => {
       .catch((err) => {
         setError(
           err?.response?.data?.message ||
-            err?.message ||
-            err?.request ||
-            "Some Error Occured"
+          err?.message ||
+          err?.request ||
+          "Some Error Occured"
         );
       });
     setLoading(false);
@@ -111,7 +111,7 @@ const Login = ({ previousURL }) => {
       <div className={styles.signUpMsg}>
         Don’t have an Account?{" "}
         <Link href="/auth/sign-up">
-          <a className="signUp">&ensp;Sign Up</a>
+          <a className={styles.signUp}>&ensp;Sign Up</a>
         </Link>
       </div>
     </div>
