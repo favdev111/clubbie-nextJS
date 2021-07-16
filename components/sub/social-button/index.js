@@ -8,9 +8,12 @@ import Repost from "@svg/social/repost";
 import Send from "@svg/social/send";
 import Upload from "@svg/social/upload";
 
-function SocialButton({ type, children, highlight }) {
+function SocialButton({ type, children, highlight, onClick }) {
   return (
-    <div className={cn(styles.socialButton, highlight && styles.highlight)}>
+    <div
+      onClick={onClick}
+      className={cn(styles.socialButton, highlight && styles.highlight)}
+    >
       {type == "repost" && <Repost strokeColor={highlight && "white"} />}
       {type == "fav" && <Fav strokeColor={highlight && "white"} />}
       {type == "comment" && <Comment strokeColor={highlight && "white"} />}

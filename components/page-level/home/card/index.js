@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
+import useNotifications from "@sub/hook-notification";
+import Interactions from "@api/services/interactions";
 import cn from "classnames";
 import InViewMonitor from "react-inview-monitor";
 import Video from "./Video";
 
-function HomeVideosCard({ createdPost, data }) {
+function HomeVideosCard({ createdPost, data, isLoggedIn }) {
   const {
     id,
     description,
@@ -19,9 +21,44 @@ function HomeVideosCard({ createdPost, data }) {
     myInteractions,
   } = data;
 
-  const [content] = useState(media || thumbnail);
+  const { showNotificationMsg } = useNotifications();
 
-  console.log(data);
+  const [content] = useState(media || thumbnail);
+  const [likeCount, setLikeCount] = useState(counts?.likes || 0);
+  const [isLiked, setIsLiked] = useState(!!myInteractions?.liked);
+
+  const handleLikeClick = async () => {
+    if (!isLoggedIn) {
+      // TODO: popup instead of this
+      showNotificationMsg("Please Login To Continue", {
+        variant: "error",
+        displayIcon: true,
+      });
+      return;
+    }
+    if (!isLiked) {
+      const response = await Interactions.LikePost(id).catch((e) => {
+        console.log("error liking => ", e);
+        return null;
+      });
+      if (!response) {
+        showNotificationMsg("Error liking post. Try again..!", {
+          variant: "error",
+          displayIcon: true,
+        });
+        return;
+      }
+      setIsLiked(true);
+      setLikeCount((count) => count + 1);
+      showNotificationMsg("Post Liked Successfully", {
+        variant: "success",
+        displayIcon: true,
+      });
+    } else {
+      // TODO: remove interaction
+      showNotificationMsg("Remove Post Like");
+    }
+  };
 
   return (
     <div
@@ -80,8 +117,8 @@ function HomeVideosCard({ createdPost, data }) {
       </p>
       {/* buttons */}
       <div className={styles.socialButtons}>
-        <SocialButton type="fav" highlight={myInteractions?.liked}>
-          {counts?.likes || "0"}
+        <SocialButton type="fav" highlight={isLiked} onClick={handleLikeClick}>
+          {likeCount + ""}
         </SocialButton>
         <SocialButton type="repost">{counts?.reposts || "0"}</SocialButton>
         <SocialButton type="send" />

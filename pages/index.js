@@ -3,15 +3,18 @@ import Seo from "@layout/seo";
 import React from "react";
 import Home from "@page/home";
 import Posts from "@api/services/Posts";
+import authUser from "@utils/helpers/auth";
 
 const HomePage = ({ posts }) => {
+  const user = authUser.getUser();
+
   return (
     <Layout>
       <Seo
         title="Clubbie"
         desc="Clubbie - Raising The Bar For Amateur Sports"
       />
-      <Home posts={posts} />
+      <Home posts={posts} user={user} />
     </Layout>
   );
 };

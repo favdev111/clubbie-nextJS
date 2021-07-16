@@ -41,7 +41,7 @@ function EndFeedMessage() {
   );
 }
 
-function Home({ posts }) {
+function Home({ posts, user }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
@@ -155,6 +155,7 @@ function Home({ posts }) {
               key={post + index}
               data={post}
               createdPost={createdPost}
+              isLoggedIn={!!user}
             />
           ))}
       </InfiniteScroll>

@@ -1,6 +1,6 @@
 import HTTPClient from "../HTTPClient";
 
-export default class PostManagementRoutes {
+export default class PostInteractionManagementRoutes {
   static async LikePost(id) {
     return HTTPClient.post(`/content-interactions/`, {
       type: "post",
