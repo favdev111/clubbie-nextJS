@@ -11,7 +11,7 @@ import Video from "./Video";
 function HomeVideosCard({ createdPost, data, isLoggedIn }) {
   const {
     id,
-    description,
+    title,
     media,
     thumbnail,
     author,
@@ -20,6 +20,8 @@ function HomeVideosCard({ createdPost, data, isLoggedIn }) {
     counts,
     myInteractions,
   } = data;
+
+  console.log(data);
 
   const { showNotificationMsg } = useNotifications();
 
@@ -50,10 +52,6 @@ function HomeVideosCard({ createdPost, data, isLoggedIn }) {
       }
       setIsLiked(true);
       setLikeCount((count) => count + 1);
-      showNotificationMsg("Post Liked Successfully", {
-        variant: "success",
-        displayIcon: true,
-      });
     } else {
       // TODO: remove interaction
       showNotificationMsg("Remove Post Like");
@@ -107,7 +105,7 @@ function HomeVideosCard({ createdPost, data, isLoggedIn }) {
         <SocialButton type="upload" />
       </div>
 
-      <p className={styles.desc}> {description}</p>
+      <p className={styles.desc}> {title}</p>
       <p className={cn("opacity-50", styles.viewCount)}>
         {counts?.views || counts?.views === 0
           ? `${counts?.views} View${
