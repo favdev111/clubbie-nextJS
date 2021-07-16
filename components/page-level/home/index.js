@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
+import ConfirmDialog from "@sub/confirm-dialog";
 import HomeVideosCard from "./card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
-import YouShouldSignUp from "@sub/sign-up-warn";
 import { useRouter } from "next/router";
 import Loader from "@sub/loader";
 import InfiniteScroll from "@sub/infinite-scroll";
@@ -61,6 +61,7 @@ function Home({ posts, user }) {
   const [filter, setFilter] = useState({
     sortBy: "createdAt:desc",
   });
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const fetchMorePosts = async () => {
     const response = await Posts.GetPosts({
@@ -85,7 +86,14 @@ function Home({ posts, user }) {
 
   return (
     <div className={styles.homePage}>
-      <YouShouldSignUp open />
+      <ConfirmDialog
+        open={showLoginPopup}
+        setOpen={setShowLoginPopup}
+        message="You need to login to perform this action"
+        confirmText="Login"
+        onConfirm={() => router.push("/auth/login")}
+        type="info"
+      ></ConfirmDialog>
       <div className={styles.search}>
         <CommonSearch />
       </div>
@@ -156,6 +164,7 @@ function Home({ posts, user }) {
               data={post}
               createdPost={createdPost}
               isLoggedIn={!!user}
+              setShowLoginPopup={setShowLoginPopup}
             />
           ))}
       </InfiniteScroll>

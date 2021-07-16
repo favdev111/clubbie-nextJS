@@ -8,7 +8,7 @@ import cn from "classnames";
 import InViewMonitor from "react-inview-monitor";
 import Video from "./Video";
 
-function HomeVideosCard({ createdPost, data, isLoggedIn }) {
+function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
   const {
     id,
     title,
@@ -29,20 +29,16 @@ function HomeVideosCard({ createdPost, data, isLoggedIn }) {
   const [likeCount, setLikeCount] = useState(counts?.likes || 0);
   const [isLiked, setIsLiked] = useState(!!myInteractions?.liked);
 
+  const verifyLoggedIn = () => {
+    if (isLoggedIn) return true;
+    setShowLoginPopup(true);
+    return false;
+  };
+
   const handleLikeClick = async () => {
-    if (!isLoggedIn) {
-      // TODO: popup instead of this
-      showNotificationMsg("Please Login To Continue", {
-        variant: "error",
-        displayIcon: true,
-      });
-      return;
-    }
+    if (!verifyLoggedIn()) return;
     if (!isLiked) {
-      const response = await Interactions.LikePost(id).catch((e) => {
-        console.log("error liking => ", e);
-        return null;
-      });
+      const response = await Interactions.LikePost(id).catch(() => null);
       if (!response) {
         showNotificationMsg("Error liking post. Try again..!", {
           variant: "error",

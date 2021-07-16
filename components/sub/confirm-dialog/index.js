@@ -25,6 +25,7 @@ function ConfirmDialog({
   confirmText,
   onConfirm,
   onDismiss,
+  type,
 }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
@@ -41,7 +42,7 @@ function ConfirmDialog({
             Cancel
           </Button>
           <Button
-            variant="danger"
+            variant={type || "danger"}
             onClick={() => {
               onConfirm();
               setOpen(false);
