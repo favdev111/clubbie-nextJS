@@ -18,13 +18,13 @@ function useOutsideAlerter(ref, setOpen) {
   }, [ref]);
 }
 
-function DropDown({ Component, links }) {
+function DropDown({ Component, list, title }) {
   const [open, setOpen] = useState(false);
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
   /*
-  links: [
+  list: [
     {
       href,
       title,
@@ -40,19 +40,41 @@ function DropDown({ Component, links }) {
         <Component></Component>
       </span>
       <div className={cn(styles.dropDownList, open && styles.openDropdown)}>
-        {links?.length &&
-          links.map((link, index) => (
-            <Link key={index} href={link.href}>
-              <span
-                className={cn(
-                  styles.dropDownListItem,
-                  link.seperator && styles.seperator
+        {title && <span className={styles.dropDownListTitle}>{title}</span>}
+        <div className={title && styles.dropDownListMenu}>
+          {list?.length &&
+            list.map((item, index) => (
+              <>
+                {item.href && (
+                  <Link key={index} href={item.href}>
+                    <span
+                      className={cn(
+                        styles.dropDownListItem,
+                        item.seperator && styles.seperator
+                      )}
+                    >
+                      {item.title}
+                    </span>
+                  </Link>
                 )}
-              >
-                {link.title}
-              </span>
-            </Link>
-          ))}
+                {item.onClick && (
+                  <span
+                    className={cn(
+                      styles.dropDownListItem,
+                      styles.dropDownListMenuItem,
+                      item.seperator && styles.seperator
+                    )}
+                    onClick={async (e) => {
+                      await item.onClick(e);
+                      setOpen(false);
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                )}
+              </>
+            ))}
+        </div>
       </div>
     </div>
   );

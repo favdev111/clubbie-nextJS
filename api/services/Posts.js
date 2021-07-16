@@ -30,6 +30,8 @@ export default class PostManagementRoutes {
   }
 
   static async Repost(id, query) {
-    return HTTPClient.post(`/posts/${id}/repost`, query);
+    return HTTPClient.post(
+      `/posts/${id}/repost?${new URLSearchParams(query).toString()}`
+    );
   }
 }
