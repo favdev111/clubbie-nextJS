@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
 import ConfirmDialog from "@sub/confirm-dialog";
-import HomeVideosCard from "./card";
+import HomeVideosCard from "../common/card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
 import { useRouter } from "next/router";
