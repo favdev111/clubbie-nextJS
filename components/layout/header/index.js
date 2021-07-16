@@ -22,11 +22,14 @@ function Header() {
           <MobileNavigation authUser={user} />
         </>
       ) : (
-        <Link href="/auth/login">
-          <a>
-            <DirectedButton direction="forward">Login</DirectedButton>
-          </a>
-        </Link>
+        <>
+          <MobileNavigation />
+          <Link href="/auth/login">
+            <a>
+              <DirectedButton direction="forward">Login</DirectedButton>
+            </a>
+          </Link>
+        </>
       )}
     </header>
   );
