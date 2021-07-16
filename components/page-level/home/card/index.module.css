@@ -82,6 +82,15 @@
 .highLightPost {
   animation: highLightPost 5s;
 }
+
+@media only screen and (max-width: 280px) {
+  /* For mobile phones: */
+  .socialButtons{
+    padding: 0;
+    margin-left: 3px;
+  }
+}
+
 @keyframes highLightPost {
   0% {
     background: var(--c-yellow);

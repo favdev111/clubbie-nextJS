@@ -39,3 +39,10 @@
     justify-content: center;
   }
 }
+
+@media only screen and (max-width: 340px) {
+  /* For mobile phones: */
+  .navText{
+    font-size: 10px;
+  }
+}
