@@ -61,6 +61,53 @@ function Home({ posts }) {
     sortBy: "createdAt:desc",
   });
 
+  const getDefaultPosts = async () => {
+    const response = await Posts.GetPosts({
+      limit: 10,
+      page: 1,
+      ...filter,
+    }).catch(() => undefined);
+    const newPosts = response?.data;
+
+    if (!newPosts) {
+      console.log("Error fetching new posts"); // console for now
+      return;
+    }
+
+    const updatedPostState = {
+      ...newPosts,
+      results: [..._posts.results, ...newPosts.results],
+    };
+
+    setPosts({ ...updatedPostState });
+  };
+
+  const filterPosts = async (index) => {
+    setActiveTag(index)
+    if(displaySports[index] == 'All Sports') { 
+      getDefaultPosts()
+      return; 
+    }
+    
+    const response = await Posts.GetPosts({
+      limit: 100,
+      page: 1,
+      type: displaySports[index],
+      ...filter,
+    }).catch(() => undefined);
+    const newPosts = response?.data;
+
+    if (!newPosts) {
+      console.log("Error fetching new posts"); // console for now
+      return;
+    }
+
+    const updatedPostState = {
+      results: newPosts.results,
+    };
+    setPosts({ ...updatedPostState });
+  };
+
   const fetchMorePosts = async () => {
     const response = await Posts.GetPosts({
       limit: 10,
@@ -100,7 +147,7 @@ function Home({ posts }) {
             (tag, index) => (
               <Tag
                 activeTag={activeTag}
-                onClick={() => setActiveTag(index)}
+                onClick={() => filterPosts(index)}
                 index={index}
                 key={tag + index}
               >
