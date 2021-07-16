@@ -1,4 +1,4 @@
-export default function Upload() {
+export default function Upload({ strokeColor }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ export default function Upload() {
           d="M4,12v8a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V12"
           transform="translate(-4 -4)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -24,7 +24,7 @@ export default function Upload() {
           d="M16,6,12,2,8,6"
           transform="translate(-4 -2)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -35,7 +35,7 @@ export default function Upload() {
           y2="13"
           transform="translate(8)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"

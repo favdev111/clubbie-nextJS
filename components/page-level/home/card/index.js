@@ -3,8 +3,8 @@ import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 import cn from "classnames";
-import InViewMonitor from 'react-inview-monitor';
-import Video from './Video';
+import InViewMonitor from "react-inview-monitor";
+import Video from "./Video";
 
 function HomeVideosCard({ createdPost, data }) {
   const {
@@ -16,9 +16,12 @@ function HomeVideosCard({ createdPost, data }) {
     createdAt,
     contentType,
     counts,
+    myInteractions,
   } = data;
 
   const [content] = useState(media || thumbnail);
+
+  console.log(data);
 
   return (
     <div
@@ -30,12 +33,12 @@ function HomeVideosCard({ createdPost, data }) {
       <Link href={`/content/${id}`}>
         <span>
           {content.includes("video") ? (
-          <InViewMonitor
-            childPropsInView={{isPlaying: true, sTyling: styles.preview}}
-            toggleChildPropsOnInView={true}
-          >
-            <Video src={content} />
-          </InViewMonitor>
+            <InViewMonitor
+              childPropsInView={{ isPlaying: true, sTyling: styles.preview }}
+              toggleChildPropsOnInView={true}
+            >
+              <Video src={content} />
+            </InViewMonitor>
           ) : content.includes("image") ? (
             <img className={styles.preview} src={content} />
           ) : (
@@ -77,7 +80,9 @@ function HomeVideosCard({ createdPost, data }) {
       </p>
       {/* buttons */}
       <div className={styles.socialButtons}>
-        <SocialButton type="fav">{counts?.likes || "0"}</SocialButton>
+        <SocialButton type="fav" highlight={myInteractions?.liked}>
+          {counts?.likes || "0"}
+        </SocialButton>
         <SocialButton type="repost">{counts?.reposts || "0"}</SocialButton>
         <SocialButton type="send" />
         <SocialButton type="comment">{counts?.comments || "0"}</SocialButton>

@@ -1,4 +1,4 @@
-export default function Send() {
+export default function Send({ strokeColor }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ export default function Send() {
           y2="7"
           transform="translate(7 0.093)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -25,7 +25,7 @@ export default function Send() {
           d="M16.093,2,11.161,16.093,8.342,9.751,2,6.933Z"
           transform="translate(-2 -2)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"

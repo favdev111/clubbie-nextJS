@@ -26,7 +26,7 @@ function EndFeedMessage() {
       <a>
         <div className={styles.addContent}>
           <p className={styles.endFeedMessage}>
-            You are all catched up with the video feed. Care to make a post of
+            You are all caught up with the video feed. Care to make a post of
             your own?
           </p>
           <div className={styles.addButton}>
@@ -40,6 +40,7 @@ function EndFeedMessage() {
     </Link>
   );
 }
+
 function Home({ posts }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
