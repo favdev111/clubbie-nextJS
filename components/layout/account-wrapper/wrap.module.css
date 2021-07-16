@@ -1,37 +1,25 @@
-.wrapblock {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  width: 1264px; /*66vw*/
-  /* height: 802px; 74vh */
-  border-radius: var(--radius-xl);
-  background: var(--c-primary);
-  margin: 139px auto; /*13vh*/
+
+.staticBlock{
+    display: flex;
+    flex-direction: row;
+    margin: 100px;
+    background-color: #141f34;
+    border-radius: 25px;
+    padding: 20px;
 }
-.wrapper {
-  display: flex;
-  width: 1264px; /*66vw*/
-  /* height: 802px; 74vh */
-  justify-content: space-around;
+
+.logoBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 }
-.staticBlock {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 100%;
+
+.dynamicBlock{
+    flex: 1;
 }
-.logoBlock {
-  display: block;
-  width: 323px;
-  height: 107px;
-  margin: 85px auto 48px;
-}
-.logo {
-  display: block;
-  width: 320px; /*16vw*/
-  cursor: pointer;
-}
+
 .logoText {
   font-weight: normal;
   font-size: 19px; /*15px 0.9rem*/
@@ -40,30 +28,61 @@
   color: var(--c-yellow);
   margin-top: 10px;
 }
-.picBlock {
-  display: block;
-  width: 698px;
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+    .staticBlock{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .logoBlock{
+        margin-top: 50px;
+        flex: 1;
+    }
+
+    .dynamicBlock{
+        margin-top: -30px;
+        margin-bottom: -30px;
+        flex: 1;
+    }
 }
-.picture {
-  display: block;
-  width: 600px; /*  370px 29vw*/
-  margin: 0 auto;
-  z-index: 200;
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+     .staticBlock{
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+    }
+    
+    .logoBlock{
+        margin-top: 50px;
+        flex: 1;
+    }
+
+    .dynamicBlock{
+        margin-top: -30px;
+        margin-bottom: -30px;
+    }
 }
-.shadowPic {
-  display: block;
-  position: relative;
-  width: 100%; /* 29vw*/
-  opacity: 0.09;
-  background: transparent;
-  margin: -15px auto 0;
-  z-index: 100;
-}
-.dynamicBlock {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 100%;
+
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+
+    .staticBlock{
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      border-radius: 0;
+      margin-top: 60px
+    }
+
+    .logoBlock{
+        margin-top: 50px;
+        flex: 1;
+    }
+
+    .dynamicBlock{
+        margin-top: -30px;
+        margin-bottom: -30px;
+    }
 }

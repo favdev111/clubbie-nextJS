@@ -48,3 +48,47 @@
 .inputMargin {
   margin-bottom: var(--space-5);
 }
+
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+ 
+    .loginBlock{
+      width: auto;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+  /* For mobile phones: */
+  .loginBlock{
+    width: auto;
+  }
+
+  .formAct{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .signUpMsg{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .signUp{
+    font-family: var(--ff-bold);
+    text-align: center;
+    color: var(--c-turk) !important;
+    margin-bottom: var(--space-32);
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .whiteColor {
+    margin-top: 20px;
+  }
+
+  .socialSignin {
+    display: flex;
+    justify-content: center;
+  }
+}
