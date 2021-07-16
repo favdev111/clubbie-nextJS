@@ -7,7 +7,7 @@ import useNotifications from "@sub/hook-notification";
 import DropDown from "@sub/dropdown";
 import Posts from "@api/services/Posts";
 import Teams from "@api/services/Teams";
-import Interactions from "@api/services/interactions";
+import Interactions from "@api/services/Interactions";
 import cn from "classnames";
 import InViewMonitor from "react-inview-monitor";
 import Video from "./Video";
