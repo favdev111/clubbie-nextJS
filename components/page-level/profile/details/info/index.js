@@ -20,11 +20,17 @@ function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
             {clubs.map((club, index) => (
               <ToolTip text={club.title}>
                 <span>
-                  <img
-                    key={index}
-                    className={styles.playerClubImg}
-                    src={club?.crest || "/assets/club-badge-placeholder.png"}
-                  />
+                  <Link href={`/clubs/${club?.id}`}>
+                    <a>
+                      <img
+                        key={index}
+                        className={styles.playerClubImg}
+                        src={
+                          club?.crest || "/assets/club-badge-placeholder.png"
+                        }
+                      />
+                    </a>
+                  </Link>
                 </span>
               </ToolTip>
             ))}
