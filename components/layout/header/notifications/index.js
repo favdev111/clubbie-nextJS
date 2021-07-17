@@ -29,7 +29,7 @@ function Notifications({ authUser }) {
         <NotificationsSvg />
       </a>
       <Dropdown
-        links={links}
+        list={links}
         Component={() => (
           <img
             className={styles.profileBubble}

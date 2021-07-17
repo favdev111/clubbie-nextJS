@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
+import ConfirmDialog from "@sub/confirm-dialog";
+import useNotification from "@sub/hook-notification";
 import HomeVideosCard from "./card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
-import YouShouldSignUp from "@sub/sign-up-warn";
 import { useRouter } from "next/router";
 import Loader from "@sub/loader";
 import InfiniteScroll from "@sub/infinite-scroll";
@@ -26,7 +27,7 @@ function EndFeedMessage() {
       <a>
         <div className={styles.addContent}>
           <p className={styles.endFeedMessage}>
-            You are all catched up with the video feed. Care to make a post of
+            You are all caught up with the video feed. Care to make a post of
             your own?
           </p>
           <div className={styles.addButton}>
@@ -40,7 +41,8 @@ function EndFeedMessage() {
     </Link>
   );
 }
-function Home({ posts }) {
+
+function Home({ posts, user }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
@@ -60,6 +62,9 @@ function Home({ posts }) {
   const [filter, setFilter] = useState({
     sortBy: "createdAt:desc",
   });
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+  const { showNotificationMsg } = useNotification();
 
   const getDefaultPosts = async () => {
     const response = await Posts.GetPosts({
@@ -117,7 +122,10 @@ function Home({ posts }) {
     const newPosts = response?.data;
 
     if (!newPosts) {
-      console.log("Error fetching new posts"); // console for now
+      showNotificationMsg("Error fetching new posts", {
+        variant: "error",
+        displayIcon: true,
+      });
       return;
     }
 
@@ -131,7 +139,14 @@ function Home({ posts }) {
 
   return (
     <div className={styles.homePage}>
-      <YouShouldSignUp open />
+      <ConfirmDialog
+        open={showLoginPopup}
+        setOpen={setShowLoginPopup}
+        message="You need to login to perform this action"
+        confirmText="Login"
+        onConfirm={() => router.push("/auth/login")}
+        type="info"
+      ></ConfirmDialog>
       <div className={styles.search}>
         <CommonSearch />
       </div>
@@ -201,6 +216,9 @@ function Home({ posts }) {
               key={post + index}
               data={post}
               createdPost={createdPost}
+              isLoggedIn={!!user}
+              user={user}
+              setShowLoginPopup={setShowLoginPopup}
             />
           ))}
       </InfiniteScroll>

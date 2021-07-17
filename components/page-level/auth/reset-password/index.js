@@ -126,9 +126,11 @@ const ResetPassword = () => {
       </form>
 
       <Link href="/auth/forgot-password">
-        <div className={styles.toLogin}>
-          <a className="signUp">Request a Reset Code</a>
-        </div>
+        <a>
+          <div className={styles.toLogin}>
+            <a className="signUp">Request a Reset Code</a>
+          </div>
+        </a>
       </Link>
     </div>
   );

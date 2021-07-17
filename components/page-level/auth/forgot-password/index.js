@@ -91,9 +91,11 @@ const ForgotPassword = () => {
       </form>
 
       <Link href="/auth/login">
-        <div className={styles.toLogin}>
-          <a className="signUp">Go back to Login</a>
-        </div>
+        <a>
+          <div className={styles.toLogin}>
+            <a className="signUp">Go back to Login</a>
+          </div>
+        </a>
       </Link>
     </div>
   );

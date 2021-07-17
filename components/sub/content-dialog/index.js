@@ -18,10 +18,11 @@ function useOutsideAlerter(ref, setOpen) {
   }, [ref]);
 }
 
-function ConfirmDialog({
+function ContentDialog({
   open,
   setOpen,
-  message,
+  title,
+  Body,
   confirmText,
   onConfirm,
   onDismiss,
@@ -33,7 +34,10 @@ function ConfirmDialog({
   return (
     <div className={cn(open ? styles.backdrop : styles.close)}>
       <div className={styles.content} ref={wrapperRef}>
-        <p>{message}</p>
+        <h2>{title}</h2>
+        <div className={styles.body}>
+          <Body></Body>
+        </div>
         <div className={styles.buttons}>
           <Button
             variant="cancel"
@@ -56,4 +60,4 @@ function ConfirmDialog({
   );
 }
 
-export default ConfirmDialog;
+export default ContentDialog;

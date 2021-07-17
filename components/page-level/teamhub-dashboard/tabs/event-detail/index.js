@@ -117,23 +117,27 @@ function EventDetail({ eventId, activeTeam, user }) {
         {/* Edit Event */}
         {userRole == "teamLead" && data?.eventType == "match" && (
           <Link href={`/teamhub/event/edit-event/${eventId}`}>
-            <div className={styles.routeComponent}>
-              <div className={styles.center}>
-                <EditEvent /> Edit event
+            <a>
+              <div className={styles.routeComponent}>
+                <div className={styles.center}>
+                  <EditEvent /> Edit event
+                </div>
+                <RightArrow />
               </div>
-              <RightArrow />
-            </div>
+            </a>
           </Link>
         )}
         {/* Confirm Line Up */}
         {userRole == "teamLead" && data?.eventType !== "social" && (
           <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
-            <div className={styles.routeComponent}>
-              <div className={styles.center}>
-                <ConfirmLineup /> Confirm Line-up
+            <a>
+              <div className={styles.routeComponent}>
+                <div className={styles.center}>
+                  <ConfirmLineup /> Confirm Line-up
+                </div>
+                <RightArrow />
               </div>
-              <RightArrow />
-            </div>
+            </a>
           </Link>
         )}
         {userRole == "teamLead" && (

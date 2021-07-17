@@ -14,7 +14,8 @@ const Button = (props) => {
           loading && styles.btnDisabled,
           variant === "danger" && styles.danger,
           variant === "cancel" && styles.cancel,
-          variant === "success" && styles.success
+          variant === "success" && styles.success,
+          variant === "info" && styles.info
         )}
         disabled={loading}
       >

@@ -3,7 +3,7 @@ import TemplateInput from "@sub/input";
 import Button from "@sub/button";
 import styles from "./commentInput.module.css";
 
-function CommentInput({ placeholder, buttonText, onSubmit, loading }) {
+function CommentInput({ placeholder, buttonText, onSubmit, loading, focused }) {
   const [comment, setComment] = useState("");
   const handleOnClick = async () => {
     await onSubmit(comment);
@@ -18,6 +18,7 @@ function CommentInput({ placeholder, buttonText, onSubmit, loading }) {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         onEnter={() => !loading && handleOnClick()}
+        focused={focused}
       ></TemplateInput>
       <span className={styles.spacing}></span>
       <Button loading={loading} onClick={handleOnClick}>

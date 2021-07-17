@@ -7,6 +7,9 @@
   margin-right: var(--space-12);
   cursor: pointer;
 }
+.highlight {
+  background-color: var(--c-red);
+}
 .socialButton:hover {
   background-color: var(--c-white-30);
 }
