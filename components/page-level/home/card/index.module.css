@@ -2,6 +2,8 @@
   border-radius: var(--radius-lg);
   background-color: var(--c-primary);
   margin-bottom: 50px;
+  padding-bottom: 10px;
+
 }
 .videoCard span {
   cursor: pointer;
@@ -41,6 +43,8 @@
   padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
 }
+
+
 @media (max-width: 768px) {
   .videoCard {
     display: grid;
@@ -83,11 +87,27 @@
   animation: highLightPost 5s;
 }
 
-@media only screen and (max-width: 280px) {
+
+@media only screen and (max-width: 320px) and (min-width: 280px) {
   /* For mobile phones: */
   .socialButtons{
     padding: 0;
-    margin-left: 3px;
+    justify-content: center;
+  }
+
+  .desc{
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-width: 280px) {
+   .socialButtons{
+    padding: 0;
+    margin-left: 10px;
+  }
+
+  .desc{
+    margin-bottom: 10px;
   }
 }
 

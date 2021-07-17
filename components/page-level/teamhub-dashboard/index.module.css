@@ -1,12 +1,5 @@
 .dashboard {
   display: flex;
-  padding-left: 280px;
-}
-
-@media screen and (max-width: 1684px) and (min-width: 1024px) {
-  .dashboard {
-    padding-left: 10px;
-  }
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
@@ -17,8 +10,18 @@
   }
 }
 
-@media screen and (max-width: 766px) and (min-width: 360px) {
+@media screen and (max-width: 766px) and (min-width: 320px) {
   .dashboard {
+    padding-left: unset;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  /* For mobile phones: */
+  .dashboard{
     padding-left: unset;
     width: 100%;
     display: flex;

@@ -41,3 +41,20 @@
     width: 100%;
   }
 }
+
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+  .recentHeader {
+    padding: 12px;
+  }
+  .recentVideos{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .recentVideos img {
+    object-fit: cover;
+    width: 100%;
+  }
+}

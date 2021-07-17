@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import TeamhubNav from "./navbar";
 import TeamhubRouter from "./router";
 import { useRouter } from "next/router";
-
 import styles from "./index.module.css";
 
 function DashboardContent({ activeTeam, setTeam, user, eventId }) {

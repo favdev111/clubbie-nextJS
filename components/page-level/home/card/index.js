@@ -30,12 +30,12 @@ function HomeVideosCard({ createdPost, data }) {
       <Link href={`/content/${id}`}>
         <span>
           {content.includes("video") ? (
-          <InViewMonitor
-            childPropsInView={{isPlaying: true, sTyling: styles.preview}}
-            toggleChildPropsOnInView={true}
-          >
-            <Video src={content} />
-          </InViewMonitor>
+            <InViewMonitor
+              childPropsInView={{ isPlaying: true, sTyling: styles.preview }}
+              toggleChildPropsOnInView={true}
+            >
+              <Video src={content} />
+            </InViewMonitor>
           ) : content.includes("image") ? (
             <img className={styles.preview} src={content} />
           ) : (
@@ -70,9 +70,8 @@ function HomeVideosCard({ createdPost, data }) {
       <p className={styles.desc}> {description}</p>
       <p className={cn("opacity-50", styles.viewCount)}>
         {counts?.views || counts?.views === 0
-          ? `${counts?.views} View${
-              counts?.views > 1 || counts?.views < 1 ? "s" : ""
-            }`
+          ? `${counts?.views} View${counts?.views > 1 || counts?.views < 1 ? "s" : ""
+          }`
           : ""}
       </p>
       {/* buttons */}
