@@ -39,10 +39,16 @@ function ContentHeader({ contentId, author, isMyPost }) {
   const deleteContent = async (contentId) => {
     const response = await Posts.DeletePost(contentId).catch(() => undefined);
     if (response?.status !== 204) {
-      alert("Error Deleting Post"); // TODO: make queueable notification snack
+      showNotificationMsg("Failed to delete post", {
+        variant: "error",
+        displayIcon: true,
+      });
       return;
     }
-    alert("Content Deleted Successfully");
+    showNotificationMsg("Post Deleted Successfully", {
+      variant: "success",
+      displayIcon: true,
+    });
     router.push("/"); // Goto Home Page
   };
 
@@ -245,7 +251,10 @@ function ContentComments({ user, comments, contentId }) {
     }).catch(() => false);
     const moreComments = responsePostComments?.data;
     if (!moreComments) {
-      console.log("error loading comments"); // Todo: error component
+      showNotificationMsg("Failed to load more comments", {
+        variant: "error",
+        displayIcon: true,
+      });
       setLoadingComments(false);
       return;
     }
@@ -271,7 +280,10 @@ function ContentComments({ user, comments, contentId }) {
     );
     const createdComment = response?.data;
     if (!createdComment) {
-      console.log("error creating comments"); // Todo: error component
+      showNotificationMsg("Failed to create comment", {
+        variant: "error",
+        displayIcon: true,
+      });
       setCreatingComment(false);
       return;
     }
@@ -297,7 +309,10 @@ function ContentComments({ user, comments, contentId }) {
     );
     const editedComment = response?.data;
     if (!editedComment) {
-      console.log("Comment Not Edited"); // Todo: error component
+      showNotificationMsg("Failed to update comment", {
+        variant: "error",
+        displayIcon: true,
+      });
       setEditingComment(false);
       return;
     }
@@ -327,7 +342,10 @@ function ContentComments({ user, comments, contentId }) {
     const response = await Comments.DeleteComment(commentId).catch(() => false);
     const deleted = response?.status === 204;
     if (!deleted) {
-      console.log("Comment Not Deleted"); // Todo: error component
+      showNotificationMsg("Failed to delete comment", {
+        variant: "error",
+        displayIcon: true,
+      });
       setDeletingComment(false);
       return;
     }
@@ -353,7 +371,10 @@ function ContentComments({ user, comments, contentId }) {
     );
     const updatedComment = response?.data;
     if (!updatedComment) {
-      console.log("error creating reply to comment"); // Todo: error component
+      showNotificationMsg("Failed to add reply", {
+        variant: "error",
+        displayIcon: true,
+      });
       setCreatingReply(false);
       return;
     }
@@ -386,7 +407,10 @@ function ContentComments({ user, comments, contentId }) {
     );
     const deleted = response?.status === 204;
     if (!deleted) {
-      console.log("Reply Not Deleted"); // Todo: error component
+      showNotificationMsg("Failed to delete reply", {
+        variant: "error",
+        displayIcon: true,
+      });
       setDeletingReply(false);
       return;
     }
@@ -419,7 +443,10 @@ function ContentComments({ user, comments, contentId }) {
     ).catch(() => false);
     const updatedComment = response?.data;
     if (!updatedComment) {
-      console.log("Reply Not Edited"); // Todo: error component
+      showNotificationMsg("Failed to edit reply", {
+        variant: "error",
+        displayIcon: true,
+      });
       setEditingReply(false);
       return;
     }
