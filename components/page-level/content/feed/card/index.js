@@ -132,15 +132,19 @@ function HomeVideosCard({
             if (!verifyLoggedIn()) return;
             repostHandler();
           }}
-          onProfileRepost={() => {
-            setIsReposted(true);
-            setRepostCount((count) => count + 1);
-            setRepostProfileCount((count) => count + 1);
+          onProfileRepost={(originalPostId) => {
+            if (originalPostId === id) {
+              setRepostCount((count) => count + 1);
+              setIsReposted(true);
+              setRepostProfileCount((count) => count + 1);
+            }
           }}
-          onTeamRepost={() => {
-            setIsReposted(true);
-            setRepostCount((count) => count + 1);
-            setRepostTeamCount((count) => count + 1);
+          onTeamRepost={(originalPostId) => {
+            if (originalPostId === id) {
+              setRepostCount((count) => count + 1);
+              setIsReposted(true);
+              setRepostTeamCount((count) => count + 1);
+            }
           }}
         />
         <SocialButton type="send" />

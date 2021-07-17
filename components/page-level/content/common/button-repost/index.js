@@ -73,7 +73,7 @@ export const RepostButton = ({
       displayIcon: true,
     });
     setLoading(false);
-    onProfileRepost();
+    onProfileRepost(response?.data?.repostedFromOriginal);
   };
 
   const handleTeamRepostClick = async () => {
@@ -83,6 +83,7 @@ export const RepostButton = ({
         variant: "error",
         displayIcon: true,
       });
+      setLoading(false);
       return;
     }
     const response = await Teams.GetTeamsWithDetails(teamIds).catch(() => null);
@@ -118,7 +119,7 @@ export const RepostButton = ({
       displayIcon: true,
     });
     setLoading(false);
-    onTeamRepost();
+    onTeamRepost(response?.data?.repostedFromOriginal);
   };
 
   return (

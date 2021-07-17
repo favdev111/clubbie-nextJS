@@ -8,12 +8,15 @@ import Chip from "@sub/chip";
 import ConfirmDialog from "@sub/confirm-dialog";
 import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
+import useNotification from "@sub/hook-notification";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Interactions from "@api/services/Interactions";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
+import { LikeButton } from "../common/button-like";
+import { RepostButton } from "../common/button-repost";
 
 function ContentMediaTag({ media, className, videoControls }) {
   return (
@@ -150,12 +153,71 @@ function ContentBody({ title, description, createdAt, views }) {
   );
 }
 
-function ContentActions({ totalLikes, totalReposts }) {
+function ContentActions({
+  contentId,
+  liked,
+  teamIds,
+  totalLikes,
+  totalReposts,
+  totalProfileReposts,
+  totalTeamReposts,
+  showNotificationMsg,
+}) {
+  const [likeCount, setLikeCount] = useState(totalLikes || 0);
+  const [isLiked, setIsLiked] = useState(liked);
+  const [repostCount, setRepostCount] = useState(totalReposts || 0);
+  const [repostProfileCount, setRepostProfileCount] = useState(
+    totalProfileReposts
+  );
+  const [repostTeamCount, setRepostTeamCount] = useState(totalTeamReposts);
+  const [isReposted, setIsReposted] = useState(
+    totalProfileReposts > 0 || totalTeamReposts > 0
+  );
+
   return (
     <div>
       <div className={styles.contentActionButtons}>
-        <SocialButton type="fav">{totalLikes}</SocialButton>
-        <SocialButton type="repost">{totalReposts}</SocialButton>
+        <LikeButton
+          liked={isLiked}
+          postId={contentId}
+          count={likeCount}
+          showNotificationMsg={showNotificationMsg}
+          onClick={(likeHandler) => {
+            // if (!verifyLoggedIn()) return;
+            likeHandler();
+          }}
+          onLiked={() => {
+            setIsLiked(true);
+            setLikeCount((count) => count + 1);
+          }}
+        />
+        <RepostButton
+          postId={contentId}
+          reposted={isReposted}
+          repostCount={repostCount}
+          repostProfileCount={repostProfileCount}
+          repostTeamCount={repostTeamCount}
+          showNotificationMsg={showNotificationMsg}
+          teamIds={teamIds}
+          onClick={(repostHandler) => {
+            // if (!verifyLoggedIn()) return;
+            repostHandler();
+          }}
+          onProfileRepost={(originalPostId) => {
+            if (originalPostId === contentId) {
+              setRepostCount((count) => count + 1);
+              setIsReposted(true);
+              setRepostProfileCount((count) => count + 1);
+            }
+          }}
+          onTeamRepost={(originalPostId) => {
+            if (originalPostId === contentId) {
+              setRepostCount((count) => count + 1);
+              setIsReposted(true);
+              setRepostTeamCount((count) => count + 1);
+            }
+          }}
+        />
         <SocialButton type="send" />
       </div>
     </div>
@@ -430,7 +492,9 @@ function ContentDetails({ content, user }) {
   const [_content, setContent] = useState(content);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
 
-  // trying adding content view
+  const { showNotificationMsg } = useNotification();
+
+  // try adding content view
   useEffect(() => {
     setTimeout(async function () {
       await Interactions.ViewPost(_content?.id).catch(() => undefined);
@@ -460,8 +524,14 @@ function ContentDetails({ content, user }) {
         views={content.counts.views}
       ></ContentBody>
       <ContentActions
-        totalLikes={_content?.likes}
-        totalReposts={_content?.reposts}
+        contentId={_content?.id}
+        liked={_content?.myInteractions?.liked}
+        teamIds={user?.teams?.map((x) => x?.team)}
+        totalLikes={_content?.counts?.likes}
+        totalReposts={_content?.counts?.reposts}
+        totalProfileReposts={_content?.myInteractions?.repostedInProfile}
+        totalTeamReposts={_content?.myInteractions?.repostedInTeam}
+        showNotificationMsg={showNotificationMsg}
       ></ContentActions>
       {_content?.comments?.results && (
         <ContentComments
