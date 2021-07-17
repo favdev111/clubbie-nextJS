@@ -3,7 +3,8 @@ import Link from "next/link";
 import styles from "./index.module.css";
 import CommonSearch from "@sub/search";
 import ConfirmDialog from "@sub/confirm-dialog";
-import HomeVideosCard from "../common/card";
+import useNotification from "@sub/hook-notification";
+import HomeVideosCard from "./card";
 import Tag from "./tag";
 import PlusTurk from "@svg/plus-turk";
 import { useRouter } from "next/router";
@@ -63,6 +64,8 @@ function Home({ posts, user }) {
   });
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
+  const { showNotificationMsg } = useNotification();
+
   const fetchMorePosts = async () => {
     const response = await Posts.GetPosts({
       limit: 10,
@@ -72,7 +75,10 @@ function Home({ posts, user }) {
     const newPosts = response?.data;
 
     if (!newPosts) {
-      console.log("Error fetching new posts"); // console for now
+      showNotificationMsg("Error fetching new posts", {
+        variant: "error",
+        displayIcon: true,
+      });
       return;
     }
 
