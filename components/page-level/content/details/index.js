@@ -153,8 +153,7 @@ function ContentBody({ title, description, createdAt, views }) {
           </div>
         </div>
         <span className={styles.contentViews}>
-          {/* TODO: remove the + 1 after ui */}
-          {views + 1 ? `${views} View${views > 1 || views < 1 ? "s" : ""}` : ""}
+          {views ? `${views} View${views > 1 || views < 1 ? "s" : ""}` : ""}
         </span>
       </div>
 
