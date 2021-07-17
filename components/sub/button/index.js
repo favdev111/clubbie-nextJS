@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./button.module.css";
 
 const Button = (props) => {
-  const { variant, children, onClick, type, loading } = props;
+  const { variant, children, onClick, type, loading, size } = props;
   return (
     <>
       <button
@@ -11,6 +11,7 @@ const Button = (props) => {
         onClick={onClick}
         className={cn(
           styles.btn,
+          size === "x-small" && styles.btnXSmall,
           loading && styles.btnDisabled,
           variant === "danger" && styles.danger,
           variant === "cancel" && styles.cancel,
