@@ -17,6 +17,14 @@ export default class PostManagementRoutes {
     return HTTPClient.patch(`/posts/${id}`, payload);
   }
 
+  static async RemoveChildPost(postId, childPostIds) {
+    return HTTPClient.delete(
+      `/posts/${postId}/childPosts?${childPostIds
+        .map((id) => `childPostIds=${id}`)
+        .join("&")}`
+    );
+  }
+
   static async DeletePost(id) {
     return HTTPClient.delete(`/posts/${id}`);
   }
