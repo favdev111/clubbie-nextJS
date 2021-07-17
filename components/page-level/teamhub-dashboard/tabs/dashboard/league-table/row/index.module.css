@@ -3,6 +3,7 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: center;
   padding: 24px;
+  width: auto;
 }
 .tableHead {
   color: var(--c-white-50);
@@ -29,3 +30,4 @@
 .brightBg {
   background-color: var(--c-nav);
 }
+

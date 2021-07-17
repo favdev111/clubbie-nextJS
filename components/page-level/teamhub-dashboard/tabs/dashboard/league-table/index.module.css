@@ -8,16 +8,27 @@
   .table {
     padding: 24px;
   }
+  
 }
 @media screen and (max-width: 766px) and (min-width: 360px) {
+  
   .table {
     padding: 12px;
     margin-bottom: 70px;
   }
 }
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 390px) {
   /* For mobile phones: */
+
+  .tblScroll{
+    overflow-x: scroll;
+  }
+
+  .scrollTbl{
+    width: 500px;
+  }
+
   .table{
     padding: 12px;
     margin-bottom: 70px;
