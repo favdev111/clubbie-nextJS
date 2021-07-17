@@ -28,16 +28,18 @@ function MobileNavigation() {
         {navItems.map((item, index) => (
           <li key={item + index} className={styles.navItem}>
             <Link href={item.navSrc}>
-              <div>
-                <div className={styles.navSvg}>
-                  {index == 0 && <Bell />}
-                  {index == 1 && <Clubbie />}
-                  {index == 2 && <Plus />}
-                  {index == 3 && <Profile />}
-                  {index == 4 && <Teamhub />}
+              <a>
+                <div>
+                  <div className={styles.navSvg}>
+                    {index == 0 && <Bell />}
+                    {index == 1 && <Clubbie />}
+                    {index == 2 && <Plus />}
+                    {index == 3 && <Profile />}
+                    {index == 4 && <Teamhub />}
+                  </div>
+                  <span className={styles.navText}> {item.name} </span>
                 </div>
-                <span className={styles.navText}> {item.name} </span>
-              </div>
+              </a>
             </Link>
           </li>
         ))}

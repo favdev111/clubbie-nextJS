@@ -15,6 +15,9 @@
 .success {
   background: var(--c-green);
 }
+.info {
+  background: var(--c-turk);
+}
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;

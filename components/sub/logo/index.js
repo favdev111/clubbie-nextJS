@@ -6,7 +6,9 @@ function Logo() {
   return (
     <>
       <Link href="./">
-        <img className={styles.headerLogo} src="/assets/logo.png" />
+        <a>
+          <img className={styles.headerLogo} src="/assets/logo.png" />
+        </a>
       </Link>
     </>
   );

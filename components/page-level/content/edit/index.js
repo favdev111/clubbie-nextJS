@@ -16,7 +16,7 @@ function ContentEdit({ content }) {
     deleteChildPosts,
   }) => {
     // Common Body for parent and child post
-    const tags = _tagSomeone?.split(",").map((tag) => {
+    const tags = _tagSomeone?.split(",")?.map((tag) => {
       return {
         type: _sport?.trim(),
         value: tag?.trim(),
@@ -31,14 +31,18 @@ function ContentEdit({ content }) {
 
     // delete all related media if any
     if (deleteChildPosts.length > 0) {
-      console.log("Posts to delete => ", deleteChildPosts);
       const deletedPosts = await Posts.RemoveChildPost(
         content?.id,
         deleteChildPosts
       ).catch(() => null);
-      console.log("Deleted posts => ", deletedPosts);
-      // show error if not deleted and return
-      return;
+      if (!deletedPosts) {
+        setStatus({
+          loading: false,
+          msg: "Error Removing Related Media",
+          type: "error",
+        });
+        return;
+      }
     }
 
     // upload all media if any
@@ -101,30 +105,32 @@ function ContentEdit({ content }) {
     }
 
     // Append child posts if any
-    const childPostsBody = (() => {
-      return relatedMedia.map((item) => {
-        const _body = {
-          media: item?.media,
-          thumbnail: item?.contentType === "image" ? null : item?.media,
-          contentType: item?.contentType,
-        };
-        return Object.fromEntries(
-          Object.entries(_body).filter(([_, v]) => v != null)
-        );
-      });
-    })();
-
-    if (relatedMedia && childPostsBody.length > 0) {
-      const appendedPost = await Posts.AppendChildPost(parentPost?.id, {
-        childPosts: childPostsBody,
-      }).catch(() => undefined);
-      if (!appendedPost) {
-        setStatus({
-          loading: false,
-          msg: "Error Updating Post",
-          type: "error",
+    if (relatedMedia?.length > 0) {
+      const childPostsBody = (() => {
+        return relatedMedia.map((item) => {
+          const _body = {
+            media: item?.media,
+            thumbnail: item?.contentType === "image" ? null : item?.media,
+            contentType: item?.contentType,
+          };
+          return Object.fromEntries(
+            Object.entries(_body).filter(([_, v]) => v != null)
+          );
         });
-        return;
+      })();
+
+      if (childPostsBody.length > 0) {
+        const appendedPost = await Posts.AppendChildPost(parentPost?.id, {
+          childPosts: childPostsBody,
+        }).catch(() => undefined);
+        if (!appendedPost) {
+          setStatus({
+            loading: false,
+            msg: "Error Updating Post",
+            type: "error",
+          });
+          return;
+        }
       }
     }
 

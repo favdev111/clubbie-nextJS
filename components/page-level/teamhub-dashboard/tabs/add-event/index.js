@@ -163,7 +163,9 @@ function AddEvent({ user }) {
       {/* Header */}
       <div className={styles.header}>
         <h1> Create Event</h1>
-        <Link href="./">Cancel</Link>
+        <Link href="./">
+          <a>Cancel</a>
+        </Link>
       </div>
       {/* Body */}
       <div className={styles.content}>

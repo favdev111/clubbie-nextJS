@@ -29,18 +29,20 @@ function Navbar() {
         {navigation.map((nav) => (
           <li key={`${nav.title}index`} className={styles.navbarListItem}>
             <Link href={nav.link}>
-              <div
-                className={cn(
-                  styles.navbarListItemLink,
-                  nav.active && styles.navbarListItemLinkActive
-                )}
-              >
-                {!!nav?.image ? (
-                  <img src={nav?.image} className={styles.navImage} />
-                ) : (
-                  nav.title
-                )}
-              </div>
+              <a>
+                <div
+                  className={cn(
+                    styles.navbarListItemLink,
+                    nav.active && styles.navbarListItemLinkActive
+                  )}
+                >
+                  {!!nav?.image ? (
+                    <img src={nav?.image} className={styles.navImage} />
+                  ) : (
+                    nav.title
+                  )}
+                </div>
+              </a>
             </Link>
           </li>
         ))}

@@ -1,11 +1,11 @@
-export default function Uploaded() {
+export default function Uploaded({ strokeColor }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="32"
       height="32"
       viewBox="0 0 32 32"
-      fill="#5fc4ee"
+      fill={strokeColor || "#5fc4ee"}
     >
       <path
         className="a"

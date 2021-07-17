@@ -1,7 +1,7 @@
 .close {
   display: none;
 }
-.popup {
+.backdrop {
   position: fixed;
   z-index: 99;
   display: flex;
@@ -16,12 +16,11 @@
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 32px;
-  color: var(--c-turk);
-  background-color: #dddddd;
+  background-color: var(--c-nav);
   border-radius: var(--radius-md);
   position: relative;
+  max-width: 700px;
 }
 .content p {
   font-size: 22px;
@@ -35,6 +34,11 @@
 }
 .buttons {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   padding-top: 16px;
   gap: 16px;
+}
+.body {
+  margin: var(--space-30) var(--space-10);
 }

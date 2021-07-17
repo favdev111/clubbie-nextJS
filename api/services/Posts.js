@@ -17,8 +17,16 @@ export default class PostManagementRoutes {
     return HTTPClient.patch(`/posts/${id}`, payload);
   }
 
-  static async DeletePost(id) {
-    return HTTPClient.delete(`/posts/${id}`);
+  static async RemoveChildPost(postId, childPostIds) {
+    return HTTPClient.delete(
+      `/posts/${postId}/childPosts?${childPostIds
+        .map((id) => `childPostIds=${id}`)
+        .join("&")}`
+    );
+  }
+
+  static async DeletePost(id, params) {
+    return HTTPClient.delete(`/posts/${id}/${params.type}`);
   }
 
   static async GetSinglePost(id) {
@@ -30,6 +38,8 @@ export default class PostManagementRoutes {
   }
 
   static async Repost(id, query) {
-    return HTTPClient.post(`/posts/${id}/repost`, query);
+    return HTTPClient.post(
+      `/posts/${id}/repost?${new URLSearchParams(query).toString()}`
+    );
   }
 }

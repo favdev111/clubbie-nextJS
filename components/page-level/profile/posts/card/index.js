@@ -18,35 +18,37 @@ function ProfilePostCard({ post }) {
   return (
     <>
       <Link href={`/content/${post?.id}`}>
-        <div className={styles.profilePhotosItem}>
-          <span className={!loaded && styles.hidden}>
-            {contentItem?.includes("video") && (
-              <video src={contentItem}></video>
-            )}
-            {contentItem?.includes("image") && (
-              <img src={contentItem} onLoad={() => setLoaded(true)}></img>
-            )}
-          </span>
-          <div className={!loaded && styles.loadingPost}></div>
-          <div className={styles.profilePhotosOptions}>
-            <span>
-              <FavSVG />
-              {post?.counts?.likes}
+        <a>
+          <div className={styles.profilePhotosItem}>
+            <span className={!loaded && styles.hidden}>
+              {contentItem?.includes("video") && (
+                <video src={contentItem}></video>
+              )}
+              {contentItem?.includes("image") && (
+                <img src={contentItem} onLoad={() => setLoaded(true)}></img>
+              )}
             </span>
-            <span>
-              <EyeSVG filled />
-              {post?.counts?.views}
-            </span>
-            <span>
-              <CommentSVG />
-              {post?.counts?.comments}
-            </span>
-            <span>
-              <RepostSVG filled />
-              {post?.counts?.reposts}
-            </span>
+            <div className={!loaded && styles.loadingPost}></div>
+            <div className={styles.profilePhotosOptions}>
+              <span>
+                <FavSVG />
+                {post?.counts?.likes}
+              </span>
+              <span>
+                <EyeSVG filled />
+                {post?.counts?.views}
+              </span>
+              <span>
+                <CommentSVG />
+                {post?.counts?.comments}
+              </span>
+              <span>
+                <RepostSVG filled />
+                {post?.counts?.reposts}
+              </span>
+            </div>
           </div>
-        </div>
+        </a>
       </Link>
     </>
   );

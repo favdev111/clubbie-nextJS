@@ -1,4 +1,4 @@
-export default function Repost() {
+export default function Repost({ strokeColor }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ export default function Repost() {
           d="M17,1l3.132,3.132L17,7.264"
           transform="translate(-6.039 -1)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -24,7 +24,7 @@ export default function Repost() {
           d="M3,9.7V8.132A3.132,3.132,0,0,1,6.132,5H17.093"
           transform="translate(-3 -1.868)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -35,7 +35,7 @@ export default function Repost() {
           d="M6.132,21.264,3,18.132,6.132,15"
           transform="translate(-3 -4.039)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"
@@ -46,7 +46,7 @@ export default function Repost() {
           d="M17.093,13v1.566A3.132,3.132,0,0,1,13.961,17.7H3"
           transform="translate(-3 -3.605)"
           fill="none"
-          stroke="#5fc4ee"
+          stroke={strokeColor || "#5fc4ee"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.4"

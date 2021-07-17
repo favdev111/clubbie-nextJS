@@ -18,6 +18,7 @@ const TemplateInput = ({
   hint,
   className,
   disabled,
+  focused,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -54,6 +55,7 @@ const TemplateInput = ({
               required={required}
               onChange={onChange}
               onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
+              ref={(input) => input && focused && input.focus()}
               {...customProps}
             />
             {type === "password" ? (
@@ -99,6 +101,7 @@ const TemplateInput = ({
             required={required}
             onChange={onChange}
             rows={rows || 2}
+            ref={(input) => input && focused && input.focus()}
             {...customProps}
           ></textarea>
           {hint?.type && hint?.msg && (

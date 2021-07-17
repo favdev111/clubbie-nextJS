@@ -10,7 +10,7 @@ import styles from "./join.module.css";
 
 function Join({ title, clubs, teams, selectedClub, register }) {
   const router = useRouter();
-  console.log(clubs);
+
   const [listItems, setlistItems] = useState(clubs || teams);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
@@ -170,8 +170,12 @@ function Join({ title, clubs, teams, selectedClub, register }) {
         </ul>
       </div>
       <div className={styles.mobileButtons}>
-        <Link href="/">Go back</Link>
-        <Link href="/">Skip</Link>
+        <Link href="/">
+          <a>Go back</a>
+        </Link>
+        <Link href="/">
+          <a>Skip</a>
+        </Link>
       </div>
     </div>
   );
