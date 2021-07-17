@@ -26,3 +26,12 @@
     display: none;
   }
 }
+
+
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+
+  .title{
+    display: none;
+  }
+}

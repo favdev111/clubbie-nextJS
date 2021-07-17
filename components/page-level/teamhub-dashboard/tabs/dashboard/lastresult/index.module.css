@@ -64,3 +64,18 @@
     text-align: center;
   }
 }
+
+
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+  .lastResult {
+    padding: 12px;
+  }
+  .eventCard {
+    padding: 16px;
+  }
+  .card {
+    text-align: center;
+  }
+
+}

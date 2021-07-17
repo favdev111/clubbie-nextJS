@@ -1,11 +1,11 @@
 .teamCards {
   margin-top: var(--space-24);
-  min-width: var(--container-sm);
   background-color: var(--c-white-10);
-  margin-right: 30px;
+  margin-right: 20px;
   padding: var(--space-16);
   border-radius: var(--radius-lg);
   display: flex;
+  flex: 1;
   align-items: center;
   cursor: pointer;
 }
@@ -25,9 +25,6 @@
 
 .active {
   background-color: var(--c-turk);
-}
-
-@media screen and (max-width: 1684px) and (min-width: 1024px) {
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
@@ -52,6 +49,27 @@
 
 @media screen and (max-width: 766px) and (min-width: 360px) {
   .teamCards {
+    background-color: transparent;
+    padding: 6px;
+    justify-content: center;
+    min-width: 220px;
+    margin-right: 15px;
+  }
+  .cardImg {
+    padding-left: 6px;
+  }
+
+  .active {
+    border: 1px solid var(--c-turk);
+  }
+  .yellow {
+    color: var(--c-yellow);
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  /* For mobile phones: */
+    .teamCards {
     background-color: transparent;
     padding: 6px;
     justify-content: center;

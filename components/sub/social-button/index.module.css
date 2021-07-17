@@ -13,3 +13,40 @@
 .socialButton p {
   margin-left: 5px;
 }
+
+@media only screen and (max-width: 1024) and (min-width: 766px) {
+  /* For mobile phones: */
+  .socialButton{
+    width: auto;
+    height: 50px;
+  }
+
+}
+
+@media only screen and (max-width: 766px) and (min-width: 320px) {
+  /* For mobile phones: */
+  .socialButton{
+    width: auto;
+    height: 50px;
+  }
+
+}
+
+
+@media only screen and (max-width: 320px) and (min-width: 280px) {
+  /* For mobile phones: */
+  .socialButton{
+    width: auto;
+    height: 50px;
+  }
+
+}
+
+@media only screen and (max-width: 280px) {
+  /* For mobile phones: */
+  .socialButton{
+    width: auto;
+    height: 50px;
+  }
+
+}
