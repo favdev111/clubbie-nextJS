@@ -1,0 +1,39 @@
+.club {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-lg);
+  padding-top: var(--space-50);
+  padding-bottom: var(--space-50);
+}
+.clubContent {
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
+}
+.clubTitle {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+@media (max-width: 640px) {
+  .club .clubTitle {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .club .clubTitle {
+    padding-left: 30px;
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 760px) {
+  .club {
+    margin: 0 12px 12px 12px;
+  }
+  .club h1 {
+    display: none;
+  }
+}
