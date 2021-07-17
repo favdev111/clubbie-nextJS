@@ -15,7 +15,11 @@ function CommentInfo({ author }) {
   return (
     <div className={styles.commentInfo}>
       <Link href={`/profile/${author?.id}`}>
-        <img src={author?.profile?.image || "/assets/person-placeholder.jpg"} />
+        <a>
+          <img
+            src={author?.profile?.image || "/assets/person-placeholder.jpg"}
+          />
+        </a>
       </Link>
     </div>
   );
@@ -27,9 +31,11 @@ function CommentBody({ author, commentText, onSaveClick, loading }) {
   return (
     <div className={styles.commentBody}>
       <Link href={`/profile/${author?.id}`}>
-        <span className="text-18" className={styles.commentAuthorName}>
-          {author?.profile?.fullName || author?.id}
-        </span>
+        <a>
+          <span className="text-18" className={styles.commentAuthorName}>
+            {author?.profile?.fullName || author?.id}
+          </span>
+        </a>
       </Link>
       {!onSaveClick ? (
         <p className={styles.commentText}>{commentText}</p>

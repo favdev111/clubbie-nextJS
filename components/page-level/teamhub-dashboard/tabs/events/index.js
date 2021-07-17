@@ -57,10 +57,12 @@ function Events({ activeTeam, user }) {
           {/* Drafts, Add event etc */}
           {userRole == "teamLead" && (
             <Link href="/teamhub/event/add-event/">
-              <div className={styles.draft}>
-                <EditIcon />
-                <p>Add new event </p>
-              </div>
+              <a>
+                <div className={styles.draft}>
+                  <EditIcon />
+                  <p>Add new event </p>
+                </div>
+              </a>
             </Link>
           )}
         </div>

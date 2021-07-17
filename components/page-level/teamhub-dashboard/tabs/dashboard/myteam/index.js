@@ -15,9 +15,11 @@ function MyTeam({ active, setactive, userTeams, user }) {
         <div className={styles.myTeamFlex}>
           <h3>My team</h3>
           <Link href="/teamhub/initial">
-            <span className={styles.teamhubInitial}>
-              <PlusTurkSVG></PlusTurkSVG>
-            </span>
+            <a>
+              <span className={styles.teamhubInitial}>
+                <PlusTurkSVG></PlusTurkSVG>
+              </span>
+            </a>
           </Link>
         </div>
         <div className={styles.myTeamFlex}>

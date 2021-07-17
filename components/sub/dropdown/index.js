@@ -47,14 +47,16 @@ function DropDown({ Component, list, title }) {
               <>
                 {item.href && (
                   <Link key={index} href={item.href}>
-                    <span
-                      className={cn(
-                        styles.dropDownListItem,
-                        item.seperator && styles.seperator
-                      )}
-                    >
-                      {item.title}
-                    </span>
+                    <a>
+                      <span
+                        className={cn(
+                          styles.dropDownListItem,
+                          item.seperator && styles.seperator
+                        )}
+                      >
+                        {item.title}
+                      </span>
+                    </a>
                   </Link>
                 )}
                 {item.onClick && (

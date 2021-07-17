@@ -68,9 +68,11 @@ function ContentHeader({ contentId, author, isMyPost }) {
           <img src={author?.image || "/assets/person-placeholder.jpg"} />
           <div className={styles.postAuthorInfo}>
             <Link href={`/profile/${author?.id}`}>
-              <p className="text-18" className={styles.postAuthorName}>
-                {author?.name || author?.id}
-              </p>
+              <a>
+                <p className="text-18" className={styles.postAuthorName}>
+                  {author?.name || author?.id}
+                </p>
+              </a>
             </Link>
             {author?.playerTitle && (
               <p className="opacity-50">{author?.playerTitle}</p>
@@ -475,6 +477,7 @@ function ContentComments({ user, comments, contentId }) {
         buttonText={"Comment"}
         loading={creatingComment}
         onSubmit={(comment) => createComment(comment)}
+        focused={true}
       ></CommentInput>
       {_comments?.results.map((comment, index) => (
         <Comment

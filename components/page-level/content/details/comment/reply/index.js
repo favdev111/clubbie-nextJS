@@ -12,7 +12,9 @@ function ReplyInfo({ author }) {
   return (
     <div className={styles.replyInfo}>
       <Link href={`/profile/${author?.id}`}>
-        <img src={author?.image || "/assets/person-placeholder.jpg"} />
+        <a>
+          <img src={author?.image || "/assets/person-placeholder.jpg"} />
+        </a>
       </Link>
     </div>
   );
@@ -24,9 +26,11 @@ function ReplyBody({ author, replyText, onSaveClick, loading }) {
   return (
     <div className={styles.replyBody}>
       <Link href={`/profile/${author?.id}`}>
-        <span className="text-18" className={styles.replyAuthorName}>
-          {author?.fullName || author?.id}
-        </span>
+        <a>
+          <span className="text-18" className={styles.replyAuthorName}>
+            {author?.fullName || author?.id}
+          </span>
+        </a>
       </Link>
       {!onSaveClick ? (
         <p className={styles.replyText}>{replyText}</p>

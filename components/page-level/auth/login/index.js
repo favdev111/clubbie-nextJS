@@ -91,7 +91,9 @@ const Login = ({ previousURL }) => {
         {error && <Alert variant="error" text={error} />}
         <div className={styles.formAct}>
           <Link href="/auth/forgot-password">
-            <span className={styles.whiteColor}>Forgot Password?</span>
+            <a>
+              <span className={styles.whiteColor}>Forgot Password?</span>
+            </a>
           </Link>
           <Button loading={loading}>Login</Button>
         </div>

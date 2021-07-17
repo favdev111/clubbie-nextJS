@@ -58,35 +58,41 @@ function HomeVideosCard({
       )}
     >
       <Link href={`/content/${id}`}>
-        <span>
-          {content.includes("video") ? (
-            <InViewMonitor
-              childPropsInView={{ isPlaying: true, sTyling: styles.preview }}
-              toggleChildPropsOnInView={true}
-            >
-              <Video src={content} />
-            </InViewMonitor>
-          ) : content.includes("image") ? (
-            <img className={styles.preview} src={content} />
-          ) : (
-            <></>
-          )}
-        </span>
+        <a>
+          <span>
+            {content.includes("video") ? (
+              <InViewMonitor
+                childPropsInView={{ isPlaying: true, sTyling: styles.preview }}
+                toggleChildPropsOnInView={true}
+              >
+                <Video src={content} />
+              </InViewMonitor>
+            ) : content.includes("image") ? (
+              <img className={styles.preview} src={content} />
+            ) : (
+              <></>
+            )}
+          </span>
+        </a>
       </Link>
       <div className={styles.cardInfoHeader}>
         <div className={styles.cardInfoProfile}>
           <Link href={`/profile/${author?.id}`}>
-            <img
-              className={styles.postAuthorImage}
-              src={author?.image || "/assets/person-placeholder.jpg"}
-            />
+            <a>
+              <img
+                className={styles.postAuthorImage}
+                src={author?.image || "/assets/person-placeholder.jpg"}
+              />
+            </a>
           </Link>
           <div className={styles.avatarInfo}>
             <p className="text-18">
               <Link href={`/profile/${author?.id}`}>
-                <p className="text-18" className={styles.postAuthorName}>
-                  {author?.name || author?.id}
-                </p>
+                <a>
+                  <p className="text-18" className={styles.postAuthorName}>
+                    {author?.name || author?.id}
+                  </p>
+                </a>
               </Link>
             </p>
             <p className={cn("opacity-50", styles.postDate)}>

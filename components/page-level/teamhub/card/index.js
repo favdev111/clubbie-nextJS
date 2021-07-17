@@ -15,9 +15,11 @@ function TeamhubCard({ data, type, last }) {
         <p className="opacity-50"> {data.desc} </p>
       </div>
       <Link href={data.link}>
-        <button className={styles.teamhubCardButton}>
-          <RightArrow />
-        </button>
+        <a>
+          <button className={styles.teamhubCardButton}>
+            <RightArrow />
+          </button>
+        </a>
       </Link>
     </div>
   );

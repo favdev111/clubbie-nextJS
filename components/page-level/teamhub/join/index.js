@@ -170,8 +170,12 @@ function Join({ title, clubs, teams, selectedClub, register }) {
         </ul>
       </div>
       <div className={styles.mobileButtons}>
-        <Link href="/">Go back</Link>
-        <Link href="/">Skip</Link>
+        <Link href="/">
+          <a>Go back</a>
+        </Link>
+        <Link href="/">
+          <a>Skip</a>
+        </Link>
       </div>
     </div>
   );
