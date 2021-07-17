@@ -154,7 +154,13 @@ function HomeVideosCard({
           }}
         />
         <SocialButton type="send" />
-        <SocialButton type="comment">{counts?.comments || "0"}</SocialButton>
+        <Link href={`/content/${id}?focusComment=true`}>
+          <a>
+            <SocialButton type="comment">
+              {counts?.comments || "0"}
+            </SocialButton>
+          </a>
+        </Link>
       </div>
     </div>
   );

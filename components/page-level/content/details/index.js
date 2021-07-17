@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import Link from "next/link";
 import ActionButton from "@sub/action-button";
 import SocialButton from "@sub/social-button";
@@ -233,6 +233,7 @@ function ContentActions({
 }
 
 function ContentComments({ user, comments, contentId }) {
+  const _router = useRouter();
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
@@ -241,6 +242,13 @@ function ContentComments({ user, comments, contentId }) {
   const [creatingReply, setCreatingReply] = useState(false);
   const [editingReply, setEditingReply] = useState(false);
   const [deletingReply, setDeletingReply] = useState(false);
+  const [focusComment, setFocusComment] = useState(false);
+
+  useEffect(() => {
+    if (_router.query.focusComment === "true") {
+      setFocusComment(true);
+    }
+  }, []);
 
   const loadMoreComments = async () => {
     setLoadingComments(true);
@@ -477,7 +485,7 @@ function ContentComments({ user, comments, contentId }) {
         buttonText={"Comment"}
         loading={creatingComment}
         onSubmit={(comment) => createComment(comment)}
-        focused={true}
+        focused={focusComment}
       ></CommentInput>
       {_comments?.results.map((comment, index) => (
         <Comment
