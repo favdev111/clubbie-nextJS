@@ -25,8 +25,8 @@ export default class PostManagementRoutes {
     );
   }
 
-  static async DeletePost(id) {
-    return HTTPClient.delete(`/posts/${id}`);
+  static async DeletePost(id, params) {
+    return HTTPClient.delete(`/posts/${id}/${params.type}`);
   }
 
   static async GetSinglePost(id) {

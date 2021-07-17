@@ -33,11 +33,13 @@ function ContentMediaTag({ media, className, videoControls }) {
   );
 }
 
-function ContentHeader({ contentId, author, isMyPost }) {
+function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const deleteContent = async (contentId) => {
-    const response = await Posts.DeletePost(contentId).catch(() => undefined);
+    const response = await Posts.DeletePost(contentId, { type: "mine" }).catch(
+      () => undefined
+    );
     if (response?.status !== 204) {
       showNotificationMsg("Failed to delete post", {
         variant: "error",
@@ -232,7 +234,7 @@ function ContentActions({
   );
 }
 
-function ContentComments({ user, comments, contentId }) {
+function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   const _router = useRouter();
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -545,6 +547,7 @@ function ContentDetails({ content, user }) {
         contentId={_content?.id}
         author={_content?.author}
         isMyPost={_content?.author?.id === user?.id}
+        showNotificationMsg={showNotificationMsg}
       ></ContentHeader>
       <ContentMedia media={activeMedia}></ContentMedia>
       {_content?.childPosts.length > 0 && (
@@ -576,6 +579,7 @@ function ContentDetails({ content, user }) {
           user={user}
           comments={content.comments}
           contentId={_content?.id}
+          showNotificationMsg={showNotificationMsg}
         ></ContentComments>
       )}
     </>
