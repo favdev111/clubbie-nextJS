@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
+import InView from "@sub/hook-inview";
 import useNotifications from "@sub/hook-notification";
 import cn from "classnames";
-import InViewMonitor from "react-inview-monitor";
-import Video from "./Video";
 import { LikeButton } from "../../common/button-like";
 import { RepostButton } from "../../common/button-repost";
 
@@ -50,6 +49,16 @@ function HomeVideosCard({
     return false;
   };
 
+  const videoElRef = useRef();
+  const playVideo = () => {
+    setTimeout(function () {
+      videoElRef.current.play();
+    }, 500);
+  };
+  const stopVideo = () => {
+    videoElRef.current.pause();
+  };
+
   return (
     <div
       className={cn(
@@ -61,12 +70,13 @@ function HomeVideosCard({
         <a>
           <span>
             {content.includes("video") ? (
-              <InViewMonitor
-                childPropsInView={{ isPlaying: true, sTyling: styles.preview }}
-                toggleChildPropsOnInView={true}
-              >
-                <Video src={content} />
-              </InViewMonitor>
+              <InView onVisiable={playVideo} onHidden={stopVideo}>
+                <video
+                  src={content}
+                  className={styles.preview}
+                  ref={videoElRef}
+                ></video>
+              </InView>
             ) : content.includes("image") ? (
               <img className={styles.preview} src={content} />
             ) : (
