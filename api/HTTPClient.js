@@ -1,5 +1,7 @@
 import Axios from "axios";
 import router from "next/router";
+import Auth from "@api/services/Auth";
+import authUser from "@utils/helpers/auth";
 import { API_BASE_URL } from "./config";
 
 let baseURL = API_BASE_URL;
@@ -59,15 +61,55 @@ export default class HTTPClient {
   }
 }
 
-// middleware to check if user acc is activated
-// check on client side
+// middleware/s on client side
 if (process.browser) {
   client.interceptors.response.use(
     (response) => {
       return response;
     },
     async function (error) {
-      // user's account is not activated
+      const originalReq = error.config;
+      // refresh token if expired
+      if (error.response.status === 401 && !originalReq.retryAttempt) {
+        const refreshToken = authUser.getRefreshToken();
+        let tokens = null;
+
+        // refresh request
+        const response = await Auth.RefreshTokens({
+          refreshToken: refreshToken,
+        }).catch(() => null);
+
+        // require login if failed to refresh token
+        if (!response) {
+          router.push("/auth/login");
+          return Promise.reject(error);
+        }
+
+        // set token from response
+        tokens = response?.data;
+
+        // update cookies
+        authUser.setAccessToken(tokens?.access?.token, {
+          expires: new Date(tokens?.access?.expiry),
+        });
+        authUser.setRefreshToken(tokens?.refresh?.token, {
+          expires: new Date(tokens?.refresh?.expiry),
+        });
+
+        // update axios header for current instance
+        await HTTPClient.setHeader(
+          "Authorization",
+          `Bearer ${tokens?.access?.token}`
+        );
+
+        // update header for current request
+        originalReq.headers.Authorization = `Bearer ${tokens?.access?.token}`;
+        originalReq.retryAttempt = true;
+
+        // retry request
+        return client(originalReq);
+      }
+      // verify user account activation status | 406 not activated
       if (error.response.status === 406) {
         router.push("/auth/account-verification");
       }
