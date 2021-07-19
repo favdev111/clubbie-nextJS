@@ -39,6 +39,26 @@ function PostFilters({ setFilter, fetchPosts, setLoading }) {
     setApplyFilter(true);
   };
 
+  const handleSportFilterDropDownChange = (e) => {
+    e.preventDefault();
+    const value = e?.target?.value;
+    if (value === "recent") {
+      setFilter((filter) => {
+        const _filter = { ...filter, sortBy: "createdAt:desc" };
+        delete _filter["isFeatured"];
+        return _filter;
+      });
+    }
+    if (value === "featured") {
+      setFilter((filter) => {
+        const _filter = { ...filter, isFeatured: true };
+        delete _filter["sortBy"];
+        return _filter;
+      });
+    }
+    setApplyFilter(true);
+  };
+
   useEffect(async () => {
     if (applyFilter) {
       setLoading(true);
@@ -78,11 +98,13 @@ function PostFilters({ setFilter, fetchPosts, setLoading }) {
           </Tag>
         </div>
 
-        <div className={styles.sortSelect}>
+        <div
+          className={styles.sortSelect}
+          onChange={handleSportFilterDropDownChange}
+        >
           <select name="sort" id="sort">
             <option value="recent">Recent</option>
-            <option value="popular">Following</option>
-            <option value="Ranking">Ranking</option>
+            <option value="featured">Featured</option>
           </select>
         </div>
       </div>
