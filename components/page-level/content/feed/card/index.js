@@ -75,6 +75,8 @@ function HomeVideosCard({
                   src={content}
                   className={styles.preview}
                   ref={videoElRef}
+                  controls
+                  loop
                 ></video>
               </InView>
             ) : content.includes("image") ? (
