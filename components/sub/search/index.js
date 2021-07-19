@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./index.module.css";
 import Search from "@svg/search";
 
-function CommonSearch({ placeholder, onChange }) {
+function CommonSearch({ placeholder, value, onChange, onEnter }) {
   return (
     <div className={styles.commonSearch}>
       <a>
@@ -12,7 +12,9 @@ function CommonSearch({ placeholder, onChange }) {
       <input
         type="text"
         placeholder={placeholder || "Search"}
+        value={value}
         onChange={onChange}
+        onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
       />
     </div>
   );

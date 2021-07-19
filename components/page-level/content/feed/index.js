@@ -14,6 +14,39 @@ import InfiniteScroll from "@sub/infinite-scroll";
 import Posts from "@api/services/Posts";
 import sports from "@utils/fixedValues/sports";
 
+function PostSearch({ setFilter, fetchPosts, setLoading }) {
+  const [searchText, setSearchText] = useState("");
+  const [applySearch, setApplySearch] = useState("");
+
+  const makeSearch = () => {
+    if (searchText?.trim().length > 3) {
+      setFilter((filter) => {
+        return { ...filter, search: searchText };
+      });
+      setApplySearch(true);
+    }
+  };
+
+  useEffect(async () => {
+    if (applySearch) {
+      setLoading(true);
+      await fetchPosts(1, true);
+      setApplySearch(false);
+      setLoading(false);
+    }
+  }, [applySearch]);
+
+  return (
+    <div className={styles.search}>
+      <CommonSearch
+        value={searchText}
+        onChange={(e) => setSearchText(e?.target?.value)}
+        onEnter={makeSearch}
+      />
+    </div>
+  );
+}
+
 function PostFilters({ setFilter, fetchPosts, setLoading }) {
   const [sportList] = useState([
     ...new Set([
@@ -213,9 +246,11 @@ function Home({ posts, user }) {
         onConfirm={() => router.push("/auth/login")}
         type="info"
       ></ConfirmDialog>
-      <div className={styles.search}>
-        <CommonSearch />
-      </div>
+      <PostSearch
+        setFilter={setFilter}
+        setLoading={setLoading}
+        fetchPosts={fetchPosts}
+      />
       <h1 className={styles.title}> Videos</h1>
       <PostFilters
         setFilter={setFilter}
