@@ -81,6 +81,7 @@ function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
         value={searchText}
         onChange={handleSearchTextChange}
         onEnter={makeSearch}
+        onSearchButtonClick={makeSearch}
       />
       {filter?.search && searchText === filter?.search && (
         <div className={styles.appliedSearch}>

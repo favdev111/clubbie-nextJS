@@ -2,12 +2,18 @@ import React from "react";
 import styles from "./index.module.css";
 import Search from "@svg/search";
 
-function CommonSearch({ placeholder, value, onChange, onEnter }) {
+function CommonSearch({
+  placeholder,
+  value,
+  onChange,
+  onEnter,
+  onSearchButtonClick,
+}) {
   return (
     <div className={styles.commonSearch}>
-      <a>
+      <span onClick={onSearchButtonClick}>
         <Search />
-      </a>
+      </span>
 
       <input
         type="text"
