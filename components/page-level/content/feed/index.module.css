@@ -85,6 +85,22 @@
   margin-bottom: 20px;
 }
 
+.search {
+  margin-top: 24px;
+  margin-bottom: 50px;
+}
+.appliedSearch {
+  margin-top: var(--space-16);
+}
+.appliedSearchText {
+  font-style: italic;
+}
+.clearAppliedSearch {
+  display: inline-block;
+  margin-left: var(--space-10);
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .sortSelect {
     display: none;

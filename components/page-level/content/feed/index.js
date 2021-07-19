@@ -14,7 +14,28 @@ import InfiniteScroll from "@sub/infinite-scroll";
 import Posts from "@api/services/Posts";
 import sports from "@utils/fixedValues/sports";
 
-function PostSearch({ setFilter, fetchPosts, setLoading }) {
+// Todo: make a svg and replace this
+function CloseSVG() {
+  return (
+    <span
+      style={{
+        color: "#ffffff",
+        background: "#c41d24",
+        borderRadius: "50%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontWeight: "bold",
+        height: 35,
+        width: 35,
+      }}
+    >
+      x
+    </span>
+  );
+}
+
+function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
   const [searchText, setSearchText] = useState("");
   const [applySearch, setApplySearch] = useState("");
 
@@ -25,6 +46,16 @@ function PostSearch({ setFilter, fetchPosts, setLoading }) {
       });
       setApplySearch(true);
     }
+  };
+
+  const clearSearch = () => {
+    setSearchText("");
+    setFilter((filter) => {
+      const _filter = { ...filter };
+      delete _filter["search"];
+      return _filter;
+    });
+    setApplySearch(true);
   };
 
   useEffect(async () => {
@@ -43,6 +74,15 @@ function PostSearch({ setFilter, fetchPosts, setLoading }) {
         onChange={(e) => setSearchText(e?.target?.value)}
         onEnter={makeSearch}
       />
+      {filter?.search && searchText === filter?.search && (
+        <div className={styles.appliedSearch}>
+          Showing results for{" "}
+          <span className={styles.appliedSearchText}>"{searchText}"</span>
+          <span className={styles.clearAppliedSearch} onClick={clearSearch}>
+            <CloseSVG />
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -247,6 +287,7 @@ function Home({ posts, user }) {
         type="info"
       ></ConfirmDialog>
       <PostSearch
+        filter={filter}
         setFilter={setFilter}
         setLoading={setLoading}
         fetchPosts={fetchPosts}
