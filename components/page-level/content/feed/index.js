@@ -223,6 +223,9 @@ function Home({ posts, user }) {
         fetchPosts={fetchPosts}
       />
       <AddContent />
+      {_posts?.results?.length === 0 && (
+        <div className={styles.noPosts}>No posts for the applied filter</div>
+      )}
       <InfiniteScroll
         dataLength={_posts?.totalResults}
         getMore={fetchPosts}
