@@ -228,7 +228,9 @@ function Home({ posts, user }) {
         getMore={fetchPosts}
         hasMore={_posts?.page < _posts?.totalPages}
         loader={<LoadingPosts />}
-        endingMessage={<EndFeedMessage />}
+        endingMessage={
+          _posts?.results?.length > 10 ? <EndFeedMessage /> : <></>
+        }
       >
         {_posts?.results &&
           _posts?.results.map((post, index) => (
