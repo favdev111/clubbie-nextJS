@@ -1,0 +1,191 @@
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Button from "@sub/button";
+import Table from "@sub/table";
+import ChatSVG from "@svg/messages";
+import styles from "./clubDetails.module.css";
+
+function ClubDetails({ club }) {
+  const [clubOfficialRows, setClubOfficialRows] = useState([]);
+  const [clubTeamRows, setClubTeamRows] = useState([]);
+  const [clubPlayerRows, setClubPlayerRows] = useState([]);
+
+  console.log(club);
+  useEffect(() => {
+    if (club?.officials) {
+      const rows = club?.officials?.map((x) => {
+        return [
+          () => (
+            <div className={styles.clubMember}>
+              <Link href={`/profile/${x?.user?.id}`}>
+                <img
+                  className={styles.clubMemberAvatar}
+                  src={
+                    x?.user?.profile?.image || "/assets/person-placeholder.jpg"
+                  }
+                />
+              </Link>
+              <Link href={`/profile/${x?.user?.id}`}>
+                <a>
+                  <span className={styles.clubMemberName}>
+                    {x?.user?.profile?.fullName || "User Name" || x?.user?.id}
+                  </span>
+                </a>
+              </Link>
+            </div>
+          ),
+          () => <span className={styles.clubMemberRole}>{x?.role}</span>,
+          () => (
+            <div className={styles.clubMemberListAction}>
+              <span>
+                <Link
+                  href={`/chats/${x?.user?.id}/start-new-chat-when-clicked`}
+                >
+                  <a>
+                    <ChatSVG />
+                  </a>
+                </Link>
+              </span>
+            </div>
+          ),
+        ];
+      });
+      setClubOfficialRows(rows);
+    }
+    if (club?.teams) {
+      const rows = club?.teams?.map((x) => {
+        return [
+          () => (
+            <div className={styles.clubMember}>
+              <Link href={`/clubs/${club?.id}/teams/${x?.id}`}>
+                <img
+                  className={styles.clubMemberAvatar}
+                  src={x?.crest || "/assets/person-placeholder.jpg"}
+                />
+              </Link>
+              <Link href={`/clubs/${club?.id}/teams/${x?.id}`}>
+                <a>
+                  <span className={styles.clubMemberName}>
+                    {x?.title || "Team Name" || x?.id}
+                  </span>
+                </a>
+              </Link>
+            </div>
+          ),
+          () => (
+            <div className={styles.clubMemberListAction}>
+              <span>
+                <Link href={`/join-team-url-here/${x?.id}`}>
+                  <a>
+                    <Button size="x-small">Join</Button>
+                  </a>
+                </Link>
+              </span>
+            </div>
+          ),
+        ];
+      });
+      setClubTeamRows(rows);
+    }
+    if (club?.players) {
+      const rows = club?.players?.map((x) => {
+        return [
+          () => (
+            <div className={styles.clubMember}>
+              <Link href={`/profile/${x?.id}`}>
+                <img
+                  className={styles.clubMemberAvatar}
+                  src={x?.profile?.image || "/assets/person-placeholder.jpg"}
+                />
+              </Link>
+              <Link href={`/profile/${x?.id}`}>
+                <a>
+                  <span className={styles.clubMemberName}>
+                    {x?.profile?.fullName || "User Name" || x?.id}
+                  </span>
+                </a>
+              </Link>
+            </div>
+          ),
+          () => (
+            <span className={styles.clubMemberRole}>
+              {x?.profile?.playerTitle || "No Title"}
+            </span>
+          ),
+          () => (
+            <div className={styles.clubMemberListAction}>
+              <span>
+                <Link href={`/chats/${x?.id}/start-new-chat-when-clicked`}>
+                  <a>
+                    <ChatSVG />
+                  </a>
+                </Link>
+              </span>
+            </div>
+          ),
+        ];
+      });
+      setClubPlayerRows(rows);
+    }
+  }, [club]);
+
+  return (
+    <>
+      <div>
+        <div className={styles.clubHeaderWrapper}>
+          <img
+            className={styles.clubCrest}
+            src={club?.crest || "/assets/club-badge-placeholder.png"}
+          />
+          <h1>{club?.title}</h1>
+          <div className={styles.clubActionButtons}>
+            <Button variant="success">Join</Button>
+            <Button variant="danger">Leave</Button>
+            <Button>Manage</Button>
+            <Button variant="cancel">Edit</Button>
+            <Button>Add Team</Button>
+          </div>
+        </div>
+
+        <div className={styles.clubBodyWrapper}>
+          <div>
+            <h3>Description</h3>
+            <p className={styles.clubDescription}>
+              {"A  group of people who meet to participate in an activity (such as a sport or hobby) : the place where the members of a club meet. : a sports team or organization." ||
+                club?.description ||
+                "Add Club Description..."}
+            </p>
+          </div>
+          <div className={styles.clubOfficials}>
+            <h3>Officials</h3>
+            <Table
+              className={styles.clubTable}
+              header={["Name", "Role", "Action"]}
+              rows={clubOfficialRows}
+            ></Table>
+          </div>
+          <div className={styles.clubsTeamsAndPlayers}>
+            <div className={styles.clubTeams}>
+              <h3>Teams</h3>
+              <Table
+                className={styles.clubTable}
+                header={["Name", "Action"]}
+                rows={clubTeamRows}
+              ></Table>
+            </div>
+            <div className={styles.clubPlayers}>
+              <h3>Players</h3>
+              <Table
+                className={styles.clubTable}
+                header={["Name", "Role", "Action"]}
+                rows={clubPlayerRows}
+              ></Table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ClubDetails;

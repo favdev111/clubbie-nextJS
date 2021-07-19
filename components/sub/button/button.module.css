@@ -6,6 +6,9 @@
   border: none;
   cursor: pointer;
 }
+.btnXSmall {
+  padding: var(--space-5) var(--space-30);
+}
 .danger {
   background: var(--c-red);
 }
