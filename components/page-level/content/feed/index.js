@@ -39,6 +39,14 @@ function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
   const [searchText, setSearchText] = useState("");
   const [applySearch, setApplySearch] = useState("");
 
+  const handleSearchTextChange = (e) => {
+    if (e.target.value?.length === 0 && filter?.search) {
+      clearSearch();
+      return;
+    }
+    setSearchText(e?.target?.value);
+  };
+
   const makeSearch = () => {
     if (searchText?.trim().length > 3) {
       setFilter((filter) => {
@@ -71,7 +79,7 @@ function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
     <div className={styles.search}>
       <CommonSearch
         value={searchText}
-        onChange={(e) => setSearchText(e?.target?.value)}
+        onChange={handleSearchTextChange}
         onEnter={makeSearch}
       />
       {filter?.search && searchText === filter?.search && (
