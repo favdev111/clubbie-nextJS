@@ -16,7 +16,7 @@ import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
-import { RepostButton } from "../common/button-repost";
+// import { RepostButton } from "../common/button-repost";
 
 function ContentMediaTag({ media, className, videoControls }) {
   return (
@@ -165,23 +165,23 @@ function ContentBody({ title, description, createdAt, views }) {
 function ContentActions({
   contentId,
   liked,
-  teamIds,
+  // teamIds,
   totalLikes,
-  totalReposts,
-  totalProfileReposts,
-  totalTeamReposts,
+  // totalReposts,
+  // totalProfileReposts,
+  // totalTeamReposts,
   showNotificationMsg,
 }) {
   const [likeCount, setLikeCount] = useState(totalLikes || 0);
   const [isLiked, setIsLiked] = useState(liked);
-  const [repostCount, setRepostCount] = useState(totalReposts || 0);
-  const [repostProfileCount, setRepostProfileCount] = useState(
-    totalProfileReposts
-  );
-  const [repostTeamCount, setRepostTeamCount] = useState(totalTeamReposts);
-  const [isReposted, setIsReposted] = useState(
-    totalProfileReposts > 0 || totalTeamReposts > 0
-  );
+  // const [repostCount, setRepostCount] = useState(totalReposts || 0);
+  // const [repostProfileCount, setRepostProfileCount] = useState(
+  //   totalProfileReposts
+  // );
+  // const [repostTeamCount, setRepostTeamCount] = useState(totalTeamReposts);
+  // const [isReposted, setIsReposted] = useState(
+  //   totalProfileReposts > 0 || totalTeamReposts > 0
+  // );
 
   return (
     <div>
@@ -200,7 +200,7 @@ function ContentActions({
             setLikeCount((count) => count + 1);
           }}
         />
-        <RepostButton
+        {/* <RepostButton
           postId={contentId}
           reposted={isReposted}
           repostCount={repostCount}
@@ -226,7 +226,7 @@ function ContentActions({
               setRepostTeamCount((count) => count + 1);
             }
           }}
-        />
+        /> */}
         <SocialButton type="send" />
       </div>
     </div>

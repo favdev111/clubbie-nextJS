@@ -6,7 +6,7 @@ import InView from "@sub/hook-inview";
 import useNotifications from "@sub/hook-notification";
 import cn from "classnames";
 import { LikeButton } from "../../common/button-like";
-import { RepostButton } from "../../common/button-repost";
+// import { RepostButton } from "../../common/button-repost";
 
 function HomeVideosCard({
   createdPost,
@@ -32,16 +32,16 @@ function HomeVideosCard({
   const [content] = useState(media || thumbnail);
   const [likeCount, setLikeCount] = useState(counts?.likes || 0);
   const [isLiked, setIsLiked] = useState(!!myInteractions?.liked);
-  const [repostCount, setRepostCount] = useState(counts?.reposts || 0);
-  const [repostProfileCount, setRepostProfileCount] = useState(
-    myInteractions?.repostedInProfile || 0
-  );
-  const [repostTeamCount, setRepostTeamCount] = useState(
-    myInteractions?.repostedInTeam || 0
-  );
-  const [isReposted, setIsReposted] = useState(
-    !!myInteractions?.repostedInProfile
-  );
+  // const [repostCount, setRepostCount] = useState(counts?.reposts || 0);
+  // const [repostProfileCount, setRepostProfileCount] = useState(
+  //   myInteractions?.repostedInProfile || 0
+  // );
+  // const [repostTeamCount, setRepostTeamCount] = useState(
+  //   myInteractions?.repostedInTeam || 0
+  // );
+  // const [isReposted, setIsReposted] = useState(
+  //   !!myInteractions?.repostedInProfile
+  // );
 
   const verifyLoggedIn = () => {
     if (isLoggedIn) return true;
@@ -138,7 +138,7 @@ function HomeVideosCard({
             setLikeCount((count) => count + 1);
           }}
         />
-        <RepostButton
+        {/* <RepostButton
           postId={id}
           reposted={isReposted}
           repostCount={repostCount}
@@ -164,7 +164,7 @@ function HomeVideosCard({
               setRepostTeamCount((count) => count + 1);
             }
           }}
-        />
+        /> */}
         <SocialButton type="send" />
         <Link href={`/content/${id}?focusComment=true`}>
           <a>
