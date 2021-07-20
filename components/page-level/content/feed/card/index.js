@@ -7,6 +7,7 @@ import useNotifications from "@sub/hook-notification";
 import cn from "classnames";
 import { LikeButton } from "../../common/button-like";
 // import { RepostButton } from "../../common/button-repost";
+import { ShareButton } from "../../common/button-share";
 
 function HomeVideosCard({
   createdPost,
@@ -112,7 +113,7 @@ function HomeVideosCard({
             </p>
           </div>
         </div>
-        <SocialButton type="upload" />
+        <ShareButton postTitle={title} postMedia={content} />
       </div>
       <p className={styles.desc}> {title}</p>
       <p className={cn("opacity-50", styles.viewCount)}>
