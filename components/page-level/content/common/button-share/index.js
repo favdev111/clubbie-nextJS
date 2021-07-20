@@ -3,7 +3,7 @@ import SocialButton from "@sub/social-button";
 import DropDown from "@sub/dropdown";
 import SocialShare from "@sub/social-share";
 
-export const ShareButton = () => {
+export const ShareButton = ({ postTitle, postMedia }) => {
   const [dismiss, setDismiss] = useState(false);
 
   const onShare = () => {
@@ -25,8 +25,8 @@ export const ShareButton = () => {
         <SocialShare
           onClipBoardClick={onShare}
           onShareButtonClick={onShare}
-          shareText={"Shared From Clubbie"}
-          shareMedia={"https://i.stack.imgur.com/f0RDj.jpg"}
+          shareText={postTitle}
+          shareMedia={postMedia}
         ></SocialShare>
       )}
       dismiss={dismiss}

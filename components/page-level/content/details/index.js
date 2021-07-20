@@ -34,7 +34,14 @@ function ContentMediaTag({ media, className, videoControls }) {
   );
 }
 
-function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
+function ContentHeader({
+  contentId,
+  author,
+  isMyPost,
+  showNotificationMsg,
+  title,
+  media,
+}) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const deleteContent = async (contentId) => {
@@ -92,7 +99,7 @@ function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
               />
             </>
           )}
-          <ShareButton />
+          <ShareButton postTitle={title} postMedia={media} />
         </span>
       </div>
     </>
@@ -548,6 +555,8 @@ function ContentDetails({ content, user }) {
         author={_content?.author}
         isMyPost={_content?.author?.id === user?.id}
         showNotificationMsg={showNotificationMsg}
+        title={_content?.title}
+        media={_content?.media}
       ></ContentHeader>
       <ContentMedia media={activeMedia}></ContentMedia>
       {_content?.childPosts.length > 0 && (
@@ -559,10 +568,10 @@ function ContentDetails({ content, user }) {
         ></ContentRelatedMedia>
       )}
       <ContentBody
-        title={content.title}
-        description={content.description}
-        createdAt={content.createdAt}
-        views={content.counts.views}
+        title={_content.title}
+        description={_content.description}
+        createdAt={_content.createdAt}
+        views={_content.counts.views}
       ></ContentBody>
       <ContentActions
         contentId={_content?.id}
@@ -577,7 +586,7 @@ function ContentDetails({ content, user }) {
       {_content?.comments?.results && (
         <ContentComments
           user={user}
-          comments={content.comments}
+          comments={_content.comments}
           contentId={_content?.id}
           showNotificationMsg={showNotificationMsg}
         ></ContentComments>
