@@ -21,16 +21,32 @@
   gap: 5px;
 }
 
-
 .sortSelect select {
   padding: var(--space-12) 82px var(--space-12) var(--space-16);
   background-color: var(--c-white-10);
   color: var(--c-white);
   border-radius: var(--radius-lg);
   outline: none;
-    background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='14' height='14' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='white'/></g></svg>") no-repeat;
-    -webkit-appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='14' height='14' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='white'/></g></svg>")
+    no-repeat;
+  -webkit-appearance: none;
   background-position: right 15px top 50%;
+}
+
+.noPosts {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-5);
 }
 
 .sortSelect select:focus {
@@ -67,6 +83,22 @@
 
 .endFeedMessage {
   margin-bottom: 20px;
+}
+
+.search {
+  margin-top: 24px;
+  margin-bottom: 50px;
+}
+.appliedSearch {
+  margin-top: var(--space-16);
+}
+.appliedSearchText {
+  font-style: italic;
+}
+.clearAppliedSearch {
+  display: inline-block;
+  margin-left: var(--space-10);
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -114,20 +146,20 @@
   .homePage {
     padding-top: var(--space-32);
   }
-  .tagInner{
+  .tagInner {
     margin-bottom: 10px;
   }
 }
 
 @media only screen and (max-width: 280px) {
   /* For mobile phones: */
-  .mobileSort{
+  .mobileSort {
     margin-bottom: 20px;
     padding: 0;
     margin-left: 15px;
   }
 
-  .tagInner{
+  .tagInner {
     margin-bottom: 10px;
   }
 }
