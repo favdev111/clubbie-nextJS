@@ -53,11 +53,11 @@ function HomeVideosCard({
   const videoElRef = useRef();
   const playVideo = () => {
     setTimeout(function () {
-      videoElRef.current.play();
+      videoElRef?.current?.play();
     }, 500);
   };
   const stopVideo = () => {
-    videoElRef.current.pause();
+    videoElRef?.current?.pause();
   };
 
   return (
