@@ -31,12 +31,21 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
       .join(", ");
   };
 
-  const handleFacebookClick = (e) => {
-    e.preventDefault();
-    window.open(
+  const openShareDialog = (url, title, config = {}) => {
+    window.open(url, title, popupConfig(config));
+  };
+
+  const handleFacebookClick = () => {
+    openShareDialog(
       `https://www.facebook.com/sharer/sharer.php?u=${_pageLink}&quote=${shareText}`,
-      "Share on Facebook",
-      popupConfig()
+      "Share on Facebook"
+    );
+  };
+
+  const handleTwitterClick = () => {
+    openShareDialog(
+      `https://twitter.com/share?url=${_pageLink}&text=${shareText}`,
+      "Share on Twitter"
     );
   };
 
@@ -74,7 +83,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
         <span onClick={handleFacebookClick}>
           <FacebookSVG />
         </span>
-        <span>
+        <span onClick={handleTwitterClick}>
           <TwitterSVG />
         </span>
         <span>
