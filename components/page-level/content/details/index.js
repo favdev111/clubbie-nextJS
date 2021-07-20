@@ -17,6 +17,7 @@ import Comment from "./comment";
 import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
 // import { RepostButton } from "../common/button-repost";
+import { ShareButton } from "../common/button-share";
 
 function ContentMediaTag({ media, className, videoControls }) {
   return (
@@ -91,7 +92,7 @@ function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
               />
             </>
           )}
-          <SocialButton type="upload" />
+          <ShareButton />
         </span>
       </div>
     </>

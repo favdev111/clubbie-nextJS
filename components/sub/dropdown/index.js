@@ -18,8 +18,14 @@ function useOutsideAlerter(ref, setOpen) {
   }, [ref]);
 }
 
-function DropDown({ Component, list, title }) {
+function DropDown({ Component, ChildComponent, list, title, dismiss }) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (dismiss) {
+      setOpen(false);
+    }
+  }, [dismiss]);
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
@@ -33,6 +39,7 @@ function DropDown({ Component, list, title }) {
       seperater: true
     }
   ]
+  or ChildComponent
   */
   return (
     <div className={styles.dropDownWrapper} ref={wrapperRef}>
@@ -40,43 +47,49 @@ function DropDown({ Component, list, title }) {
         <Component></Component>
       </span>
       <div className={cn(styles.dropDownList, open && styles.openDropdown)}>
-        {title && <span className={styles.dropDownListTitle}>{title}</span>}
-        <div className={title && styles.dropDownListMenu}>
-          {list?.length &&
-            list.map((item, index) => (
-              <>
-                {item.href && (
-                  <Link key={index} href={item.href}>
-                    <a>
+        {ChildComponent ? (
+          <ChildComponent></ChildComponent>
+        ) : (
+          <>
+            {title && <span className={styles.dropDownListTitle}>{title}</span>}
+            <div className={title && styles.dropDownListMenu}>
+              {list?.length &&
+                list.map((item, index) => (
+                  <>
+                    {item.href && (
+                      <Link key={index} href={item.href}>
+                        <a>
+                          <span
+                            className={cn(
+                              styles.dropDownListItem,
+                              item.seperator && styles.seperator
+                            )}
+                          >
+                            {item.title}
+                          </span>
+                        </a>
+                      </Link>
+                    )}
+                    {item.onClick && (
                       <span
                         className={cn(
                           styles.dropDownListItem,
+                          styles.dropDownListMenuItem,
                           item.seperator && styles.seperator
                         )}
+                        onClick={async (e) => {
+                          await item.onClick(e);
+                          setOpen(false);
+                        }}
                       >
                         {item.title}
                       </span>
-                    </a>
-                  </Link>
-                )}
-                {item.onClick && (
-                  <span
-                    className={cn(
-                      styles.dropDownListItem,
-                      styles.dropDownListMenuItem,
-                      item.seperator && styles.seperator
                     )}
-                    onClick={async (e) => {
-                      await item.onClick(e);
-                      setOpen(false);
-                    }}
-                  >
-                    {item.title}
-                  </span>
-                )}
-              </>
-            ))}
-        </div>
+                  </>
+                ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
