@@ -49,6 +49,13 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
     );
   };
 
+  const handleWhatsAppClick = () => {
+    openShareDialog(
+      `https://web.whatsapp.com/send?text=${shareText + " " + _pageLink}`,
+      "Share on Whatsapp"
+    );
+  };
+
   useEffect(() => {
     if (process.browser && !pageLink) {
       // setPageLink(window?.location?.href);
@@ -89,7 +96,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
         <span>
           <PinterestSVG />
         </span>
-        <span>
+        <span onClick={handleWhatsAppClick}>
           <WhatsAppSVG />
         </span>
       </div>
