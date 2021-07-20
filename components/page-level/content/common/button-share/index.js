@@ -6,7 +6,7 @@ import SocialShare from "@sub/social-share";
 export const ShareButton = () => {
   const [dismiss, setDismiss] = useState(false);
 
-  const onClipBoardClick = () => {
+  const onShare = () => {
     setDismiss(true);
   };
 
@@ -23,7 +23,8 @@ export const ShareButton = () => {
       Component={() => <SocialButton type="upload" />}
       ChildComponent={() => (
         <SocialShare
-          onClipBoardClick={onClipBoardClick}
+          onClipBoardClick={onShare}
+          onShareButtonClick={onShare}
           shareText={"Shared From Clubbie"}
           shareMedia={"https://i.stack.imgur.com/f0RDj.jpg"}
         ></SocialShare>

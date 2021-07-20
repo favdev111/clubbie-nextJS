@@ -8,7 +8,13 @@ import PinterestSVG from "@svg/social/share/pinterest";
 import WhatsAppSVG from "@svg/social/share/whatsapp";
 import ClipBoardSVG from "@svg/clipboard";
 
-function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
+function SocialShare({
+  onClipBoardClick,
+  onShareButtonClick,
+  pageLink,
+  shareText,
+  shareMedia,
+}) {
   const [_pageLink, setPageLink] = useState(pageLink || "");
 
   const popupConfig = (customConfig = {}) => {
@@ -40,6 +46,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
       `https://www.facebook.com/sharer/sharer.php?u=${_pageLink}&quote=${shareText}`,
       "Share on Facebook"
     );
+    onShareButtonClick();
   };
 
   const handleTwitterClick = () => {
@@ -47,6 +54,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
       `https://twitter.com/share?url=${_pageLink}&text=${shareText}`,
       "Share on Twitter"
     );
+    onShareButtonClick();
   };
 
   const handlePinterestClick = () => {
@@ -54,6 +62,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
       `https://pinterest.com/pin/create/button?url=${_pageLink}&media=${shareMedia}&description=${shareText}`,
       "Share on Pinterest"
     );
+    onShareButtonClick();
   };
 
   const handleWhatsAppClick = () => {
@@ -61,12 +70,12 @@ function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
       `https://web.whatsapp.com/send?text=${shareText + " " + _pageLink}`,
       "Share on Whatsapp"
     );
+    onShareButtonClick();
   };
 
   useEffect(() => {
     if (process.browser && !pageLink) {
-      // setPageLink(window?.location?.href);
-      setPageLink("http://github.com/"); // for testing
+      setPageLink(window?.location?.href); // must be a live url
     }
   }, []);
 
