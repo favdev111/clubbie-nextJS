@@ -8,7 +8,7 @@ import PinterestSVG from "@svg/social/share/pinterest";
 import WhatsAppSVG from "@svg/social/share/whatsapp";
 import ClipBoardSVG from "@svg/clipboard";
 
-function SocialShare({ onClipBoardClick, pageLink, shareText }) {
+function SocialShare({ onClipBoardClick, pageLink, shareText, shareMedia }) {
   const [_pageLink, setPageLink] = useState(pageLink || "");
 
   const popupConfig = (customConfig = {}) => {
@@ -46,6 +46,13 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
     openShareDialog(
       `https://twitter.com/share?url=${_pageLink}&text=${shareText}`,
       "Share on Twitter"
+    );
+  };
+
+  const handlePinterestClick = () => {
+    openShareDialog(
+      `https://pinterest.com/pin/create/button?url=${_pageLink}&media=${shareMedia}&description=${shareText}`,
+      "Share on Pinterest"
     );
   };
 
@@ -93,7 +100,7 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
         <span onClick={handleTwitterClick}>
           <TwitterSVG />
         </span>
-        <span>
+        <span onClick={handlePinterestClick}>
           <PinterestSVG />
         </span>
         <span onClick={handleWhatsAppClick}>

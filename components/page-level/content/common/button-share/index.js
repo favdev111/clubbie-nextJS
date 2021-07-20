@@ -25,6 +25,7 @@ export const ShareButton = () => {
         <SocialShare
           onClipBoardClick={onClipBoardClick}
           shareText={"Shared From Clubbie"}
+          shareMedia={"https://i.stack.imgur.com/f0RDj.jpg"}
         ></SocialShare>
       )}
       dismiss={dismiss}
