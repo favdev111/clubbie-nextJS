@@ -78,6 +78,7 @@ function HomeVideosCard({
                   ref={videoElRef}
                   controls
                   loop
+                  muted
                 ></video>
               </InView>
             ) : content.includes("image") ? (
