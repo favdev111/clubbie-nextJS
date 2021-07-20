@@ -9,12 +9,41 @@ import WhatsAppSVG from "@svg/social/share/whatsapp";
 import ClipBoardSVG from "@svg/clipboard";
 
 function SocialShare({ onClipBoardClick, pageLink, shareText }) {
-  const [_shareText] = useState(shareText || "Share this post on social media");
   const [_pageLink, setPageLink] = useState(pageLink || "");
+
+  const popupConfig = (customConfig = {}) => {
+    const _config = {
+      height: "500px",
+      width: "500px",
+      location: "no",
+      toolbar: "no",
+      status: "no",
+      directories: "no",
+      menubar: "no",
+      scrollbars: "yes",
+      resizable: "no",
+      centerscreen: "yes",
+      chrome: "yes",
+      ...customConfig,
+    };
+    return Object.keys(_config)
+      .map((key) => `${key}=${_config[key]}`)
+      .join(", ");
+  };
+
+  const handleFacebookClick = (e) => {
+    e.preventDefault();
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${_pageLink}&quote=${shareText}`,
+      "Share on Facebook",
+      popupConfig()
+    );
+  };
 
   useEffect(() => {
     if (process.browser && !pageLink) {
-      setPageLink(window?.location?.href);
+      // setPageLink(window?.location?.href);
+      setPageLink("http://github.com/"); // for testing
     }
   }, []);
 
@@ -40,9 +69,9 @@ function SocialShare({ onClipBoardClick, pageLink, shareText }) {
 
   return (
     <div className={styles.socialShare}>
-      <p>{_shareText}</p>
+      <p>Share this post on social media</p>
       <div className={styles.socialIconsWrapper}>
-        <span>
+        <span onClick={handleFacebookClick}>
           <FacebookSVG />
         </span>
         <span>

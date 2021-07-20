@@ -22,7 +22,10 @@ export const ShareButton = () => {
     <DropDown
       Component={() => <SocialButton type="upload" />}
       ChildComponent={() => (
-        <SocialShare onClipBoardClick={onClipBoardClick}></SocialShare>
+        <SocialShare
+          onClipBoardClick={onClipBoardClick}
+          shareText={"Shared From Clubbie"}
+        ></SocialShare>
       )}
       dismiss={dismiss}
     ></DropDown>
