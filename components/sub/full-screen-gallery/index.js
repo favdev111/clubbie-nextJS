@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import cn from "classnames";
 import LeftAngleSVG from "@svg/left-angle";
 import RightAngleSVG from "@svg/right-angle";
@@ -7,6 +7,7 @@ import styles from "./index.module.css";
 function FullScreenGallery({ display, setDisplay, galleryItems }) {
   const [_galleryItems] = useState(galleryItems);
   const [activeIndex, setActiveIndex] = useState(0);
+  const videoRef = useRef();
 
   const onPreviousButtonClick = () => {
     const index =
@@ -22,6 +23,9 @@ function FullScreenGallery({ display, setDisplay, galleryItems }) {
 
   const handleEscape = (e) => {
     if (e.key === "Escape") {
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
       setDisplay(false);
     }
   };
@@ -47,6 +51,7 @@ function FullScreenGallery({ display, setDisplay, galleryItems }) {
               loop
               onKeyDown={handleEscape}
               tabIndex="1"
+              ref={videoRef}
             ></video>
           )}
           {_galleryItems[activeIndex]?.includes("image") && (
