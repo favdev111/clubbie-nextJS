@@ -112,6 +112,9 @@
 .loader {
   margin-left: 5px;
 }
+.mediaHover {
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .postHeader {

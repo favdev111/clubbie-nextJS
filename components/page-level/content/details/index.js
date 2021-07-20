@@ -18,18 +18,41 @@ import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
 // import { RepostButton } from "../common/button-repost";
 import { ShareButton } from "../common/button-share";
+import FullScreenGallery from "@sub/full-screen-gallery";
 
-function ContentMediaTag({ media, className, videoControls }) {
+function ContentMediaTag({
+  media,
+  className,
+  videoControls,
+  setShowFullScreenGallery,
+}) {
   return (
     <>
       {media?.includes("video") && (
         <video
-          className={className}
+          className={cn(
+            className,
+            setShowFullScreenGallery && styles.mediaHover
+          )}
           src={media}
           controls={videoControls}
+          onClick={() =>
+            setShowFullScreenGallery && setShowFullScreenGallery(true)
+          }
         ></video>
       )}
-      {media?.includes("image") && <img className={className} src={media} />}
+      {media?.includes("image") && (
+        <img
+          className={cn(
+            className,
+            setShowFullScreenGallery && styles.mediaHover
+          )}
+          src={media}
+          onClick={() =>
+            setShowFullScreenGallery && setShowFullScreenGallery(true)
+          }
+        />
+      )}
     </>
   );
 }
@@ -106,13 +129,14 @@ function ContentHeader({
   );
 }
 
-function ContentMedia({ media }) {
+function ContentMedia({ media, setShowFullScreenGallery }) {
   return (
     <div className={styles.contentMediaWrapper}>
       <ContentMediaTag
         media={media}
         className={styles.contentMedia}
         videoControls
+        setShowFullScreenGallery={setShowFullScreenGallery}
       />
     </div>
   );
@@ -538,6 +562,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
 function ContentDetails({ content, user }) {
   const [_content, setContent] = useState(content);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
+  const [showFullScreenGallery, setShowFullScreenGallery] = useState(false);
 
   const { showNotificationMsg } = useNotification();
 
@@ -550,6 +575,14 @@ function ContentDetails({ content, user }) {
 
   return (
     <>
+      <FullScreenGallery
+        display={showFullScreenGallery}
+        setDisplay={setShowFullScreenGallery}
+        galleryItems={[
+          _content?.media,
+          ..._content?.childPosts.map((x) => x.media),
+        ]}
+      ></FullScreenGallery>
       <ContentHeader
         contentId={_content?.id}
         author={_content?.author}
@@ -558,7 +591,10 @@ function ContentDetails({ content, user }) {
         title={_content?.title}
         media={_content?.media}
       ></ContentHeader>
-      <ContentMedia media={activeMedia}></ContentMedia>
+      <ContentMedia
+        media={activeMedia}
+        setShowFullScreenGallery={setShowFullScreenGallery}
+      ></ContentMedia>
       {_content?.childPosts.length > 0 && (
         <ContentRelatedMedia
           parentMedia={_content?.media}
