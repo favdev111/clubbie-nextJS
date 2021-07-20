@@ -17,6 +17,7 @@
 }
 .viewCount {
   padding: 12px 0 0 30px;
+  padding-right: var(--space-48);
 }
 .cardInfoProfile img {
   border-radius: var(--radius-xl);
@@ -109,4 +110,12 @@
     background: none;
     box-shadow: none;
   }
+}
+.actionButtons {
+  display: flex;
+}
+.current {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--space-10);
 }
