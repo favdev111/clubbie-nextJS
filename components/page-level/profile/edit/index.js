@@ -19,7 +19,7 @@ import useNotifications from "@sub/hook-notification";
 import { editProfile } from "@utils/schemas/user.schema";
 
 function ProfileEdit({ profile, clubs }) {
-  // TODO: edit email, delete clubs , handle image display, show errors
+  // TODO: edit email, delete clubs
   const router = useRouter();
 
   const { register, handleSubmit, errors, setValue } = useForm({
@@ -57,7 +57,6 @@ function ProfileEdit({ profile, clubs }) {
   };
   const onImagePicked = (image) => setImage(image);
   const onSubmit = async (data) => {
-    // console.log("Remove these clubs => ", clubsToRemove);
     setStatus({ loading: true });
 
     // upload profile image if any
@@ -123,7 +122,7 @@ function ProfileEdit({ profile, clubs }) {
       });
       return;
     }
-    showNotificationMsg("Profile Updated Successfully", {
+    showNotificationMsg("Profile Updated", {
       variant: "success",
       displayIcon: true,
     });
@@ -301,7 +300,8 @@ function ProfileEdit({ profile, clubs }) {
               type="text"
               name="bio"
               multiLine
-              rows={2}
+              resizable={true}
+              rows={4}
               customProps={{ ...register("bio") }}
               hint={
                 errors?.bio && {
