@@ -5,6 +5,7 @@ import Send from "@svg/send";
 import EditProfile from "@svg/edit-profile";
 import Uploaded from "@svg/uploaded";
 import Tag from "@svg/tag";
+import Fav from "@svg/social/fav";
 import Repost from "@svg/repost";
 import Messages from "@svg/messages";
 
@@ -42,7 +43,6 @@ function OvalButton({
               <Messages />
             </a>
           )}
-
           {appearence === "uploaded" && (
             <a>
               <Uploaded />
@@ -51,6 +51,11 @@ function OvalButton({
           {appearence === "tagged" && (
             <a>
               <Tag />
+            </a>
+          )}
+          {appearence === "liked" && (
+            <a>
+              <Fav strokeColor={"#FFFFFF"} />
             </a>
           )}
           {appearence === "reposts" && (

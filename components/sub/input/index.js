@@ -32,13 +32,20 @@ const TemplateInput = ({
   };
 
   return (
-    <div className={cn(styles.inputCont, className)}>
+    <div
+      className={cn(
+        styles.inputCont,
+        !multiLine && styles.inputContFixHeight,
+        className
+      )}
+    >
       {!multiLine ? (
         <>
           <span className={cn(styles.inputBox)}>
             <input
               className={cn(
                 styles.inputBlock,
+                !multiLine && styles.inputBlockFixHeight,
                 disabled && styles.disabledInput,
                 hint?.type === "error" &&
                   hint?.inputBorder &&

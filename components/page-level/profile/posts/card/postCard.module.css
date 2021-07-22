@@ -6,6 +6,12 @@
   justify-content: center;
   cursor: pointer;
 }
+.profilePhotosItem img {
+  height: 292px;
+  width: 292px;
+  border-radius: var(--space-16);
+  object-fit: cover;
+}
 .profilePhotosItem video {
   height: 292px;
   width: 292px;
@@ -30,29 +36,34 @@
 .hidden {
   display: none;
 }
-.profilePhotosItem img {
-  height: 292px;
-  width: 292px;
-  border-radius: var(--space-16);
-  object-fit: cover;
+.media {
+  position: relative;
 }
-.profilePhotosItem:hover .profilePhotosOptions {
+.media:hover .mediaCounts {
   display: flex;
 }
-.profilePhotosItem .profilePhotosOptions {
+.media .mediaCounts {
   display: none;
   align-items: center;
+  justify-content: center;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--space-16);
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.profilePhotosItem img:hover {
+.media img:hover {
   opacity: 0.5;
 }
-.profilePhotosItem video:hover {
+.media video:hover {
   opacity: 0.5;
 }
 
-.profilePhotosItem .profilePhotosOptions span {
+.media .mediaCounts span {
   display: grid;
   grid-auto-flow: column;
   grid-column-gap: 5px;

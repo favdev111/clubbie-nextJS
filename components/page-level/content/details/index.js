@@ -64,10 +64,12 @@ function ContentHeader({
   showNotificationMsg,
   title,
   media,
+  verifyLoggedIn,
 }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const deleteContent = async (contentId) => {
+    if (!verifyLoggedIn()) return;
     const response = await Posts.DeletePost(contentId, { type: "mine" }).catch(
       () => undefined
     );
@@ -118,7 +120,10 @@ function ContentHeader({
               <ActionButton type="delete" onClick={() => setOpenDialog(true)} />
               <ActionButton
                 type="edit"
-                onClick={() => router.push(`/content/${contentId}/edit`)}
+                onClick={() => {
+                  if (!verifyLoggedIn()) return;
+                  router.push(`/content/${contentId}/edit`);
+                }}
               />
             </>
           )}
@@ -203,6 +208,7 @@ function ContentActions({
   // totalProfileReposts,
   // totalTeamReposts,
   showNotificationMsg,
+  verifyLoggedIn,
 }) {
   const [likeCount, setLikeCount] = useState(totalLikes || 0);
   const [isLiked, setIsLiked] = useState(liked);
@@ -223,13 +229,17 @@ function ContentActions({
           postId={contentId}
           count={likeCount}
           showNotificationMsg={showNotificationMsg}
-          onClick={(likeHandler) => {
-            // if (!verifyLoggedIn()) return;
-            likeHandler();
+          onClick={async (likeHandler) => {
+            if (!verifyLoggedIn()) return;
+            await likeHandler();
           }}
-          onLiked={() => {
-            setIsLiked(true);
+          onLiked={(likeId) => {
+            setIsLiked(likeId);
             setLikeCount((count) => count + 1);
+          }}
+          onUnliked={() => {
+            setIsLiked(false);
+            setLikeCount((count) => count - 1);
           }}
         />
         {/* <RepostButton
@@ -265,7 +275,13 @@ function ContentActions({
   );
 }
 
-function ContentComments({ user, comments, contentId, showNotificationMsg }) {
+function ContentComments({
+  user,
+  comments,
+  contentId,
+  showNotificationMsg,
+  verifyLoggedIn,
+}) {
   const _router = useRouter();
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -313,6 +329,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const createComment = async (commentText) => {
+    if (!verifyLoggedIn()) return;
     if (commentText.trim().length === 0) return;
     setCreatingComment(true);
 
@@ -342,6 +359,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const editComment = async (commentId, commentText) => {
+    if (!verifyLoggedIn()) return;
     if (!commentId || !commentText) return;
     setEditingComment(true);
 
@@ -378,6 +396,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const deleteComment = async (commentId) => {
+    if (!verifyLoggedIn()) return;
     if (!commentId) return;
     setDeletingComment(true);
 
@@ -404,6 +423,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const createReply = async (commentId, replyText) => {
+    if (!verifyLoggedIn()) return;
     if (!commentId || replyText.trim().length === 0) return;
     setCreatingReply(true);
 
@@ -441,6 +461,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const deleteReply = async (commentId, replyId) => {
+    if (!verifyLoggedIn()) return;
     if (!commentId || !replyId) return;
     setDeletingReply(true);
 
@@ -474,6 +495,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
   };
 
   const editReply = async (commentId, replyId, replyText) => {
+    if (!verifyLoggedIn()) return;
     if (!commentId || !replyId || !replyText) return;
     setEditingReply(true);
 
@@ -563,18 +585,35 @@ function ContentDetails({ content, user }) {
   const [_content, setContent] = useState(content);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
   const [showFullScreenGallery, setShowFullScreenGallery] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const { showNotificationMsg } = useNotification();
 
+  const verifyLoggedIn = () => {
+    if (user) return true;
+    setShowLoginPopup(true);
+    return false;
+  };
+
   // try adding content view
   useEffect(() => {
-    setTimeout(async function () {
-      await Interactions.ViewPost(_content?.id).catch(() => undefined);
-    }, 5000);
+    if (user) {
+      setTimeout(async function () {
+        await Interactions.ViewPost(_content?.id).catch(() => undefined);
+      }, 5000);
+    }
   }, [_content]);
 
   return (
     <>
+      <ConfirmDialog
+        open={showLoginPopup}
+        setOpen={setShowLoginPopup}
+        message="You need to login to perform this action"
+        confirmText="Login"
+        onConfirm={() => router.push("/auth/login")}
+        type="info"
+      ></ConfirmDialog>
       <FullScreenGallery
         display={showFullScreenGallery}
         setDisplay={setShowFullScreenGallery}
@@ -590,6 +629,7 @@ function ContentDetails({ content, user }) {
         showNotificationMsg={showNotificationMsg}
         title={_content?.title}
         media={_content?.media}
+        verifyLoggedIn={verifyLoggedIn}
       ></ContentHeader>
       <ContentMedia
         media={activeMedia}
@@ -618,6 +658,7 @@ function ContentDetails({ content, user }) {
         totalProfileReposts={_content?.myInteractions?.repostedInProfile}
         totalTeamReposts={_content?.myInteractions?.repostedInTeam}
         showNotificationMsg={showNotificationMsg}
+        verifyLoggedIn={verifyLoggedIn}
       ></ContentActions>
       {_content?.comments?.results && (
         <ContentComments
@@ -625,6 +666,8 @@ function ContentDetails({ content, user }) {
           comments={_content.comments}
           contentId={_content?.id}
           showNotificationMsg={showNotificationMsg}
+          // here
+          verifyLoggedIn={verifyLoggedIn}
         ></ContentComments>
       )}
     </>

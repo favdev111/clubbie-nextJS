@@ -8,22 +8,32 @@ export const LikeButton = ({
   postId,
   showNotificationMsg,
   onLiked,
+  onUnliked,
   onClick,
 }) => {
   const handleLikeClick = async () => {
     if (!liked) {
       const response = await Interactions.LikePost(postId).catch(() => null);
       if (!response) {
-        showNotificationMsg("Error liking post. Try again..!", {
+        showNotificationMsg("Error Liking Post", {
           variant: "error",
           displayIcon: true,
         });
         return;
       }
-      onLiked();
+      onLiked(response.data.id);
     } else {
-      // TODO: remove interaction
-      showNotificationMsg("Remove Post Like");
+      const response = await Interactions.RemoveInteraction(liked).catch(
+        () => null
+      );
+      if (!response) {
+        showNotificationMsg("Error Removing Like", {
+          variant: "error",
+          displayIcon: true,
+        });
+        return;
+      }
+      onUnliked();
     }
   };
 

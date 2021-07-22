@@ -9,7 +9,7 @@
 }
 
 .avatar:hover .image {
-  opacity: 0.6;
+  opacity: 0.3;
 }
 .avatar:hover .edit {
   z-index: 1;
