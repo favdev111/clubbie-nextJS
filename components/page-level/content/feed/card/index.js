@@ -51,7 +51,15 @@ function HomeVideosCard({
   };
 
   const videoElRef = useRef();
+  const videoInPlayRef = useRef();
   const playVideo = () => {
+    if (!videoElRef?.current?.src) {
+      videoElRef?.current?.load();
+    }
+    if (videoInPlayRef?.current?.src && videoElRef.current) {
+      videoInPlayRef?.current?.pause();
+    }
+    videoInPlayRef.current = videoElRef?.current;
     setTimeout(function () {
       videoElRef?.current?.play();
     }, 500);
@@ -78,7 +86,7 @@ function HomeVideosCard({
                   ref={videoElRef}
                   controls
                   loop
-                  muted
+                  // muted
                 ></video>
               </InView>
             ) : content.includes("image") ? (
