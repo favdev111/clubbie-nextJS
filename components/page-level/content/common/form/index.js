@@ -11,6 +11,7 @@ import UploadSVG from "@svg/upload";
 import MediaCard from "./mediaCard";
 import Alert from "@sub/alert";
 import useForm from "@sub/hook-form";
+import DragDrop from "@sub/drag-drop";
 
 function ContentForm({
   media,
@@ -158,15 +159,33 @@ function ContentForm({
     })(e);
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files[0].type !== "video/mp4") return;
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setMedia(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <form onSubmit={onSubmit}>
       {!_media ? (
         <>
-          <div
+          <DragDrop
             className={cn(
               styles.dragDropVideos,
               mediaRequired && styles.errorInput
             )}
+            onDrop={handleDrop}
           >
             <input
               hidden
@@ -187,7 +206,7 @@ function ContentForm({
                 <label htmlFor="pick-parent-media">Browse Files</label>
               </a>
             </span>
-          </div>
+          </DragDrop>
           {mediaRequired && (
             <p className={styles.errorMsg}>Media is required</p>
           )}

@@ -6,7 +6,7 @@ function DragDrop({
   onDragEnter,
   onDragOver,
   onDragLeave,
-  onDrop,
+  onDrop, // required
 }) {
   const preventDefaults = (e) => e.preventDefault();
 
