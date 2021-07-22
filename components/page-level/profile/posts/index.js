@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import cn from "classnames";
 import styles from "./profile-posts.module.css";
 import OvalButton from "@sub/button-oval";
+import useNotification from "@sub/hook-notification";
 import PostCard from "./card";
 import InfiniteScroll from "@sub/infinite-scroll";
 import Users from "@api/services/Users";
@@ -28,10 +29,10 @@ function ProfilePosts({ userId, posts }) {
       name: "Liked",
       apperance: "liked",
     },
-    {
-      name: "Reposts",
-      apperance: "reposts",
-    },
+    // {
+    //   name: "Reposts",
+    //   apperance: "reposts",
+    // },
   ];
 
   const postsFilter = {
@@ -39,15 +40,20 @@ function ProfilePosts({ userId, posts }) {
     sortBy: "createdAt:desc",
   };
 
+  const { showNotificationMsg } = useNotification();
+
   const getMoreUploadedPosts = async () => {
     const resUploadedPosts = await Users.GetUploadedPosts(userId, {
       ...postsFilter,
       page: _posts?.uploaded?.page + 1,
-    }).catch(() => false); // avoid page error for now
+    }).catch(() => false);
     const userUploadedPosts = resUploadedPosts?.data;
 
     if (!userUploadedPosts) {
-      console.log("error fetching more uploaded posts");
+      showNotificationMsg("Failed To Fetch More Posts", {
+        variant: "error",
+        displayIcon: true,
+      });
       return;
     }
 
@@ -64,16 +70,18 @@ function ProfilePosts({ userId, posts }) {
     setPosts({ ...updatedPosts });
   };
 
-  // Todo: fix this and add when api updates
   const getMoreLikedPosts = async () => {
     const resLikedPosts = await Users.GetLikedPosts(userId, {
       ...postsFilter,
       page: _posts?.liked?.page + 1,
-    }).catch(() => false); // avoid page error for now
+    }).catch(() => false);
     const userLikedPosts = resLikedPosts?.data;
 
     if (!userLikedPosts) {
-      console.log("error fetching more liked posts");
+      showNotificationMsg("Failed To Fetch More Posts", {
+        variant: "error",
+        displayIcon: true,
+      });
       return;
     }
 
@@ -90,30 +98,33 @@ function ProfilePosts({ userId, posts }) {
     setPosts({ ...updatedPosts });
   };
 
-  const getMoreRepostedPosts = async () => {
-    const resRepostedPosts = await Users.GetRepostedPosts(userId, {
-      ...postsFilter,
-      page: _posts?.reposted?.page + 1,
-    }).catch(() => false); // avoid page error for now
-    const userRepostedPosts = resRepostedPosts?.data;
+  // const getMoreRepostedPosts = async () => {
+  //   const resRepostedPosts = await Users.GetRepostedPosts(userId, {
+  //     ...postsFilter,
+  //     page: _posts?.reposted?.page + 1,
+  //   }).catch(() => false);
+  //   const userRepostedPosts = resRepostedPosts?.data;
 
-    if (!userRepostedPosts) {
-      console.log("error fetching more reposted posts");
-      return;
-    }
+  //   if (!userRepostedPosts) {
+  //     showNotificationMsg("Failed To Fetch More Posts", {
+  //       variant: "error",
+  //       displayIcon: true,
+  //     });
+  //     return;
+  //   }
 
-    const updatedRepostedPosts = {
-      ...userRepostedPosts,
-      results: [..._posts?.reposted?.results, ...userRepostedPosts?.results],
-    };
+  //   const updatedRepostedPosts = {
+  //     ...userRepostedPosts,
+  //     results: [..._posts?.reposted?.results, ...userRepostedPosts?.results],
+  //   };
 
-    const updatedPosts = {
-      ..._posts,
-      reposted: updatedRepostedPosts,
-    };
+  //   const updatedPosts = {
+  //     ..._posts,
+  //     reposted: updatedRepostedPosts,
+  //   };
 
-    setPosts({ ...updatedPosts });
-  };
+  //   setPosts({ ...updatedPosts });
+  // };
 
   return (
     <>
@@ -139,11 +150,11 @@ function ProfilePosts({ userId, posts }) {
               dataLength={_posts[key]?.results?.length}
               getMore={
                 (activeTab === 0 && getMoreUploadedPosts) ||
-                // (activeTab === 1 && getMoreLikedPosts) || // add this line here for liked posts when api updates
-                (activeTab === 2 && getMoreRepostedPosts)
+                (activeTab === 1 && getMoreLikedPosts)
+                // || (activeTab === 2 && getMoreRepostedPosts)
               }
               hasMore={_posts[key]?.page < _posts[key]?.totalPages}
-              loading={<LoadingPosts />}
+              loader={<LoadingPosts />}
             >
               <div className={styles.profilePhotos}>
                 {_posts[key]?.results?.map((post, index) => (
