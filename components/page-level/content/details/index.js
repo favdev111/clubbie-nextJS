@@ -233,9 +233,13 @@ function ContentActions({
             if (!verifyLoggedIn()) return;
             await likeHandler();
           }}
-          onLiked={() => {
-            setIsLiked(true);
+          onLiked={(likeId) => {
+            setIsLiked(likeId);
             setLikeCount((count) => count + 1);
+          }}
+          onUnliked={() => {
+            setIsLiked(false);
+            setLikeCount((count) => count - 1);
           }}
         />
         {/* <RepostButton

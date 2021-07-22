@@ -1,12 +1,16 @@
 import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Content from "@page/content";
+import HTTPClient from "@api/HTTPClient";
+import authUser from "@utils/helpers/auth";
+import { parseCookies } from "@utils/helpers/parseCookies";
 
-function ContentDetails({ post, user }) {
+function ContentDetails({ post }) {
+  const user = authUser.getUser();
+
   return (
     <Layout>
       <Seo title="Content Details" desc="Lorem ipsum dolor sit amet" />
@@ -18,6 +22,10 @@ function ContentDetails({ post, user }) {
 export default ContentDetails;
 
 export const getServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx.req);
+  const accessToken = cookies.access_token;
+  HTTPClient.setHeader("Authorization", `Bearer ${accessToken}`);
+
   const postId = ctx.params.postId;
 
   // get posts

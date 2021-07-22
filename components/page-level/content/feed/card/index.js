@@ -32,7 +32,7 @@ function HomeVideosCard({
 
   const [content] = useState(media || thumbnail);
   const [likeCount, setLikeCount] = useState(counts?.likes || 0);
-  const [isLiked, setIsLiked] = useState(!!myInteractions?.liked);
+  const [isLiked, setIsLiked] = useState(myInteractions?.liked);
   // const [repostCount, setRepostCount] = useState(counts?.reposts || 0);
   // const [repostProfileCount, setRepostProfileCount] = useState(
   //   myInteractions?.repostedInProfile || 0
@@ -124,9 +124,13 @@ function HomeVideosCard({
               if (!verifyLoggedIn()) return;
               likeHandler();
             }}
-            onLiked={() => {
-              setIsLiked(true);
+            onLiked={(likeId) => {
+              setIsLiked(likeId);
               setLikeCount((count) => count + 1);
+            }}
+            onUnliked={() => {
+              setIsLiked(false);
+              setLikeCount((count) => count - 1);
             }}
           />
           <SocialButton type="send" />
