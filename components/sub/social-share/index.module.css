@@ -1,0 +1,43 @@
+.socialShare {
+  margin: var(--space-16);
+  width: 280px;
+}
+.socialIconsWrapper {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-10);
+}
+.socialIconsWrapper > span {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.socialIconsWrapper > span:hover {
+  transform: scale(1.2);
+}
+.clipBoardURLWrapper {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+}
+.clipBoardInputWrapper {
+  height: 0;
+}
+.clipBoardInput {
+  line-height: var(--space-32) !important;
+  height: var(--space-32) !important;
+  padding: var(--space-18) !important;
+  border-radius: var(--radius) !important;
+}
+.clipboardButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--c-white-10);
+  border-radius: var(--radius);
+  padding: var(--space-8);
+}

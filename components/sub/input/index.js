@@ -17,6 +17,7 @@ const TemplateInput = ({
   customProps,
   hint,
   className,
+  inputClassName,
   disabled,
   focused,
 }) => {
@@ -38,6 +39,7 @@ const TemplateInput = ({
             <input
               className={cn(
                 styles.inputBlock,
+                disabled && styles.disabledInput,
                 hint?.type === "error" &&
                   hint?.inputBorder &&
                   styles.errorInput,
@@ -45,7 +47,7 @@ const TemplateInput = ({
                 hint?.type === "success" &&
                   hint?.inputBorder &&
                   styles.successInput,
-                disabled && styles.disabledInput
+                inputClassName
               )}
               disabled={disabled}
               type={typeInput}
@@ -86,13 +88,14 @@ const TemplateInput = ({
             className={cn(
               styles.inputBlock,
               styles.textArea,
+              disabled && styles.disabledInput,
               resizable && styles.resizableTextArea,
               hint?.type === "error" && hint?.inputBorder && styles.errorInput,
               hint?.type === "info" && hint?.inputBorder && styles.infoInput,
               hint?.type === "success" &&
                 hint?.inputBorder &&
                 styles.successInput,
-              disabled && styles.disabledInput
+              inputClassName
             )}
             disabled={disabled}
             placeholder={placeholder}

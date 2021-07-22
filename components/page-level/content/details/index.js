@@ -16,24 +16,55 @@ import CommentInput from "./commentInput";
 import Comment from "./comment";
 import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
-import { RepostButton } from "../common/button-repost";
+// import { RepostButton } from "../common/button-repost";
+import { ShareButton } from "../common/button-share";
+import FullScreenGallery from "@sub/full-screen-gallery";
 
-function ContentMediaTag({ media, className, videoControls }) {
+function ContentMediaTag({
+  media,
+  className,
+  videoControls,
+  setShowFullScreenGallery,
+}) {
   return (
     <>
       {media?.includes("video") && (
         <video
-          className={className}
+          className={cn(
+            className,
+            setShowFullScreenGallery && styles.mediaHover
+          )}
           src={media}
           controls={videoControls}
+          onClick={() =>
+            setShowFullScreenGallery && setShowFullScreenGallery(true)
+          }
         ></video>
       )}
-      {media?.includes("image") && <img className={className} src={media} />}
+      {media?.includes("image") && (
+        <img
+          className={cn(
+            className,
+            setShowFullScreenGallery && styles.mediaHover
+          )}
+          src={media}
+          onClick={() =>
+            setShowFullScreenGallery && setShowFullScreenGallery(true)
+          }
+        />
+      )}
     </>
   );
 }
 
-function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
+function ContentHeader({
+  contentId,
+  author,
+  isMyPost,
+  showNotificationMsg,
+  title,
+  media,
+}) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const deleteContent = async (contentId) => {
@@ -91,20 +122,21 @@ function ContentHeader({ contentId, author, isMyPost, showNotificationMsg }) {
               />
             </>
           )}
-          <SocialButton type="upload" />
+          <ShareButton postTitle={title} postMedia={media} />
         </span>
       </div>
     </>
   );
 }
 
-function ContentMedia({ media }) {
+function ContentMedia({ media, setShowFullScreenGallery }) {
   return (
     <div className={styles.contentMediaWrapper}>
       <ContentMediaTag
         media={media}
         className={styles.contentMedia}
         videoControls
+        setShowFullScreenGallery={setShowFullScreenGallery}
       />
     </div>
   );
@@ -165,23 +197,23 @@ function ContentBody({ title, description, createdAt, views }) {
 function ContentActions({
   contentId,
   liked,
-  teamIds,
+  // teamIds,
   totalLikes,
-  totalReposts,
-  totalProfileReposts,
-  totalTeamReposts,
+  // totalReposts,
+  // totalProfileReposts,
+  // totalTeamReposts,
   showNotificationMsg,
 }) {
   const [likeCount, setLikeCount] = useState(totalLikes || 0);
   const [isLiked, setIsLiked] = useState(liked);
-  const [repostCount, setRepostCount] = useState(totalReposts || 0);
-  const [repostProfileCount, setRepostProfileCount] = useState(
-    totalProfileReposts
-  );
-  const [repostTeamCount, setRepostTeamCount] = useState(totalTeamReposts);
-  const [isReposted, setIsReposted] = useState(
-    totalProfileReposts > 0 || totalTeamReposts > 0
-  );
+  // const [repostCount, setRepostCount] = useState(totalReposts || 0);
+  // const [repostProfileCount, setRepostProfileCount] = useState(
+  //   totalProfileReposts
+  // );
+  // const [repostTeamCount, setRepostTeamCount] = useState(totalTeamReposts);
+  // const [isReposted, setIsReposted] = useState(
+  //   totalProfileReposts > 0 || totalTeamReposts > 0
+  // );
 
   return (
     <div>
@@ -200,7 +232,7 @@ function ContentActions({
             setLikeCount((count) => count + 1);
           }}
         />
-        <RepostButton
+        {/* <RepostButton
           postId={contentId}
           reposted={isReposted}
           repostCount={repostCount}
@@ -226,7 +258,7 @@ function ContentActions({
               setRepostTeamCount((count) => count + 1);
             }
           }}
-        />
+        /> */}
         <SocialButton type="send" />
       </div>
     </div>
@@ -530,6 +562,7 @@ function ContentComments({ user, comments, contentId, showNotificationMsg }) {
 function ContentDetails({ content, user }) {
   const [_content, setContent] = useState(content);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
+  const [showFullScreenGallery, setShowFullScreenGallery] = useState(false);
 
   const { showNotificationMsg } = useNotification();
 
@@ -542,13 +575,26 @@ function ContentDetails({ content, user }) {
 
   return (
     <>
+      <FullScreenGallery
+        display={showFullScreenGallery}
+        setDisplay={setShowFullScreenGallery}
+        galleryItems={[
+          _content?.media,
+          ..._content?.childPosts.map((x) => x.media),
+        ]}
+      ></FullScreenGallery>
       <ContentHeader
         contentId={_content?.id}
         author={_content?.author}
         isMyPost={_content?.author?.id === user?.id}
         showNotificationMsg={showNotificationMsg}
+        title={_content?.title}
+        media={_content?.media}
       ></ContentHeader>
-      <ContentMedia media={activeMedia}></ContentMedia>
+      <ContentMedia
+        media={activeMedia}
+        setShowFullScreenGallery={setShowFullScreenGallery}
+      ></ContentMedia>
       {_content?.childPosts.length > 0 && (
         <ContentRelatedMedia
           parentMedia={_content?.media}
@@ -558,10 +604,10 @@ function ContentDetails({ content, user }) {
         ></ContentRelatedMedia>
       )}
       <ContentBody
-        title={content.title}
-        description={content.description}
-        createdAt={content.createdAt}
-        views={content.counts.views}
+        title={_content.title}
+        description={_content.description}
+        createdAt={_content.createdAt}
+        views={_content.counts.views}
       ></ContentBody>
       <ContentActions
         contentId={_content?.id}
@@ -576,7 +622,7 @@ function ContentDetails({ content, user }) {
       {_content?.comments?.results && (
         <ContentComments
           user={user}
-          comments={content.comments}
+          comments={_content.comments}
           contentId={_content?.id}
           showNotificationMsg={showNotificationMsg}
         ></ContentComments>

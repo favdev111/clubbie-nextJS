@@ -2,8 +2,6 @@
   border-radius: var(--radius-lg);
   background-color: var(--c-primary);
   margin-bottom: 50px;
-  padding-bottom: 10px;
-
 }
 .videoCard span {
   cursor: pointer;
@@ -19,6 +17,7 @@
 }
 .viewCount {
   padding: 12px 0 0 30px;
+  padding-right: var(--space-48);
 }
 .cardInfoProfile img {
   border-radius: var(--radius-xl);
@@ -43,8 +42,6 @@
   padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
 }
-
-
 @media (max-width: 768px) {
   .videoCard {
     display: grid;
@@ -86,27 +83,20 @@
 .highLightPost {
   animation: highLightPost 5s;
 }
-
-
 @media only screen and (max-width: 320px) and (min-width: 280px) {
   /* For mobile phones: */
-  .socialButtons{
+  .socialButtons {
     padding: 0;
     justify-content: center;
   }
 
-  .desc{
+  .desc {
     margin-bottom: 10px;
   }
 }
 
 @media only screen and (min-width: 280px) {
-   .socialButtons{
-    padding: 0;
-    margin-left: 10px;
-  }
-
-  .desc{
+  .desc {
     margin-bottom: 10px;
   }
 }
@@ -120,4 +110,12 @@
     background: none;
     box-shadow: none;
   }
+}
+.actionButtons {
+  display: flex;
+}
+.current {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--space-10);
 }
