@@ -32,6 +32,7 @@
     "react-hook-form": "^7.9.0",
     "react-inview-monitor": "^2.3.0",
     "react-redux": "^7.2.4",
+    "react-time-ago": "^7.0.0",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
