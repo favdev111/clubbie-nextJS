@@ -17,7 +17,7 @@ function ContentDetails({ post, user }) {
 
 export default ContentDetails;
 
-export const getServerSideProps = requiresPageAuth(async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   const postId = ctx.params.postId;
 
   // get posts
@@ -43,4 +43,4 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     },
     notFound: notFound,
   };
-});
+};
