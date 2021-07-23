@@ -9,13 +9,16 @@ const Chip = ({
   onCloseClick,
   background,
   roundedImage,
+  className,
+  size,
 }) => {
   return (
     <div
       className={cn(
         styles.chip,
         background === "danger" && styles.backgroundDanger,
-        background === "success" && styles.backgroundSuccess
+        background === "success" && styles.backgroundSuccess,
+        className
       )}
     >
       {component ? (
@@ -34,7 +37,10 @@ const Chip = ({
           {onCloseClick && (
             <div className={styles.chipClose}>
               <svg
-                className={styles.chipSvg}
+                className={cn(
+                  styles.chipSvg,
+                  size === "small" && styles.chipSvgSmall
+                )}
                 focusable="false"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
