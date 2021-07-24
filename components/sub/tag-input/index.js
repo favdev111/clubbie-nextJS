@@ -69,6 +69,9 @@ function TagInput({
           placeholder={tags && tags?.length > 0 ? null : placeholder}
           className={styles.input}
           onKeyDown={(e) => {
+            if (e.key === "Backspace") {
+              tags && onTagRemove(tags.length - 1); // remove last tag
+            }
             if (onInputSubmit && e.key === "Enter") {
               e.preventDefault();
               if (e.target.value.trim() === 0) return;
