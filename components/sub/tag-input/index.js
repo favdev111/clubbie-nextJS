@@ -29,6 +29,7 @@ function TagInput({
   showSuggestions,
   suggestionsLoading,
 }) {
+  // TODO: hide input when blured
   // const _suggestions = [
   //   {
   //     text,

@@ -186,6 +186,7 @@ function ContentForm({
   };
 
   const handleTagSearch = async (searchText) => {
+    // TODO: cancel multi req
     if (searchText.trim().length === 0) return;
 
     // make api call
@@ -249,7 +250,6 @@ function ContentForm({
               <UploadSVG></UploadSVG>
             </label>
             <span className={styles.marginTop}>
-              {/* Todo: make span drag/dropable */}
               <span>Drag and drop a video or</span>
               &ensp;
               <a className={styles.dragDropVideosBrowseFiles}>

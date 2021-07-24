@@ -1,7 +1,6 @@
 .tagInput {
   position: relative;
   display: block;
-  height: 76px;
   width: 100%;
   z-index: 1;
 }
