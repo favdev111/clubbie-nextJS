@@ -9,6 +9,14 @@ export default class PostInteractionManagementRoutes {
     });
   }
 
+  static async LikeComment(id) {
+    return HTTPClient.post(`/content-interactions/`, {
+      type: "comment",
+      action: "like",
+      content: id,
+    });
+  }
+
   static async RemoveInteraction(id) {
     return HTTPClient.delete(`/content-interactions/${id}`);
   }

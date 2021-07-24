@@ -359,6 +359,37 @@ function ContentComments({
     setCreatingComment(false);
   };
 
+  const likeComment = async (commentId) => {
+    if (!verifyLoggedIn()) return;
+
+    // like comment
+    const response = await Interactions.LikeComment(commentId).catch(
+      () => false
+    );
+    const createdInteraction = response?.data;
+    if (!createdInteraction) {
+      showNotificationMsg("Failed to like comment", {
+        variant: "error",
+        displayIcon: true,
+      });
+      return;
+    }
+
+    // find and update comment
+    const updatedCommentState = _comments.results;
+    const commentToUpdate = updatedCommentState.find(
+      (x) => x?.id === commentId
+    );
+    commentToUpdate.myInteractions.liked = createdInteraction?.id;
+
+    // update state
+    const commentsToSet = {
+      ..._comments,
+      results: updatedCommentState,
+    };
+    setComments({ ...commentsToSet });
+  };
+
   const editComment = async (commentId, commentText) => {
     if (!verifyLoggedIn()) return;
     if (!commentId || !commentText) return;
@@ -549,6 +580,7 @@ function ContentComments({
           user={user}
           isAuthor={user?.id === comment?.user?.id}
           comment={comment}
+          onLikeCommentClick={likeComment}
           onDeleteCommentClick={deleteComment}
           onSaveCommentClick={editComment}
           editingComment={editingComment}

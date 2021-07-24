@@ -62,6 +62,7 @@ function CommentBody({ author, commentText, onSaveClick, loading }) {
 // todo: update when api done
 function CommentActions({
   isAuthor,
+  liked,
   hasLiked,
   hasCommented,
   likeBtnAction,
@@ -84,7 +85,7 @@ function CommentActions({
       ></ConfirmDialog>
       <div className={styles.commentActions}>
         <span onClick={likeBtnAction} className={hasLiked && styles.hasLiked}>
-          <FavSVG></FavSVG>
+          <FavSVG strokeColor={liked && "red"}></FavSVG>
         </span>
         <span
           onClick={commentBtnAction}
@@ -119,6 +120,7 @@ function Comment({
   comment,
   replies,
   isAuthor,
+  onLikeCommentClick,
   onDeleteCommentClick,
   onSaveCommentClick,
   editingComment,
@@ -130,6 +132,7 @@ function Comment({
 }) {
   const [addReply, setAddReply] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  console.log(comment);
 
   const saveComment = (commentText) => {
     if (commentText.trim().length === 0) return;
@@ -155,7 +158,8 @@ function Comment({
         {/* Todo: action buttons api logic */}
         <CommentActions
           isAuthor={isAuthor}
-          likeBtnAction={() => console.log("like clicked")}
+          liked={comment?.myInteractions?.liked}
+          likeBtnAction={() => onLikeCommentClick(comment?.id)}
           commentBtnAction={() => setAddReply(!addReply)}
           editBtnAction={() => setEditMode(!editMode)}
           deleteBtnAction={
