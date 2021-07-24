@@ -9,6 +9,7 @@ import ConfirmDialog from "@sub/confirm-dialog";
 import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
 import useNotification from "@sub/hook-notification";
+import TimeAgo from "@sub/time-ago";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Interactions from "@api/services/Interactions";
@@ -186,7 +187,7 @@ function ContentBody({ title, description, createdAt, views }) {
         <div className={styles.contentTitle}>
           <h1>{title}</h1>
           <div className={styles.contentDateTime}>
-            <Chip text={new Date(createdAt).toLocaleString()}></Chip>
+            <Chip text={<TimeAgo date={createdAt} />}></Chip>
           </div>
         </div>
         <span className={styles.contentViews}>

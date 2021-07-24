@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
 import InView from "@sub/hook-inview";
 import useNotifications from "@sub/hook-notification";
+import TimeAgo from "@sub/time-ago";
 import cn from "classnames";
 import { LikeButton } from "../../common/button-like";
 // import { RepostButton } from "../../common/button-repost";
@@ -118,7 +119,7 @@ function HomeVideosCard({
               </Link>
             </p>
             <p className={cn("opacity-50", styles.postDate)}>
-              {new Date(createdAt).toLocaleString()}
+              <TimeAgo date={createdAt} />
             </p>
           </div>
         </div>
