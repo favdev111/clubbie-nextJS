@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
 import ConfirmDialog from "@sub/confirm-dialog";
+import TimeAgo from "@sub/time-ago";
 import FavSVG from "@svg/social/fav";
 import CommentSVG from "@svg/social/comment";
 import ThrashSVG from "@svg/thrash";
@@ -105,7 +106,9 @@ function CommentActions({
             )}
           </>
         )}
-        <span>{new Date(dateTime).toLocaleString()}</span>
+        <span>
+          <TimeAgo date={dateTime}></TimeAgo>
+        </span>
       </div>
     </>
   );
