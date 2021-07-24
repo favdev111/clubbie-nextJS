@@ -109,7 +109,7 @@ function Replies({
   const saveReply = (replyText) => {
     if (replyText.trim().length === 0) return;
     setEditMode(false);
-    onSaveReplyClick(reply?._id, replyText);
+    onSaveReplyClick(reply?._id || reply?.id, replyText);
   };
 
   return (

@@ -184,7 +184,7 @@ function Comment({
             isAuthor={user?.id === reply?.user?.id}
             reply={reply}
             onDeleteReplyClick={() =>
-              onDeleteReplyClick(comment?.id, reply?._id)
+              onDeleteReplyClick(comment?.id, reply?._id || reply?.id)
             }
             editingReply={editingReply}
             onSaveReplyClick={(replyId, replyText) =>
