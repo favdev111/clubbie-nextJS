@@ -151,7 +151,7 @@ function HomeVideosCard({
               setLikeCount((count) => count - 1);
             }}
           />
-          <SocialButton type="send" />
+          {/* <SocialButton type="send" /> */}
           <Link href={`/content/${id}?focusComment=true`}>
             <a>
               <SocialButton type="comment">
