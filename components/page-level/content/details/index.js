@@ -350,10 +350,24 @@ function ContentComments({
       return;
     }
 
+    const defaults = {
+      myInteractions: {
+        liked: null,
+      },
+      counts: {
+        likes: 0,
+        views: 0,
+        replies: 0,
+      },
+    };
+
     // set in state
     const commentsToSet = {
       ..._comments,
-      results: [{ ...createdComment, user: user }, ..._comments?.results],
+      results: [
+        { ...createdComment, ...defaults, user: user },
+        ..._comments?.results,
+      ],
     };
     setComments({ ...commentsToSet });
 
