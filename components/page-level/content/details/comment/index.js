@@ -132,7 +132,6 @@ function Comment({
 }) {
   const [addReply, setAddReply] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  console.log(comment);
 
   const saveComment = (commentText) => {
     if (commentText.trim().length === 0) return;
@@ -159,7 +158,9 @@ function Comment({
         <CommentActions
           isAuthor={isAuthor}
           liked={comment?.myInteractions?.liked}
-          likeBtnAction={() => onLikeCommentClick(comment?.id)}
+          likeBtnAction={() =>
+            onLikeCommentClick(comment?.id, comment?.myInteractions?.liked)
+          }
           commentBtnAction={() => setAddReply(!addReply)}
           editBtnAction={() => setEditMode(!editMode)}
           deleteBtnAction={

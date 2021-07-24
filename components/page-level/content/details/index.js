@@ -287,6 +287,7 @@ function ContentComments({
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
+  const [likingComment, setLikingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
@@ -359,35 +360,69 @@ function ContentComments({
     setCreatingComment(false);
   };
 
-  const likeComment = async (commentId) => {
+  const likeComment = async (commentId, liked) => {
     if (!verifyLoggedIn()) return;
 
-    // like comment
-    const response = await Interactions.LikeComment(commentId).catch(
-      () => false
-    );
-    const createdInteraction = response?.data;
-    if (!createdInteraction) {
-      showNotificationMsg("Failed to like comment", {
-        variant: "error",
-        displayIcon: true,
-      });
-      return;
+    if (!liked) {
+      setLikingComment(true);
+      // like comment
+      const response = await Interactions.LikeComment(commentId).catch(
+        () => false
+      );
+      const createdInteraction = response?.data;
+      if (!createdInteraction) {
+        showNotificationMsg("Failed to like comment", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = createdInteraction?.id;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
+    } else {
+      setLikingComment(true);
+      // remove like
+      const response = await Interactions.RemoveInteraction(liked).catch(
+        () => null
+      );
+      if (!response) {
+        showNotificationMsg("Error Removing Like", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = null;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
     }
-
-    // find and update comment
-    const updatedCommentState = _comments.results;
-    const commentToUpdate = updatedCommentState.find(
-      (x) => x?.id === commentId
-    );
-    commentToUpdate.myInteractions.liked = createdInteraction?.id;
-
-    // update state
-    const commentsToSet = {
-      ..._comments,
-      results: updatedCommentState,
-    };
-    setComments({ ...commentsToSet });
   };
 
   const editComment = async (commentId, commentText) => {
@@ -607,9 +642,11 @@ function ContentComments({
           </span>
         </div>
       )}
-      {(editingComment || deletingComment || editingReply || deletingReply) && (
-        <BackDropLoader></BackDropLoader>
-      )}
+      {(likingComment ||
+        editingComment ||
+        deletingComment ||
+        editingReply ||
+        deletingReply) && <BackDropLoader></BackDropLoader>}
     </div>
   );
 }
