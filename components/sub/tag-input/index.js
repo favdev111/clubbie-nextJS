@@ -103,7 +103,10 @@ function TagInput({
             suggestions?.map((suggestion) => (
               <div
                 className={styles.tagSuggestedItem}
-                onClick={() => onInputSubmit(suggestion?.text)}
+                onClick={() => {
+                  onInputSubmit(suggestion?.text);
+                  inputRef.current.value = "";
+                }}
               >
                 <div>
                   {suggestion?.image && (
