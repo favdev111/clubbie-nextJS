@@ -26,7 +26,12 @@ const Chip = ({
       ) : (
         <>
           {image && (
-            <div className={styles.chipHead}>
+            <div
+              className={cn(
+                styles.chipHead,
+                size === "small" && styles.chipHeadSmall
+              )}
+            >
               <img
                 src={image}
                 className={roundedImage && styles.roundedImage}

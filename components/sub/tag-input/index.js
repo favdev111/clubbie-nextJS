@@ -61,6 +61,7 @@ function TagInput({
               onCloseClick={() => onTagRemove(index)}
               className={styles.chip}
               size="small"
+              roundedImage={true}
             />
           ))}
         <input
@@ -69,7 +70,7 @@ function TagInput({
           placeholder={tags && tags?.length > 0 ? null : placeholder}
           className={styles.input}
           onKeyDown={(e) => {
-            if (e.key === "Backspace") {
+            if (e.key === "Backspace" && e.target.value.trim().length === 0) {
               tags && onTagRemove(tags.length - 1); // remove last tag
             }
             if (onInputSubmit && e.key === "Enter") {
@@ -107,7 +108,7 @@ function TagInput({
               <div
                 className={styles.tagSuggestedItem}
                 onClick={() => {
-                  onInputSubmit(suggestion?.text);
+                  onInputSubmit(suggestion);
                   inputRef.current.value = "";
                 }}
               >

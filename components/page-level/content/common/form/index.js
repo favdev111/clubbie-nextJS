@@ -351,11 +351,22 @@ function ContentForm({
               onInput={handleTagSearch}
               onInputClear={() => setSuggestions([])}
               onInputSubmit={(input) => {
-                if (input.trim().length === 0) return;
-                setTags((tags) => {
-                  if (tags?.find((x) => x.text === input.trim())) return tags;
-                  return [...tags, { text: input.trim() }];
-                });
+                if (typeof input === "object") {
+                  setTags((tags) => {
+                    if (tags?.find((x) => x.text === input?.text?.trim()))
+                      return tags;
+                    return [
+                      ...tags,
+                      { text: input?.text?.trim(), image: input?.image },
+                    ];
+                  });
+                } else {
+                  if (input.trim().length === 0) return;
+                  setTags((tags) => {
+                    if (tags?.find((x) => x.text === input.trim())) return tags;
+                    return [...tags, { text: input.trim() }];
+                  });
+                }
               }}
               suggestions={suggestions}
               showSuggestions={true}

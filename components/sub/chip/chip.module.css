@@ -22,6 +22,10 @@
   max-width: 30px;
   height: auto;
 }
+.chipHeadSmall {
+  max-width: 20px;
+  height: 20px;
+}
 .chipContent {
   cursor: inherit;
   display: flex;
