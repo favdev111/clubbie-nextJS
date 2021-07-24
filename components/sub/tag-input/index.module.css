@@ -3,6 +3,7 @@
   display: block;
   height: 76px;
   width: 100%;
+  z-index: 1;
 }
 .tagBox {
   position: relative;

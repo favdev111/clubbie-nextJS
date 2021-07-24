@@ -96,40 +96,42 @@ function TagInput({
           }}
         />
       </div>
-      {suggestions?.length > 0 && _showSuggestions && (
-        <div className={styles.tagSuggestions}>
-          {suggestionsLoading && (
-            <div className={styles.tagSuggestionsLoading}>
-              <Loader />
-            </div>
-          )}
-          {!suggestionsLoading &&
-            suggestions?.map((suggestion) => (
-              <div
-                className={styles.tagSuggestedItem}
-                onClick={() => {
-                  onInputSubmit(suggestion);
-                  inputRef.current.value = "";
-                }}
-              >
-                <div>
-                  {suggestion?.image && (
-                    <img
-                      className={styles.tagSuggestedItemImage}
-                      src={suggestion?.image}
-                    />
-                  )}
-                  <span className={styles.tagSuggestedItemName}>
-                    {suggestion?.text}
-                  </span>
-                </div>
-                <div className={styles.tagSuggestedItemResource}>
-                  {suggestion?.type}
-                </div>
+      {suggestions?.length > 0 &&
+        _showSuggestions &&
+        inputRef?.current?.value.trim().length > 0 && (
+          <div className={styles.tagSuggestions}>
+            {suggestionsLoading && (
+              <div className={styles.tagSuggestionsLoading}>
+                <Loader />
               </div>
-            ))}
-        </div>
-      )}
+            )}
+            {!suggestionsLoading &&
+              suggestions?.map((suggestion) => (
+                <div
+                  className={styles.tagSuggestedItem}
+                  onClick={() => {
+                    onInputSubmit(suggestion);
+                    inputRef.current.value = "";
+                  }}
+                >
+                  <div>
+                    {suggestion?.image && (
+                      <img
+                        className={styles.tagSuggestedItemImage}
+                        src={suggestion?.image}
+                      />
+                    )}
+                    <span className={styles.tagSuggestedItemName}>
+                      {suggestion?.text}
+                    </span>
+                  </div>
+                  <div className={styles.tagSuggestedItemResource}>
+                    {suggestion?.type}
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
     </div>
   );
 }
