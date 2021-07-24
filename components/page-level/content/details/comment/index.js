@@ -145,7 +145,7 @@ function Comment({
   };
 
   return (
-    <div className={styles.commentBoxWrapper}>
+    <div className={styles.commentBoxWrapper} key={comment?.id}>
       <CommentInfo author={comment?.user}></CommentInfo>
       <div className={styles.commentContent}>
         <CommentBody
