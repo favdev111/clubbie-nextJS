@@ -1,7 +1,22 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Chip from "@sub/chip";
 import Loader from "@sub/loader";
 import styles from "./index.module.css";
+
+function useOutsideAlerter(ref, setOpen) {
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
 
 function TagInput({
   placeholder,
@@ -9,6 +24,7 @@ function TagInput({
   onTagRemove,
   onInput,
   onInputSubmit,
+  onInputClear,
   suggestions,
   showSuggestions,
   suggestionsLoading,
@@ -20,9 +36,14 @@ function TagInput({
   //     type,
   //   },
   // ];
+  const wrapperRef = useRef(null);
   const inputRef = useRef();
+
+  const [_showSuggestions, setShowSuggestions] = useState(false);
+  useOutsideAlerter(wrapperRef, setShowSuggestions);
+
   return (
-    <div className={styles.tagInput}>
+    <div className={styles.tagInput} ref={wrapperRef}>
       <div
         className={styles.tagBox}
         id="tagBox"
@@ -53,13 +74,25 @@ function TagInput({
               if (e.target.value.trim() === 0) return;
               onInputSubmit(e.target.value);
               e.target.value = "";
-            } else {
-              onInput && onInput(e.target.value);
+            }
+          }}
+          onKeyUp={(e) => {
+            if (e.key !== "Enter") {
+              if (e.target.value.trim().length === 0) {
+                onInputClear && onInputClear();
+              } else {
+                onInput && onInput(e.target.value);
+              }
+            }
+          }}
+          onFocus={() => {
+            if (showSuggestions && !_showSuggestions) {
+              setShowSuggestions(true);
             }
           }}
         />
       </div>
-      {suggestions && showSuggestions && (
+      {suggestions?.length > 0 && _showSuggestions && (
         <div className={styles.tagSuggestions}>
           {suggestionsLoading && (
             <div className={styles.tagSuggestionsLoading}>

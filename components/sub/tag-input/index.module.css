@@ -27,7 +27,8 @@
   width: auto;
   margin-right: var(--space-5);
   margin-bottom: var(--space-5);
-  background-color: var(--c-white-20);
+  background-color: var(--c-primary);
+  text-transform: capitalize;
 }
 .input {
   width: 100%;
@@ -50,7 +51,8 @@
   padding: var(--space-16);
   display: flex;
   flex-direction: column;
-  background-color: var(--c-white-10);
+  background-color: var(--c-nav);
+  z-index: 1;
   color: var(--c-white);
   max-height: 200px;
   overflow-y: scroll;
@@ -79,7 +81,7 @@
   justify-content: space-between;
   padding: var(--space-8) var(--space-12);
   margin: var(--space-3);
-  background-color: var(--c-white-20);
+  background-color: var(--c-primary);
   border-radius: var(--radius-md);
   cursor: pointer;
 }
@@ -94,7 +96,7 @@
   text-transform: capitalize;
 }
 .tagSuggestedItemResource {
-  background-color: var(--c-turk);
+  background-color: var(--c-yellow);
   border-radius: var(--radius);
   padding: var(--space-3) var(--space-5);
   text-transform: capitalize;
