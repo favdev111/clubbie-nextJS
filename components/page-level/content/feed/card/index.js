@@ -2,7 +2,9 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
-import InView from "@sub/hook-inview";
+// import InView from "@sub/hook-inview";
+import InViewMonitor from "react-inview-monitor";
+import Video from "./Video";
 import useNotifications from "@sub/hook-notification";
 import TimeAgo from "@sub/time-ago";
 import cn from "classnames";
@@ -80,16 +82,23 @@ function HomeVideosCard({
         <a>
           <span>
             {content.includes("video") ? (
-              <InView onVisiable={playVideo} onHidden={stopVideo}>
-                <video
-                  src={content}
-                  className={styles.preview}
-                  ref={videoElRef}
-                  controls
-                  loop
-                  muted
-                ></video>
-              </InView>
+              // <InView onVisiable={playVideo} onHidden={stopVideo}>
+              //   <video
+              //     className={styles.preview}
+              //     ref={videoElRef}
+              //     controls
+              //     loop
+              //     // muted
+              //   >
+              //     <source src={content} type="video/mp4" />
+              //   </video>
+              // </InView>
+              <InViewMonitor
+                childPropsInView={{ isPlaying: true, styling: styles.preview }}
+                toggleChildPropsOnInView={true}
+              >
+                <Video src={content} />
+              </InViewMonitor>
             ) : content.includes("image") ? (
               <img className={styles.preview} src={content} />
             ) : (
