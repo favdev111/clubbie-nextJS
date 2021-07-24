@@ -9,7 +9,6 @@ import SaveSVG from "@svg/save";
 import styles from "./reply.module.css";
 
 function ReplyInfo({ author }) {
-  console.log(author);
   return (
     <div className={styles.replyInfo}>
       <Link href={`/profile/${author?.id}`}>

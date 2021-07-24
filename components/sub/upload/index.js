@@ -18,7 +18,6 @@ function UploadMedia({ onFileChange, deleteMedia, media }) {
           <UploadSVG />
         </label>
         <span className={styles.marginTop}>
-          {/* Todo: make span drag/dropable */}
           <span>Drag and drop a video or</span>
           &ensp;
           <a className={styles.dragDropVideosBrowseFiles}>

@@ -101,7 +101,11 @@ function ContentHeader({
       ></ConfirmDialog>
       <div className={styles.postHeader}>
         <div className={styles.postAuthorProfile}>
-          <img src={author?.image || "/assets/person-placeholder.jpg"} />
+          <Link href={`/profile/${author?.id}`}>
+            <a>
+              <img src={author?.image || "/assets/person-placeholder.jpg"} />
+            </a>
+          </Link>
           <div className={styles.postAuthorInfo}>
             <Link href={`/profile/${author?.id}`}>
               <a>
@@ -128,7 +132,9 @@ function ContentHeader({
               />
             </>
           )}
-          <ShareButton postTitle={title} postMedia={media} />
+          <span>
+            <ShareButton postTitle={title} postMedia={media} />
+          </span>
         </span>
       </div>
     </>
@@ -563,9 +569,10 @@ function ContentComments({
     // filter from state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    foundComment.replies = foundComment.replies.filter(
-      (x) => x._id !== replyId
-    );
+    foundComment.replies = foundComment.replies.filter((x) => {
+      const id = x?._id || x?.id;
+      return id !== replyId;
+    });
     const commentsToSet = {
       ..._comments,
       results: updatedResults,
@@ -602,7 +609,9 @@ function ContentComments({
     // update reply in state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    const foundReply = foundComment.replies.find((x) => x._id === replyId);
+    const foundReply = foundComment.replies.find(
+      (x) => x._id === replyId || x.id === replyId
+    );
     foundReply.text = editedReply.text;
     const commentsToSet = {
       ..._comments,

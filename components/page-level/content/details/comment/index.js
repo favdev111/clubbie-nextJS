@@ -59,7 +59,6 @@ function CommentBody({ author, commentText, onSaveClick, loading }) {
   );
 }
 
-// todo: update when api done
 function CommentActions({
   isAuthor,
   liked,
@@ -154,7 +153,6 @@ function Comment({
           onSaveClick={editMode ? saveComment : null}
           loading={editingComment}
         ></CommentBody>
-        {/* Todo: action buttons api logic */}
         <CommentActions
           isAuthor={isAuthor}
           liked={comment?.myInteractions?.liked}
