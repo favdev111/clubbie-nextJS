@@ -9,19 +9,37 @@ function ContentEdit({ content }) {
     _media,
     _caption,
     _sport,
-    _tagSomeone,
+    _tags,
     _relatedMediaItems,
     uploadMultiplePostMedia,
     setStatus,
     deleteChildPosts,
   }) => {
+    const tagType = (str) => {
+      const _str = str
+        ?.split(" ")
+        ?.map((w) => w[0]?.toUpperCase() + w?.substr(1)?.toLowerCase())
+        ?.join("")
+        ?.trim();
+      return _str.charAt(0).toLowerCase() + _str.slice(1);
+    };
+
     // Common Body for parent and child post
-    const tags = _tagSomeone?.split(",")?.map((tag) => {
-      return {
-        type: _sport?.trim(),
-        value: tag?.trim(),
-      };
-    });
+    const tags = (() => {
+      const _tempTags = _tags?.map((x) => {
+        return {
+          type: tagType(x?.text),
+          value: x?.text,
+        };
+      });
+      if (_sport) {
+        _tempTags?.push({
+          type: _sport.trim(),
+          value: _sport.trim(),
+        });
+      }
+      return _tempTags || null;
+    })();
 
     const commonBody = {
       title: _caption?.trim(),
@@ -153,7 +171,7 @@ function ContentEdit({ content }) {
       description={content?.description}
       relatedMediaItems={content?.childPosts}
       sport={content?.tags[0]?.type || null}
-      tagSomeone={
+      tags={
         content?.tags.length > 0
           ? content?.tags.map((x) => x.value).join()
           : null

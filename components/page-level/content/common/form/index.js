@@ -22,7 +22,7 @@ function ContentForm({
   caption,
   description,
   sport,
-  tagSomeone,
+  tags,
   onSubmitForm,
   actionText,
   validationSchema,
@@ -35,7 +35,7 @@ function ContentForm({
   const [_relatedMediaItems, setRelatedMediaItems] = useState(
     relatedMediaItems || []
   );
-  const [tags, setTags] = useState([]);
+  const [_tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionsLoading, setSuggestionsLoading] = useState(false);
   const [deleteChildPosts, setDeleteChildPosts] = useState([]);
@@ -133,8 +133,18 @@ function ContentForm({
   useEffect(() => {
     caption && setValue("caption", caption);
     sport && setValue("sport", sport);
-    tagSomeone && setValue("tagSomeone", tagSomeone);
-  }, [caption, sport, tagSomeone]);
+    if (tags) {
+      const _tagsTemp = [];
+      tags.split(",").map((x) => {
+        if (sports.includes(x)) {
+          setValue("sport", x);
+          return null;
+        }
+        return _tagsTemp.push({ text: x });
+      });
+      setTags(_tagsTemp);
+    }
+  }, [caption, sport, tags]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -158,7 +168,7 @@ function ContentForm({
       await onSubmitForm({
         _caption: data?.caption,
         _sport: data?.sport,
-        _tags: tags,
+        _tags: _tags,
         _media,
         _relatedMediaItems,
         uploadMultiplePostMedia,
@@ -340,12 +350,12 @@ function ContentForm({
           <div className={cn(styles.span1, styles.contentItem)}>
             <TagInput
               placeholder="Tag Someone (Team, Club, Individual)"
-              tags={tags}
+              tags={_tags}
               onTagRemove={(tagIndex) => {
                 setTags((tags) => {
-                  const _tags = [...tags];
-                  _tags.splice(tagIndex, 1);
-                  return _tags;
+                  const _tagsTemp = [...tags];
+                  _tagsTemp.splice(tagIndex, 1);
+                  return _tagsTemp;
                 });
               }}
               onInput={handleTagSearch}
