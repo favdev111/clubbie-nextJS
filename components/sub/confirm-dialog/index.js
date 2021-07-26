@@ -22,6 +22,7 @@ function ConfirmDialog({
   open,
   setOpen,
   message,
+  Component,
   confirmText,
   onConfirm,
   onDismiss,
@@ -33,24 +34,30 @@ function ConfirmDialog({
   return (
     <div className={cn(open ? styles.backdrop : styles.close)}>
       <div className={styles.content} ref={wrapperRef}>
-        <p>{message}</p>
-        <div className={styles.buttons}>
-          <Button
-            variant="cancel"
-            onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant={type || "danger"}
-            onClick={() => {
-              onConfirm();
-              setOpen(false);
-            }}
-          >
-            {confirmText}
-          </Button>
-        </div>
+        {Component ? (
+          <Component />
+        ) : (
+          <>
+            <p className={styles.contentMsg}>{message}</p>
+            <div className={styles.buttons}>
+              <Button
+                variant="cancel"
+                onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant={type || "danger"}
+                onClick={() => {
+                  onConfirm();
+                  setOpen(false);
+                }}
+              >
+                {confirmText || "Confirm"}
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
