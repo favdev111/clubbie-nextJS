@@ -2,6 +2,13 @@
   display: flex;
 }
 
+
+@media screen and (min-width: 1950px) {
+  .dashboard {
+   margin-left: 10%
+  }
+}
+
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .dashboard {
     padding-left: unset;

@@ -32,3 +32,12 @@
     display: flex;
   }
 }
+
+@media screen and (max-width: 360px) {
+  .payments h1 {
+    display: none;
+  }
+    .payments {
+    padding: 12px;
+  }
+}

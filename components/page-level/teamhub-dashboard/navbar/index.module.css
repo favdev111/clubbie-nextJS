@@ -16,7 +16,7 @@
   font-family: var(--ff-bold);
 }
 
-@media screen and (max-width: 1684px) and (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   .teamhubNav {
     padding-left: 10px;
     margin-right: 200px;
@@ -44,6 +44,7 @@
 
 @media screen and (max-width: 766px) and (min-width: 360px) {
   .teamhubNav {
+    margin-bottom: 10px;
     margin-top: 24px;
     margin-left: 12px;
     margin-right: 12px;

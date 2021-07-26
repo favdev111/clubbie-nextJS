@@ -46,3 +46,21 @@
     margin-bottom: unset;
   }
 }
+
+@media screen and (max-width: 360px){
+  .duePaymentTable{
+    position: relative;
+    overflow-x: scroll;
+  }
+  .scrollTable{
+    width: 500px;
+  }
+
+  .pastPaymentTable{
+    position: relative;
+    overflow-x: scroll;
+  }
+   .pastPaymentTable {
+    margin-bottom:70px;
+  }
+}
