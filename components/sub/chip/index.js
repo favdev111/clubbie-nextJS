@@ -6,6 +6,7 @@ const Chip = ({
   component,
   text,
   image,
+  onClick,
   onCloseClick,
   background,
   roundedImage,
@@ -20,6 +21,7 @@ const Chip = ({
         background === "success" && styles.backgroundSuccess,
         className
       )}
+      onClick={onClick}
     >
       {component ? (
         <div>{component}</div>
