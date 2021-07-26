@@ -10,11 +10,14 @@ import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
 import useNotification from "@sub/hook-notification";
 import TimeAgo from "@sub/time-ago";
+import Seperator from "@sub/seperator";
+import ToolTip from "@sub/tooltip";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Interactions from "@api/services/Interactions";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
+import Tags from "./tags";
 import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
 // import { RepostButton } from "../common/button-repost";
@@ -674,6 +677,25 @@ function ContentComments({
   );
 }
 
+function ContentTags({ tags }) {
+  return (
+    <>
+      <Seperator className={styles.tagsSeperator}></Seperator>
+      <div className={styles.tagsWrapper}>
+        <div className={styles.tagsTitle}>
+          <h2>Tags</h2>
+          <ToolTip
+            text={
+              "Want to see similar posts? Click on a tag below to find related posts on the home feed."
+            }
+          ></ToolTip>
+        </div>
+        <Tags tags={tags.map((x) => x.value)}></Tags>
+      </div>
+    </>
+  );
+}
+
 function ContentDetails({ content, user }) {
   const [_content, setContent] = useState(content);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
@@ -759,9 +781,11 @@ function ContentDetails({ content, user }) {
           comments={_content.comments}
           contentId={_content?.id}
           showNotificationMsg={showNotificationMsg}
-          // here
           verifyLoggedIn={verifyLoggedIn}
         ></ContentComments>
+      )}
+      {_content.tags.length > 0 && (
+        <ContentTags tags={_content?.tags}></ContentTags>
       )}
     </>
   );
