@@ -572,7 +572,7 @@ function ProfileEdit({ profile, clubs }) {
                 Change Password
               </Button>
             </div>
-            <div
+            {/* <div
               className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
             >
               <Button
@@ -582,7 +582,7 @@ function ProfileEdit({ profile, clubs }) {
               >
                 Change Email
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </form>
