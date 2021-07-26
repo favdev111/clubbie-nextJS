@@ -164,3 +164,10 @@
     display: none;
   }
 }
+
+@media (max-width: 320px) {
+  .profilePlayer{
+    padding: 0;
+    background: none;
+  } 
+}

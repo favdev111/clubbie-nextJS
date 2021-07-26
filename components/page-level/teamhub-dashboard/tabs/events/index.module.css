@@ -57,6 +57,28 @@
   .event h1 {
     display: none;
   }
+   .event{
+    margin-bottom: 70px;
+  }
+  .draft {
+    display: none;
+  }
+  .eventCardsRow {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 12px;
+    margin-top: unset;
+    margin-bottom: unset;
+  }
+}
+
+
+@media screen and (max-width: 360px) {
+  .event h1 {
+    display: none;
+  }
+  .event{
+    margin-bottom: 70px;
+  }
   .draft {
     display: none;
   }

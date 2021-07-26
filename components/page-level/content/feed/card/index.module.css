@@ -42,32 +42,7 @@
   padding: var(--space-32) 0 var(--space-12) var(--space-32);
   display: flex;
 }
-@media (max-width: 768px) {
-  .videoCard {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    background-color: unset;
-    position: relative;
-    margin-bottom: 10px;
-  }
-  .cardInfoHeader {
-    order: 1;
-  }
-  .preview {
-    order: 2;
-  }
-  .desc {
-    order: 3;
-    padding-left: var(--space-24);
-    padding-right: var(--space-24);
-  }
-  .viewCount {
-    order: 5;
-  }
-  .socialButtons {
-    order: 4;
-  }
-}
+
 .postDate {
   margin-top: var(--space-5);
 }
@@ -83,19 +58,77 @@
 .highLightPost {
   animation: highLightPost 5s;
 }
-@media only screen and (max-width: 320px) and (min-width: 280px) {
+@media only screen and (max-width: 760px) and (min-width: 360px) {
+  .videoCard {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    background-color: unset;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .cardInfoHeader {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cardInfoProfile{
+    margin-bottom: 10px;
+  }
+
+  .preview {
+    order: 2;
+  }
+  .desc {
+    order: 3;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+  }
+  .viewCount {
+    order: 5;
+  }
+  .socialButtons {
+    order: 4;
+  }
+}
+@media only screen and (max-width: 360px) and (min-width: 280px) {
   /* For mobile phones: */
+    .cardInfoHeader {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cardInfoProfile{
+    margin-bottom: 10px;
+  }
+
   .socialButtons {
     padding: 0;
     justify-content: center;
   }
 
+   .preview {
+    order: 2;
+  }
+
   .desc {
-    margin-bottom: 10px;
+    order: 3;
+  }
+
+   .viewCount {
+    order: 5;
+  }
+  .socialButtons {
+    order: 4;
   }
 }
 
-@media only screen and (min-width: 280px) {
+@media only screen and (max-width: 280px) {
   .desc {
     margin-bottom: 10px;
   }
