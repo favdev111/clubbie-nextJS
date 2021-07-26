@@ -270,7 +270,7 @@ function ContentActions({
             }
           }}
         /> */}
-        <SocialButton type="send" />
+        {/* <SocialButton type="send" /> */}
       </div>
     </div>
   );

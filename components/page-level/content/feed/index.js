@@ -323,7 +323,7 @@ function Home({ posts, user }) {
         {_posts?.results &&
           _posts?.results.map((post, index) => (
             <HomeVideosCard
-              key={post + index}
+              key={post?.id}
               data={post}
               createdPost={createdPost}
               isLoggedIn={!!user}
