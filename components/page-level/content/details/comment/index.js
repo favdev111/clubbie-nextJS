@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
 import ConfirmDialog from "@sub/confirm-dialog";
+import TimeAgo from "@sub/time-ago";
 import FavSVG from "@svg/social/fav";
 import CommentSVG from "@svg/social/comment";
 import ThrashSVG from "@svg/thrash";
@@ -58,9 +59,9 @@ function CommentBody({ author, commentText, onSaveClick, loading }) {
   );
 }
 
-// todo: update when api done
 function CommentActions({
   isAuthor,
+  liked,
   hasLiked,
   hasCommented,
   likeBtnAction,
@@ -83,7 +84,7 @@ function CommentActions({
       ></ConfirmDialog>
       <div className={styles.commentActions}>
         <span onClick={likeBtnAction} className={hasLiked && styles.hasLiked}>
-          <FavSVG></FavSVG>
+          <FavSVG strokeColor={liked && "red"}></FavSVG>
         </span>
         <span
           onClick={commentBtnAction}
@@ -105,7 +106,9 @@ function CommentActions({
             )}
           </>
         )}
-        <span>{new Date(dateTime).toLocaleString()}</span>
+        <span>
+          <TimeAgo date={dateTime}></TimeAgo>
+        </span>
       </div>
     </>
   );
@@ -116,6 +119,7 @@ function Comment({
   comment,
   replies,
   isAuthor,
+  onLikeCommentClick,
   onDeleteCommentClick,
   onSaveCommentClick,
   editingComment,
@@ -140,7 +144,7 @@ function Comment({
   };
 
   return (
-    <div className={styles.commentBoxWrapper}>
+    <div className={styles.commentBoxWrapper} key={comment?.id}>
       <CommentInfo author={comment?.user}></CommentInfo>
       <div className={styles.commentContent}>
         <CommentBody
@@ -149,10 +153,12 @@ function Comment({
           onSaveClick={editMode ? saveComment : null}
           loading={editingComment}
         ></CommentBody>
-        {/* Todo: action buttons api logic */}
         <CommentActions
           isAuthor={isAuthor}
-          likeBtnAction={() => console.log("like clicked")}
+          liked={comment?.myInteractions?.liked}
+          likeBtnAction={() =>
+            onLikeCommentClick(comment?.id, comment?.myInteractions?.liked)
+          }
           commentBtnAction={() => setAddReply(!addReply)}
           editBtnAction={() => setEditMode(!editMode)}
           deleteBtnAction={
@@ -176,7 +182,7 @@ function Comment({
             isAuthor={user?.id === reply?.user?.id}
             reply={reply}
             onDeleteReplyClick={() =>
-              onDeleteReplyClick(comment?.id, reply?._id)
+              onDeleteReplyClick(comment?.id, reply?._id || reply?.id)
             }
             editingReply={editingReply}
             onSaveReplyClick={(replyId, replyText) =>

@@ -101,7 +101,11 @@ function ContentHeader({
       ></ConfirmDialog>
       <div className={styles.postHeader}>
         <div className={styles.postAuthorProfile}>
-          <img src={author?.image || "/assets/person-placeholder.jpg"} />
+          <Link href={`/profile/${author?.id}`}>
+            <a>
+              <img src={author?.image || "/assets/person-placeholder.jpg"} />
+            </a>
+          </Link>
           <div className={styles.postAuthorInfo}>
             <Link href={`/profile/${author?.id}`}>
               <a>
@@ -128,7 +132,9 @@ function ContentHeader({
               />
             </>
           )}
-          <ShareButton postTitle={title} postMedia={media} />
+          <span>
+            <ShareButton postTitle={title} postMedia={media} />
+          </span>
         </span>
       </div>
     </>
@@ -287,6 +293,7 @@ function ContentComments({
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
+  const [likingComment, setLikingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
@@ -349,14 +356,93 @@ function ContentComments({
       return;
     }
 
+    const defaults = {
+      myInteractions: {
+        liked: null,
+      },
+      counts: {
+        likes: 0,
+        views: 0,
+        replies: 0,
+      },
+    };
+
     // set in state
     const commentsToSet = {
       ..._comments,
-      results: [{ ...createdComment, user: user }, ..._comments?.results],
+      results: [
+        { ...createdComment, ...defaults, user: user },
+        ..._comments?.results,
+      ],
     };
     setComments({ ...commentsToSet });
 
     setCreatingComment(false);
+  };
+
+  const likeComment = async (commentId, liked) => {
+    if (!verifyLoggedIn()) return;
+
+    if (!liked) {
+      setLikingComment(true);
+      // like comment
+      const response = await Interactions.LikeComment(commentId).catch(
+        () => false
+      );
+      const createdInteraction = response?.data;
+      if (!createdInteraction) {
+        showNotificationMsg("Failed to like comment", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = createdInteraction?.id;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
+    } else {
+      setLikingComment(true);
+      // remove like
+      const response = await Interactions.RemoveInteraction(liked).catch(
+        () => null
+      );
+      if (!response) {
+        showNotificationMsg("Error Removing Like", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = null;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
+    }
   };
 
   const editComment = async (commentId, commentText) => {
@@ -483,9 +569,10 @@ function ContentComments({
     // filter from state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    foundComment.replies = foundComment.replies.filter(
-      (x) => x._id !== replyId
-    );
+    foundComment.replies = foundComment.replies.filter((x) => {
+      const id = x?._id || x?.id;
+      return id !== replyId;
+    });
     const commentsToSet = {
       ..._comments,
       results: updatedResults,
@@ -522,7 +609,9 @@ function ContentComments({
     // update reply in state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    const foundReply = foundComment.replies.find((x) => x._id === replyId);
+    const foundReply = foundComment.replies.find(
+      (x) => x._id === replyId || x.id === replyId
+    );
     foundReply.text = editedReply.text;
     const commentsToSet = {
       ..._comments,
@@ -549,6 +638,7 @@ function ContentComments({
           user={user}
           isAuthor={user?.id === comment?.user?.id}
           comment={comment}
+          onLikeCommentClick={likeComment}
           onDeleteCommentClick={deleteComment}
           onSaveCommentClick={editComment}
           editingComment={editingComment}
@@ -575,9 +665,11 @@ function ContentComments({
           </span>
         </div>
       )}
-      {(editingComment || deletingComment || editingReply || deletingReply) && (
-        <BackDropLoader></BackDropLoader>
-      )}
+      {(likingComment ||
+        editingComment ||
+        deletingComment ||
+        editingReply ||
+        deletingReply) && <BackDropLoader></BackDropLoader>}
     </div>
   );
 }

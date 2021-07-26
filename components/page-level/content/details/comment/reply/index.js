@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
 import ConfirmDialog from "@sub/confirm-dialog";
+import TimeAgo from "@sub/time-ago";
 import ThrashSVG from "@svg/thrash";
 import EditSVG from "@svg/edit";
 import SaveSVG from "@svg/save";
 import styles from "./reply.module.css";
 
 function ReplyInfo({ author }) {
-  console.log(author);
   return (
     <div className={styles.replyInfo}>
       <Link href={`/profile/${author?.id}`}>
@@ -88,7 +88,9 @@ function ReplyActions({
             )}
           </>
         )}
-        <span>{new Date(dateTime).toLocaleString()}</span>
+        <span>
+          <TimeAgo date={dateTime}></TimeAgo>
+        </span>
       </div>
     </>
   );
@@ -106,7 +108,7 @@ function Replies({
   const saveReply = (replyText) => {
     if (replyText.trim().length === 0) return;
     setEditMode(false);
-    onSaveReplyClick(reply?._id, replyText);
+    onSaveReplyClick(reply?._id || reply?.id, replyText);
   };
 
   return (
