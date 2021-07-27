@@ -8,8 +8,11 @@ const config = {
     if (_userObj?.local?.password) delete _userObj.local.password;
     if (_userObj?.clubs) delete _userObj.clubs;
     if (_userObj?.teams) delete _userObj.teams;
-    if (_userObj?.stripe?.customer?.paymentMethods)
-      delete _userObj.stripe.customer.paymentMethods;
+    if (_userObj?.stripe?.customer?.paymentMethods) {
+      // record the size of pay methods array
+      _userObj.stripe.customer.paymentMethods =
+        _userObj.stripe.customer.paymentMethods?.length;
+    }
 
     return _userObj;
   },

@@ -5,6 +5,10 @@ export default class UserManagementRoutes {
     return HTTPClient.get(`/users/${id}/profile`);
   }
 
+  static async GetMyProfile() {
+    return HTTPClient.get("/users/my-profile");
+  }
+
   static async GetUploadedPosts(id, query) {
     return HTTPClient.get(
       `/users/${id}/uploaded-posts/?${new URLSearchParams(query).toString()}`
