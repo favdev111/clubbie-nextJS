@@ -5,6 +5,7 @@ import DashboardContent from "@page/teamhub-dashboard";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";
+import Users from "@api/services/Users";
 
 function TeamhubPayments({ user, activeTeam, setTeam }) {
   useEffect(() => {
@@ -27,4 +28,13 @@ function TeamhubPayments({ user, activeTeam, setTeam }) {
 
 export default TeamhubPayments;
 
-export const getServerSideProps = requiresPageAuth();
+export const getServerSideProps = requiresPageAuth(async () => {
+  const responseProfile = await Users.GetMyProfile().catch(() => false);
+  const _user = responseProfile?.data;
+
+  return {
+    props: {
+      user: _user,
+    },
+  };
+});

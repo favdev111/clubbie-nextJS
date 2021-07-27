@@ -4,6 +4,7 @@ import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub-dashboard";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
+import Users from "@api/services/Users";
 
 function TeamhubStatistics({ user, activeTeam, setTeam }) {
   useEffect(() => {
@@ -26,4 +27,13 @@ function TeamhubStatistics({ user, activeTeam, setTeam }) {
 
 export default TeamhubStatistics;
 
-export const getServerSideProps = requiresPageAuth();
+export const getServerSideProps = requiresPageAuth(async () => {
+  const responseProfile = await Users.GetMyProfile().catch(() => false);
+  const _user = responseProfile?.data;
+
+  return {
+    props: {
+      user: _user,
+    },
+  };
+});
