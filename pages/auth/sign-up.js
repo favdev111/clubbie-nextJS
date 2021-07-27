@@ -7,8 +7,8 @@ import SignUp from "@page/auth/sign-up";
 import auth from "@utils/helpers/auth";
 
 const SignUpPage = () => {
-  const authUser = auth.getUser();
-  if (authUser) {
+  const authAccessToken = auth.getAccessToken();
+  if (authAccessToken) {
     router.push("/");
   }
 
