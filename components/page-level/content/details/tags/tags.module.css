@@ -1,0 +1,21 @@
+.tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.tagChip {
+  width: auto;
+  padding: var(--space-12);
+  cursor: pointer;
+  transition: 0.05s ease;
+}
+.tagChip:hover {
+  transform: scale(1.1);
+  margin: auto 5px;
+}
+.spacing {
+  margin: 3px;
+}

@@ -4,7 +4,7 @@ import ContentForm from "../common/form";
 import router from "next/router";
 import { createPost } from "@utils/schemas/post.schema";
 
-function ContentAdd() {
+function ContentAdd({ user }) {
   const handleOnSubmit = async ({
     _media,
     _caption,
@@ -42,6 +42,12 @@ function ContentAdd() {
             value: _sport.trim(),
           });
         }
+        // add author name as tag
+        user?.profile?.fullName &&
+          _tempTags?.push({
+            type: "authorName",
+            value: user?.profile?.fullName,
+          });
         return _tempTags || null;
       })(),
     };
