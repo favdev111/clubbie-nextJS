@@ -537,7 +537,7 @@ function ContentComments({
     const foundComment = updatedResults.find(
       (x) => x.id === updatedComment?.id
     );
-    foundComment.replies.push({
+    foundComment.replies.results.unshift({
       ...updatedComment.replies[updatedComment.replies.length - 1],
       user: user,
     });
@@ -572,7 +572,7 @@ function ContentComments({
     // filter from state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    foundComment.replies = foundComment.replies.filter((x) => {
+    foundComment.replies.results = foundComment.replies.results.filter((x) => {
       const id = x?._id || x?.id;
       return id !== replyId;
     });
@@ -607,15 +607,13 @@ function ContentComments({
       return;
     }
 
-    const editedReply = updatedComment.replies.find((x) => x._id === replyId);
-
     // update reply in state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    const foundReply = foundComment.replies.find(
+    const foundReply = foundComment.replies.results.find(
       (x) => x._id === replyId || x.id === replyId
     );
-    foundReply.text = editedReply.text;
+    foundReply.text = replyText;
     const commentsToSet = {
       ..._comments,
       results: updatedResults,
