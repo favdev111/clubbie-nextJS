@@ -107,7 +107,7 @@
   }
   .mobileSort span {
     font-size: var(--fs-base);
-    padding-right: var(--space-24);
+    margin-right: var(--space-24);
     line-height: 17px;
     cursor: pointer;
   }
