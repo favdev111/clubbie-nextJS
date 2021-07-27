@@ -166,9 +166,8 @@ function HomeVideosCard({
         <h4 className={styles.desc}> {title}</h4>
         <p className={cn("opacity-50", styles.viewCount)}>
           {counts?.views || counts?.views === 0
-            ? `${counts?.views} View${
-                counts?.views > 1 || counts?.views < 1 ? "s" : ""
-              }`
+            ? `${counts?.views} View${counts?.views > 1 || counts?.views < 1 ? "s" : ""
+            }`
             : ""}
         </p>
       </div>

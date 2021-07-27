@@ -3,7 +3,7 @@ import Link from "next/link";
 import Button from "@sub/button";
 import Table from "@sub/table";
 import ChatSVG from "@svg/messages";
-import styles from "./clubDetails.module.css";
+import styles from "./newclubDetails.module.css";
 
 function ClubDetails({ club }) {
   const [clubOfficialRows, setClubOfficialRows] = useState([]);
@@ -156,8 +156,8 @@ function ClubDetails({ club }) {
                 "Add Club Description..."}
             </p>
           </div>
+          <h3 className={styles.tblHeading}>Officials</h3>
           <div className={styles.clubOfficials}>
-            <h3>Officials</h3>
             <Table
               className={styles.clubTable}
               header={["Name", "Role", "Action"]}
@@ -165,21 +165,25 @@ function ClubDetails({ club }) {
             ></Table>
           </div>
           <div className={styles.clubsTeamsAndPlayers}>
-            <div className={styles.clubTeams}>
-              <h3>Teams</h3>
-              <Table
-                className={styles.clubTable}
-                header={["Name", "Action"]}
-                rows={clubTeamRows}
-              ></Table>
+            <div className={styles.teamContent}>
+              <h3 className={styles.tblHeading}>Teams</h3>
+              <div className={styles.clubTeams}>
+                <Table
+                  className={styles.clubTable}
+                  header={["Name", "Action"]}
+                  rows={clubTeamRows}
+                ></Table>
+              </div>
             </div>
-            <div className={styles.clubPlayers}>
-              <h3>Players</h3>
-              <Table
-                className={styles.clubTable}
-                header={["Name", "Role", "Action"]}
-                rows={clubPlayerRows}
-              ></Table>
+            <div className={styles.playerContent}>
+              <h3 className={styles.tblHeading}>Players</h3>
+              <div className={styles.clubPlayers}>
+                <Table
+                  className={styles.clubTable}
+                  header={["Name", "Role", "Action"]}
+                  rows={clubPlayerRows}
+                ></Table>
+              </div>
             </div>
           </div>
         </div>
