@@ -9,8 +9,8 @@ import authUser from "@utils/helpers/auth";
 import BankCard from "./card";
 import styles from "./connectedbanks.module.css";
 
-function ConnectedBanks() {
-  const [user, setUser] = useState(authUser.getUser());
+function ConnectedBanks({ user }) {
+  const [_user, setUser] = useState(user);
   const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [stripeCustomer, setStripeCustomer] = useState(null);
@@ -18,16 +18,17 @@ function ConnectedBanks() {
   const { showNotificationMsg } = useNotification();
 
   useEffect(() => {
-    if (user?.stripe?.customer) {
-      setStripeCustomer(user?.stripe?.customer);
+    if (_user?.stripe?.customer) {
+      setStripeCustomer(_user?.stripe?.customer);
     }
-  }, [user]);
+  }, [_user]);
 
   const getUpdatedStripeInfo = async () => {
-    const currentPayMethods = stripeCustomer?.paymentMethods;
-    const response = await Users.GetUserProfile(user?.id).catch(() => null);
+    const userCookie = authUser.getUser();
+    const currentPayMethods = userCookie?.stripe?.customer?.paymentMethods;
+    const response = await Users.GetMyProfile().catch(() => null);
     if (!response) {
-      showNotificationMsg("Failed to add new payment method.", {
+      showNotificationMsg("Could not add new payment method.", {
         variant: "error",
         displayIcon: true,
       });
@@ -36,9 +37,9 @@ function ConnectedBanks() {
     const updatedUser = response?.data;
     if (
       updatedUser?.stripe?.customer?.paymentMethods?.length ===
-      currentPayMethods?.length
+      currentPayMethods
     ) {
-      showNotificationMsg("Failed to add new payment method.", {
+      showNotificationMsg("Could not add new payment method.", {
         variant: "error",
         displayIcon: true,
       });
@@ -49,7 +50,6 @@ function ConnectedBanks() {
       displayIcon: true,
     });
     authUser.setUser(updatedUser);
-    setUser(updatedUser);
     return;
   };
 
@@ -72,7 +72,7 @@ function ConnectedBanks() {
       cancelURL: url("/profile/self/connected-banks"),
     }).catch(() => null);
     if (!response) {
-      showNotificationMsg("Error fetching Stripe Session Link", {
+      showNotificationMsg("Could not connect to stripe", {
         variant: "error",
         displayIcon: true,
       });
