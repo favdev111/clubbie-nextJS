@@ -49,7 +49,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     reposted: userRepostedPosts || [],
   };
 
-  const clubIds = userProfile.clubs.map((c) => c.club);
+  const clubIds = userProfile.clubs.map((c) => c?.club?.id);
   const userClubs = await Clubs.GetClubsWithDetails(clubIds).catch(() => false);
   const clubs = userClubs?.data || [];
 
