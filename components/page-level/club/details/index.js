@@ -10,7 +10,6 @@ function ClubDetails({ club }) {
   const [clubTeamRows, setClubTeamRows] = useState([]);
   const [clubPlayerRows, setClubPlayerRows] = useState([]);
 
-  console.log(club);
   useEffect(() => {
     if (club?.officials) {
       const rows = club?.officials?.map((x) => {

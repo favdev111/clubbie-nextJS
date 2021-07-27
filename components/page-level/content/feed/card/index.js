@@ -12,13 +12,7 @@ import { LikeButton } from "../../common/button-like";
 // import { RepostButton } from "../../common/button-repost";
 import { ShareButton } from "../../common/button-share";
 
-function HomeVideosCard({
-  createdPost,
-  data,
-  isLoggedIn,
-  user,
-  setShowLoginPopup,
-}) {
+function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
   const {
     id,
     title,

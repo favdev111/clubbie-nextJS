@@ -767,7 +767,7 @@ function ContentDetails({ content, user }) {
       <ContentActions
         contentId={_content?.id}
         liked={_content?.myInteractions?.liked}
-        teamIds={user?.teams?.map((x) => x?.team)}
+        teamIds={user?.teams?.map((x) => x?.team)} // TODO: update w.r.t latest client cookie config
         totalLikes={_content?.counts?.likes}
         totalReposts={_content?.counts?.reposts}
         totalProfileReposts={_content?.myInteractions?.repostedInProfile}
