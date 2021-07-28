@@ -103,7 +103,7 @@ function JoinSearch({
           </div>
           {searchClubs && (
             <p className={styles.registerText}>
-              Or take owner ship of an existing club
+              Or take ownership of an existing club
             </p>
           )}
         </div>
