@@ -114,6 +114,47 @@ function CommentActions({
   );
 }
 
+function CommentReplies({
+  user,
+  replies,
+  commentId,
+  addReply,
+  creatingReply,
+  createCommentReply,
+  onDeleteReplyClick,
+  editingReply,
+  onSaveReplyClick,
+}) {
+  return (
+    <>
+      {addReply && (
+        <div className={styles.addReply}>
+          <CommentInput
+            placeholder={"Type your reply..."}
+            buttonText={"Reply"}
+            loading={creatingReply}
+            onSubmit={createCommentReply}
+          ></CommentInput>
+        </div>
+      )}
+      {replies?.results?.map((reply, index) => (
+        <Reply
+          key={reply?._id || reply?.id}
+          isAuthor={user?.id === reply?.user?.id}
+          reply={reply}
+          onDeleteReplyClick={() =>
+            onDeleteReplyClick(commentId, reply?._id || reply?.id)
+          }
+          editingReply={editingReply}
+          onSaveReplyClick={(replyId, replyText) =>
+            onSaveReplyClick(commentId, replyId, replyText)
+          }
+        ></Reply>
+      ))}
+    </>
+  );
+}
+
 function Comment({
   user,
   comment,
@@ -166,30 +207,19 @@ function Comment({
           }
           dateTime={comment?.dateTime}
         ></CommentActions>
-        {addReply && (
-          <div className={styles.addReply}>
-            <CommentInput
-              placeholder={"Type your reply..."}
-              buttonText={"Reply"}
-              loading={creatingReply}
-              onSubmit={createCommentReply}
-            ></CommentInput>
-          </div>
-        )}
-        {replies.map((reply, index) => (
-          <Reply
-            key={index}
-            isAuthor={user?.id === reply?.user?.id}
-            reply={reply}
-            onDeleteReplyClick={() =>
-              onDeleteReplyClick(comment?.id, reply?._id || reply?.id)
-            }
+        {replies?.results && (
+          <CommentReplies
+            user={user}
+            replies={replies}
+            commentId={comment?.id}
+            addReply={addReply}
+            creatingReply={creatingReply}
+            createCommentReply={createCommentReply}
+            onDeleteReplyClick={onDeleteReplyClick}
             editingReply={editingReply}
-            onSaveReplyClick={(replyId, replyText) =>
-              onSaveReplyClick(comment?.id, replyId, replyText)
-            }
-          ></Reply>
-        ))}
+            onSaveReplyClick={onSaveReplyClick}
+          ></CommentReplies>
+        )}
       </div>
     </div>
   );
