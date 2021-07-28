@@ -15,7 +15,7 @@ function TeamhubRegisterTeamPage({ club }) {
         title="Register a Team"
         selectedClub={club}
         teams={club.teams}
-        register
+        registerMode={true}
       />
     </Layout>
   );

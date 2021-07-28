@@ -28,8 +28,12 @@
   align-items: center;
 }
 .joinHeaderCurrent img {
+  cursor: pointer;
   margin-left: var(--space-16);
   margin-right: var(--space-6);
+}
+.joinHeaderCurrent span {
+  cursor: pointer;
 }
 .joinHeaderInner button {
   background-color: transparent;
@@ -109,6 +113,25 @@
   display: flex;
   align-items: center;
   justify-content: end;
+}
+.joinListNoItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-16);
+  padding: var(--space-50);
+  background-color: var(--c-white-05);
+  border-radius: var(--radius-md);
+}
+.joinListNoItemsClubName {
+  cursor: pointer;
+  color: var(--c-turk);
+  margin-left: var(--space-5);
+  margin-right: var(--space-5);
+}
+.joinListNoItemsCTA {
+  color: var(--c-turk);
+  transition: 0.1s ease;
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {

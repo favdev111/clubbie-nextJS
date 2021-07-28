@@ -9,7 +9,7 @@ function TeamhubRegisterClubPage({ clubs }) {
   return (
     <Layout>
       <Seo title="Register a Club" desc="Lorem ipsum dolor sit amet" />
-      <Join title="Register a Club" clubs={clubs} register />
+      <Join title="Register a Club" clubs={clubs} registerMode={true} />
     </Layout>
   );
 }

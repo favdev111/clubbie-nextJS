@@ -10,7 +10,104 @@ import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
 import styles from "./join.module.css";
 
-function Join({ title, clubs, teams, selectedClub, register }) {
+function SelectedClubMobile({ selectedClub }) {
+  return (
+    <div className={styles.mobileCurrent}>
+      <div>
+        <img
+          src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
+        />
+        <p> {selectedClub?.title}</p>
+      </div>
+    </div>
+  );
+}
+
+function SelectedClub({ selectedClub }) {
+  return (
+    <div className={styles.joinHeaderCurrent}>
+      <Link href={`/clubs/${selectedClub?.id}`}>
+        <a>
+          <img
+            src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
+            className={styles.selectedClubImage}
+          />
+          <span>{selectedClub?.title}</span>
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+function JoinList({
+  listItems,
+  handleItemClick,
+  registerMode,
+  listOfClubs,
+  listOfTeams,
+  selectedClub,
+}) {
+  return listItems ? (
+    <div className={styles.joinListContent}>
+      <ul className={"join__list"}>
+        {listItems.map((item, index) => (
+          <li
+            key={item + index}
+            className={styles.joinListItem}
+            onClick={async () => await handleItemClick(item)}
+          >
+            <img
+              src={item?.crest || "/assets/club-badge-placeholder.png"}
+              className={styles.crestImage}
+            />
+            {item?.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : (
+    !registerMode && (
+      <div className={styles.joinListNoItems}>
+        <p>
+          Looks like there are no
+          {(listOfClubs && " Clubs ") ||
+            (listOfTeams && " Teams ") ||
+            "Clubs/Teams"}
+          registered{" "}
+          {listOfTeams && selectedClub?.title && (
+            <>
+              for
+              <Link href={`/clubs/${selectedClub?.id}`}>
+                <a>
+                  {" "}
+                  <span className={styles.joinListNoItemsClubName}>
+                    {selectedClub?.title}
+                  </span>{" "}
+                </a>
+              </Link>
+            </>
+          )}
+          as of now. Care to make one of your own?.
+          <Link
+            href={
+              (listOfClubs && "/teamhub/register-club") ||
+              (listOfTeams &&
+                `/teamhub/register-club/${selectedClub?.id}/register-team`)
+            }
+          >
+            <a>
+              <span className={styles.joinListNoItemsCTA}>
+                &ensp;Click Here
+              </span>
+            </a>
+          </Link>
+        </p>
+      </div>
+    )
+  );
+}
+
+function Join({ title, clubs, teams, selectedClub, registerMode }) {
   const router = useRouter();
 
   const [backdropLoading, setBackdropLoading] = useState(false);
@@ -33,7 +130,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
 
   const handleSearchTextChange = (e) => {
     filterList(e.target.value);
-    if (register) {
+    if (registerMode) {
       clubs && setNewClubTitle(e.target.value.trim());
       teams && setNewTeamTitle(e.target.value.trim());
     }
@@ -42,8 +139,8 @@ function Join({ title, clubs, teams, selectedClub, register }) {
   const handleItemClick = async (item) => {
     if (clubs) {
       setBackdropLoading(true);
-      !register && router.push(`/teamhub/join-club/${item?.id}/join-team`);
-      register &&
+      !registerMode && router.push(`/teamhub/join-club/${item?.id}/join-team`);
+      registerMode &&
         router.push(`/teamhub/register-club/${item?.id}/register-team`);
       setBackdropLoading(false);
       return;
@@ -87,7 +184,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
   };
 
   const handleRegisterClick = () => {
-    if (!register) return;
+    if (!registerMode) return;
     if (clubs && newClubTitle?.length > 0) {
       // create a new club
       Clubs.RegisterClub({
@@ -123,16 +220,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
       {backdropLoading && <BackDropLoader />}
       <div className={styles.join}>
         {teams && selectedClub && (
-          <div className={styles.mobileCurrent}>
-            <div>
-              <img
-                src={
-                  selectedClub?.crest || "/assets/club-badge-placeholder.png"
-                }
-              />
-              <p> {selectedClub?.title}</p>
-            </div>
-          </div>
+          <SelectedClubMobile selectedClub={selectedClub}></SelectedClubMobile>
         )}
         <div className={styles.joinHeader}>
           <div className={styles.joinHeaderInner}>
@@ -144,15 +232,7 @@ function Join({ title, clubs, teams, selectedClub, register }) {
 
             <h1> {title} </h1>
             {teams && selectedClub && (
-              <div className={styles.joinHeaderCurrent}>
-                <img
-                  src={
-                    selectedClub?.crest || "/assets/club-badge-placeholder.png"
-                  }
-                  className={styles.selectedClubImage}
-                />
-                {selectedClub?.title}
-              </div>
+              <SelectedClub selectedClub={selectedClub}></SelectedClub>
             )}
           </div>
 
@@ -165,16 +245,16 @@ function Join({ title, clubs, teams, selectedClub, register }) {
 
         <CommonSearch
           placeholder={
-            register && clubs
+            registerMode && clubs
               ? "Club Name"
-              : register && teams
+              : registerMode && teams
               ? "Team Name"
               : null
           }
           onChange={(e) => handleSearchTextChange(e)}
         />
 
-        {register && (
+        {registerMode && (
           <div>
             <div className={styles.registerButton}>
               <Button onClick={handleRegisterClick}>Next</Button>
@@ -187,24 +267,15 @@ function Join({ title, clubs, teams, selectedClub, register }) {
           </div>
         )}
 
-        <div className={styles.joinListContent}>
-          <ul className={"join__list"}>
-            {listItems &&
-              listItems.map((item, index) => (
-                <li
-                  key={item + index}
-                  className={styles.joinListItem}
-                  onClick={async () => await handleItemClick(item)}
-                >
-                  <img
-                    src={item?.crest || "/assets/club-badge-placeholder.png"}
-                    className={styles.crestImage}
-                  />
-                  {item?.title}
-                </li>
-              ))}
-          </ul>
-        </div>
+        <JoinList
+          listOfClubs={!!clubs}
+          listOfTeams={!!teams}
+          listItems={listItems}
+          handleItemClick={handleItemClick}
+          registerMode={registerMode}
+          selectedClub={selectedClub}
+        ></JoinList>
+
         <div className={styles.mobileButtons}>
           <Link href="/">
             <a>Go back</a>
