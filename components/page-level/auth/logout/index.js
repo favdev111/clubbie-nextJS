@@ -10,8 +10,8 @@ import styles from "./logout.module.css";
 const Logout = () => {
   useEffect(async () => {
     await Auth.Logout({ refreshToken: authUser.getRefreshToken() })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => null)
+      .catch(() => null);
     authUser.deleteUser();
     authUser.deleteAccessToken();
     authUser.deleteRefreshToken();

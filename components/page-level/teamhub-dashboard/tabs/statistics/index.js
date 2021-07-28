@@ -13,7 +13,6 @@ function Statistics({ activeTeam, user }) {
   useEffect(() => {
     const fetchStatistics = async () => {
       const response = await Event.GetAllTeamStatistics();
-      console.log(response);
     };
     /*     fetchStatistics();
      */
