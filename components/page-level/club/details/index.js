@@ -3,14 +3,19 @@ import Link from "next/link";
 import Button from "@sub/button";
 import Table from "@sub/table";
 import ChatSVG from "@svg/messages";
-import styles from "./newclubDetails.module.css";
+import styles from "./clubDetails.module.css";
+import TeamManagementRoutes from "../../../../api/services/Teams"
+import useNotification from "@sub/hook-notification";
 
 function ClubDetails({ club }) {
   const [clubOfficialRows, setClubOfficialRows] = useState([]);
   const [clubTeamRows, setClubTeamRows] = useState([]);
   const [clubPlayerRows, setClubPlayerRows] = useState([]);
+  const [teamJoined, setTeamJoined] = useState("")
+  const [teamStatus, setTeamStatus] = useState(true);
+  const { showNotificationMsg } = useNotification();
 
-  console.log(club);
+  console.log(club.teams[0].id);
   useEffect(() => {
     if (club?.officials) {
       const rows = club?.officials?.map((x) => {
@@ -52,6 +57,29 @@ function ClubDetails({ club }) {
       });
       setClubOfficialRows(rows);
     }
+
+
+    const teamInfo = async () => {
+      const test = TeamManagementRoutes.JoinTeam(club.teams[0].id)
+      const resp = await test
+      if (resp.status === 200) {
+        const team = resp.data.title
+        showNotificationMsg(team + " Team Joined!", {
+          variant: "success",
+          displayIcon: true,
+        });
+      } else {
+        showNotificationMsg("Error Joining Team", {
+          variant: "error",
+          displayIcon: true,
+        });
+      }
+    }
+
+    const onJoinClick = () => {
+      teamInfo();
+    }
+
     if (club?.teams) {
       const rows = club?.teams?.map((x) => {
         return [
@@ -75,11 +103,9 @@ function ClubDetails({ club }) {
           () => (
             <div className={styles.clubMemberListAction}>
               <span>
-                <Link href={`/join-team-url-here/${x?.id}`}>
-                  <a>
-                    <Button size="x-small">Join</Button>
-                  </a>
-                </Link>
+                <a>
+                  <Button size="x-small" onClick={onJoinClick}>Join</Button>
+                </a>
               </span>
             </div>
           ),
