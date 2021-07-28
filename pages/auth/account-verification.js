@@ -7,7 +7,7 @@ import AccountVerif from "@page/auth/account-verification/";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 const AccountVerifPage = ({ user }) => {
-  if (user.isActivated && process.browser) {
+  if (user?.isActivated && process.browser) {
     router.push("/");
   }
 

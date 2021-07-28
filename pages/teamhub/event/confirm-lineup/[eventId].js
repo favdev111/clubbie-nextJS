@@ -4,6 +4,7 @@ import Seo from "../../../../components/layout/seo";
 import { requiresPageAuth } from "../../../../utils/middlewares/requiresPageAuth";
 import auth from "../../../../utils/helpers/auth";
 import PitchBlock from "../../../../components/page-level/pitch/PitchBlock";
+import Users from "@api/services/Users";
 
 function PitchPage() {
   const authUser = auth.getUser();
@@ -19,4 +20,13 @@ function PitchPage() {
 
 export default PitchPage;
 
-export const getServerSideProps = requiresPageAuth();
+export const getServerSideProps = requiresPageAuth(async () => {
+  const responseProfile = await Users.GetMyProfile().catch(() => false);
+  const _user = responseProfile?.data;
+
+  return {
+    props: {
+      user: _user,
+    },
+  };
+});

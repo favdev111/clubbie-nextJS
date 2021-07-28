@@ -5,7 +5,7 @@ import Seo from "@layout/seo";
 import Clubs from "@api/services/Clubs";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
-function Club({ club, user }) {
+function Club({ club }) {
   return (
     <Layout>
       <Seo title="Club" desc="Lorem ipsum dolor sit amet" />

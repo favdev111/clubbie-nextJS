@@ -4,14 +4,15 @@ import { useRouter } from "next/router";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import DashboardContent from "@page/teamhub-dashboard";
+import Users from "@api/services/Users";
 
 function EventDetailPage({ user, activeTeam, setTeam }) {
   const [eventId, setEventId] = useState();
   const router = useRouter();
 
   useEffect(() => {
-    setEventId(router.query.id);
-  }, [router.query.id]);
+    setEventId(router?.query?.id);
+  }, [router?.query?.id]);
 
   return (
     <Layout>
@@ -28,4 +29,13 @@ function EventDetailPage({ user, activeTeam, setTeam }) {
 
 export default EventDetailPage;
 
-export const getServerSideProps = requiresPageAuth();
+export const getServerSideProps = requiresPageAuth(async () => {
+  const responseProfile = await Users.GetMyProfile().catch(() => false);
+  const _user = responseProfile?.data;
+
+  return {
+    props: {
+      user: _user,
+    },
+  };
+});

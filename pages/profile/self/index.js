@@ -22,7 +22,8 @@ function ProfilePage({ user, posts, clubs }) {
 export default ProfilePage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const user = ctx.user;
+  const myProfile = await Users.GetMyProfile().catch(() => false);
+  const user = myProfile?.data;
 
   const postsFilter = {
     limit: 10,
@@ -31,18 +32,18 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   };
 
   const resUploadedPosts = await Users.GetUploadedPosts(
-    user.id,
+    user?.id,
     postsFilter
-  ).catch(() => false); // avoid page error for now
+  ).catch(() => false);
   const userUploadedPosts = resUploadedPosts?.data;
-  const resLikedPosts = await Users.GetLikedPosts(user.id, postsFilter).catch(
+  const resLikedPosts = await Users.GetLikedPosts(user?.id, postsFilter).catch(
     () => false
-  ); // avoid page error for now
+  );
   const userLikedPosts = resLikedPosts?.data;
-  const resRepostedPosts = await Users.GetRepostedPosts(user.id).catch(
+  const resRepostedPosts = await Users.GetRepostedPosts(user?.id).catch(
     () => false,
     postsFilter
-  ); // avoid page error for now
+  );
   const userRepostedPosts = resRepostedPosts?.data;
   const posts = {
     uploaded: userUploadedPosts || [],
@@ -50,7 +51,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     reposted: userRepostedPosts || [],
   };
 
-  const clubIds = user.clubs.map((c) => c.club);
+  const clubIds = user?.clubs?.map((c) => c?.club);
   const userClubs = await Clubs.GetClubsWithDetails(clubIds).catch(() => false);
   const clubs = userClubs?.data || [];
 

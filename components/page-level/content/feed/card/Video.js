@@ -28,7 +28,7 @@ class Video extends Component {
         ref={(el) => {
           this._videoEl = el;
         }}
-        // muted
+        muted
         loop
         controls
       >

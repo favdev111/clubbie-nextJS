@@ -6,7 +6,11 @@ const getUser = () => {
 };
 
 const setUser = (user, options = {}) => {
-  return clientCookies.setCookie("user", user, options);
+  return clientCookies.setCookie(
+    "user",
+    clientCookies.config.userCookieConfig(user),
+    options
+  );
 };
 
 const deleteUser = () => {

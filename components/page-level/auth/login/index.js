@@ -48,9 +48,9 @@ const Login = ({ previousURL }) => {
       .catch((err) => {
         setError(
           err?.response?.data?.message ||
-          err?.message ||
-          err?.request ||
-          "Some Error Occured"
+            err?.message ||
+            err?.request ||
+            "Some Error Occured"
         );
       });
     setLoading(false);

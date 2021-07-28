@@ -67,8 +67,8 @@ export const requiresPageAuth = (getPropsFunc) => {
                   tokens: context.setCookieForTokens,
                 }
               : false,
-            ...innerProps?.props,
             ...commonProps.props,
+            ...innerProps?.props,
           },
           notFound: innerProps?.notFound,
         };

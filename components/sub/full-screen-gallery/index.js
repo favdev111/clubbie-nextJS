@@ -49,6 +49,7 @@ function FullScreenGallery({ display, setDisplay, galleryItems }) {
               autoPlay
               controls
               loop
+              muted
               onKeyDown={handleEscape}
               tabIndex="1"
               ref={videoRef}

@@ -7,7 +7,7 @@ import AccountConfirm from "@page/auth/account-confirm/";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 const AccountConfirmPage = ({ user }) => {
-  if (user.isActivated && process.browser) {
+  if (user?.isActivated && process.browser) {
     router.push("/");
   }
 

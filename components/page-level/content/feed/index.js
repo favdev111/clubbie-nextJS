@@ -339,7 +339,6 @@ function Home({ posts, user }) {
               data={post}
               createdPost={createdPost}
               isLoggedIn={!!user}
-              user={user}
               setShowLoginPopup={setShowLoginPopup}
             />
           ))}
