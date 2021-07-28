@@ -299,6 +299,7 @@ function ContentComments({
   const [likingComment, setLikingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
+  const [loadingReplies, setLoadingReplies] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
   const [editingReply, setEditingReply] = useState(false);
   const [deletingReply, setDeletingReply] = useState(false);
@@ -512,6 +513,47 @@ function ContentComments({
     setDeletingComment(false);
   };
 
+  const loadMoreReplies = async (commentId, currentPage, resetCurrent) => {
+    setLoadingReplies(true);
+
+    // get replies
+    const responsePostCommentReplies = await Comments.GetCommentReplies(
+      commentId,
+      {
+        limit: 10,
+        page: currentPage + 1,
+        sortOrder: "desc",
+      }
+    ).catch(() => false);
+    const moreReplies = responsePostCommentReplies?.data;
+    if (!moreReplies) {
+      showNotificationMsg("Failed to load more replies", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoadingReplies(false);
+      return;
+    }
+
+    // set in state;
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    foundComment.replies = {
+      ...moreReplies,
+      results: [
+        ...(!resetCurrent ? foundComment?.replies?.results || [] : []),
+        ...(moreReplies?.results || []),
+      ],
+    };
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setLoadingReplies(false);
+  };
+
   const createReply = async (commentId, replyText) => {
     if (!verifyLoggedIn()) return;
     if (!commentId || replyText.trim().length === 0) return;
@@ -644,6 +686,8 @@ function ContentComments({
           onSaveCommentClick={editComment}
           editingComment={editingComment}
           replies={comment?.replies}
+          onLoadMoreRepliesClick={loadMoreReplies}
+          loadingReplies={loadingReplies}
           onCreateReply={createReply}
           creatingReply={creatingReply}
           onSaveReplyClick={editReply}
