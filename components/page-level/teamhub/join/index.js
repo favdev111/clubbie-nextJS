@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import CommonSearch from "@sub/search";
@@ -119,13 +119,34 @@ function JoinList({
   listOfClubs,
   listOfTeams,
   selectedClub,
+  listJoined,
 }) {
+  const [_listItems, setListItems] = useState(listItems);
+
+  const isJoined = (itemId) => {
+    const joined = listJoined?.find((x) => x?.id === itemId);
+    if (joined) {
+      return joined?.role;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const toSet = listItems?.map((x) => {
+      return {
+        ...x,
+        joinRole: isJoined(x?.id),
+      };
+    });
+    setListItems([...toSet]);
+  }, [listItems]);
+
   return (
     <>
-      {listItems ? (
+      {_listItems?.length > 0 ? (
         <div className={styles.joinListContent}>
           <ul className={"join__list"}>
-            {listItems.map((item, index) => (
+            {_listItems?.map((item, index) => (
               <li
                 key={item + index}
                 className={styles.joinListItem}
@@ -135,7 +156,12 @@ function JoinList({
                   src={item?.crest || "/assets/club-badge-placeholder.png"}
                   className={styles.crestImage}
                 />
-                {item?.title}
+                <span>{item?.title}</span>
+                {item?.joinRole && (
+                  <span className={styles.joinListItemJoinedByAuthUser}>
+                    Joined as {item?.joinRole}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -192,12 +218,20 @@ function JoinList({
   );
 }
 
-function Join({ title, clubs, teams, selectedClub, registerMode }) {
+function Join({
+  title,
+  clubs,
+  teams,
+  selectedClub,
+  registerMode,
+  clubsJoined,
+}) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [listItems, setlistItems] = useState(clubs || teams);
+  const [listJoined] = useState(clubsJoined);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
 
@@ -231,6 +265,7 @@ function Join({ title, clubs, teams, selectedClub, registerMode }) {
       setBackdropLoading(false);
       return;
     }
+
     if (selectedClub && teams) {
       // join club
       const responseClub = await Clubs.JoinClub(selectedClub?.id).catch(
@@ -346,6 +381,7 @@ function Join({ title, clubs, teams, selectedClub, registerMode }) {
           listOfClubs={!!clubs}
           listOfTeams={!!teams}
           listItems={listItems}
+          listJoined={listJoined}
           handleItemClick={handleItemClick}
           registerMode={registerMode}
           selectedClub={selectedClub}
