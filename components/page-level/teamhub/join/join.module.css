@@ -133,6 +133,9 @@
   color: var(--c-turk);
   transition: 0.1s ease;
 }
+.clubAndTeamRegisteration {
+  margin-top: var(--space-10);
+}
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
   .join {

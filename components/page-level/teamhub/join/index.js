@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import CommonSearch from "@sub/search";
@@ -10,32 +10,105 @@ import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
 import styles from "./join.module.css";
 
-function SelectedClubMobile({ selectedClub }) {
+function JoinHeader({ teams, selectedClub, title }) {
+  const router = useRouter();
+
   return (
-    <div className={styles.mobileCurrent}>
-      <div>
-        <img
-          src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
-        />
-        <p> {selectedClub?.title}</p>
+    <>
+      {teams && selectedClub && (
+        <div className={styles.mobileCurrent}>
+          <div>
+            <img
+              src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
+            />
+            <p> {selectedClub?.title}</p>
+          </div>
+        </div>
+      )}
+      <div className={styles.joinHeader}>
+        <div className={styles.joinHeaderInner}>
+          <a className={styles.back}>
+            <button onClick={() => router.back()}>
+              <LeftArrow />
+            </button>
+          </a>
+
+          <h1> {title} </h1>
+          {teams && selectedClub && (
+            <div className={styles.joinHeaderCurrent}>
+              <Link href={`/clubs/${selectedClub?.id}`}>
+                <a>
+                  <img
+                    src={
+                      selectedClub?.crest ||
+                      "/assets/club-badge-placeholder.png"
+                    }
+                    className={styles.selectedClubImage}
+                  />
+                  <span>{selectedClub?.title}</span>
+                </a>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.skipButtonWrapper}>
+          <Link href="/profile/self">
+            <a className={styles.skip}>Skip</a>
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-function SelectedClub({ selectedClub }) {
+function JoinSearch({
+  searchClubs,
+  searchTeams,
+  registerMode,
+  onSearchTextChange,
+  onRegisterClick,
+  loading,
+}) {
+  const searchRef = useRef();
+
+  const handleNextButtonClick = async () => {
+    if (searchRef?.current && searchRef?.current?.value?.trim()?.length === 0) {
+      searchRef?.current?.focus();
+      return;
+    }
+    await onRegisterClick();
+  };
+
   return (
-    <div className={styles.joinHeaderCurrent}>
-      <Link href={`/clubs/${selectedClub?.id}`}>
-        <a>
-          <img
-            src={selectedClub?.crest || "/assets/club-badge-placeholder.png"}
-            className={styles.selectedClubImage}
-          />
-          <span>{selectedClub?.title}</span>
-        </a>
-      </Link>
-    </div>
+    <>
+      <CommonSearch
+        placeholder={
+          registerMode && searchClubs
+            ? "Club Name"
+            : registerMode && searchTeams
+            ? "Team Name"
+            : null
+        }
+        onChange={onSearchTextChange}
+        inputRef={searchRef}
+        onEnter={handleNextButtonClick}
+      />
+      {registerMode && (
+        <div className={styles.clubAndTeamRegisteration}>
+          <div className={styles.registerButton}>
+            <Button onClick={handleNextButtonClick} loading={loading}>
+              Next
+            </Button>
+          </div>
+          {searchClubs && (
+            <p className={styles.registerText}>
+              Or take owner ship of an existing club
+            </p>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
@@ -47,69 +120,82 @@ function JoinList({
   listOfTeams,
   selectedClub,
 }) {
-  return listItems ? (
-    <div className={styles.joinListContent}>
-      <ul className={"join__list"}>
-        {listItems.map((item, index) => (
-          <li
-            key={item + index}
-            className={styles.joinListItem}
-            onClick={async () => await handleItemClick(item)}
-          >
-            <img
-              src={item?.crest || "/assets/club-badge-placeholder.png"}
-              className={styles.crestImage}
-            />
-            {item?.title}
-          </li>
-        ))}
-      </ul>
-    </div>
-  ) : (
-    !registerMode && (
-      <div className={styles.joinListNoItems}>
-        <p>
-          Looks like there are no
-          {(listOfClubs && " Clubs ") ||
-            (listOfTeams && " Teams ") ||
-            "Clubs/Teams"}
-          registered{" "}
-          {listOfTeams && selectedClub?.title && (
-            <>
-              for
-              <Link href={`/clubs/${selectedClub?.id}`}>
+  return (
+    <>
+      {listItems ? (
+        <div className={styles.joinListContent}>
+          <ul className={"join__list"}>
+            {listItems.map((item, index) => (
+              <li
+                key={item + index}
+                className={styles.joinListItem}
+                onClick={async () => await handleItemClick(item)}
+              >
+                <img
+                  src={item?.crest || "/assets/club-badge-placeholder.png"}
+                  className={styles.crestImage}
+                />
+                {item?.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        !registerMode && (
+          <div className={styles.joinListNoItems}>
+            <p>
+              Looks like there are no
+              {(listOfClubs && " Clubs ") ||
+                (listOfTeams && " Teams ") ||
+                "Clubs/Teams"}
+              registered{" "}
+              {listOfTeams && selectedClub?.title && (
+                <>
+                  for
+                  <Link href={`/clubs/${selectedClub?.id}`}>
+                    <a>
+                      {" "}
+                      <span className={styles.joinListNoItemsClubName}>
+                        {selectedClub?.title}
+                      </span>{" "}
+                    </a>
+                  </Link>
+                </>
+              )}
+              as of now. Care to make one of your own?.
+              <Link
+                href={
+                  (listOfClubs && "/teamhub/register-club") ||
+                  (listOfTeams &&
+                    `/teamhub/register-club/${selectedClub?.id}/register-team`)
+                }
+              >
                 <a>
-                  {" "}
-                  <span className={styles.joinListNoItemsClubName}>
-                    {selectedClub?.title}
-                  </span>{" "}
+                  <span className={styles.joinListNoItemsCTA}>
+                    &ensp;Click Here
+                  </span>
                 </a>
               </Link>
-            </>
-          )}
-          as of now. Care to make one of your own?.
-          <Link
-            href={
-              (listOfClubs && "/teamhub/register-club") ||
-              (listOfTeams &&
-                `/teamhub/register-club/${selectedClub?.id}/register-team`)
-            }
-          >
-            <a>
-              <span className={styles.joinListNoItemsCTA}>
-                &ensp;Click Here
-              </span>
-            </a>
-          </Link>
-        </p>
+            </p>
+          </div>
+        )
+      )}
+      <div className={styles.mobileButtons}>
+        <Link href="/">
+          <a>Go back</a>
+        </Link>
+        <Link href="/">
+          <a>Skip</a>
+        </Link>
       </div>
-    )
+    </>
   );
 }
 
 function Join({ title, clubs, teams, selectedClub, registerMode }) {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [listItems, setlistItems] = useState(clubs || teams);
   const [newClubTitle, setNewClubTitle] = useState(null);
@@ -183,35 +269,59 @@ function Join({ title, clubs, teams, selectedClub, registerMode }) {
     }
   };
 
-  const handleRegisterClick = () => {
+  const handleRegisterClick = async () => {
     if (!registerMode) return;
+
     if (clubs && newClubTitle?.length > 0) {
-      // create a new club
-      Clubs.RegisterClub({
-        title: newClubTitle,
-      })
-        .then((res) => {
-          console.log("res createing club => ", res);
-          const club = res.data;
-          router.push(`/teamhub/register-club/${club?.id}/register-team`);
-        })
-        .catch((err) => {
-          console.log("err creating club => ", err); // TODO: show error
+      // register new club
+      setLoading(true);
+      const payload = { title: newClubTitle };
+      const responseClub = await Clubs.RegisterClub(payload).catch(() => null);
+      const club = responseClub?.data;
+
+      if (!club) {
+        setLoading(false);
+        showNotificationMsg("Could Not Register Club", {
+          variant: "error",
+          displayIcon: true,
         });
+        return;
+      }
+
+      setLoading(false);
+      showNotificationMsg(`You are now the owner of ${club?.title}`, {
+        variant: "success",
+        displayIcon: true,
+      });
+      router.push(`/teamhub/register-club/${club?.id}/register-team`);
+      return;
     }
     if (teams && selectedClub && newTeamTitle?.length > 0) {
-      // create a new team
-      Teams.RegisterTeam(selectedClub?.id, {
-        title: newTeamTitle,
-      })
-        .then((res) => {
-          console.log("res creating team => ", res);
-          // const team = res.data;
-          router.push(`/profile/self`); // TODO: show success msg
-        })
-        .catch((err) => {
-          console.log("err creating team => ", err); // TODO: show error
+      // register new team for selected club
+      setLoading(true);
+      const payload = { title: newTeamTitle };
+      const responseTeam = await Teams.RegisterTeam(
+        selectedClub?.id,
+        payload
+      ).catch(() => null);
+
+      const team = responseTeam?.data;
+      if (!team) {
+        setLoading(false);
+        showNotificationMsg("Could Not Register Club", {
+          variant: "error",
+          displayIcon: true,
         });
+        return;
+      }
+
+      setLoading(false);
+      showNotificationMsg(`You are now the owner of ${team?.title}`, {
+        variant: "success",
+        displayIcon: true,
+      });
+      router.push(`/profile/self`);
+      return;
     }
   };
 
@@ -219,54 +329,19 @@ function Join({ title, clubs, teams, selectedClub, registerMode }) {
     <>
       {backdropLoading && <BackDropLoader />}
       <div className={styles.join}>
-        {teams && selectedClub && (
-          <SelectedClubMobile selectedClub={selectedClub}></SelectedClubMobile>
-        )}
-        <div className={styles.joinHeader}>
-          <div className={styles.joinHeaderInner}>
-            <a className={styles.back}>
-              <button onClick={() => router.back()}>
-                <LeftArrow />
-              </button>
-            </a>
-
-            <h1> {title} </h1>
-            {teams && selectedClub && (
-              <SelectedClub selectedClub={selectedClub}></SelectedClub>
-            )}
-          </div>
-
-          <div className={styles.skipButtonWrapper}>
-            <Link href="/profile/self">
-              <a className={styles.skip}>Skip</a>
-            </Link>
-          </div>
-        </div>
-
-        <CommonSearch
-          placeholder={
-            registerMode && clubs
-              ? "Club Name"
-              : registerMode && teams
-              ? "Team Name"
-              : null
-          }
-          onChange={(e) => handleSearchTextChange(e)}
-        />
-
-        {registerMode && (
-          <div>
-            <div className={styles.registerButton}>
-              <Button onClick={handleRegisterClick}>Next</Button>
-            </div>
-            {clubs && (
-              <p className={styles.registerText}>
-                Or take owner ship of an existing club
-              </p>
-            )}
-          </div>
-        )}
-
+        <JoinHeader
+          selectedClub={selectedClub}
+          teams={teams}
+          title={title}
+        ></JoinHeader>
+        <JoinSearch
+          searchClubs={!!clubs}
+          searchTeams={!!teams}
+          registerMode={registerMode}
+          onSearchTextChange={handleSearchTextChange}
+          onRegisterClick={handleRegisterClick}
+          loading={loading}
+        ></JoinSearch>
         <JoinList
           listOfClubs={!!clubs}
           listOfTeams={!!teams}
@@ -275,15 +350,6 @@ function Join({ title, clubs, teams, selectedClub, registerMode }) {
           registerMode={registerMode}
           selectedClub={selectedClub}
         ></JoinList>
-
-        <div className={styles.mobileButtons}>
-          <Link href="/">
-            <a>Go back</a>
-          </Link>
-          <Link href="/">
-            <a>Skip</a>
-          </Link>
-        </div>
       </div>
     </>
   );

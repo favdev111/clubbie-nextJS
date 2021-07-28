@@ -8,6 +8,7 @@ function CommonSearch({
   onChange,
   onEnter,
   onSearchButtonClick,
+  inputRef,
 }) {
   return (
     <div className={styles.commonSearch}>
@@ -21,6 +22,7 @@ function CommonSearch({
         value={value}
         onChange={onChange}
         onKeyDown={(e) => onEnter && e.key === "Enter" && onEnter()}
+        ref={inputRef}
       />
     </div>
   );
