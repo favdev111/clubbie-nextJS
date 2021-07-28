@@ -3,8 +3,6 @@ import Join from "@page/teamhub/join";
 import Layout from "@layout/";
 import Seo from "@layout/seo";
 import Clubs from "@api/services/Clubs";
-import HTTPClient from "@api/HTTPClient";
-import { parseCookies } from "@utils/helpers/parseCookies";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 function TeamhubJoinTeamPage({ club }) {
@@ -21,7 +19,7 @@ export default TeamhubJoinTeamPage;
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const clubId = ctx.params.clubId; // get club id from params
 
-  const response = await Clubs.Get(clubId).catch(() => false);
+  const response = await Clubs.Get(clubId).catch(() => null);
   const club = response?.data[0];
   const notFound = !club;
 

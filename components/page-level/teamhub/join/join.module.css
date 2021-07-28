@@ -55,6 +55,9 @@
 .joinListContent {
   height: 500px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  margin: var(--space-16) auto;
+  margin-bottom: var(--space-50);
 }
 .joinListContent::-webkit-scrollbar-track {
   padding: var(--space-1) 0;
@@ -74,6 +77,14 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: 0.1s ease;
+}
+.joinListItem:hover {
+  transform: scale(1.05);
+  margin-left: 25px;
+}
+.joinListItem:last-child {
+  margin-bottom: 120px;
 }
 .joinListItem img {
   margin-right: var(--space-6);
@@ -93,6 +104,11 @@
 }
 .crestImage {
   border-radius: 50%;
+}
+.skipButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
