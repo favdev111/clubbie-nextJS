@@ -225,13 +225,14 @@ function Join({
   selectedClub,
   registerMode,
   clubsJoined,
+  teamsJoined,
 }) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [listItems, setlistItems] = useState(clubs || teams);
-  const [listJoined] = useState(clubsJoined);
+  const [listJoined] = useState(clubsJoined || teamsJoined);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
 
