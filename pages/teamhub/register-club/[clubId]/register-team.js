@@ -16,6 +16,7 @@ function TeamhubRegisterTeamPage({ club, teamsJoined }) {
         teams={club.teams}
         registerMode={true}
         teamsJoined={teamsJoined}
+        hideList={true}
       />
     </Layout>
   );
@@ -37,9 +38,17 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     };
   });
 
-  const clubId = ctx.params.clubId; // get club id from params
+  const clubId = ctx?.params?.clubId; // get club id from params
   const response = await Clubs.Get(clubId).catch(() => false);
-  const club = response?.data[0];
+  let club =
+    response?.data && response?.data?.length > 0 ? response?.data[0] : null;
+
+  // get user role for selected club
+  const foundClubUserProfile = responsePublicUser?.data?.clubs?.find(
+    (x) => x?.club?.id === club?.id
+  );
+  club = { ...club, joinRole: foundClubUserProfile?.role || null };
+
   const notFound = !club || !user || !userTeams;
 
   return {

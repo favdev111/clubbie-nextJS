@@ -46,6 +46,11 @@ function JoinHeader({ teams, selectedClub, title }) {
                     className={styles.selectedClubImage}
                   />
                   <span>{selectedClub?.title}</span>
+                  {selectedClub?.joinRole && (
+                    <span className={styles.joinListItemJoinedByAuthUser}>
+                      Joined as {selectedClub?.joinRole}
+                    </span>
+                  )}
                 </a>
               </Link>
             </div>
@@ -69,6 +74,7 @@ function JoinSearch({
   onSearchTextChange,
   onRegisterClick,
   loading,
+  showOwnerShipText,
 }) {
   const searchRef = useRef();
 
@@ -101,7 +107,7 @@ function JoinSearch({
               Next
             </Button>
           </div>
-          {searchClubs && (
+          {searchClubs && showOwnerShipText && (
             <p className={styles.registerText}>
               Or take ownership of an existing club
             </p>
@@ -120,6 +126,8 @@ function JoinList({
   listOfTeams,
   selectedClub,
   listJoined,
+  showNotificationMsg,
+  isFiltered,
 }) {
   const [_listItems, setListItems] = useState(listItems);
 
@@ -141,6 +149,17 @@ function JoinList({
     setListItems([...toSet]);
   }, [listItems]);
 
+  const _handleItemClick = async (item) => {
+    if (item?.joinRole && listOfTeams) {
+      showNotificationMsg("You are already a member of this team", {
+        variant: "info",
+        displayIcon: true,
+      });
+      return;
+    }
+    await handleItemClick(item);
+  };
+
   return (
     <>
       {_listItems?.length > 0 ? (
@@ -150,7 +169,7 @@ function JoinList({
               <li
                 key={item + index}
                 className={styles.joinListItem}
-                onClick={async () => await handleItemClick(item)}
+                onClick={async () => await _handleItemClick(item)}
               >
                 <img
                   src={item?.crest || "/assets/club-badge-placeholder.png"}
@@ -167,7 +186,8 @@ function JoinList({
           </ul>
         </div>
       ) : (
-        !registerMode && (
+        !registerMode &&
+        !isFiltered && (
           <div className={styles.joinListNoItems}>
             <p>
               Looks like there are no
@@ -188,20 +208,25 @@ function JoinList({
                   </Link>
                 </>
               )}
-              as of now. Care to make one of your own?.
-              <Link
-                href={
-                  (listOfClubs && "/teamhub/register-club") ||
-                  (listOfTeams &&
-                    `/teamhub/register-club/${selectedClub?.id}/register-team`)
-                }
-              >
-                <a>
-                  <span className={styles.joinListNoItemsCTA}>
-                    &ensp;Click Here
-                  </span>
-                </a>
-              </Link>
+              as of now.
+              {selectedClub?.joinRole?.toLowerCase() === "owner" && (
+                <>
+                  &ensp;Care to make one?.
+                  <Link
+                    href={
+                      (listOfClubs && "/teamhub/register-club") ||
+                      (listOfTeams &&
+                        `/teamhub/register-club/${selectedClub?.id}/register-team`)
+                    }
+                  >
+                    <a>
+                      <span className={styles.joinListNoItemsCTA}>
+                        &ensp;Click Here
+                      </span>
+                    </a>
+                  </Link>
+                </>
+              )}
             </p>
           </div>
         )
@@ -226,12 +251,14 @@ function Join({
   registerMode,
   clubsJoined,
   teamsJoined,
+  hideList,
 }) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [listItems, setlistItems] = useState(clubs || teams);
+  const [isFiltered, setIsFiltered] = useState(false);
   const [listJoined] = useState(clubsJoined || teamsJoined);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
@@ -244,9 +271,11 @@ function Join({
         (x) => x.title.toLowerCase().indexOf(searchText.toLowerCase()) > -1
       );
       setlistItems(filtered);
+      setIsFiltered(true);
       return;
     }
     setlistItems(clubs || teams);
+    setIsFiltered(false);
   };
 
   const handleSearchTextChange = (e) => {
@@ -312,12 +341,22 @@ function Join({
       // register new club
       setLoading(true);
       const payload = { title: newClubTitle };
-      const responseClub = await Clubs.RegisterClub(payload).catch(() => null);
+      const responseClub = await Clubs.RegisterClub(payload).catch((e) => {
+        return {
+          error: {
+            code: e.response.status,
+            msg:
+              e.response.status === 409
+                ? "Club Already Exists"
+                : "Could Not Register Club",
+          },
+        };
+      });
       const club = responseClub?.data;
 
-      if (!club) {
+      if (responseClub?.error) {
         setLoading(false);
-        showNotificationMsg("Could Not Register Club", {
+        showNotificationMsg(responseClub?.error?.msg, {
           variant: "error",
           displayIcon: true,
         });
@@ -339,12 +378,24 @@ function Join({
       const responseTeam = await Teams.RegisterTeam(
         selectedClub?.id,
         payload
-      ).catch(() => null);
+      ).catch((e) => {
+        return {
+          error: {
+            code: e.response.status,
+            msg: (() => {
+              if (e.response.status === 409) return "Team Already Exists";
+              if (e.response.status === 403)
+                return "Only Club Owner Can Register A Team For This Club";
+              return "Could Not Register Team";
+            })(),
+          },
+        };
+      });
 
       const team = responseTeam?.data;
-      if (!team) {
+      if (responseTeam?.error) {
         setLoading(false);
-        showNotificationMsg("Could Not Register Club", {
+        showNotificationMsg(responseTeam?.error?.msg, {
           variant: "error",
           displayIcon: true,
         });
@@ -377,16 +428,21 @@ function Join({
           onSearchTextChange={handleSearchTextChange}
           onRegisterClick={handleRegisterClick}
           loading={loading}
+          showOwnerShipText={!hideList}
         ></JoinSearch>
-        <JoinList
-          listOfClubs={!!clubs}
-          listOfTeams={!!teams}
-          listItems={listItems}
-          listJoined={listJoined}
-          handleItemClick={handleItemClick}
-          registerMode={registerMode}
-          selectedClub={selectedClub}
-        ></JoinList>
+        {!hideList && (
+          <JoinList
+            listOfClubs={!!clubs}
+            listOfTeams={!!teams}
+            listItems={listItems}
+            listJoined={listJoined}
+            handleItemClick={handleItemClick}
+            showNotificationMsg={showNotificationMsg}
+            registerMode={registerMode}
+            selectedClub={selectedClub}
+            isFiltered={isFiltered}
+          ></JoinList>
+        )}
       </div>
     </>
   );
