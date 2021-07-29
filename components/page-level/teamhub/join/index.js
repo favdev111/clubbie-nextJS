@@ -314,12 +314,22 @@ function Join({
       // register new club
       setLoading(true);
       const payload = { title: newClubTitle };
-      const responseClub = await Clubs.RegisterClub(payload).catch(() => null);
+      const responseClub = await Clubs.RegisterClub(payload).catch((e) => {
+        return {
+          error: {
+            code: e.response.status,
+            msg:
+              e.response.status === 409
+                ? "Club Already Exists"
+                : "Could Not Register Club",
+          },
+        };
+      });
       const club = responseClub?.data;
 
-      if (!club) {
+      if (responseClub?.error) {
         setLoading(false);
-        showNotificationMsg("Could Not Register Club", {
+        showNotificationMsg(responseClub?.error?.msg, {
           variant: "error",
           displayIcon: true,
         });
