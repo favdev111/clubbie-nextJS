@@ -46,6 +46,11 @@ function JoinHeader({ teams, selectedClub, title }) {
                     className={styles.selectedClubImage}
                   />
                   <span>{selectedClub?.title}</span>
+                  {selectedClub?.joinRole && (
+                    <span className={styles.joinListItemJoinedByAuthUser}>
+                      Joined as {selectedClub?.joinRole}
+                    </span>
+                  )}
                 </a>
               </Link>
             </div>
