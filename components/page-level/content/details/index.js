@@ -522,7 +522,7 @@ function ContentComments({
       {
         limit: 10,
         page: currentPage + 1,
-        sortOrder: "desc",
+        sortOrder: "asc",
       }
     ).catch(() => false);
     const moreReplies = responsePostCommentReplies?.data;
@@ -579,7 +579,7 @@ function ContentComments({
     const foundComment = updatedResults.find(
       (x) => x.id === updatedComment?.id
     );
-    foundComment.replies.results.unshift({
+    foundComment.replies.results.push({
       ...updatedComment.replies[updatedComment.replies.length - 1],
       user: user,
     });
