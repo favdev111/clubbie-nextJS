@@ -38,9 +38,10 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     };
   });
 
-  const clubId = ctx.params.clubId; // get club id from params
+  const clubId = ctx?.params?.clubId; // get club id from params
   const response = await Clubs.Get(clubId).catch(() => false);
-  const club = response?.data[0];
+  const club =
+    response?.data && response?.data?.length > 0 ? response?.data[0] : null;
   const notFound = !club || !user || !userTeams;
 
   return {
