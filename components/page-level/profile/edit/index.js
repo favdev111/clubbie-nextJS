@@ -87,8 +87,8 @@ function ChangePasswordForm({ showNotificationMsg, email, setQuitReset }) {
 
     // logout the user
     await Auth.Logout({ refreshToken: auth.getRefreshToken() })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => null)
+      .catch(() => null);
     setTimeout(function () {
       auth.deleteUser();
       auth.deleteAccessToken();

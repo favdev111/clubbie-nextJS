@@ -28,6 +28,7 @@ function TagInput({
   suggestions,
   showSuggestions,
   suggestionsLoading,
+  customTags,
 }) {
   // TODO: hide input when blured
   // const _suggestions = [
@@ -74,7 +75,7 @@ function TagInput({
             if (e.key === "Backspace" && e.target.value.trim().length === 0) {
               tags && onTagRemove(tags.length - 1); // remove last tag
             }
-            if (onInputSubmit && e.key === "Enter") {
+            if (customTags && onInputSubmit && e.key === "Enter") {
               e.preventDefault();
               if (e.target.value.trim() === 0) return;
               onInputSubmit(e.target.value);

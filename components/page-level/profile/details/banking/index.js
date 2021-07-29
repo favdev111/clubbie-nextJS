@@ -31,14 +31,12 @@ function Banking({ user }) {
         return;
       }
       const updatedUser = response?.data;
-      console.log("updatedUser => ", updatedUser);
       const connectedAccount = updatedUser?.stripe?.connectedAccount;
       if (connectedAccount?.isOnboard && connectedAccount?.id) {
         showNotificationMsg("Connected with Stripe.", {
           variant: "success",
           displayIcon: true,
         });
-        console.log("now update cookie");
         authUser.setUser(updatedUser);
         setUser(updatedUser);
       } else {

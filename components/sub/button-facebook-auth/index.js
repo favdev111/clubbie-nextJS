@@ -4,7 +4,6 @@ import Facebook from "@svg/social/facebook";
 
 const responseFacebook = (response) => {
   // Get the response for now
-  console.log(response);
 };
 
 const FacebookButton = () => {

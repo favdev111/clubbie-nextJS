@@ -55,8 +55,6 @@ function AddEvent({ user }) {
         file,
       };
       setMedia(mediaPicked);
-      console.log("media");
-      console.log(mediaPicked);
     };
     reader.readAsDataURL(file);
   };
@@ -95,15 +93,11 @@ function AddEvent({ user }) {
       )
         .then((res) => {
           mediaIdToUpload = res?.data[0]?.s3Url;
-          console.log("media res => ", res);
         })
         .catch((err) => {
-          console.log("media err => ", err);
           alert(err?.response?.data?.message); // TODO: error comp
         });
     }
-
-    console.log(mediaIdToUpload);
 
     const eventDateTime =
       data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";

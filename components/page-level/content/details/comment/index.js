@@ -3,6 +3,7 @@ import Link from "next/link";
 import TemplateInput from "@sub/input";
 import ConfirmDialog from "@sub/confirm-dialog";
 import TimeAgo from "@sub/time-ago";
+import Loader from "@sub/loader";
 import FavSVG from "@svg/social/fav";
 import CommentSVG from "@svg/social/comment";
 import ThrashSVG from "@svg/thrash";
@@ -120,6 +121,8 @@ function CommentReplies({
   commentId,
   addReply,
   creatingReply,
+  onLoadMoreRepliesClick,
+  loadingReplies,
   createCommentReply,
   onDeleteReplyClick,
   editingReply,
@@ -137,7 +140,7 @@ function CommentReplies({
           ></CommentInput>
         </div>
       )}
-      {replies?.results?.map((reply, index) => (
+      {replies?.results?.map((reply) => (
         <Reply
           key={reply?._id || reply?.id}
           isAuthor={user?.id === reply?.user?.id}
@@ -151,6 +154,27 @@ function CommentReplies({
           }
         ></Reply>
       ))}
+      {replies?.page < replies?.totalPages && (
+        <div className={styles.repliesLoadMoreWrapper}>
+          <span
+            className={styles.repliesLoadMoreButton}
+            onClick={() =>
+              onLoadMoreRepliesClick(
+                commentId,
+                replies?.results?.length < 4 ? 0 : replies?.page,
+                replies?.results?.length < 4
+              )
+            }
+          >
+            Load More
+            {loadingReplies && (
+              <span className={styles.loader}>
+                <Loader></Loader>
+              </span>
+            )}
+          </span>
+        </div>
+      )}
     </>
   );
 }
@@ -164,6 +188,8 @@ function Comment({
   onDeleteCommentClick,
   onSaveCommentClick,
   editingComment,
+  onLoadMoreRepliesClick,
+  loadingReplies,
   onCreateReply,
   creatingReply,
   onDeleteReplyClick,
@@ -212,6 +238,8 @@ function Comment({
             user={user}
             replies={replies}
             commentId={comment?.id}
+            onLoadMoreRepliesClick={onLoadMoreRepliesClick}
+            loadingReplies={loadingReplies}
             addReply={addReply}
             creatingReply={creatingReply}
             createCommentReply={createCommentReply}

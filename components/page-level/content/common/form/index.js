@@ -381,6 +381,7 @@ function ContentForm({
               suggestions={suggestions}
               showSuggestions={true}
               suggestionsLoading={suggestionsLoading}
+              customTags={false}
             />
           </div>
         </div>
