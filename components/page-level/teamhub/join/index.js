@@ -122,6 +122,7 @@ function JoinList({
   selectedClub,
   listJoined,
   showNotificationMsg,
+  isFiltered,
 }) {
   const [_listItems, setListItems] = useState(listItems);
 
@@ -180,7 +181,8 @@ function JoinList({
           </ul>
         </div>
       ) : (
-        !registerMode && (
+        !registerMode &&
+        !isFiltered && (
           <div className={styles.joinListNoItems}>
             <p>
               Looks like there are no
@@ -246,6 +248,7 @@ function Join({
   const [loading, setLoading] = useState(false);
   const [backdropLoading, setBackdropLoading] = useState(false);
   const [listItems, setlistItems] = useState(clubs || teams);
+  const [isFiltered, setIsFiltered] = useState(false);
   const [listJoined] = useState(clubsJoined || teamsJoined);
   const [newClubTitle, setNewClubTitle] = useState(null);
   const [newTeamTitle, setNewTeamTitle] = useState(null);
@@ -258,9 +261,11 @@ function Join({
         (x) => x.title.toLowerCase().indexOf(searchText.toLowerCase()) > -1
       );
       setlistItems(filtered);
+      setIsFiltered(true);
       return;
     }
     setlistItems(clubs || teams);
+    setIsFiltered(false);
   };
 
   const handleSearchTextChange = (e) => {
@@ -423,6 +428,7 @@ function Join({
             showNotificationMsg={showNotificationMsg}
             registerMode={registerMode}
             selectedClub={selectedClub}
+            isFiltered={isFiltered}
           ></JoinList>
         )}
       </div>
