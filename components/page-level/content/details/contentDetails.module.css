@@ -43,9 +43,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .contentViews {
   padding: 20px;
+  min-width: 100px;
 }
 .contentTitle {
   display: flex;
