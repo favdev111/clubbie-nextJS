@@ -69,6 +69,7 @@ function JoinSearch({
   onSearchTextChange,
   onRegisterClick,
   loading,
+  showOwnerShipText,
 }) {
   const searchRef = useRef();
 
@@ -101,7 +102,7 @@ function JoinSearch({
               Next
             </Button>
           </div>
-          {searchClubs && (
+          {searchClubs && showOwnerShipText && (
             <p className={styles.registerText}>
               Or take ownership of an existing club
             </p>
@@ -226,6 +227,7 @@ function Join({
   registerMode,
   clubsJoined,
   teamsJoined,
+  hideList,
 }) {
   const router = useRouter();
 
@@ -339,12 +341,22 @@ function Join({
       const responseTeam = await Teams.RegisterTeam(
         selectedClub?.id,
         payload
-      ).catch(() => null);
+      ).catch((e) => {
+        return {
+          error: {
+            code: e.response.status,
+            msg:
+              e.response.status === 409
+                ? "Team Already Exists"
+                : "Could Not Register Team",
+          },
+        };
+      });
 
       const team = responseTeam?.data;
-      if (!team) {
+      if (responseTeam?.error) {
         setLoading(false);
-        showNotificationMsg("Could Not Register Club", {
+        showNotificationMsg(responseTeam?.error?.msg, {
           variant: "error",
           displayIcon: true,
         });
@@ -377,16 +389,19 @@ function Join({
           onSearchTextChange={handleSearchTextChange}
           onRegisterClick={handleRegisterClick}
           loading={loading}
+          showOwnerShipText={!hideList}
         ></JoinSearch>
-        <JoinList
-          listOfClubs={!!clubs}
-          listOfTeams={!!teams}
-          listItems={listItems}
-          listJoined={listJoined}
-          handleItemClick={handleItemClick}
-          registerMode={registerMode}
-          selectedClub={selectedClub}
-        ></JoinList>
+        {!hideList && (
+          <JoinList
+            listOfClubs={!!clubs}
+            listOfTeams={!!teams}
+            listItems={listItems}
+            listJoined={listJoined}
+            handleItemClick={handleItemClick}
+            registerMode={registerMode}
+            selectedClub={selectedClub}
+          ></JoinList>
+        )}
       </div>
     </>
   );

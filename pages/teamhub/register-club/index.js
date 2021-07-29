@@ -15,6 +15,7 @@ function TeamhubRegisterClubPage({ clubs, clubsJoined }) {
         clubs={clubs}
         registerMode={true}
         clubsJoined={clubsJoined}
+        hideList={true}
       />
     </Layout>
   );
