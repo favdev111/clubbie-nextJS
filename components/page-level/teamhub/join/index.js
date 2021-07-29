@@ -208,20 +208,25 @@ function JoinList({
                   </Link>
                 </>
               )}
-              as of now. Care to make one of your own?.
-              <Link
-                href={
-                  (listOfClubs && "/teamhub/register-club") ||
-                  (listOfTeams &&
-                    `/teamhub/register-club/${selectedClub?.id}/register-team`)
-                }
-              >
-                <a>
-                  <span className={styles.joinListNoItemsCTA}>
-                    &ensp;Click Here
-                  </span>
-                </a>
-              </Link>
+              as of now.
+              {selectedClub?.joinRole?.toLowerCase() === "owner" && (
+                <>
+                  &ensp;Care to make one?.
+                  <Link
+                    href={
+                      (listOfClubs && "/teamhub/register-club") ||
+                      (listOfTeams &&
+                        `/teamhub/register-club/${selectedClub?.id}/register-team`)
+                    }
+                  >
+                    <a>
+                      <span className={styles.joinListNoItemsCTA}>
+                        &ensp;Click Here
+                      </span>
+                    </a>
+                  </Link>
+                </>
+              )}
             </p>
           </div>
         )
