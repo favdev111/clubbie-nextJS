@@ -121,6 +121,7 @@ function JoinList({
   listOfTeams,
   selectedClub,
   listJoined,
+  showNotificationMsg,
 }) {
   const [_listItems, setListItems] = useState(listItems);
 
@@ -142,6 +143,17 @@ function JoinList({
     setListItems([...toSet]);
   }, [listItems]);
 
+  const _handleItemClick = async (item) => {
+    if (item?.joinRole && listOfTeams) {
+      showNotificationMsg("You are already a member of this team", {
+        variant: "info",
+        displayIcon: true,
+      });
+      return;
+    }
+    await handleItemClick(item);
+  };
+
   return (
     <>
       {_listItems?.length > 0 ? (
@@ -151,7 +163,7 @@ function JoinList({
               <li
                 key={item + index}
                 className={styles.joinListItem}
-                onClick={async () => await handleItemClick(item)}
+                onClick={async () => await _handleItemClick(item)}
               >
                 <img
                   src={item?.crest || "/assets/club-badge-placeholder.png"}
@@ -408,6 +420,7 @@ function Join({
             listItems={listItems}
             listJoined={listJoined}
             handleItemClick={handleItemClick}
+            showNotificationMsg={showNotificationMsg}
             registerMode={registerMode}
             selectedClub={selectedClub}
           ></JoinList>
