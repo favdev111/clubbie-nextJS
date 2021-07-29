@@ -4,7 +4,7 @@ import Button from "@sub/button";
 import Table from "@sub/table";
 import ChatSVG from "@svg/messages";
 import styles from "./clubDetails.module.css";
-import TeamManagementRoutes from "../../../../api/services/Teams"
+import Team from "../../../../api/services/Teams"
 import useNotification from "@sub/hook-notification";
 
 function ClubDetails({ club }) {
@@ -12,10 +12,7 @@ function ClubDetails({ club }) {
   const [clubTeamRows, setClubTeamRows] = useState([]);
   const [clubPlayerRows, setClubPlayerRows] = useState([]);
   const [teamJoined, setTeamJoined] = useState("")
-  const [teamStatus, setTeamStatus] = useState(true);
   const { showNotificationMsg } = useNotification();
-
-  console.log(club.teams[0].id);
   useEffect(() => {
     if (club?.officials) {
       const rows = club?.officials?.map((x) => {
@@ -59,25 +56,28 @@ function ClubDetails({ club }) {
     }
 
 
-    const teamInfo = async () => {
-      const test = TeamManagementRoutes.JoinTeam(club.teams[0].id)
-      const resp = await test
-      if (resp.status === 200) {
-        const team = resp.data.title
-        showNotificationMsg(team + " Team Joined!", {
-          variant: "success",
-          displayIcon: true,
-        });
-      } else {
-        showNotificationMsg("Error Joining Team", {
+    const teamInfo = async (teamId) => {
+      try {
+        const response = await Team.JoinTeam(teamId)
+        const status = response.status
+        if (status === 200) {
+          const team = response.data.title
+          showNotificationMsg(team + " Team Joined!", {
+            variant: "success",
+            displayIcon: true,
+          });
+        } else {
+          showNotificationMsg("Error Joining Team", {
+            variant: "error",
+            displayIcon: true,
+          });
+        }
+      } catch (e) {
+        showNotificationMsg(e, {
           variant: "error",
           displayIcon: true,
         });
       }
-    }
-
-    const onJoinClick = () => {
-      teamInfo();
     }
 
     if (club?.teams) {
@@ -104,7 +104,7 @@ function ClubDetails({ club }) {
             <div className={styles.clubMemberListAction}>
               <span>
                 <a>
-                  <Button size="x-small" onClick={onJoinClick}>Join</Button>
+                  <Button size="x-small" onClick={teamInfo.bind(this, x?.id)}>Join</Button>
                 </a>
               </span>
             </div>
