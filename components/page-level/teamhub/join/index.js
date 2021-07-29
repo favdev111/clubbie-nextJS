@@ -377,10 +377,12 @@ function Join({
         return {
           error: {
             code: e.response.status,
-            msg:
-              e.response.status === 409
-                ? "Team Already Exists"
-                : "Could Not Register Team",
+            msg: (() => {
+              if (e.response.status === 409) return "Team Already Exists";
+              if (e.response.status === 403)
+                return "Only Club Owner Can Register A Team For This Club";
+              return "Could Not Register Team";
+            })(),
           },
         };
       });
