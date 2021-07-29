@@ -7,9 +7,11 @@
 .pointer {
   cursor: pointer;
 }
-
-.avatar:hover .image {
+.avatarHoverOpacity:hover .image {
   opacity: 0.3;
+}
+.avatarHoverCursor {
+  cursor: pointer;
 }
 .avatar:hover .edit {
   z-index: 1;
@@ -18,4 +20,8 @@
   top: 45%;
   left: 40%;
   cursor: pointer;
+}
+.imageFullScreen {
+  min-width: 550px;
+  min-height: 550px;
 }
