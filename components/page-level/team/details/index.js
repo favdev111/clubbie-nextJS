@@ -2,12 +2,61 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
+import useNotification from "@sub/hook-notification";
 import ChatSVG from "@svg/messages";
 import TickMarkSVG from "@svg/tick-mark";
 import XMarkSVG from "@svg/x-mark";
+import Clubs from "@api/services/Clubs";
+import Teams from "@api/services/Teams";
 import styles from "./teamDetails.module.css";
 
-function TeamHeader({ clubCrest, teamCrest, teamTitle }) {
+function TeamHeader({
+  clubId,
+  clubCrest,
+  teamId,
+  teamCrest,
+  teamTitle,
+  showNotificationMsg,
+}) {
+  const [joiningTeam, setJoiningTeam] = useState(false);
+
+  const handleJoinClick = async () => {
+    setJoiningTeam(true);
+    // join club
+    const responseClub = await Clubs.JoinClub(clubId).catch(() => null);
+    if (!responseClub) {
+      showNotificationMsg("Could Not Join Team's Club", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setJoiningTeam(false);
+      return;
+    }
+
+    // join team of club
+    const responseTeam = await Teams.JoinTeam(teamId).catch(() => null);
+    if (!responseTeam) {
+      showNotificationMsg("Could Not Join Team", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setJoiningTeam(false);
+      return;
+    }
+    showNotificationMsg(
+      `${
+        responseTeam?.data?.title
+          ? "You are now a member of " + responseTeam?.data?.title.toUpperCase()
+          : "Team Joined Successfully..!"
+      }`,
+      {
+        variant: "success",
+        displayIcon: true,
+      }
+    );
+    setJoiningTeam(false);
+  };
+
   return (
     <div className={styles.teamHeaderWrapper}>
       <div className={styles.teamCrestWrapper}>
@@ -32,7 +81,12 @@ function TeamHeader({ clubCrest, teamCrest, teamTitle }) {
           </span>
         </div>
         <div className={styles.teamHeaderActionButtons}>
-          <Button variant="success" size="medium">
+          <Button
+            variant="success"
+            size="medium"
+            onClick={handleJoinClick}
+            loading={joiningTeam}
+          >
             Join
           </Button>
           <Button variant="danger" size="medium">
@@ -305,12 +359,17 @@ function TeamJoinRequests({ players }) {
 }
 
 function TeamDetails({ team }) {
+  const { showNotificationMsg } = useNotification();
+
   return (
     <>
       <TeamHeader
+        clubId={team?.club?.id}
         clubCrest={team?.club?.crest}
+        teamId={team?.id}
         teamCrest={team?.crest}
         teamTitle={team?.title}
+        showNotificationMsg={showNotificationMsg}
       ></TeamHeader>
       <TeamMembers
         owner={team?.owner}
