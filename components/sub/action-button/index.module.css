@@ -13,3 +13,7 @@
 .actionButton p {
   margin-left: 5px;
 }
+.chatButton {
+  width: 16.974px !important;
+  height: 16.974px !important;
+}
