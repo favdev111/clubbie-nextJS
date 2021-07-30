@@ -19,6 +19,7 @@ function TeamHeader({
   showNotificationMsg,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
+  const [leavingTeam, setLeavingTeam] = useState(false);
 
   const handleJoinClick = async () => {
     setJoiningTeam(true);
@@ -57,6 +58,26 @@ function TeamHeader({
     setJoiningTeam(false);
   };
 
+  const handleLeaveClick = async () => {
+    setLeavingTeam(true);
+
+    const response = await Teams.LeaveTeam(teamId).catch(() => null);
+    if (!response) {
+      showNotificationMsg("Could Not Leave Team", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLeavingTeam(false);
+      return;
+    }
+
+    showNotificationMsg("Team Left Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setLeavingTeam(false);
+  };
+
   return (
     <div className={styles.teamHeaderWrapper}>
       <div className={styles.teamCrestWrapper}>
@@ -89,7 +110,12 @@ function TeamHeader({
           >
             Join
           </Button>
-          <Button variant="danger" size="medium">
+          <Button
+            variant="danger"
+            size="medium"
+            onClick={handleLeaveClick}
+            loading={leavingTeam}
+          >
             Leave
           </Button>
         </div>

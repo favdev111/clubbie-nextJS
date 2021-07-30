@@ -17,7 +17,7 @@ export default class TeamManagementRoutes {
     return HTTPClient.patch(`/teams/${id}/member-status`);
   }
 
-  static async LeaveATeam() {
+  static async LeaveTeam(id) {
     return HTTPClient.patch(`/teams/${id}/leave`);
   }
 
