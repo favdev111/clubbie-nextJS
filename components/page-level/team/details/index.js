@@ -227,7 +227,7 @@ function TeamSubscriptionPlans({ plans }) {
             planName={planName(plan?.type)}
             planType={plan?.type}
             planAmount={plan?.amount}
-            planCurrencySymbol={plan?.currency || "€"}
+            planCurrencySymbol={plan?.currency || "£ "}
             isActive={plan?.active}
           ></TeamSubscriptionPlanCard>
         ))}
