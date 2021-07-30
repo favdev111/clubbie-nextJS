@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import cn from "classnames";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
@@ -8,7 +7,7 @@ import TickMarkSVG from "@svg/tick-mark";
 import XMarkSVG from "@svg/x-mark";
 import styles from "./teamDetails.module.css";
 
-function TeamHeader({ teamCrest, teamTitle }) {
+function TeamHeader({ clubCrest, teamCrest, teamTitle }) {
   return (
     <div className={styles.teamHeaderWrapper}>
       <div className={styles.teamCrestWrapper}>
@@ -19,7 +18,7 @@ function TeamHeader({ teamCrest, teamTitle }) {
         <span className={styles.teamClubCrestWrapper}>
           <img
             className={styles.teamClubCrest}
-            src={teamCrest || "/assets/club-badge-placeholder.png"}
+            src={clubCrest || "/assets/club-badge-placeholder.png"}
           />
         </span>
       </div>
@@ -122,10 +121,10 @@ function TeamMembers({ owner, coach, leader, players }) {
     if (players) {
       players?.map((player) => {
         members.push({
-          id: player?.id || "Player-ID",
+          id: player?.user?.id || "Player-ID",
           name: player?.user?.name || player?.user?.id || "Player-ID",
           role: "Player",
-          image: player?.image || "/assets/person-placeholder.jpg",
+          image: player?.user?.image || "/assets/person-placeholder.jpg",
           status: player?.status || "Unset", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
         });
       });
@@ -136,19 +135,27 @@ function TeamMembers({ owner, coach, leader, players }) {
   return (
     <div className={styles.teamMembersWrapper}>
       <h2>Members {_members?.length > 0 && `(${_members?.length})`}</h2>
-      <div className={styles.teamMembers}>
-        {_members.map((member) => (
-          <>
-            <TeamMemberCard
-              id={member?.id}
-              name={member?.name}
-              image={member?.image}
-              role={member?.role}
-              chatButton={true}
-            ></TeamMemberCard>
-          </>
-        ))}
-      </div>
+      {_members?.length > 0 && (
+        <div className={styles.teamMembers}>
+          {_members?.map((member) => (
+            <>
+              <TeamMemberCard
+                id={member?.id}
+                name={member?.name}
+                image={member?.image}
+                role={member?.role}
+                chatButton={true}
+              ></TeamMemberCard>
+            </>
+          ))}
+        </div>
+      )}
+      {_members?.length === 0 && (
+        <div className={styles?.teamMembersNone}>
+          This team has no members currently.
+          <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
+        </div>
+      )}
     </div>
   );
 }
@@ -156,10 +163,10 @@ function TeamMembers({ owner, coach, leader, players }) {
 function TeamSubscriptionPlanCard({
   planId,
   planName,
-  planType,
   planAmount,
   planCurrencySymbol,
-  isActive,
+  planInterval,
+  isSubscribed,
 }) {
   return (
     <div className={styles.teamSubscriptionPlanCard} key={planId}>
@@ -168,47 +175,37 @@ function TeamSubscriptionPlanCard({
         <span className={styles.teamSubscriptionPlanPriceWrapper}>
           Starting at&ensp;
           <span className={styles.teamSubscriptionPlanPrice}>
-            {planAmount.toFixed(2)} {planCurrencySymbol}/ Month
+            {planAmount.toFixed(2)} {planCurrencySymbol}/ {planInterval}
           </span>
         </span>
       </div>
       <div className={styles.teamSubscriptionPlanActions}>
-        <span
-          className={cn(
-            isActive
-              ? styles.teamSubscriptionPlanActive
-              : styles.teamSubscriptionPlanInActive
-          )}
-        >
-          {isActive ? "Active" : "Inactive"}
-        </span>
+        {isSubscribed && (
+          <span className={styles.teamSubscriptionPlanActive}>Subscribed</span>
+        )}
       </div>
     </div>
   );
 }
 
 function TeamSubscriptionPlans({ plans }) {
-  const subscriptionPlans = [
-    {
-      _id: "60fe8fecccfad122f033b004",
-      stripePriceId: "price_1JHR9bIj1mYhDDM4tBhm1ozE",
-      type: "free",
-      amount: 0,
-      active: true,
-    },
-    {
-      _id: "60fe8fecccfad122f033b0041",
-      stripePriceId: "price_1JHR9bIj1mYhDDM4tBhm1ozE",
-      type: "basic",
-      amount: 50.99,
-      active: false,
-    },
-  ];
-
   const [_plans, setPlans] = useState([]);
 
   useEffect(() => {
-    setPlans([...subscriptionPlans]);
+    const toSet = [];
+    plans?.map((x) => {
+      toSet.push({
+        type: x?.type,
+        id: x?.id,
+        amount: x?.amount,
+        active: x?.active,
+        // add these fields in api response
+        isSubscribed: true,
+        currency: "£",
+        interval: "Month",
+      });
+    });
+    setPlans([...toSet]);
   }, [plans]);
 
   const planName = (planType) => {
@@ -221,65 +218,88 @@ function TeamSubscriptionPlans({ plans }) {
     <div className={styles.teamSubscriptionPlansWrapper}>
       <h2>Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}</h2>
       <div className={styles.teamSubscriptionPlans}>
-        {_plans.map((plan) => (
-          <TeamSubscriptionPlanCard
-            planId={plan?.id || plan?._id}
-            planName={planName(plan?.type)}
-            planType={plan?.type}
-            planAmount={plan?.amount}
-            planCurrencySymbol={plan?.currency || "£ "}
-            isActive={plan?.active}
-          ></TeamSubscriptionPlanCard>
-        ))}
+        {_plans.map(
+          (plan) =>
+            plan?.active && (
+              <TeamSubscriptionPlanCard
+                planId={plan?.id || plan?._id}
+                planName={planName(plan?.type)}
+                planAmount={plan?.amount}
+                planCurrencySymbol={plan?.currency}
+                planInterval={plan?.interval}
+                isSubscribed={plan?.isSubscribed}
+              ></TeamSubscriptionPlanCard>
+            )
+        )}
       </div>
       <div className={styles.teamSubscriptionPlanUsageInfo}>
-        <span>Whats the benefit?</span>&ensp;You get access to specific team
-        events free of charge and more.
+        {_plans?.length > 0 ? (
+          <>
+            <span>Whats the benefit?</span>&ensp;You get access to specific team
+            events free of charge and more.
+          </>
+        ) : (
+          <>
+            <span>No Plans Offered.</span>&ensp;This team does not offer any
+            subscription plan currently.
+          </>
+        )}
       </div>
-      <div className={styles.teamSubscriptionPlanCTA}>
-        Contact your Teamleader to add you to a subscription plan
-      </div>
+      {_plans?.length > 0 && (
+        <div className={styles.teamSubscriptionPlanCTA}>
+          Contact your Teamleader to add you to a subscription plan
+        </div>
+      )}
     </div>
   );
 }
 
-function TeamJoinRequests({}) {
-  const joinRequests = [
-    {
-      id: "kcjbjvbd",
-      name: "some name",
-      image: "/assets/person-placeholder.jpg",
-      role: "player",
-      status: "unapproved",
-    },
-    {
-      id: "kcjbjvbd",
-      name: "one more name",
-      image: "/assets/person-placeholder.jpg",
-      role: "player",
-      status: "unapproved",
-    },
-  ];
+function TeamJoinRequests({ players }) {
+  const [_joinRequests, setJoinRequests] = useState([]);
+
+  useEffect(() => {
+    const toSet = [];
+    players?.map((x) => {
+      if (x?.status === "unapproved") {
+        toSet.push({
+          id: x?.user?.id || "Player-ID",
+          name: x?.user?.name || x?.user?.name || "Playername",
+          image: x?.user?.image || "/assets/person-placeholder.jpg",
+          role: "Player",
+          status: x?.status || "Unapproved",
+        });
+      }
+    });
+    setJoinRequests([...toSet]);
+  }, [players]);
 
   return (
     <div className={styles.teamJoinRequestsWrapper}>
       <h2>
-        Join Requests {joinRequests?.length > 0 && `(${joinRequests?.length})`}
+        Join Requests{" "}
+        {_joinRequests?.length > 0 && `(${_joinRequests?.length})`}
       </h2>
-      <div className={styles.teamJoinRequests}>
-        {joinRequests.map((member) => (
-          <>
-            <TeamMemberCard
-              id={member?.id}
-              name={member?.name}
-              image={member?.image}
-              role={member?.role}
-              acceptButton={true}
-              declineButton={true}
-            ></TeamMemberCard>
-          </>
-        ))}
-      </div>
+      {_joinRequests?.length > 0 && (
+        <div className={styles.teamJoinRequests}>
+          {_joinRequests?.map((member) => (
+            <>
+              <TeamMemberCard
+                id={member?.id}
+                name={member?.name}
+                image={member?.image}
+                role={member?.role}
+                acceptButton={true}
+                declineButton={true}
+              ></TeamMemberCard>
+            </>
+          ))}
+        </div>
+      )}
+      {_joinRequests?.length === 0 && (
+        <div className={styles.teamJoinRequestsNone}>
+          No New requests for now
+        </div>
+      )}
     </div>
   );
 }
@@ -287,7 +307,11 @@ function TeamJoinRequests({}) {
 function TeamDetails({ team }) {
   return (
     <>
-      <TeamHeader teamCrest={team?.crest} teamTitle={team?.title}></TeamHeader>
+      <TeamHeader
+        clubCrest={team?.club?.crest}
+        teamCrest={team?.crest}
+        teamTitle={team?.title}
+      ></TeamHeader>
       <TeamMembers
         owner={team?.owner}
         coach={team?.coach}
@@ -295,9 +319,9 @@ function TeamDetails({ team }) {
         players={team?.players}
       ></TeamMembers>
       <TeamSubscriptionPlans
-        plans={team?.TeamSubscriptionPlans}
+        plans={team?.subscriptionPlans}
       ></TeamSubscriptionPlans>
-      <TeamJoinRequests></TeamJoinRequests>
+      <TeamJoinRequests players={team?.players}></TeamJoinRequests>
     </>
   );
 }

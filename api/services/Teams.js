@@ -1,6 +1,10 @@
 import HTTPClient from "@api/HTTPClient";
 
 export default class TeamManagementRoutes {
+  static async Get(id) {
+    return HTTPClient.get(`/teams/details?id=${id}`);
+  }
+
   static async RegisterTeam(clubId, payload) {
     return HTTPClient.post(`/teams/register/${clubId}`, payload);
   }
