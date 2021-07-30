@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
+import ConfirmDialog from "@sub/confirm-dialog";
 import useNotification from "@sub/hook-notification";
 import ChatSVG from "@svg/messages";
 import TickMarkSVG from "@svg/tick-mark";
@@ -19,6 +20,7 @@ function TeamHeader({
   showNotificationMsg,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
+  const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
   const [leavingTeam, setLeavingTeam] = useState(false);
 
   const handleJoinClick = async () => {
@@ -79,48 +81,60 @@ function TeamHeader({
   };
 
   return (
-    <div className={styles.teamHeaderWrapper}>
-      <div className={styles.teamCrestWrapper}>
-        <img
-          className={styles.teamCrest}
-          src={teamCrest || "/assets/club-badge-placeholder.png"}
-        />
-        <span className={styles.teamClubCrestWrapper}>
+    <>
+      <ConfirmDialog
+        open={leaveTeamConfirm}
+        setOpen={setLeaveTeamConfirm}
+        message={
+          "Are you sure to leave this team? You might miss out on current events, feed, group chat and more."
+        }
+        confirmText={"Leave"}
+        onConfirm={handleLeaveClick}
+        type={"danger"}
+      />
+      <div className={styles.teamHeaderWrapper}>
+        <div className={styles.teamCrestWrapper}>
           <img
-            className={styles.teamClubCrest}
-            src={clubCrest || "/assets/club-badge-placeholder.png"}
+            className={styles.teamCrest}
+            src={teamCrest || "/assets/club-badge-placeholder.png"}
           />
-        </span>
-      </div>
-      <div className={styles.teamHeaderDetailsWrapper}>
-        <div className={styles.teamHeaderTitleWrapper}>
-          <h1>{teamTitle}</h1>
-          <span className={styles.teamHeaderAdminActionButtons}>
-            <ActionButton type="settings" />
-            <ActionButton type="edit" />
-            <ActionButton type="chat" />
+          <span className={styles.teamClubCrestWrapper}>
+            <img
+              className={styles.teamClubCrest}
+              src={clubCrest || "/assets/club-badge-placeholder.png"}
+            />
           </span>
         </div>
-        <div className={styles.teamHeaderActionButtons}>
-          <Button
-            variant="success"
-            size="medium"
-            onClick={handleJoinClick}
-            loading={joiningTeam}
-          >
-            Join
-          </Button>
-          <Button
-            variant="danger"
-            size="medium"
-            onClick={handleLeaveClick}
-            loading={leavingTeam}
-          >
-            Leave
-          </Button>
+        <div className={styles.teamHeaderDetailsWrapper}>
+          <div className={styles.teamHeaderTitleWrapper}>
+            <h1>{teamTitle}</h1>
+            <span className={styles.teamHeaderAdminActionButtons}>
+              <ActionButton type="settings" />
+              <ActionButton type="edit" />
+              <ActionButton type="chat" />
+            </span>
+          </div>
+          <div className={styles.teamHeaderActionButtons}>
+            <Button
+              variant="success"
+              size="medium"
+              onClick={handleJoinClick}
+              loading={joiningTeam}
+            >
+              Join
+            </Button>
+            <Button
+              variant="danger"
+              size="medium"
+              onClick={() => setLeaveTeamConfirm(true)}
+              loading={leavingTeam}
+            >
+              Leave
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
