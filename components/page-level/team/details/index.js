@@ -243,6 +243,47 @@ function TeamSubscriptionPlans({ plans }) {
   );
 }
 
+function TeamJoinRequests({}) {
+  const joinRequests = [
+    {
+      id: "kcjbjvbd",
+      name: "some name",
+      image: "/assets/person-placeholder.jpg",
+      role: "player",
+      status: "unapproved",
+    },
+    {
+      id: "kcjbjvbd",
+      name: "one more name",
+      image: "/assets/person-placeholder.jpg",
+      role: "player",
+      status: "unapproved",
+    },
+  ];
+
+  return (
+    <div className={styles.teamJoinRequestsWrapper}>
+      <h2>
+        Join Requests {joinRequests?.length > 0 && `(${joinRequests?.length})`}
+      </h2>
+      <div className={styles.teamJoinRequests}>
+        {joinRequests.map((member) => (
+          <>
+            <TeamMemberCard
+              id={member?.id}
+              name={member?.name}
+              image={member?.image}
+              role={member?.role}
+              acceptButton={true}
+              declineButton={true}
+            ></TeamMemberCard>
+          </>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function TeamDetails({ team }) {
   return (
     <>
@@ -256,6 +297,7 @@ function TeamDetails({ team }) {
       <TeamSubscriptionPlans
         plans={team?.TeamSubscriptionPlans}
       ></TeamSubscriptionPlans>
+      <TeamJoinRequests></TeamJoinRequests>
     </>
   );
 }

@@ -228,3 +228,27 @@
   margin-bottom: var(--space-16);
   color: var(--c-turk);
 }
+.teamJoinRequestsWrapper {
+  width: 100%;
+  background-color: var(--c-white-05);
+  margin-top: var(--space-32);
+  padding: var(--space-16);
+  border-radius: var(--radius);
+}
+.teamJoinRequests {
+  width: 100%;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding: var(--space-8);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  max-height: 280px;
+  overflow-y: scroll;
+}
+.teamJoinRequests::-webkit-scrollbar-track {
+  background-color: transparent;
+}
