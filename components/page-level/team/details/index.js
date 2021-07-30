@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
@@ -152,6 +153,96 @@ function TeamMembers({ owner, coach, leader, players }) {
   );
 }
 
+function TeamSubscriptionPlanCard({
+  planId,
+  planName,
+  planType,
+  planAmount,
+  planCurrencySymbol,
+  isActive,
+}) {
+  return (
+    <div className={styles.teamSubscriptionPlanCard} key={planId}>
+      <div className={styles.teamSubscriptionPlanInfoWrapper}>
+        <span className={styles.teamSubscriptionPlanName}>{planName}</span>
+        <span className={styles.teamSubscriptionPlanPriceWrapper}>
+          Starting at&ensp;
+          <span className={styles.teamSubscriptionPlanPrice}>
+            {planAmount.toFixed(2)} {planCurrencySymbol}/ Month
+          </span>
+        </span>
+      </div>
+      <div className={styles.teamSubscriptionPlanActions}>
+        <span
+          className={cn(
+            isActive
+              ? styles.teamSubscriptionPlanActive
+              : styles.teamSubscriptionPlanInActive
+          )}
+        >
+          {isActive ? "Active" : "Inactive"}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function TeamSubscriptionPlans({ plans }) {
+  const subscriptionPlans = [
+    {
+      _id: "60fe8fecccfad122f033b004",
+      stripePriceId: "price_1JHR9bIj1mYhDDM4tBhm1ozE",
+      type: "free",
+      amount: 0,
+      active: true,
+    },
+    {
+      _id: "60fe8fecccfad122f033b0041",
+      stripePriceId: "price_1JHR9bIj1mYhDDM4tBhm1ozE",
+      type: "basic",
+      amount: 50.99,
+      active: false,
+    },
+  ];
+
+  const [_plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    setPlans([...subscriptionPlans]);
+  }, [plans]);
+
+  const planName = (planType) => {
+    if (planType?.includes("free")) return `FREE Subscription`;
+    if (planType?.includes("basic")) return `Basic Subscription`;
+    return "Team Subscription Plan";
+  };
+
+  return (
+    <div className={styles.teamSubscriptionPlansWrapper}>
+      <h2>Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}</h2>
+      <div className={styles.teamSubscriptionPlans}>
+        {_plans.map((plan) => (
+          <TeamSubscriptionPlanCard
+            planId={plan?.id || plan?._id}
+            planName={planName(plan?.type)}
+            planType={plan?.type}
+            planAmount={plan?.amount}
+            planCurrencySymbol={plan?.currency || "€"}
+            isActive={plan?.active}
+          ></TeamSubscriptionPlanCard>
+        ))}
+      </div>
+      <div className={styles.teamSubscriptionPlanUsageInfo}>
+        <span>Whats the benefit?</span>&ensp;You get access to specific team
+        events free of charge and more.
+      </div>
+      <div className={styles.teamSubscriptionPlanCTA}>
+        Contact your Teamleader to add you to a subscription plan
+      </div>
+    </div>
+  );
+}
+
 function TeamDetails({ team }) {
   return (
     <>
@@ -162,6 +253,9 @@ function TeamDetails({ team }) {
         leader={team?.leader}
         players={team?.players}
       ></TeamMembers>
+      <TeamSubscriptionPlans
+        plans={team?.TeamSubscriptionPlans}
+      ></TeamSubscriptionPlans>
     </>
   );
 }

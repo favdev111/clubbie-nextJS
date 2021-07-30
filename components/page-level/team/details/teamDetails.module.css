@@ -131,3 +131,100 @@
   cursor: pointer;
   padding: var(--space-5);
 }
+.teamSubscriptionPlansWrapper {
+  width: 100%;
+  background-color: var(--c-white-05);
+  margin-top: var(--space-32);
+  padding: var(--space-16);
+  border-radius: var(--radius);
+}
+.teamSubscriptionPlans {
+  width: 100%;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding: var(--space-8);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-height: 280px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 0;
+}
+.teamSubscriptionPlans::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.teamSubscriptionPlanCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-md);
+  background-color: var(--c-primary);
+  margin: var(--space-5);
+  padding: var(--space-20) var(--space-10);
+  width: 48%;
+  transition: 0.2s ease;
+  cursor: pointer;
+  z-index: 1;
+}
+.teamSubscriptionPlanCard:hover {
+  transform: scale(1.1);
+  margin-left: 20px;
+  box-shadow: 0px 3px 15px rgba(255, 255, 255, 0.1);
+  z-index: 999;
+}
+.teamSubscriptionPlanInfoWrapper {
+  margin-right: auto;
+  margin-left: var(--space-10); /*temp: use spacer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.teamSubscriptionPlanPriceWrapper {
+  margin-top: var(--space-5);
+  color: var(--c-white-30);
+}
+.teamSubscriptionPlanName {
+  cursor: pointer;
+  transition: 0.1s ease;
+  text-transform: capitalize;
+}
+.teamSubscriptionPlanPrice {
+  color: var(--c-yellow);
+  font-size: var(--fs-h2);
+}
+.teamSubscriptionPlanActions {
+  margin-left: auto;
+}
+.teamSubscriptionPlanActions > span {
+  padding: var(--space-5);
+  border-radius: var(--radius);
+}
+.teamSubscriptionPlanActive {
+  background-color: var(--c-green);
+}
+.teamSubscriptionPlanInActive {
+  background-color: var(--c-red);
+}
+.teamSubscriptionPlanUsageInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+.teamSubscriptionPlanUsageInfo > span {
+  font-size: var(--fs-h3);
+  border-bottom: 1.5px solid var(--c-white-70);
+}
+.teamSubscriptionPlanCTA {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-16);
+  color: var(--c-turk);
+}
