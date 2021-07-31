@@ -362,14 +362,6 @@ function TeamDetails({ user, team }) {
     const { owner, coach, leader, players } = team;
 
     // set members
-    if (owner) {
-      members.push({
-        id: owner?.id || "Owner-ID",
-        name: owner?.name || owner?.id || "Owner-ID",
-        role: "Owner",
-        image: owner?.image || "/assets/person-placeholder.jpg",
-      });
-    }
     if (coach) {
       members.push({
         id: coach?.id || "Coach-ID",
@@ -445,7 +437,7 @@ function TeamDetails({ user, team }) {
         showNotificationMsg={showNotificationMsg}
         joinButton={!_isPlayer}
         leaveButton={_isPlayer}
-        isTeamOwner={_isOwner}
+        // isTeamOwner={_isOwner}
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
