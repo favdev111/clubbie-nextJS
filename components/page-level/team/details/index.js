@@ -388,13 +388,15 @@ function TeamDetails({ user, team }) {
     }
     if (players) {
       players?.map((player) => {
-        members.push({
-          id: player?.user?.id || "Player-ID",
-          name: player?.user?.name || player?.user?.id || "Player-ID",
-          role: "Player",
-          image: player?.user?.image || "/assets/person-placeholder.jpg",
-          status: player?.status || "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
-        });
+        if (player?.status !== "left") {
+          members.push({
+            id: player?.user?.id || "Player-ID",
+            name: player?.user?.name || player?.user?.id || "Player-ID",
+            role: "Player",
+            image: player?.user?.image || "/assets/person-placeholder.jpg",
+            status: player?.status || "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
+          });
+        }
       });
     }
 
