@@ -25,6 +25,7 @@ function TeamHeader({
   onMemberLeave,
   isCoach,
   isLeader,
+  isOwner,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
@@ -71,6 +72,7 @@ function TeamHeader({
   const handleLeaveClick = async () => {
     setLeavingTeam(true);
 
+    await onMemberLeave();
     const response = await Teams.LeaveTeam(teamId).catch(() => null);
     if (!response) {
       showNotificationMsg("Could Not Leave Team", {
@@ -80,7 +82,6 @@ function TeamHeader({
       setLeavingTeam(false);
       return;
     }
-    await onMemberLeave();
     showNotificationMsg("Team Left Successfully..!", {
       variant: "success",
       displayIcon: true,
@@ -94,11 +95,17 @@ function TeamHeader({
         open={leaveTeamConfirm}
         setOpen={setLeaveTeamConfirm}
         message={`Are you sure to leave this team${
-          (isLeader || isCoach) && " as a Player"
+          (isLeader || isCoach || isOwner) && " as a Player"
         }?${
-          isLeader || isCoach
+          isLeader || isCoach || isOwner
             ? ` You will still retain your role as a ${
+                (isLeader &&
+                  isCoach &&
+                  isOwner &&
+                  "Team Leader, a Coach and Team Owner") ||
                 (isLeader && isCoach && "Team Leader and a Coach") ||
+                (isOwner && isCoach && "Team Owner and a Coach") ||
+                (isOwner && "Team Owner") ||
                 (isLeader && "Team Leader") ||
                 (isCoach && "Team Coach")
               }`
@@ -138,7 +145,7 @@ function TeamHeader({
                 onClick={handleJoinClick}
                 loading={joiningTeam}
               >
-                {isCoach || isLeader ? "Join as Player" : "Join"}
+                {isOwner || isCoach || isLeader ? "Join as Player" : "Join"}
               </Button>
             )}
             {leaveButton && (
@@ -148,7 +155,7 @@ function TeamHeader({
                 onClick={() => setLeaveTeamConfirm(true)}
                 loading={leavingTeam}
               >
-                {isCoach || isLeader ? "Leave as Player" : "Leave"}
+                {isOwner || isCoach || isLeader ? "Leave as Player" : "Leave"}
               </Button>
             )}
           </div>
@@ -460,7 +467,9 @@ function TeamDetails({ user, team }) {
       ) {
         setMembership({
           status: foundPlayer?.status,
-          statusText: foundPlayer?.status,
+          statusText: `${foundPlayer?.status}${
+            _isOwner || _isLeader || _isCoach ? " as Player" : ""
+          }`,
         });
       }
       setIsPlayer(true);
@@ -480,28 +489,44 @@ function TeamDetails({ user, team }) {
         image: user?.profile?.image || "/assets/person-placeholder.jpg",
         status: "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
       });
-      setMembership({ status: "unapproved", statusText: "Unapproved" });
+      setMembership({
+        status: "unapproved",
+        statusText: `Unapproved${
+          _isOwner || _isLeader || _isCoach ? " as Player" : ""
+        }`,
+      });
     }
     if (
       foundMember &&
       !foundMember?.roles?.find((x) => x.toLowerCase() === "player")
     ) {
       foundMember?.roles?.push("player");
-      setMembership({ status: "unapproved", statusText: "Unapproved" });
+      setMembership({
+        status: "unapproved",
+        statusText: `Unapproved${
+          _isOwner || _isLeader || _isCoach ? " as Player" : ""
+        }`,
+      });
     }
     setMembers([...toSet]);
     setIsPlayer(true);
   };
 
   const removeUserFromTeamPlayers = () => {
-    const toSet = [..._members];
-    const foundMember = toSet?.find((x) => x?.id == user?.id);
+    let toSet = [..._members];
+    const foundMember = toSet?.find((x) => x?.id === user?.id);
     if (foundMember) {
       foundMember.roles = foundMember?.roles?.filter(
         (x) => x?.toLowerCase() !== "player"
       );
+      if (foundMember?.roles?.length == 0) {
+        toSet = toSet?.filter((x) => x?.id !== user?.id);
+      }
       setMembers([...toSet]);
-      setMembership(null);
+      setMembership({
+        status: _isOwner ? "owner" : null,
+        statusText: _isOwner ? "Owner" : null,
+      });
       setIsPlayer(false);
     }
   };
@@ -519,6 +544,7 @@ function TeamDetails({ user, team }) {
         leaveButton={_isPlayer}
         isCoach={_isCoach}
         isLeader={_isLeader}
+        isOwner={_isOwner}
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
