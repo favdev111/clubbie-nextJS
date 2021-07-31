@@ -18,6 +18,8 @@ function TeamHeader({
   teamCrest,
   teamTitle,
   showNotificationMsg,
+  joinButton,
+  leaveButton,
   onMemberJoin,
   onMemberLeave,
 }) {
@@ -118,22 +120,26 @@ function TeamHeader({
             </span>
           </div>
           <div className={styles.teamHeaderActionButtons}>
-            <Button
-              variant="success"
-              size="medium"
-              onClick={handleJoinClick}
-              loading={joiningTeam}
-            >
-              Join
-            </Button>
-            <Button
-              variant="danger"
-              size="medium"
-              onClick={() => setLeaveTeamConfirm(true)}
-              loading={leavingTeam}
-            >
-              Leave
-            </Button>
+            {joinButton && (
+              <Button
+                variant="success"
+                size="medium"
+                onClick={handleJoinClick}
+                loading={joiningTeam}
+              >
+                Join
+              </Button>
+            )}
+            {leaveButton && (
+              <Button
+                variant="danger"
+                size="medium"
+                onClick={() => setLeaveTeamConfirm(true)}
+                loading={leavingTeam}
+              >
+                Leave
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -343,10 +349,16 @@ function TeamDetails({ user, team }) {
   console.log("user => ", user);
 
   const [_members, setMembers] = useState([]);
+  const [_isOwner, setIsOwner] = useState(false);
+  const [_isCoach, setIsCoach] = useState(false);
+  const [_isLeader, setIsLeader] = useState(false);
+  const [_isPlayer, setIsPlayer] = useState(false);
 
   useEffect(() => {
     const members = [];
     const { owner, coach, leader, players } = team;
+
+    // set members
     if (owner) {
       members.push({
         id: owner?.id || "Owner-ID",
@@ -382,6 +394,13 @@ function TeamDetails({ user, team }) {
         });
       });
     }
+
+    // set user authority
+    if (owner?.id === user?.id) setIsOwner(true);
+    if (coach?.id === user?.id) setIsCoach(true);
+    if (leader?.id === user?.id) setIsLeader(true);
+    if (players?.find((x) => x?.user?.id === user?.id)) setIsPlayer(true);
+
     setMembers([...members]);
   }, [team]);
 
@@ -398,11 +417,13 @@ function TeamDetails({ user, team }) {
       });
       setMembers([...toSet]);
     }
+    setIsPlayer(true);
   };
 
   const removeUserFromTeamPlayers = () => {
     const toSet = _members?.filter((x) => x?.id !== user?.id);
     setMembers([...toSet]);
+    setIsPlayer(false);
   };
 
   return (
@@ -414,6 +435,8 @@ function TeamDetails({ user, team }) {
         teamCrest={team?.crest}
         teamTitle={team?.title}
         showNotificationMsg={showNotificationMsg}
+        joinButton={!_isPlayer}
+        leaveButton={_isPlayer}
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
