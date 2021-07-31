@@ -35,7 +35,6 @@ const StripeDisconnectButton = ({ onSuccess }) => {
       displayIcon: true,
     });
     // update user with response
-    console.log("update user => ", response);
     authUser.setUser(response?.data);
     await onSuccess(response?.data);
     setLoading(false);

@@ -1,0 +1,12 @@
+.seperatorWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.seperator {
+  height: 3px;
+  background-color: var(--c-white-50);
+  border-radius: 100px;
+  width: 80%;
+}

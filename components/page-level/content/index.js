@@ -15,7 +15,7 @@ function Content({ mode, content, user }) {
       </h1>
       <div className={styles.contentBody}>
         {mode
-          ? (mode === "add" && <ContentAdd />) ||
+          ? (mode === "add" && <ContentAdd user={user} />) ||
             (mode === "edit" && <ContentEdit content={content} />)
           : content && <ContentDetails content={content} user={user} />}
       </div>

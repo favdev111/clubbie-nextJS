@@ -21,8 +21,6 @@ function DateTable({ selected, setSelected }) {
     document.getElementById("table").scrollLeft = selected * 80;
   });
 
-  /*   console.log(selected);
-   */
   return (
     <div id="table" className={styles.table}>
       {months.map((month, index) => (

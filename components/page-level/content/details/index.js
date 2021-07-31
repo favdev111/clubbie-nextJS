@@ -9,11 +9,15 @@ import ConfirmDialog from "@sub/confirm-dialog";
 import Loader from "@sub/loader";
 import BackDropLoader from "@sub/backdrop-loader";
 import useNotification from "@sub/hook-notification";
+import TimeAgo from "@sub/time-ago";
+import Seperator from "@sub/seperator";
+import ToolTip from "@sub/tooltip";
 import Posts from "@api/services/Posts";
 import Comments from "@api/services/Comments";
 import Interactions from "@api/services/Interactions";
 import CommentInput from "./commentInput";
 import Comment from "./comment";
+import Tags from "./tags";
 import styles from "./contentDetails.module.css";
 import { LikeButton } from "../common/button-like";
 // import { RepostButton } from "../common/button-repost";
@@ -100,7 +104,11 @@ function ContentHeader({
       ></ConfirmDialog>
       <div className={styles.postHeader}>
         <div className={styles.postAuthorProfile}>
-          <img src={author?.image || "/assets/person-placeholder.jpg"} />
+          <Link href={`/profile/${author?.id}`}>
+            <a>
+              <img src={author?.image || "/assets/person-placeholder.jpg"} />
+            </a>
+          </Link>
           <div className={styles.postAuthorInfo}>
             <Link href={`/profile/${author?.id}`}>
               <a>
@@ -127,7 +135,9 @@ function ContentHeader({
               />
             </>
           )}
-          <ShareButton postTitle={title} postMedia={media} />
+          <span>
+            <ShareButton postTitle={title} postMedia={media} />
+          </span>
         </span>
       </div>
     </>
@@ -186,7 +196,7 @@ function ContentBody({ title, description, createdAt, views }) {
         <div className={styles.contentTitle}>
           <h1>{title}</h1>
           <div className={styles.contentDateTime}>
-            <Chip text={new Date(createdAt).toLocaleString()}></Chip>
+            <Chip text={<TimeAgo date={createdAt} />}></Chip>
           </div>
         </div>
         <span className={styles.contentViews}>
@@ -269,7 +279,7 @@ function ContentActions({
             }
           }}
         /> */}
-        <SocialButton type="send" />
+        {/* <SocialButton type="send" /> */}
       </div>
     </div>
   );
@@ -286,8 +296,10 @@ function ContentComments({
   const [_comments, setComments] = useState(comments);
   const [loadingComments, setLoadingComments] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
+  const [likingComment, setLikingComment] = useState(false);
   const [editingComment, setEditingComment] = useState(false);
   const [deletingComment, setDeletingComment] = useState(false);
+  const [loadingReplies, setLoadingReplies] = useState(false);
   const [creatingReply, setCreatingReply] = useState(false);
   const [editingReply, setEditingReply] = useState(false);
   const [deletingReply, setDeletingReply] = useState(false);
@@ -348,14 +360,93 @@ function ContentComments({
       return;
     }
 
+    const defaults = {
+      myInteractions: {
+        liked: null,
+      },
+      counts: {
+        likes: 0,
+        views: 0,
+        replies: 0,
+      },
+    };
+
     // set in state
     const commentsToSet = {
       ..._comments,
-      results: [{ ...createdComment, user: user }, ..._comments?.results],
+      results: [
+        { ...createdComment, ...defaults, user: user },
+        ..._comments?.results,
+      ],
     };
     setComments({ ...commentsToSet });
 
     setCreatingComment(false);
+  };
+
+  const likeComment = async (commentId, liked) => {
+    if (!verifyLoggedIn()) return;
+
+    if (!liked) {
+      setLikingComment(true);
+      // like comment
+      const response = await Interactions.LikeComment(commentId).catch(
+        () => false
+      );
+      const createdInteraction = response?.data;
+      if (!createdInteraction) {
+        showNotificationMsg("Failed to like comment", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = createdInteraction?.id;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
+    } else {
+      setLikingComment(true);
+      // remove like
+      const response = await Interactions.RemoveInteraction(liked).catch(
+        () => null
+      );
+      if (!response) {
+        showNotificationMsg("Error Removing Like", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLikingComment(false);
+        return;
+      }
+
+      // find and update comment
+      const updatedCommentState = _comments.results;
+      const commentToUpdate = updatedCommentState.find(
+        (x) => x?.id === commentId
+      );
+      commentToUpdate.myInteractions.liked = null;
+
+      // update state
+      const commentsToSet = {
+        ..._comments,
+        results: updatedCommentState,
+      };
+      setComments({ ...commentsToSet });
+      setLikingComment(false);
+    }
   };
 
   const editComment = async (commentId, commentText) => {
@@ -422,6 +513,47 @@ function ContentComments({
     setDeletingComment(false);
   };
 
+  const loadMoreReplies = async (commentId, currentPage, resetCurrent) => {
+    setLoadingReplies(true);
+
+    // get replies
+    const responsePostCommentReplies = await Comments.GetCommentReplies(
+      commentId,
+      {
+        limit: 10,
+        page: currentPage + 1,
+        sortOrder: "asc",
+      }
+    ).catch(() => false);
+    const moreReplies = responsePostCommentReplies?.data;
+    if (!moreReplies) {
+      showNotificationMsg("Failed to load more replies", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoadingReplies(false);
+      return;
+    }
+
+    // set in state;
+    const updatedResults = _comments.results;
+    const foundComment = updatedResults.find((x) => x.id === commentId);
+    foundComment.replies = {
+      ...moreReplies,
+      results: [
+        ...(!resetCurrent ? foundComment?.replies?.results || [] : []),
+        ...(moreReplies?.results || []),
+      ],
+    };
+    const commentsToSet = {
+      ..._comments,
+      results: updatedResults,
+    };
+    setComments({ ...commentsToSet });
+
+    setLoadingReplies(false);
+  };
+
   const createReply = async (commentId, replyText) => {
     if (!verifyLoggedIn()) return;
     if (!commentId || replyText.trim().length === 0) return;
@@ -447,7 +579,7 @@ function ContentComments({
     const foundComment = updatedResults.find(
       (x) => x.id === updatedComment?.id
     );
-    foundComment.replies.push({
+    foundComment.replies.results.push({
       ...updatedComment.replies[updatedComment.replies.length - 1],
       user: user,
     });
@@ -482,9 +614,10 @@ function ContentComments({
     // filter from state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    foundComment.replies = foundComment.replies.filter(
-      (x) => x._id !== replyId
-    );
+    foundComment.replies.results = foundComment.replies.results.filter((x) => {
+      const id = x?._id || x?.id;
+      return id !== replyId;
+    });
     const commentsToSet = {
       ..._comments,
       results: updatedResults,
@@ -516,13 +649,13 @@ function ContentComments({
       return;
     }
 
-    const editedReply = updatedComment.replies.find((x) => x._id === replyId);
-
     // update reply in state
     const updatedResults = _comments.results;
     const foundComment = updatedResults.find((x) => x.id === commentId);
-    const foundReply = foundComment.replies.find((x) => x._id === replyId);
-    foundReply.text = editedReply.text;
+    const foundReply = foundComment.replies.results.find(
+      (x) => x._id === replyId || x.id === replyId
+    );
+    foundReply.text = replyText;
     const commentsToSet = {
       ..._comments,
       results: updatedResults,
@@ -548,10 +681,13 @@ function ContentComments({
           user={user}
           isAuthor={user?.id === comment?.user?.id}
           comment={comment}
+          onLikeCommentClick={likeComment}
           onDeleteCommentClick={deleteComment}
           onSaveCommentClick={editComment}
           editingComment={editingComment}
           replies={comment?.replies}
+          onLoadMoreRepliesClick={loadMoreReplies}
+          loadingReplies={loadingReplies}
           onCreateReply={createReply}
           creatingReply={creatingReply}
           onSaveReplyClick={editReply}
@@ -574,10 +710,31 @@ function ContentComments({
           </span>
         </div>
       )}
-      {(editingComment || deletingComment || editingReply || deletingReply) && (
-        <BackDropLoader></BackDropLoader>
-      )}
+      {(likingComment ||
+        editingComment ||
+        deletingComment ||
+        editingReply ||
+        deletingReply) && <BackDropLoader></BackDropLoader>}
     </div>
+  );
+}
+
+function ContentTags({ tags }) {
+  return (
+    <>
+      <Seperator className={styles.tagsSeperator}></Seperator>
+      <div className={styles.tagsWrapper}>
+        <div className={styles.tagsTitle}>
+          <h2>Tags</h2>
+          <ToolTip
+            text={
+              "Want to see similar posts? Click on a tag below to find related posts on the home feed."
+            }
+          ></ToolTip>
+        </div>
+        <Tags tags={tags.map((x) => x.value)}></Tags>
+      </div>
+    </>
   );
 }
 
@@ -652,7 +809,7 @@ function ContentDetails({ content, user }) {
       <ContentActions
         contentId={_content?.id}
         liked={_content?.myInteractions?.liked}
-        teamIds={user?.teams?.map((x) => x?.team)}
+        teamIds={user?.teams?.map((x) => x?.team)} // TODO: update w.r.t latest client cookie config
         totalLikes={_content?.counts?.likes}
         totalReposts={_content?.counts?.reposts}
         totalProfileReposts={_content?.myInteractions?.repostedInProfile}
@@ -666,9 +823,11 @@ function ContentDetails({ content, user }) {
           comments={_content.comments}
           contentId={_content?.id}
           showNotificationMsg={showNotificationMsg}
-          // here
           verifyLoggedIn={verifyLoggedIn}
         ></ContentComments>
+      )}
+      {_content.tags.length > 0 && (
+        <ContentTags tags={_content?.tags}></ContentTags>
       )}
     </>
   );

@@ -13,6 +13,7 @@ function ClubDetails({ club }) {
   const [clubPlayerRows, setClubPlayerRows] = useState([]);
   const [teamJoined, setTeamJoined] = useState("")
   const { showNotificationMsg } = useNotification();
+
   useEffect(() => {
     if (club?.officials) {
       const rows = club?.officials?.map((x) => {

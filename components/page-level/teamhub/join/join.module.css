@@ -28,8 +28,12 @@
   align-items: center;
 }
 .joinHeaderCurrent img {
+  cursor: pointer;
   margin-left: var(--space-16);
   margin-right: var(--space-6);
+}
+.joinHeaderCurrent span {
+  cursor: pointer;
 }
 .joinHeaderInner button {
   background-color: transparent;
@@ -55,6 +59,9 @@
 .joinListContent {
   height: 500px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  margin: var(--space-16) auto;
+  margin-bottom: var(--space-50);
 }
 .joinListContent::-webkit-scrollbar-track {
   padding: var(--space-1) 0;
@@ -74,6 +81,14 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s ease;
+}
+.joinListItem:hover {
+  transform: scale(1.05);
+  margin-left: 25px;
+}
+.joinListItem:last-child {
+  margin-bottom: 120px;
 }
 .joinListItem img {
   margin-right: var(--space-6);
@@ -93,6 +108,41 @@
 }
 .crestImage {
   border-radius: 50%;
+}
+.skipButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.joinListNoItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-16);
+  padding: var(--space-50);
+  background-color: var(--c-white-05);
+  border-radius: var(--radius-md);
+}
+.joinListNoItemsClubName {
+  cursor: pointer;
+  color: var(--c-turk);
+  margin-left: var(--space-5);
+  margin-right: var(--space-5);
+}
+.joinListNoItemsCTA {
+  color: var(--c-turk);
+  transition: 0.1s ease;
+}
+.clubAndTeamRegisteration {
+  margin-top: var(--space-10);
+}
+.joinListItemJoinedByAuthUser {
+  background-color: var(--c-turk);
+  color: var(--c-black);
+  border-radius: var(--radius);
+  padding: 2px 5px;
+  margin-left: var(--space-16);
+  text-transform: capitalize;
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {

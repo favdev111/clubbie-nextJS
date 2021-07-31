@@ -58,7 +58,6 @@ function EventDetail({ eventId, activeTeam, user }) {
     e.preventDefault();
     const patch = async () => {
       const response = await Event.CancelEventbyId(eventId);
-      console.log(response);
     };
     patch()
       .then((res) => {
@@ -81,7 +80,6 @@ function EventDetail({ eventId, activeTeam, user }) {
       const res = await Event.SetAvailability(data.id, {
         available: !playerUnavailable,
       });
-      console.log("res", res);
     };
     patchAvailability()
       .then((res) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cn from "classnames";
@@ -8,6 +8,9 @@ import TemplateSelect from "@sub/selectbox";
 import DirectedButton from "@sub/button-directed";
 import Avatar from "@sub/avatar";
 import Button from "@sub/button";
+import Alert from "@sub/alert";
+import Seperator from "@sub/seperator";
+import ConfirmDialog from "@sub/confirm-dialog";
 import Files from "@api/services/Files";
 import Users from "@api/services/Users";
 import auth from "@utils/helpers/auth";
@@ -17,6 +20,163 @@ import styles from "./profileedit.module.css";
 import useForm from "@sub/hook-form";
 import useNotifications from "@sub/hook-notification";
 import { editProfile } from "@utils/schemas/user.schema";
+import Auth from "@api/services/Auth";
+import { resetPassword as resetPasswordSchema } from "@utils/schemas/auth.schema";
+
+function ChangePasswordForm({ showNotificationMsg, email, setQuitReset }) {
+  const router = useRouter();
+
+  const { register, handleSubmit, errors, setValue } = useForm({
+    schema: resetPasswordSchema,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState({
+    type: null,
+    text: null,
+  });
+
+  useEffect(() => {
+    setValue("email", email);
+  }, [email]);
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+
+    const { email, resetPasswordCode, password } = data;
+
+    const response = await Auth.ResetPassword({
+      email,
+      resetPasswordCode,
+      password,
+    }).catch((err) => {
+      const errorMsg = (() => {
+        const _msg = err?.response?.data?.message.toLowerCase();
+        if (_msg?.includes("must be a valid email"))
+          return "Invalid Email Address";
+        if (_msg?.includes("token not found")) return "Invalid Reset Token";
+        return "Error Changing Password";
+      })();
+      setStatusMsg({
+        type: "error",
+        text: errorMsg,
+      });
+      return null;
+    });
+
+    if (!response) {
+      setLoading(false);
+      return;
+    }
+
+    // show success
+    setStatusMsg({
+      type: null,
+      text: null,
+    });
+    setQuitReset(true);
+    setLoading(false);
+    showNotificationMsg(
+      "Password Reset Successfull..! You will be logged out in 10 seconds.",
+      {
+        variant: "success",
+        displayIcon: true,
+        duration: 10000,
+      }
+    );
+
+    // logout the user
+    await Auth.Logout({ refreshToken: auth.getRefreshToken() })
+      .then(() => null)
+      .catch(() => null);
+    setTimeout(function () {
+      auth.deleteUser();
+      auth.deleteAccessToken();
+      auth.deleteRefreshToken();
+      router.push("/auth/login");
+    }, 10000);
+  };
+
+  return (
+    <>
+      <h1 className={styles.changePasswordHeader}>Change Password</h1>
+      <p className={styles.changePasswordDescription}>
+        We have sent you an email with a 6-digit reset password code. Use that
+        in the form below to change your password
+      </p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.changePasswordForm}
+      >
+        <TemplateInput
+          type="text"
+          name="email"
+          placeholder="Your Email Address"
+          customProps={{ ...register("email") }}
+          hint={
+            errors?.email && {
+              type: "error",
+              msg: errors?.email?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.changePasswordEmailInput}
+        />
+        <TemplateInput
+          type="text"
+          name="resetPasswordCode"
+          placeholder="Reset Password Code"
+          customProps={{ ...register("resetPasswordCode") }}
+          hint={
+            errors?.resetPasswordCode && {
+              type: "error",
+              msg: errors?.resetPasswordCode?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.changePasswordinputBox}
+        />
+        <TemplateInput
+          type="password"
+          name="password"
+          placeholder="Your New Password"
+          customProps={{ ...register("password") }}
+          hint={
+            errors?.password && {
+              type: "error",
+              msg: errors?.password?.message,
+              inputBorder: true,
+            }
+          }
+          className={styles.changePasswordinputBox}
+        />
+        {statusMsg?.text && (
+          <span className={styles.changePasswordError}>
+            <Alert
+              variant={statusMsg.type}
+              text={statusMsg.text}
+              animateText={statusMsg?.animateText}
+            />
+          </span>
+        )}
+        <div className={styles.changeButtonActionButtons}>
+          <span>
+            <Button
+              variant="cancel"
+              type="button"
+              onClick={() => setQuitReset(true)}
+            >
+              Cancel
+            </Button>
+          </span>
+          <Button variant="success" type="submit" loading={loading}>
+            Update
+          </Button>
+        </div>
+      </form>
+    </>
+  );
+}
 
 function ProfileEdit({ profile, clubs }) {
   // TODO: edit email, delete clubs
@@ -132,224 +292,301 @@ function ProfileEdit({ profile, clubs }) {
     router.push("/profile/self");
   };
 
+  const [resetPasswordReq, setResetPasswordReq] = useState(false);
+  const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(
+    false
+  );
+
+  const handleChangePasswordReq = async () => {
+    setResetPasswordReq(true);
+    const response = await Auth.ForgotPassword({ email: profile?.email }).catch(
+      (e) => {
+        showNotificationMsg(
+          e?.response?.data?.message?.includes("must be a valid email")
+            ? "Invalid Email"
+            : e?.response?.data?.message || "Some Error Occured",
+          {
+            variant: "error",
+            displayIcon: true,
+          }
+        );
+        return null;
+      }
+    );
+    if (!response) {
+      setResetPasswordReq(false);
+      return;
+    }
+    showNotificationMsg("We have sent you an email for password recovery...!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setOpenChangePasswordDialog(true);
+    setResetPasswordReq(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.formLogin}>
-      <div className={styles.profilePlayerHeader}>
-        <div className={styles.profilePlayerHeaderInnerLeft}>
-          <Avatar
-            editMode
-            onImagePicked={onImagePicked}
-            src={image}
-            className={styles.profilePlayerImage}
+    <>
+      <ConfirmDialog
+        open={openChangePasswordDialog}
+        setOpen={setOpenChangePasswordDialog}
+        Component={() => (
+          <ChangePasswordForm
+            email={profile?.email}
+            showNotificationMsg={showNotificationMsg}
+            setQuitReset={(bool) => setOpenChangePasswordDialog(!bool)}
           />
-        </div>
-        <div className={styles.profilePlayerHeaderInnerRight}>
-          <div>
-            <Button type="submit" loading={status?.loading}>
-              Save Changes
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className={styles.profilePlayerBody}>
-        <div className={styles.profilePlayerBodyContent}>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Full Name</p>
-            <TemplateInput
-              type="text"
-              name="fullName"
-              customProps={{ ...register("fullName") }}
-              hint={
-                errors?.fullName && {
-                  type: "error",
-                  msg: errors?.fullName?.message,
-                  inputBorder: true,
-                }
-              }
+        )}
+      />
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formLogin}>
+        <div className={styles.profilePlayerHeader}>
+          <div className={styles.profilePlayerHeaderInnerLeft}>
+            <Avatar
+              editMode
+              onImagePicked={onImagePicked}
+              src={image}
+              className={styles.profilePlayerImage}
             />
           </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Title</p>
-            <TemplateSelect
-              name="playerTitle"
-              placeholder="Select Title"
-              options={playerTitles}
-              customProps={{ ...register("playerTitle") }}
-              hint={
-                errors?.playerTitle && {
-                  type: "error",
-                  msg: errors?.playerTitle?.message,
-                  inputBorder: true,
-                }
-              }
-            ></TemplateSelect>
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Email</p>
-            <TemplateInput
-              type="text"
-              name="email"
-              disabled
-              customProps={{ ...register("email") }}
-              hint={
-                errors?.email && {
-                  type: "error",
-                  msg: errors?.email?.message,
-                  inputBorder: true,
-                }
-              }
-            />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Telephone</p>
-            <TemplateInput
-              type="text"
-              name="telephone"
-              customProps={{ ...register("telephone") }}
-              hint={
-                errors?.telephone && {
-                  type: "error",
-                  msg: errors?.telephone?.message,
-                  inputBorder: true,
-                }
-              }
-            />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Address</p>
-            <TemplateInput
-              type="text"
-              name="address"
-              customProps={{ ...register("address") }}
-              hint={
-                errors?.address && {
-                  type: "error",
-                  msg: errors?.address?.message,
-                  inputBorder: true,
-                }
-              }
-            />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>City</p>
-            <TemplateInput
-              type="text"
-              name="city"
-              customProps={{ ...register("city") }}
-              hint={
-                errors?.city && {
-                  type: "error",
-                  msg: errors?.city?.message,
-                  inputBorder: true,
-                }
-              }
-            />
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Country</p>
-            <TemplateSelect
-              name="country"
-              placeholder="Select Country"
-              options={countries}
-              customProps={{ ...register("country") }}
-              hint={
-                errors?.country && {
-                  type: "error",
-                  msg: errors?.country?.message,
-                  inputBorder: true,
-                }
-              }
-            ></TemplateSelect>
-          </div>
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Postal Code</p>
-            <TemplateInput
-              type="text"
-              name="postCode"
-              customProps={{ ...register("postCode") }}
-              hint={
-                errors?.postCode && {
-                  type: "error",
-                  msg: errors?.postCode?.message,
-                  inputBorder: true,
-                }
-              }
-            />
-          </div>
-          <div
-            className={cn(styles.span2, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Bio</p>
-            <TemplateInput
-              type="text"
-              name="bio"
-              multiLine
-              resizable={true}
-              rows={4}
-              customProps={{ ...register("bio") }}
-              hint={
-                errors?.bio && {
-                  type: "error",
-                  msg: errors?.bio?.message,
-                  inputBorder: true,
-                }
-              }
-            />
+          <div className={styles.profilePlayerHeaderInnerRight}>
+            <div>
+              <Button type="submit" loading={status?.loading}>
+                Save Changes
+              </Button>
+            </div>
           </div>
         </div>
-        <div className={styles.profilePlayerClubChips}>
-          <div
-            className={cn(styles.span3, styles.profilePlayerBodyContentItem)}
-          >
-            <p>Clubs</p>
-          </div>
-          {clubs.map((club, index) => (
+        <div className={styles.profilePlayerBody}>
+          <div className={styles.profilePlayerBodyContent}>
             <div
-              key={index}
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Full Name</p>
+              <TemplateInput
+                type="text"
+                name="fullName"
+                customProps={{ ...register("fullName") }}
+                hint={
+                  errors?.fullName && {
+                    type: "error",
+                    msg: errors?.fullName?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Title</p>
+              <TemplateSelect
+                name="playerTitle"
+                placeholder="Select Title"
+                options={playerTitles}
+                customProps={{ ...register("playerTitle") }}
+                hint={
+                  errors?.playerTitle && {
+                    type: "error",
+                    msg: errors?.playerTitle?.message,
+                    inputBorder: true,
+                  }
+                }
+              ></TemplateSelect>
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Email</p>
+              <TemplateInput
+                type="text"
+                name="email"
+                disabled
+                customProps={{ ...register("email") }}
+                hint={
+                  errors?.email && {
+                    type: "error",
+                    msg: errors?.email?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Telephone</p>
+              <TemplateInput
+                type="text"
+                name="telephone"
+                customProps={{ ...register("telephone") }}
+                hint={
+                  errors?.telephone && {
+                    type: "error",
+                    msg: errors?.telephone?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Address</p>
+              <TemplateInput
+                type="text"
+                name="address"
+                customProps={{ ...register("address") }}
+                hint={
+                  errors?.address && {
+                    type: "error",
+                    msg: errors?.address?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>City</p>
+              <TemplateInput
+                type="text"
+                name="city"
+                customProps={{ ...register("city") }}
+                hint={
+                  errors?.city && {
+                    type: "error",
+                    msg: errors?.city?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Country</p>
+              <TemplateSelect
+                name="country"
+                placeholder="Select Country"
+                options={countries}
+                customProps={{ ...register("country") }}
+                hint={
+                  errors?.country && {
+                    type: "error",
+                    msg: errors?.country?.message,
+                    inputBorder: true,
+                  }
+                }
+              ></TemplateSelect>
+            </div>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Postal Code</p>
+              <TemplateInput
+                type="text"
+                name="postCode"
+                customProps={{ ...register("postCode") }}
+                hint={
+                  errors?.postCode && {
+                    type: "error",
+                    msg: errors?.postCode?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div
+              className={cn(styles.span2, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Bio</p>
+              <TemplateInput
+                type="text"
+                name="bio"
+                multiLine
+                resizable={true}
+                rows={4}
+                customProps={{ ...register("bio") }}
+                hint={
+                  errors?.bio && {
+                    type: "error",
+                    msg: errors?.bio?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+          </div>
+          <div className={styles.profilePlayerClubChips}>
+            <div
+              className={cn(styles.span3, styles.profilePlayerBodyContentItem)}
+            >
+              <p>Clubs</p>
+            </div>
+            {clubs.map((club, index) => (
+              <div
+                key={index}
+                className={cn(
+                  styles.span1,
+                  styles.profilePlayerBodyContentItem
+                )}
+              >
+                <Chip
+                  image={club?.crest || "/assets/club-badge-placeholder.png"}
+                  roundedImage
+                  text={club.title}
+                  onCloseClick={() => removeClub(club.id)}
+                />
+              </div>
+            ))}
+            <div
               className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
             >
               <Chip
-                image={club?.crest || "/assets/club-badge-placeholder.png"}
-                roundedImage
-                text={club.title}
-                onCloseClick={() => removeClub(club.id)}
+                component={
+                  <Link href="/teamhub/join-club">
+                    <a>
+                      <DirectedButton direction="forward">
+                        <span className={styles.btnChipPadding}>Join Club</span>
+                      </DirectedButton>
+                    </a>
+                  </Link>
+                }
               />
             </div>
-          ))}
-          <div
-            className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
-          >
-            <Chip
-              component={
-                <Link href="/teamhub/join-club">
-                  <a>
-                    <DirectedButton direction="forward">
-                      <span className={styles.btnChipPadding}>Join Club</span>
-                    </DirectedButton>
-                  </a>
-                </Link>
-              }
-            />
+          </div>
+          <div className={styles.seperator}>
+            <Seperator />
+          </div>
+          <div className={styles.profilePlayerClubChips}>
+            <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <Button
+                variant="cancel"
+                type="button"
+                onClick={handleChangePasswordReq}
+                loading={resetPasswordReq}
+              >
+                Change Password
+              </Button>
+            </div>
+            {/* <div
+              className={cn(styles.span1, styles.profilePlayerBodyContentItem)}
+            >
+              <Button
+                variant="cancel"
+                type="button"
+                onClick={() => alert("clicked")}
+              >
+                Change Email
+              </Button>
+            </div> */}
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

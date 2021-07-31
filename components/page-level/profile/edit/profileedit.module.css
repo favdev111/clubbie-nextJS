@@ -97,3 +97,39 @@
     height: 150px;
   }
 }
+
+.seperator {
+  margin-bottom: 36px;
+}
+.changePasswordHeader {
+  margin: 0;
+  margin-bottom: var(--space-32);
+}
+.changePasswordDescription {
+  margin: 0;
+  margin-bottom: var(--space-32);
+  max-width: 500px;
+}
+.changePasswordForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.changePasswordEmailInput {
+  display: none;
+}
+.changePasswordinputBox {
+  margin-bottom: var(--space-8);
+}
+.changeButtonActionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.changeButtonActionButtons > span:nth-child(1) {
+  margin-right: var(--space-5);
+}
+.changePasswordError {
+  margin-bottom: var(--space-32);
+}

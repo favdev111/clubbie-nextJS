@@ -19,6 +19,12 @@ export default class CommentManagementRoutes {
     return HTTPClient.delete(`/comments/${id}`);
   }
 
+  static async GetCommentReplies(commentId, query) {
+    return HTTPClient.get(
+      `/comments/${commentId}/replies?${new URLSearchParams(query).toString()}`
+    );
+  }
+
   static async ReplyToComment(id, payload) {
     return HTTPClient.patch(`/comments/${id}`, payload);
   }

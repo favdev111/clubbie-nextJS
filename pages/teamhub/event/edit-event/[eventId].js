@@ -4,6 +4,7 @@ import Seo from "../../../../components/layout/seo";
 import { requiresPageAuth } from "../../../../utils/middlewares/requiresPageAuth";
 import auth from "../../../../utils/helpers/auth";
 import EditEvent from "../../../../components/page-level/teamhub-dashboard/tabs/edit-event";
+import Users from "@api/services/Users";
 
 function EditEventPage({ activeTeam }) {
   const authUser = auth.getUser();
@@ -19,4 +20,13 @@ function EditEventPage({ activeTeam }) {
 
 export default EditEventPage;
 
-export const getServerSideProps = requiresPageAuth();
+export const getServerSideProps = requiresPageAuth(async () => {
+  const responseProfile = await Users.GetMyProfile().catch(() => false);
+  const _user = responseProfile?.data;
+
+  return {
+    props: {
+      user: _user,
+    },
+  };
+});

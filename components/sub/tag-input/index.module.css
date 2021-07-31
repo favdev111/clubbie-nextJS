@@ -1,0 +1,103 @@
+.tagInput {
+  position: relative;
+  display: block;
+  width: 100%;
+  z-index: 1;
+}
+.tagBox {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  border: 0px solid;
+  border-radius: var(--radius-md);
+  background: var(--c-white-10);
+  outline: none;
+  font-family: var(--ff-regular);
+  font-size: var(--space-16);
+  line-height: var(--space-16);
+  text-align: left;
+  color: var(--c-white-50);
+  padding: var(--space-10) var(--space-16) var(--space-10) var(--space-16);
+  margin: 0px auto var(--space-5);
+  cursor: text;
+}
+.chip {
+  width: auto;
+  margin-right: var(--space-5);
+  margin-bottom: var(--space-5);
+  background-color: var(--c-primary);
+  text-transform: capitalize;
+}
+.input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--c-white-50);
+  padding: var(--space-5);
+}
+.tagBox:focus-within {
+  border: 2px solid var(--c-white-50) !important;
+  background-color: var(--c-nav) !important;
+  color: var(--c-white) !important;
+}
+.tagSuggestions {
+  position: absolute;
+  width: 100%;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  padding: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-nav);
+  z-index: 1;
+  color: var(--c-white);
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.tagSuggestions::-webkit-scrollbar-track {
+  padding: var(--space-1) 0;
+  background-color: transparent;
+}
+.tagSuggestions:-webkit-scrollbar {
+  width: 1px !important;
+}
+.tagSuggestions::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 6px var(--c-white-30);
+  background-color: var(--c-turk);
+  border: none;
+}
+.tagSuggestionsLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tagSuggestedItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-8) var(--space-12);
+  margin: var(--space-3);
+  background-color: var(--c-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.tagSuggestedItemImage {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.tagSuggestedItemName {
+  font-family: var(--ff-bold);
+  margin-left: var(--space-5);
+  text-transform: capitalize;
+}
+.tagSuggestedItemResource {
+  background-color: var(--c-yellow);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-5);
+  text-transform: capitalize;
+}

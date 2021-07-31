@@ -31,8 +31,8 @@ const ResetPassword = () => {
   useEffect(async () => {
     if (statusMsg.type === "success") {
       await Auth.Logout({ refreshToken: authUser.getRefreshToken() })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then(() => null)
+        .catch(() => null);
       authUser.deleteUser();
       authUser.deleteAccessToken();
       authUser.deleteRefreshToken();

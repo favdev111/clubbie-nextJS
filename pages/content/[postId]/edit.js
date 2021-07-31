@@ -27,8 +27,6 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   // validate all data is found
   const notFound = !post;
 
-  console.log(post);
-
   return {
     props: {
       post,

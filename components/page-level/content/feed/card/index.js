@@ -2,20 +2,17 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import SocialButton from "@sub/social-button";
-import InView from "@sub/hook-inview";
+// import InView from "@sub/hook-inview";
+import InViewMonitor from "react-inview-monitor";
+import Video from "./Video";
 import useNotifications from "@sub/hook-notification";
+import TimeAgo from "@sub/time-ago";
 import cn from "classnames";
 import { LikeButton } from "../../common/button-like";
 // import { RepostButton } from "../../common/button-repost";
 import { ShareButton } from "../../common/button-share";
 
-function HomeVideosCard({
-  createdPost,
-  data,
-  isLoggedIn,
-  user,
-  setShowLoginPopup,
-}) {
+function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
   const {
     id,
     title,
@@ -79,16 +76,23 @@ function HomeVideosCard({
         <a>
           <span>
             {content.includes("video") ? (
-              <InView onVisiable={playVideo} onHidden={stopVideo}>
-                <video
-                  src={content}
-                  className={styles.preview}
-                  ref={videoElRef}
-                  controls
-                  loop
-                  muted
-                ></video>
-              </InView>
+              // <InView onVisiable={playVideo} onHidden={stopVideo}>
+              //   <video
+              //     className={styles.preview}
+              //     ref={videoElRef}
+              //     controls
+              //     loop
+              //     // muted
+              //   >
+              //     <source src={content} type="video/mp4" />
+              //   </video>
+              // </InView>
+              <InViewMonitor
+                childPropsInView={{ isPlaying: true, styling: styles.preview }}
+                toggleChildPropsOnInView={true}
+              >
+                <Video src={content} />
+              </InViewMonitor>
             ) : content.includes("image") ? (
               <img className={styles.preview} src={content} />
             ) : (
@@ -118,7 +122,7 @@ function HomeVideosCard({
               </Link>
             </p>
             <p className={cn("opacity-50", styles.postDate)}>
-              {new Date(createdAt).toLocaleString()}
+              <TimeAgo date={createdAt} />
             </p>
           </div>
         </div>
@@ -141,7 +145,7 @@ function HomeVideosCard({
               setLikeCount((count) => count - 1);
             }}
           />
-          <SocialButton type="send" />
+          {/* <SocialButton type="send" /> */}
           <Link href={`/content/${id}?focusComment=true`}>
             <a>
               <SocialButton type="comment">

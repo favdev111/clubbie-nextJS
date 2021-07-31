@@ -11,6 +11,10 @@ import UploadSVG from "@svg/upload";
 import MediaCard from "./mediaCard";
 import Alert from "@sub/alert";
 import useForm from "@sub/hook-form";
+import DragDrop from "@sub/drag-drop";
+import TagInput from "@sub/tag-input";
+import useNotification from "@sub/hook-notification";
+import Posts from "@api/services/Posts";
 
 function ContentForm({
   media,
@@ -18,17 +22,22 @@ function ContentForm({
   caption,
   description,
   sport,
-  tagSomeone,
+  tags,
   onSubmitForm,
   actionText,
   validationSchema,
 }) {
   const router = useRouter();
+  const { showNotificationMsg } = useNotification();
+
   const [_media, setMedia] = useState(media || null);
   const [mediaRequired, setMediaRequired] = useState(false);
   const [_relatedMediaItems, setRelatedMediaItems] = useState(
     relatedMediaItems || []
   );
+  const [_tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
   const [deleteChildPosts, setDeleteChildPosts] = useState([]);
   const [status, setStatus] = useState({
     loading: false,
@@ -124,8 +133,18 @@ function ContentForm({
   useEffect(() => {
     caption && setValue("caption", caption);
     sport && setValue("sport", sport);
-    tagSomeone && setValue("tagSomeone", tagSomeone);
-  }, [caption, sport, tagSomeone]);
+    if (tags) {
+      const _tagsTemp = [];
+      tags.split(",").map((x) => {
+        if (sports.includes(x)) {
+          setValue("sport", x);
+          return null;
+        }
+        return _tagsTemp.push({ text: x });
+      });
+      setTags(_tagsTemp);
+    }
+  }, [caption, sport, tags]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +154,7 @@ function ContentForm({
     */
     if (typeof e.target?.media === "object") {
       setMediaRequired(true);
+      return;
     } else {
       setMediaRequired(false);
     }
@@ -148,7 +168,7 @@ function ContentForm({
       await onSubmitForm({
         _caption: data?.caption,
         _sport: data?.sport,
-        _tagSomeone: data?.tagSomeone,
+        _tags: _tags,
         _media,
         _relatedMediaItems,
         uploadMultiplePostMedia,
@@ -158,15 +178,75 @@ function ContentForm({
     })(e);
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files[0].type !== "video/mp4") return;
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setMedia(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleTagSearch = async (searchText) => {
+    // TODO: cancel multi req
+    if (searchText.trim().length === 0) return;
+
+    // make api call
+    setSuggestionsLoading(true);
+    const response = await Posts.SearchTags({
+      search: searchText,
+    }).catch(() => null);
+
+    // notification snack on error
+    if (!response) {
+      showNotificationMsg("Could Not Get Suggestions", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setSuggestions([]);
+      setSuggestionsLoading(false);
+      return;
+    }
+
+    // set suggestions for tag input
+    const _suggestions = response?.data;
+    const toSet = _suggestions?.map((x) => {
+      return {
+        text:
+          x?.title ||
+          x?.name ||
+          ((x?.object === "club" || x?.object === "team") && x?.id),
+        image:
+          x?.crest ||
+          x?.image ||
+          (x?.object === "club" || x?.object === "team"
+            ? "/assets/club-badge-placeholder.png"
+            : "/assets/person-placeholder.jpg"),
+        type: x?.object,
+      };
+    });
+    setSuggestions(toSet);
+    setSuggestionsLoading(false);
+  };
+
   return (
     <form onSubmit={onSubmit}>
       {!_media ? (
         <>
-          <div
+          <DragDrop
             className={cn(
               styles.dragDropVideos,
               mediaRequired && styles.errorInput
             )}
+            onDrop={handleDrop}
           >
             <input
               hidden
@@ -180,14 +260,13 @@ function ContentForm({
               <UploadSVG></UploadSVG>
             </label>
             <span className={styles.marginTop}>
-              {/* Todo: make span drag/dropable */}
               <span>Drag and drop a video or</span>
               &ensp;
               <a className={styles.dragDropVideosBrowseFiles}>
                 <label htmlFor="pick-parent-media">Browse Files</label>
               </a>
             </span>
-          </div>
+          </DragDrop>
           {mediaRequired && (
             <p className={styles.errorMsg}>Media is required</p>
           )}
@@ -269,18 +348,40 @@ function ContentForm({
             ></TemplateSelect>
           </div>
           <div className={cn(styles.span1, styles.contentItem)}>
-            <TemplateInput
-              type="text"
-              name="tagSomeone"
+            <TagInput
               placeholder="Tag Someone (Team, Club, Individual)"
-              customProps={{ ...register("tagSomeone") }}
-              hint={
-                errors?.tagSomeone && {
-                  type: "error",
-                  msg: errors?.tagSomeone?.message,
-                  inputBorder: true,
+              tags={_tags}
+              onTagRemove={(tagIndex) => {
+                setTags((tags) => {
+                  const _tagsTemp = [...tags];
+                  _tagsTemp.splice(tagIndex, 1);
+                  return _tagsTemp;
+                });
+              }}
+              onInput={handleTagSearch}
+              onInputClear={() => setSuggestions([])}
+              onInputSubmit={(input) => {
+                if (typeof input === "object") {
+                  setTags((tags) => {
+                    if (tags?.find((x) => x.text === input?.text?.trim()))
+                      return tags;
+                    return [
+                      ...tags,
+                      { text: input?.text?.trim(), image: input?.image },
+                    ];
+                  });
+                } else {
+                  if (input.trim().length === 0) return;
+                  setTags((tags) => {
+                    if (tags?.find((x) => x.text === input.trim())) return tags;
+                    return [...tags, { text: input.trim() }];
+                  });
                 }
-              }
+              }}
+              suggestions={suggestions}
+              showSuggestions={true}
+              suggestionsLoading={suggestionsLoading}
+              customTags={false}
             />
           </div>
         </div>

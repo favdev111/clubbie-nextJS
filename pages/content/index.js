@@ -4,11 +4,11 @@ import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import Content from "@page/content";
 
-function ContentAdd() {
+function ContentAdd({ user }) {
   return (
     <Layout>
       <Seo title="Add Content" desc="Lorem ipsum dolor sit amet" />
-      <Content mode="add" />
+      <Content mode="add" user={user} />
     </Layout>
   );
 }

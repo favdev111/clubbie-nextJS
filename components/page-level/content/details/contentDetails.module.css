@@ -115,6 +115,22 @@
 .mediaHover {
   cursor: pointer;
 }
+.tagsSeperator {
+  margin-top: var(--space-64);
+}
+.tagsWrapper {
+  margin-top: var(--space-50);
+}
+.tagsTitle {
+  text-align: center;
+  margin: var(--space-16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tagsTitle > h2 {
+  margin-right: var(--space-12);
+}
 
 @media (max-width: 768px) {
   .postHeader {

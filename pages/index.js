@@ -20,6 +20,7 @@ const HomePage = ({ posts }) => {
     </Layout>
   );
 };
+
 export default HomePage;
 
 export const getServerSideProps = async (ctx) => {

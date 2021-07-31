@@ -36,6 +36,7 @@ function CloseSVG() {
 }
 
 function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
+  const router = useRouter();
   const [searchText, setSearchText] = useState("");
   const [applySearch, setApplySearch] = useState("");
 
@@ -74,6 +75,17 @@ function PostSearch({ filter, setFilter, fetchPosts, setLoading }) {
       setLoading(false);
     }
   }, [applySearch]);
+
+  useEffect(() => {
+    const tagSearch = router.query.tagSearch;
+    if (tagSearch) {
+      setSearchText(tagSearch);
+      setFilter((filter) => {
+        return { ...filter, search: tagSearch };
+      });
+      setApplySearch(true);
+    }
+  }, []);
 
   return (
     <div className={styles.search}>
@@ -323,11 +335,10 @@ function Home({ posts, user }) {
         {_posts?.results &&
           _posts?.results.map((post, index) => (
             <HomeVideosCard
-              key={post + index}
+              key={post?.id}
               data={post}
               createdPost={createdPost}
               isLoggedIn={!!user}
-              user={user}
               setShowLoginPopup={setShowLoginPopup}
             />
           ))}

@@ -22,6 +22,10 @@
   max-width: 30px;
   height: auto;
 }
+.chipHeadSmall {
+  max-width: 20px;
+  height: 20px;
+}
 .chipContent {
   cursor: inherit;
   display: flex;
@@ -43,6 +47,9 @@
   display: inline-block;
   font-size: 27px;
   transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.chipSvgSmall {
+  font-size: 15px;
 }
 .chipSvg:hover {
   color: var(--c-red);

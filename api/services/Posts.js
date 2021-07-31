@@ -42,4 +42,10 @@ export default class PostManagementRoutes {
       `/posts/${id}/repost?${new URLSearchParams(query).toString()}`
     );
   }
+
+  static async SearchTags(query) {
+    return HTTPClient.get(
+      `/posts/tags-data?${new URLSearchParams(query).toString()}`
+    );
+  }
 }

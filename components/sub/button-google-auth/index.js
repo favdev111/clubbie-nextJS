@@ -16,14 +16,12 @@ const GoogleButton = () => {
     // auth.GoogleLogin here
     await Auth.GoogleLogin(payload)
       .then((res) => {
-        console.log("res google => ", res.response);
         showNotificationMsg(res.response, {
           variant: "success",
           displayIcon: true,
         });
       })
       .catch((err) => {
-        console.log("err google => ", err.response);
         showNotificationMsg(err.response, {
           variant: "error",
           displayIcon: true,
