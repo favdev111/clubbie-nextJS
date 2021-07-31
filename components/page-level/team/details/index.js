@@ -15,6 +15,7 @@ import styles from "./teamDetails.module.css";
 function TeamHeader({
   clubId,
   clubCrest,
+  clubName,
   teamId,
   teamCrest,
   teamTitle,
@@ -116,17 +117,29 @@ function TeamHeader({
         type={"danger"}
       />
       <div className={styles.teamHeaderWrapper}>
-        <div className={styles.teamCrestWrapper}>
-          <img
-            className={styles.teamCrest}
-            src={teamCrest || "/assets/club-badge-placeholder.png"}
-          />
-          <span className={styles.teamClubCrestWrapper}>
+        <div>
+          <div className={styles.teamCrestWrapper}>
             <img
-              className={styles.teamClubCrest}
-              src={clubCrest || "/assets/club-badge-placeholder.png"}
+              className={styles.teamCrest}
+              src={teamCrest || "/assets/club-badge-placeholder.png"}
             />
-          </span>
+            <span className={styles.teamClubCrestWrapper}>
+              <img
+                className={styles.teamClubCrest}
+                src={clubCrest || "/assets/club-badge-placeholder.png"}
+              />
+            </span>
+          </div>
+          {clubName && (
+            <div className={styles.teamParentClubNameWrapper}>
+              Owned by&nbsp;
+              <Link href={`/clubs/${clubId}`}>
+                <a>
+                  <span className={styles.teamParentClubName}>{clubName}</span>
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
         <div className={styles.teamHeaderDetailsWrapper}>
           <div className={styles.teamHeaderTitleWrapper}>
@@ -536,6 +549,7 @@ function TeamDetails({ user, team }) {
       <TeamHeader
         clubId={_team?.club?.id}
         clubCrest={_team?.club?.crest}
+        clubName={_team?.club?.title}
         teamId={_team?.id}
         teamCrest={_team?.crest}
         teamTitle={_team?.title}
