@@ -151,7 +151,7 @@ function TeamMemberCard({
   id,
   image,
   name,
-  role,
+  roles,
   chatButton,
   acceptButton,
   declineButton,
@@ -169,7 +169,11 @@ function TeamMemberCard({
             <span className={styles.teamMemberName}>{name}</span>
           </a>
         </Link>
-        <span className={styles.teamMemberRole}>{role}</span>
+        <div className={styles.teamMemberRolesWrapper}>
+          {roles?.map((role) => (
+            <span className={styles.teamMemberRole}>{role}</span>
+          ))}
+        </div>
       </div>
       <div className={styles.teamMemberActionButtons}>
         {chatButton && (
@@ -204,7 +208,7 @@ function TeamMembers({ members }) {
                 id={member?.id}
                 name={member?.name}
                 image={member?.image}
-                role={member?.role}
+                roles={member?.roles}
                 chatButton={true}
               ></TeamMemberCard>
             </>
@@ -363,28 +367,38 @@ function TeamDetails({ user, team }) {
       members.push({
         id: coach?.id || "Coach-ID",
         name: coach?.name || coach?.id || "Coach-ID",
-        role: "Coach",
+        roles: ["Coach"],
         image: coach?.image || "/assets/person-placeholder.jpg",
       });
     }
     if (leader) {
-      members.push({
-        id: leader?.id || "Leader-ID",
-        name: leader?.name || leader?.id || "Leader-ID",
-        role: "Team Leader",
-        image: leader?.image || "/assets/person-placeholder.jpg",
-      });
+      const foundMember = members.find((x) => x?.id === leader?.id);
+      if (foundMember) {
+        foundMember?.roles?.push("Team Leader");
+      } else {
+        members.push({
+          id: leader?.id || "Leader-ID",
+          name: leader?.name || leader?.id || "Leader-ID",
+          roles: ["Team Leader"],
+          image: leader?.image || "/assets/person-placeholder.jpg",
+        });
+      }
     }
     if (players) {
       players?.map((player) => {
         if (player?.status !== "left") {
-          members.push({
-            id: player?.user?.id || "Player-ID",
-            name: player?.user?.name || player?.user?.id || "Player-ID",
-            role: "Player",
-            image: player?.user?.image || "/assets/person-placeholder.jpg",
-            status: player?.status || "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
-          });
+          const foundMember = members.find((x) => x?.id === player?.user?.id);
+          if (foundMember) {
+            foundMember?.roles?.push("Player");
+          } else {
+            members.push({
+              id: player?.user?.id || "Player-ID",
+              name: player?.user?.name || player?.user?.id || "Player-ID",
+              roles: ["Player"],
+              image: player?.user?.image || "/assets/person-placeholder.jpg",
+              status: player?.status || "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
+            });
+          }
         }
       });
     }
