@@ -5,15 +5,15 @@
   padding-top: var(--space-50);
   padding-bottom: var(--space-50);
 }
+.teamTitle {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
 .teamContent {
   background: var(--c-primary) 0% 0% no-repeat padding-box;
   width: 100%;
   border-radius: var(--radius-lg);
   padding: var(--space-32);
-}
-.teamTitle {
-  margin-bottom: 20px;
-  padding-left: 10px;
 }
 
 @media (max-width: 640px) {

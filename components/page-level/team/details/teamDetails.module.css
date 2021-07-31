@@ -57,12 +57,44 @@
 .teamHeaderActionButtons > button {
   margin-right: var(--space-10);
 }
+.teamMembersBlock {
+  margin-top: var(--space-50);
+}
+.teamMembershipWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.teamMembershipStatusWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.teamMembershipStatus {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-5);
+  margin-left: var(--space-5);
+  text-transform: capitalize;
+}
+.activeMemberShip {
+  background-color: var(--c-green);
+}
+.suspendedMemberShip {
+  background-color: var(--c-yellow);
+  color: var(--c-black);
+}
+.unapprovedMemberShip {
+  background-color: var(--c-red);
+}
 .teamMembersWrapper {
   width: 100%;
   background-color: var(--c-white-05);
-  margin-top: var(--space-50);
   padding: var(--space-16);
   border-radius: var(--radius);
+  margin-top: var(--space-5);
 }
 .teamMembers {
   width: 100%;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
@@ -206,31 +207,53 @@ function TeamMemberCard({
   );
 }
 
-function TeamMembers({ members }) {
+function TeamMembers({ members, memberShipStatus }) {
   return (
-    <div className={styles.teamMembersWrapper}>
-      <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
-      {members?.length > 0 && (
-        <div className={styles.teamMembers}>
-          {members?.map((member) => (
-            <>
-              <TeamMemberCard
-                id={member?.id}
-                name={member?.name}
-                image={member?.image}
-                roles={member?.roles}
-                chatButton={true}
-              ></TeamMemberCard>
-            </>
-          ))}
+    <div className={styles.teamMembersBlock}>
+      {memberShipStatus && (
+        <div className={styles.teamMembershipWrapper}>
+          <span className={styles.teamMembershipStatusWrapper}>
+            Membership
+            <span
+              className={cn(
+                styles.teamMembershipStatus,
+                memberShipStatus?.toLowerCase() === "active" &&
+                  styles.activeMemberShip,
+                memberShipStatus?.toLowerCase() === "suspended" &&
+                  styles.suspendedMemberShip,
+                memberShipStatus?.toLowerCase() === "unapproved" &&
+                  styles.unapprovedMemberShip
+              )}
+            >
+              {memberShipStatus}
+            </span>
+          </span>
         </div>
       )}
-      {members?.length === 0 && (
-        <div className={styles?.teamMembersNone}>
-          This team has no members currently.
-          <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
-        </div>
-      )}
+      <div className={styles.teamMembersWrapper}>
+        <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
+        {members?.length > 0 && (
+          <div className={styles.teamMembers}>
+            {members?.map((member) => (
+              <>
+                <TeamMemberCard
+                  id={member?.id}
+                  name={member?.name}
+                  image={member?.image}
+                  roles={member?.roles}
+                  chatButton={true}
+                ></TeamMemberCard>
+              </>
+            ))}
+          </div>
+        )}
+        {members?.length === 0 && (
+          <div className={styles?.teamMembersNone}>
+            This team has no members currently.
+            <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -368,6 +391,7 @@ function TeamDetails({ user, team }) {
   const [_isCoach, setIsCoach] = useState(false);
   const [_isLeader, setIsLeader] = useState(false);
   const [_isPlayer, setIsPlayer] = useState(false);
+  const [_membershipStatus, setMembershipStatus] = useState(false);
 
   useEffect(() => {
     const members = [];
@@ -415,11 +439,25 @@ function TeamDetails({ user, team }) {
     }
 
     // set user authority
-    if (owner?.id === user?.id) setIsOwner(true);
+    if (owner?.id === user?.id) {
+      setMembershipStatus("owner");
+      setIsOwner(true);
+    }
     if (coach?.id === user?.id) setIsCoach(true);
     if (leader?.id === user?.id) setIsLeader(true);
-    if (players?.find((x) => x?.user?.id === user?.id && x?.status !== "left"))
+    const foundPlayer = players?.find(
+      (x) => x?.user?.id === user?.id && x?.status !== "left"
+    );
+    if (foundPlayer) {
+      if (
+        ["unapproved", "active", "suspended"].includes(
+          foundPlayer?.status.toLowerCase()
+        )
+      ) {
+        setMembershipStatus(foundPlayer?.status);
+      }
       setIsPlayer(true);
+    }
 
     setMembers([...members]);
   }, [_team]);
@@ -474,7 +512,10 @@ function TeamDetails({ user, team }) {
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
-      <TeamMembers members={_members}></TeamMembers>
+      <TeamMembers
+        members={_members}
+        memberShipStatus={_membershipStatus}
+      ></TeamMembers>
       <TeamSubscriptionPlans
         plans={_team?.subscriptionPlans}
       ></TeamSubscriptionPlans>
