@@ -404,13 +404,16 @@ function TeamDetails({ user, team }) {
     if (owner?.id === user?.id) setIsOwner(true);
     if (coach?.id === user?.id) setIsCoach(true);
     if (leader?.id === user?.id) setIsLeader(true);
-    if (players?.find((x) => x?.user?.id === user?.id)) setIsPlayer(true);
+    if (players?.find((x) => x?.user?.id === user?.id && x?.status !== "left"))
+      setIsPlayer(true);
 
     setMembers([...members]);
   }, [team]);
 
   const addUserToTeamPlayers = () => {
-    const foundPlayer = _members?.find((x) => x?.id === user?.id);
+    const foundPlayer = _members?.find(
+      (x) => x?.id === user?.id && x?.role?.toLowerCase() === "player"
+    );
     if (!foundPlayer) {
       const toSet = [..._members];
       toSet.push({
