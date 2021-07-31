@@ -40,7 +40,7 @@
   /* For mobile phones: */
   .socialButton{
     width: auto;
-    height: 50px;
+    height: auto;
   }
 
 }

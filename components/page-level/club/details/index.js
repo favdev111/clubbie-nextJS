@@ -3,12 +3,16 @@ import Link from "next/link";
 import Button from "@sub/button";
 import Table from "@sub/table";
 import ChatSVG from "@svg/messages";
-import styles from "./newclubDetails.module.css";
+import styles from "./clubDetails.module.css";
+import Team from "../../../../api/services/Teams"
+import useNotification from "@sub/hook-notification";
 
 function ClubDetails({ club }) {
   const [clubOfficialRows, setClubOfficialRows] = useState([]);
   const [clubTeamRows, setClubTeamRows] = useState([]);
   const [clubPlayerRows, setClubPlayerRows] = useState([]);
+  const [teamJoined, setTeamJoined] = useState("")
+  const { showNotificationMsg } = useNotification();
 
   useEffect(() => {
     if (club?.officials) {
@@ -51,6 +55,32 @@ function ClubDetails({ club }) {
       });
       setClubOfficialRows(rows);
     }
+
+
+    const teamInfo = async (teamId) => {
+      try {
+        const response = await Team.JoinTeam(teamId)
+        const status = response.status
+        if (status === 200) {
+          const team = response.data.title
+          showNotificationMsg(team + " Team Joined!", {
+            variant: "success",
+            displayIcon: true,
+          });
+        } else {
+          showNotificationMsg("Error Joining Team", {
+            variant: "error",
+            displayIcon: true,
+          });
+        }
+      } catch (e) {
+        showNotificationMsg(e, {
+          variant: "error",
+          displayIcon: true,
+        });
+      }
+    }
+
     if (club?.teams) {
       const rows = club?.teams?.map((x) => {
         return [
@@ -74,11 +104,9 @@ function ClubDetails({ club }) {
           () => (
             <div className={styles.clubMemberListAction}>
               <span>
-                <Link href={`/join-team-url-here/${x?.id}`}>
-                  <a>
-                    <Button size="x-small">Join</Button>
-                  </a>
-                </Link>
+                <a>
+                  <Button size="x-small" onClick={teamInfo.bind(this, x?.id)}>Join</Button>
+                </a>
               </span>
             </div>
           ),
