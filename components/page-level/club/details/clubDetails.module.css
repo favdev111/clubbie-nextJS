@@ -1,20 +1,24 @@
-.clubHeaderWrapper {
+.clubHeaderWrapper{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .clubCrest {
-  height: 250px;
   width: 250px;
   cursor: pointer;
   border-radius: 50%;
 }
+
 .clubActionButtons {
-  display: grid;
+  position: relative;
+  display: flex;
   gap: 10px;
-  grid-auto-flow: column;
+  flex-wrap: wrap;
+  font-size: 12px;
 }
+
 .clubBodyWrapper {
   margin-top: var(--space-64);
   display: flex;
@@ -22,32 +26,36 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
-.clubBodyWrapper > div:not(:first-child) {
-  margin-top: var(--space-32);
-}
+
 .clubDescription {
   margin-top: var(--space-10);
 }
 .clubOfficials {
   width: 100%;
 }
+
+.clubTable {
+  margin-top: var(--space-10);
+}
+
+.tblHeading{
+  margin-top: 30px;
+}
+
 .clubsTeamsAndPlayers {
   display: flex;
   flex-direction: row;
   width: 100%;
 }
 .clubTeams {
-  width: 50%;
+  width: 100%;
   margin: 0 16px 0 0;
 }
 .clubPlayers {
   margin-top: 0 !important;
-  margin: 0 0 0 16px;
-  width: 50%;
+  width: 100%;
 }
-.clubTable {
-  margin-top: var(--space-10);
-}
+
 .clubMember {
   display: flex;
   align-items: center;
@@ -67,11 +75,79 @@
 .clubMemberRole {
   text-transform: capitalize;
 }
+
 .clubMemberListAction {
   display: flex;
   align-items: center;
 }
 .clubMemberListAction > span {
   cursor: pointer;
+} 
+
+.teamContent .playerContent{
+  display: flex;
+  flex-direction: column;
+}
+.teamContent{
+  margin-right: 20px;
+}
+
+
+@media screen and (max-width: 1024px) and (min-width: 954px) {
+  .clubActionButtons{
+    font-size: 10px;
+  }  
+}
+
+@media screen and (max-width: 954px) {
+  .clubActionButtons{
+    font-size: 10px;
+  }
+   .clubsTeamsAndPlayers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .clubsTeamsAndPlayers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 360px) and (min-width: 280px) {
+  .clubsTeamsAndPlayers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 700px){
+
+  .clubOfficials{
+    overflow-x: scroll;
+  }
+
+  .clubTeams{
+    overflow-x: scroll;
+  }
+
+  .clubPlayers{
+    overflow-x: scroll;
+  }
+
+  .clubTable{
+    width: 500px;
+  }
+
+  .teamContent{
+  margin-right: 0;
+}
+
 }
 
