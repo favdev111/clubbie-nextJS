@@ -9,6 +9,9 @@
 .btnXSmall {
   padding: var(--space-5) var(--space-30);
 }
+.btnMedium {
+  padding: var(--space-12) var(--space-32);
+}
 .danger {
   background: var(--c-red);
 }

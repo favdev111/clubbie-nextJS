@@ -27,6 +27,7 @@ function ContentDialog({
   onConfirm,
   onDismiss,
   type,
+  hideActionButtons,
 }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
@@ -34,27 +35,29 @@ function ContentDialog({
   return (
     <div className={cn(open ? styles.backdrop : styles.close)}>
       <div className={styles.content} ref={wrapperRef}>
-        <h2>{title}</h2>
+        {title && <h2>{title}</h2>}
         <div className={styles.body}>
           <Body></Body>
         </div>
-        <div className={styles.buttons}>
-          <Button
-            variant="cancel"
-            onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant={type || "danger"}
-            onClick={() => {
-              onConfirm();
-              setOpen(false);
-            }}
-          >
-            {confirmText}
-          </Button>
-        </div>
+        {!hideActionButtons && (
+          <div className={styles.buttons}>
+            <Button
+              variant="cancel"
+              onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant={type || "danger"}
+              onClick={() => {
+                onConfirm();
+                setOpen(false);
+              }}
+            >
+              {confirmText}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

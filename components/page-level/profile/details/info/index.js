@@ -11,6 +11,7 @@ function ProfileInfo({ footballerName, playerTitle, isPublic, image, clubs }) {
       <Avatar
         src={image || "/assets/person-placeholder.jpg"}
         className={styles.profilePlayerImage}
+        fullScreenOnClick={true}
       />
       <div className={styles.profileInfo}>
         <h2 className={styles.playerName}> {footballerName} </h2>
