@@ -22,6 +22,8 @@ function TeamHeader({
   leaveButton,
   onMemberJoin,
   onMemberLeave,
+  isCoach,
+  isLeader,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
@@ -90,9 +92,17 @@ function TeamHeader({
       <ConfirmDialog
         open={leaveTeamConfirm}
         setOpen={setLeaveTeamConfirm}
-        message={
-          "Are you sure to leave this team? You might miss out on current events, feed, group chat and more."
-        }
+        message={`Are you sure to leave this team${
+          (isLeader || isCoach) && " as a Player"
+        }?${
+          isLeader || isCoach
+            ? ` You will still retain your role as a ${
+                (isLeader && isCoach && "Team Leader and a Coach") ||
+                (isLeader && "Team Leader") ||
+                (isCoach && "Team Coach")
+              }`
+            : " You might miss out on current events, feed, group chat and more."
+        }`}
         confirmText={"Leave"}
         onConfirm={handleLeaveClick}
         type={"danger"}
@@ -127,7 +137,7 @@ function TeamHeader({
                 onClick={handleJoinClick}
                 loading={joiningTeam}
               >
-                Join
+                {isCoach || isLeader ? "Join as Player" : "Join"}
               </Button>
             )}
             {leaveButton && (
@@ -137,7 +147,7 @@ function TeamHeader({
                 onClick={() => setLeaveTeamConfirm(true)}
                 loading={leavingTeam}
               >
-                Leave
+                {isCoach || isLeader ? "Leave as Player" : "Leave"}
               </Button>
             )}
           </div>
@@ -352,6 +362,7 @@ function TeamDetails({ user, team }) {
   const { showNotificationMsg } = useNotification();
   console.log("user => ", user);
 
+  const [_team] = useState(team);
   const [_members, setMembers] = useState([]);
   const [_isOwner, setIsOwner] = useState(false);
   const [_isCoach, setIsCoach] = useState(false);
@@ -360,7 +371,7 @@ function TeamDetails({ user, team }) {
 
   useEffect(() => {
     const members = [];
-    const { owner, coach, leader, players } = team;
+    const { owner, coach, leader, players } = _team;
 
     // set members
     if (coach) {
@@ -411,49 +422,61 @@ function TeamDetails({ user, team }) {
       setIsPlayer(true);
 
     setMembers([...members]);
-  }, [team]);
+  }, [_team]);
 
   const addUserToTeamPlayers = () => {
-    const foundPlayer = _members?.find(
-      (x) => x?.id === user?.id && x?.role?.toLowerCase() === "player"
-    );
-    if (!foundPlayer) {
-      const toSet = [..._members];
+    const toSet = [..._members];
+    const foundMember = toSet?.find((x) => x?.id === user?.id);
+    if (!foundMember) {
       toSet.push({
         id: user?.id || "Player-ID",
         name: user?.profile?.fullName || user?.id || "Player-ID",
-        role: "Player",
+        roles: ["Player"],
         image: user?.profile?.image || "/assets/person-placeholder.jpg",
         status: "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
       });
-      setMembers([...toSet]);
     }
+    if (
+      foundMember &&
+      !foundMember?.roles?.find((x) => x.toLowerCase() === "player")
+    ) {
+      foundMember?.roles?.push("player");
+    }
+    setMembers([...toSet]);
     setIsPlayer(true);
   };
 
   const removeUserFromTeamPlayers = () => {
-    const toSet = _members?.filter((x) => x?.id !== user?.id);
-    setMembers([...toSet]);
-    setIsPlayer(false);
+    const toSet = [..._members];
+    const foundMember = toSet?.find((x) => x?.id == user?.id);
+    if (foundMember) {
+      foundMember.roles = foundMember?.roles?.filter(
+        (x) => x?.toLowerCase() !== "player"
+      );
+      setMembers([...toSet]);
+      setIsPlayer(false);
+    }
   };
 
   return (
     <>
       <TeamHeader
-        clubId={team?.club?.id}
-        clubCrest={team?.club?.crest}
-        teamId={team?.id}
-        teamCrest={team?.crest}
-        teamTitle={team?.title}
+        clubId={_team?.club?.id}
+        clubCrest={_team?.club?.crest}
+        teamId={_team?.id}
+        teamCrest={_team?.crest}
+        teamTitle={_team?.title}
         showNotificationMsg={showNotificationMsg}
-        joinButton={!_isPlayer && !(_isLeader || _isCoach)}
-        leaveButton={_isPlayer && !(_isLeader || _isCoach)}
+        joinButton={!_isPlayer}
+        leaveButton={_isPlayer}
+        isCoach={_isCoach}
+        isLeader={_isLeader}
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
       <TeamMembers members={_members}></TeamMembers>
       <TeamSubscriptionPlans
-        plans={team?.subscriptionPlans}
+        plans={_team?.subscriptionPlans}
       ></TeamSubscriptionPlans>
       <TeamJoinRequests
         requests={_members
