@@ -22,7 +22,6 @@ function TeamHeader({
   leaveButton,
   onMemberJoin,
   onMemberLeave,
-  isTeamOwner,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
@@ -92,9 +91,7 @@ function TeamHeader({
         open={leaveTeamConfirm}
         setOpen={setLeaveTeamConfirm}
         message={
-          isTeamOwner
-            ? "Are you sure to leave this team? You will still be the Owner of this Team."
-            : "Are you sure to leave this team? You might miss out on current events, feed, group chat and more."
+          "Are you sure to leave this team? You might miss out on current events, feed, group chat and more."
         }
         confirmText={"Leave"}
         onConfirm={handleLeaveClick}
@@ -130,7 +127,7 @@ function TeamHeader({
                 onClick={handleJoinClick}
                 loading={joiningTeam}
               >
-                {isTeamOwner ? "Join as Player" : "Join"}
+                Join
               </Button>
             )}
             {leaveButton && (
@@ -140,7 +137,7 @@ function TeamHeader({
                 onClick={() => setLeaveTeamConfirm(true)}
                 loading={leavingTeam}
               >
-                {isTeamOwner ? "Leave as Player" : "Leave"}
+                Leave
               </Button>
             )}
           </div>
@@ -435,9 +432,8 @@ function TeamDetails({ user, team }) {
         teamCrest={team?.crest}
         teamTitle={team?.title}
         showNotificationMsg={showNotificationMsg}
-        joinButton={!_isPlayer}
-        leaveButton={_isPlayer}
-        // isTeamOwner={_isOwner}
+        joinButton={!_isPlayer && !(_isLeader || _isCoach)}
+        leaveButton={_isPlayer && !(_isLeader || _isCoach)}
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
