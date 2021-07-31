@@ -19,6 +19,7 @@ function TeamHeader({
   teamTitle,
   showNotificationMsg,
   onMemberJoin,
+  onMemberLeave,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
@@ -74,6 +75,7 @@ function TeamHeader({
       setLeavingTeam(false);
       return;
     }
+    await onMemberLeave();
     showNotificationMsg("Team Left Successfully..!", {
       variant: "success",
       displayIcon: true,
@@ -398,6 +400,11 @@ function TeamDetails({ user, team }) {
     }
   };
 
+  const removeUserFromTeamPlayers = () => {
+    const toSet = _members?.filter((x) => x?.id !== user?.id);
+    setMembers([...toSet]);
+  };
+
   return (
     <>
       <TeamHeader
@@ -408,6 +415,7 @@ function TeamDetails({ user, team }) {
         teamTitle={team?.title}
         showNotificationMsg={showNotificationMsg}
         onMemberJoin={addUserToTeamPlayers}
+        onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
       <TeamMembers members={_members}></TeamMembers>
       <TeamSubscriptionPlans
