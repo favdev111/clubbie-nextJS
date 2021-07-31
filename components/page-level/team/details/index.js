@@ -207,25 +207,26 @@ function TeamMemberCard({
   );
 }
 
-function TeamMembers({ members, memberShipStatus }) {
+function TeamMembers({ members, membership }) {
   return (
     <div className={styles.teamMembersBlock}>
-      {memberShipStatus && (
+      {membership?.status && membership?.statusText && (
         <div className={styles.teamMembershipWrapper}>
           <span className={styles.teamMembershipStatusWrapper}>
             Membership
             <span
               className={cn(
                 styles.teamMembershipStatus,
-                memberShipStatus?.toLowerCase() === "active" &&
-                  styles.activeMemberShip,
-                memberShipStatus?.toLowerCase() === "suspended" &&
+                ["active", "owner"].includes(
+                  membership?.status?.toLowerCase()
+                ) && styles.activeMemberShip,
+                membership.status?.toLowerCase() === "suspended" &&
                   styles.suspendedMemberShip,
-                memberShipStatus?.toLowerCase() === "unapproved" &&
+                membership.status?.toLowerCase() === "unapproved" &&
                   styles.unapprovedMemberShip
               )}
             >
-              {memberShipStatus}
+              {membership.statusText}
             </span>
           </span>
         </div>
@@ -391,7 +392,10 @@ function TeamDetails({ user, team }) {
   const [_isCoach, setIsCoach] = useState(false);
   const [_isLeader, setIsLeader] = useState(false);
   const [_isPlayer, setIsPlayer] = useState(false);
-  const [_membershipStatus, setMembershipStatus] = useState(false);
+  const [_membership, setMembership] = useState({
+    status: null,
+    statusText: null,
+  });
 
   useEffect(() => {
     const members = [];
@@ -440,7 +444,7 @@ function TeamDetails({ user, team }) {
 
     // set user authority
     if (owner?.id === user?.id) {
-      setMembershipStatus("owner");
+      setMembership({ status: "owner", statusText: "Owner" });
       setIsOwner(true);
     }
     if (coach?.id === user?.id) setIsCoach(true);
@@ -454,7 +458,10 @@ function TeamDetails({ user, team }) {
           foundPlayer?.status.toLowerCase()
         )
       ) {
-        setMembershipStatus(foundPlayer?.status);
+        setMembership({
+          status: foundPlayer?.status,
+          statusText: foundPlayer?.status,
+        });
       }
       setIsPlayer(true);
     }
@@ -473,12 +480,14 @@ function TeamDetails({ user, team }) {
         image: user?.profile?.image || "/assets/person-placeholder.jpg",
         status: "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
       });
+      setMembership({ status: "unapproved", statusText: "Unapproved" });
     }
     if (
       foundMember &&
       !foundMember?.roles?.find((x) => x.toLowerCase() === "player")
     ) {
       foundMember?.roles?.push("player");
+      setMembership({ status: "unapproved", statusText: "Unapproved" });
     }
     setMembers([...toSet]);
     setIsPlayer(true);
@@ -492,6 +501,7 @@ function TeamDetails({ user, team }) {
         (x) => x?.toLowerCase() !== "player"
       );
       setMembers([...toSet]);
+      setMembership(null);
       setIsPlayer(false);
     }
   };
@@ -512,10 +522,7 @@ function TeamDetails({ user, team }) {
         onMemberJoin={addUserToTeamPlayers}
         onMemberLeave={removeUserFromTeamPlayers}
       ></TeamHeader>
-      <TeamMembers
-        members={_members}
-        memberShipStatus={_membershipStatus}
-      ></TeamMembers>
+      <TeamMembers members={_members} membership={_membership}></TeamMembers>
       <TeamSubscriptionPlans
         plans={_team?.subscriptionPlans}
       ></TeamSubscriptionPlans>
