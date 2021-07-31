@@ -5,11 +5,11 @@ import Seo from "@layout/seo";
 import Teams from "@api/services/Teams";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
-function Team({ team }) {
+function Team({ team, user }) {
   return (
     <Layout>
       <Seo title="Team" desc="Lorem ipsum dolor sit amet" />
-      <TeamPage team={team} />
+      <TeamPage team={team} user={user} />
     </Layout>
   );
 }
@@ -26,6 +26,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   if (response)
     team =
       response?.data && response?.data?.length > 0 ? response?.data[0] : null;
+
   const notFound = !team;
 
   return {

@@ -18,6 +18,7 @@ function TeamHeader({
   teamCrest,
   teamTitle,
   showNotificationMsg,
+  onMemberJoin,
 }) {
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
@@ -46,6 +47,7 @@ function TeamHeader({
       setJoiningTeam(false);
       return;
     }
+    await onMemberJoin();
     showNotificationMsg(
       `${
         responseTeam?.data?.title
@@ -72,7 +74,6 @@ function TeamHeader({
       setLeavingTeam(false);
       return;
     }
-
     showNotificationMsg("Team Left Successfully..!", {
       variant: "success",
       displayIcon: true,
@@ -183,55 +184,13 @@ function TeamMemberCard({
   );
 }
 
-function TeamMembers({ owner, coach, leader, players }) {
-  const [_members, setMembers] = useState([]);
-
-  useEffect(() => {
-    const members = [];
-    if (owner) {
-      members.push({
-        id: owner?.id || "Owner-ID",
-        name: owner?.name || owner?.id || "Owner-ID",
-        role: "Owner",
-        image: owner?.image || "/assets/person-placeholder.jpg",
-      });
-    }
-    if (coach) {
-      members.push({
-        id: coach?.id || "Coach-ID",
-        name: coach?.name || coach?.id || "Coach-ID",
-        role: "Coach",
-        image: coach?.image || "/assets/person-placeholder.jpg",
-      });
-    }
-    if (leader) {
-      members.push({
-        id: leader?.id || "Leader-ID",
-        name: leader?.name || leader?.id || "Leader-ID",
-        role: "Team Leader",
-        image: leader?.image || "/assets/person-placeholder.jpg",
-      });
-    }
-    if (players) {
-      players?.map((player) => {
-        members.push({
-          id: player?.user?.id || "Player-ID",
-          name: player?.user?.name || player?.user?.id || "Player-ID",
-          role: "Player",
-          image: player?.user?.image || "/assets/person-placeholder.jpg",
-          status: player?.status || "Unset", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
-        });
-      });
-    }
-    setMembers([...members]);
-  }, [owner, coach, leader, players]);
-
+function TeamMembers({ members }) {
   return (
     <div className={styles.teamMembersWrapper}>
-      <h2>Members {_members?.length > 0 && `(${_members?.length})`}</h2>
-      {_members?.length > 0 && (
+      <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
+      {members?.length > 0 && (
         <div className={styles.teamMembers}>
-          {_members?.map((member) => (
+          {members?.map((member) => (
             <>
               <TeamMemberCard
                 id={member?.id}
@@ -244,7 +203,7 @@ function TeamMembers({ owner, coach, leader, players }) {
           ))}
         </div>
       )}
-      {_members?.length === 0 && (
+      {members?.length === 0 && (
         <div className={styles?.teamMembersNone}>
           This team has no members currently.
           <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
@@ -348,34 +307,13 @@ function TeamSubscriptionPlans({ plans }) {
   );
 }
 
-function TeamJoinRequests({ players }) {
-  const [_joinRequests, setJoinRequests] = useState([]);
-
-  useEffect(() => {
-    const toSet = [];
-    players?.map((x) => {
-      if (x?.status === "unapproved") {
-        toSet.push({
-          id: x?.user?.id || "Player-ID",
-          name: x?.user?.name || x?.user?.name || "Playername",
-          image: x?.user?.image || "/assets/person-placeholder.jpg",
-          role: "Player",
-          status: x?.status || "Unapproved",
-        });
-      }
-    });
-    setJoinRequests([...toSet]);
-  }, [players]);
-
+function TeamJoinRequests({ requests }) {
   return (
     <div className={styles.teamJoinRequestsWrapper}>
-      <h2>
-        Join Requests{" "}
-        {_joinRequests?.length > 0 && `(${_joinRequests?.length})`}
-      </h2>
-      {_joinRequests?.length > 0 && (
+      <h2>Join Requests {requests?.length > 0 && `(${requests?.length})`}</h2>
+      {requests?.length > 0 && (
         <div className={styles.teamJoinRequests}>
-          {_joinRequests?.map((member) => (
+          {requests?.map((member) => (
             <>
               <TeamMemberCard
                 id={member?.id}
@@ -389,7 +327,7 @@ function TeamJoinRequests({ players }) {
           ))}
         </div>
       )}
-      {_joinRequests?.length === 0 && (
+      {requests?.length === 0 && (
         <div className={styles.teamJoinRequestsNone}>
           No New requests for now
         </div>
@@ -398,8 +336,67 @@ function TeamJoinRequests({ players }) {
   );
 }
 
-function TeamDetails({ team }) {
+function TeamDetails({ user, team }) {
   const { showNotificationMsg } = useNotification();
+  console.log("user => ", user);
+
+  const [_members, setMembers] = useState([]);
+
+  useEffect(() => {
+    const members = [];
+    const { owner, coach, leader, players } = team;
+    if (owner) {
+      members.push({
+        id: owner?.id || "Owner-ID",
+        name: owner?.name || owner?.id || "Owner-ID",
+        role: "Owner",
+        image: owner?.image || "/assets/person-placeholder.jpg",
+      });
+    }
+    if (coach) {
+      members.push({
+        id: coach?.id || "Coach-ID",
+        name: coach?.name || coach?.id || "Coach-ID",
+        role: "Coach",
+        image: coach?.image || "/assets/person-placeholder.jpg",
+      });
+    }
+    if (leader) {
+      members.push({
+        id: leader?.id || "Leader-ID",
+        name: leader?.name || leader?.id || "Leader-ID",
+        role: "Team Leader",
+        image: leader?.image || "/assets/person-placeholder.jpg",
+      });
+    }
+    if (players) {
+      players?.map((player) => {
+        members.push({
+          id: player?.user?.id || "Player-ID",
+          name: player?.user?.name || player?.user?.id || "Player-ID",
+          role: "Player",
+          image: player?.user?.image || "/assets/person-placeholder.jpg",
+          status: player?.status || "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
+        });
+      });
+    }
+    setMembers([...members]);
+  }, [team]);
+
+  const addUserToTeamPlayers = () => {
+    const foundPlayer = _members?.find((x) => x?.id === user?.id);
+    if (!foundPlayer) {
+      const toSet = [..._members];
+      toSet.push({
+        id: user?.id || "Player-ID",
+        name: user?.profile?.fullName || user?.id || "Player-ID",
+        role: "Player",
+        image: user?.profile?.image || "/assets/person-placeholder.jpg",
+        status: "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
+      });
+      setMembers([...toSet]);
+    }
+  };
 
   return (
     <>
@@ -410,17 +407,17 @@ function TeamDetails({ team }) {
         teamCrest={team?.crest}
         teamTitle={team?.title}
         showNotificationMsg={showNotificationMsg}
+        onMemberJoin={addUserToTeamPlayers}
       ></TeamHeader>
-      <TeamMembers
-        owner={team?.owner}
-        coach={team?.coach}
-        leader={team?.leader}
-        players={team?.players}
-      ></TeamMembers>
+      <TeamMembers members={_members}></TeamMembers>
       <TeamSubscriptionPlans
         plans={team?.subscriptionPlans}
       ></TeamSubscriptionPlans>
-      <TeamJoinRequests players={team?.players}></TeamJoinRequests>
+      <TeamJoinRequests
+        requests={_members
+          ?.map((x) => (x?.status?.toLowerCase() === "unapproved" ? x : null))
+          .filter((y) => y)}
+      ></TeamJoinRequests>
     </>
   );
 }
