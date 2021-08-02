@@ -7,6 +7,13 @@
 .teamCrestWrapper {
   position: relative;
   min-width: 250px;
+  transition: 0.1s ease;
+}
+.teamCrestWrapper:hover > img {
+  opacity: 0.5;
+}
+.teamCrestWrapper:hover span {
+  display: block;
 }
 .teamCrest {
   height: 250px;
@@ -17,15 +24,13 @@
   background-color: var(--c-white-70);
 }
 .teamClubCrestWrapper {
+  display: none;
   position: absolute;
-  top: 15px;
-  right: 0px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   cursor: pointer;
-}
-.teamClubCrestWrapper {
-  position: absolute;
-  top: 15px;
-  right: 0px;
 }
 .teamClubCrest {
   height: 70px;
