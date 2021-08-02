@@ -16,7 +16,6 @@ function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
     src: teamCrest || "/assets/club-badge-placeholder.png",
     file: null,
   });
-  const [_teamTitle, setTeamTitle] = useState(teamTitle);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -94,7 +93,7 @@ function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
 
   return (
     <>
-      <form onSubmit={async (e) => await onSubmit(e)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.teamHeaderWrapper}>
           <div>
             <div className={styles.teamCrestWrapper}>
@@ -119,8 +118,14 @@ function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
                 placeholder="Team Title..."
                 size="large"
                 name="title"
-                value={_teamTitle}
-                onChange={(e) => setTeamTitle(e?.target?.value)}
+                customProps={{ ...register("title") }}
+                hint={
+                  errors?.title && {
+                    type: "error",
+                    msg: errors?.title?.message,
+                    inputBorder: true,
+                  }
+                }
               ></TemplateInput>
             </div>
             <div className={styles.teamHeaderActionButtons}>
