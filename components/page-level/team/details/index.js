@@ -455,9 +455,16 @@ function TeamSubscriptionPlanCard({
   planIsActive,
   isSubscribed,
   onEditClick,
+  noHover,
 }) {
   return (
-    <div className={styles.teamSubscriptionPlanCardWrapper} key={planId}>
+    <div
+      className={cn(
+        styles.teamSubscriptionPlanCardWrapper,
+        !noHover && styles.teamSubscriptionPlanCardWrapperHover
+      )}
+      key={planId}
+    >
       <div className={styles.teamSubscriptionPlanCard}>
         <div className={styles.teamSubscriptionPlanInfoWrapper}>
           <span className={styles.teamSubscriptionPlanName}>{planName}</span>
@@ -630,6 +637,7 @@ function TeamSubscriptionPlans({
                   onEditClick={(planToEdit) =>
                     setEditTeamSubscriptionPlan(planToEdit)
                   }
+                  noHover={isOwner || isLeader}
                 ></TeamSubscriptionPlanCard>
               )
           )}
@@ -688,7 +696,6 @@ function TeamJoinRequests({ requests }) {
 
 function TeamDetails({ user, team }) {
   const { showNotificationMsg } = useNotification();
-  console.log("user => ", user);
 
   const [_team] = useState(team);
   const [_members, setMembers] = useState([]);
