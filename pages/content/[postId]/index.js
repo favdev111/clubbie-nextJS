@@ -37,7 +37,7 @@ export const getServerSideProps = async (ctx) => {
     limit: 10,
     page: 1,
     sortBy: "dateTime:desc",
-    replies: 3,
+    repliesLimit: 3,
   }).catch(() => false);
   const comments = responsePostComments?.data;
 
