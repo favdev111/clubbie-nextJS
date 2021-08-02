@@ -292,7 +292,12 @@ function TeamMembers({ members, membership }) {
   );
 }
 
-function AddTeamSubscription({ teamId, onCloseClick, showNotificationMsg }) {
+function AddTeamSubscription({
+  teamId,
+  onCloseClick,
+  showNotificationMsg,
+  onPlanAdded,
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -308,12 +313,16 @@ function AddTeamSubscription({ teamId, onCloseClick, showNotificationMsg }) {
       () => null
     );
 
-    if (!response) {
+    const planAdded = response?.data?.subscriptionPlans?.find(
+      (x) => x?.type === "basic"
+    );
+    if (!response || !planAdded) {
       setError("Error: Could Not Add Subcription Plan");
       setLoading(false);
       return;
     }
 
+    onPlanAdded(planAdded);
     onCloseClick();
     showNotificationMsg("Plan Added Successfully..!", {
       variant: "success",
@@ -428,6 +437,21 @@ function TeamSubscriptionPlans({ teamId, plans, showNotificationMsg }) {
     return "Team Subscription Plan";
   };
 
+  const onPlanAdded = (planAdded) => {
+    const toSet = [..._plans];
+    toSet.push({
+      type: planAdded?.type,
+      id: planAdded?.id,
+      amount: planAdded?.amount,
+      active: planAdded?.active,
+      // add these fields in api response
+      isSubscribed: true,
+      currency: "£",
+      interval: "Month",
+    });
+    setPlans([...toSet]);
+  };
+
   return (
     <>
       <ContentDialog
@@ -440,6 +464,7 @@ function TeamSubscriptionPlans({ teamId, plans, showNotificationMsg }) {
             teamId={teamId}
             onCloseClick={() => setAddTeamSubscriptionPlan(false)}
             showNotificationMsg={showNotificationMsg}
+            onPlanAdded={onPlanAdded}
           />
         )}
         className={styles.addTeamSubscriptionContentDialog}
