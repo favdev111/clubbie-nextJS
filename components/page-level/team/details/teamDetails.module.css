@@ -289,7 +289,7 @@
   background-color: var(--c-black-50);
   padding: var(--space-5) var(--space-16);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 }
 .teamSubscriptionPlanCardActions > span {

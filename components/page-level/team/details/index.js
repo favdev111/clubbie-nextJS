@@ -477,16 +477,19 @@ function TeamSubscriptionPlanCard({
         </div>
       </div>
       <div className={styles.teamSubscriptionPlanCardActions}>
-        <span
-          onClick={() =>
-            onEditClick({
-              amount: planAmount,
-              active: planIsActive,
-              type: planType,
-            })
-          }
-        >
-          <EditSVG />
+        <span>{planIsActive ? "Active" : "In Active"}</span>
+        <span>
+          <span
+            onClick={() =>
+              onEditClick({
+                amount: planAmount,
+                active: planIsActive,
+                type: planType,
+              })
+            }
+          >
+            <EditSVG />
+          </span>
         </span>
       </div>
     </div>
@@ -614,7 +617,7 @@ function TeamSubscriptionPlans({
         <div className={styles.teamSubscriptionPlans}>
           {_plans.map(
             (plan) =>
-              plan?.active && (
+              (plan?.active || isOwner || isLeader) && (
                 <TeamSubscriptionPlanCard
                   planId={plan?.id || plan?._id}
                   planType={plan?.type}
