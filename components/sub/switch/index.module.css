@@ -1,0 +1,53 @@
+.switchInput {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.switch {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.switch + label {
+  --width: 40vmin;
+  --height: 20vmin;
+  --padding: 3vmin;
+}
+
+.switch + label {
+  --width: 50px;
+  --height: 1.5rem;
+  --padding: 0.25rem;
+  --ball-size: calc(var(--height) - (var(--padding) * 2));
+  display: inline-flex;
+  align-items: center;
+  width: var(--width);
+  height: var(--height);
+  background-color: var(--c-white-30);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.switch + label:after {
+  content: "";
+  width: var(--ball-size);
+  height: var(--ball-size);
+  background-color: var(--c-white-70);
+  border-radius: 50%;
+  margin-left: calc((var(--height) - var(--ball-size)) / 2);
+  transition: 0.25s ease;
+  transform: translateX(0);
+}
+.switch:checked + label {
+  background-color: var(--c-green);
+}
+.switch:checked + label:after {
+  background-color: var(--c-white);
+  transform: translateX(
+    calc(var(--width) - var(--ball-size) - var(--padding) * 2)
+  );
+}
+.checkStatus {
+  margin-left: var(--space-8);
+}
