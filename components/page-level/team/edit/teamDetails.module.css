@@ -1,0 +1,75 @@
+.teamHeaderWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+.teamCrestWrapper {
+  position: relative;
+  min-width: 250px;
+}
+.teamCrest {
+  height: 250px;
+  width: 250px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 5px solid var(--c-white-70);
+  background-color: var(--c-white-70);
+}
+.teamClubCrestWrapper {
+  position: absolute;
+  top: 15px;
+  right: 0px;
+}
+.teamClubCrest {
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 5px solid var(--c-primary);
+  background-color: var(--c-primary);
+}
+.teamParentClubNameWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-22);
+}
+.teamParentClubName {
+  color: var(--c-turk);
+  font-size: var(--fs-h3);
+  transition: 0.1s ease;
+  margin-left: var(--space-3);
+  cursor: pointer;
+}
+.teamParentClubName:hover {
+  transform: scale(1.1);
+}
+.teamHeaderDetailsWrapper {
+  margin-left: var(--space-32);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.teamHeaderTitleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.teamHeaderAdminActionButtons {
+  display: flex;
+}
+.teamHeaderActionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: var(--space-5);
+}
+.teamHeaderActionButtons > button {
+  margin-right: var(--space-5);
+}
