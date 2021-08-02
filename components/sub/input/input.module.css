@@ -26,6 +26,9 @@
 .disabledInput {
   background: var(--c-white-30) !important;
 }
+.largeText {
+  font-size: var(--fs-h2) !important;
+}
 .inputCont:focus {
   color: var(--c-white);
   background-color: var(--c-nav);
