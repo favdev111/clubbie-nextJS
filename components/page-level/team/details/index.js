@@ -410,7 +410,13 @@ function TeamSubscriptionPlanCard({
   );
 }
 
-function TeamSubscriptionPlans({ teamId, plans, showNotificationMsg }) {
+function TeamSubscriptionPlans({
+  teamId,
+  plans,
+  showNotificationMsg,
+  isOwner,
+  isLeader,
+}) {
   const [_plans, setPlans] = useState([]);
   const [addTeamSubscriptionPlan, setAddTeamSubscriptionPlan] = useState(false);
 
@@ -474,12 +480,14 @@ function TeamSubscriptionPlans({ teamId, plans, showNotificationMsg }) {
           <h2>
             Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}
           </h2>
-          <span
-            className={styles.addSubscriptionPlan}
-            onClick={() => setAddTeamSubscriptionPlan(true)}
-          >
-            <PlusTurkSVG />
-          </span>
+          {(isOwner || isLeader) && (
+            <span
+              className={styles.addSubscriptionPlan}
+              onClick={() => setAddTeamSubscriptionPlan(true)}
+            >
+              <PlusTurkSVG />
+            </span>
+          )}
         </div>
         <div className={styles.teamSubscriptionPlans}>
           {_plans.map(
@@ -713,6 +721,8 @@ function TeamDetails({ user, team }) {
         teamId={_team?.id}
         plans={_team?.subscriptionPlans}
         showNotificationMsg={showNotificationMsg}
+        isLeader={_isLeader}
+        isOwner={_isOwner}
       ></TeamSubscriptionPlans>
       <TeamJoinRequests
         requests={_members
