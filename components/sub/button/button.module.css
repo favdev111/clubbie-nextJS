@@ -24,6 +24,12 @@
 .info {
   background: var(--c-turk);
 }
+.transparent {
+  background: transparent;
+}
+.grayColor {
+  color: var(--c-white-50) !important;
+}
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;
