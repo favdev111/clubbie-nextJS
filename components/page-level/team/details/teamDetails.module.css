@@ -206,6 +206,38 @@
   padding: var(--space-16);
   border-radius: var(--radius);
 }
+.teamSubscriptionPlansHeaderWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addSubscriptionPlan {
+  cursor: pointer;
+}
+.addTeamSubscriptionContentDialog {
+  width: 50%;
+  max-width: 50%;
+}
+.addTeamSubscriptionWrapper {
+  margin-top: var(--space-12);
+  margin-bottom: calc(var(--space-12) * -1);
+}
+.addTeamSubscriptionSelectInput {
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-16);
+}
+.addTeamSubscriptionSelectInput:hover {
+  cursor: not-allowed;
+}
+.addTeamSubscriptionErrorBox {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-16);
+}
+.addTeamSubscriptionActionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 .teamSubscriptionPlans {
   width: 100%;
   margin-top: var(--space-8);

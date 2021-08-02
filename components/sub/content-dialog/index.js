@@ -28,13 +28,14 @@ function ContentDialog({
   onDismiss,
   type,
   hideActionButtons,
+  className,
 }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setOpen);
 
   return (
     <div className={cn(open ? styles.backdrop : styles.close)}>
-      <div className={styles.content} ref={wrapperRef}>
+      <div className={cn(styles.content, className)} ref={wrapperRef}>
         {title && <h2>{title}</h2>}
         <div className={styles.body}>
           <Body></Body>

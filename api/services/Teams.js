@@ -38,4 +38,8 @@ export default class TeamManagementRoutes {
   static async GetTeamDashboard(id) {
     return HTTPClient.get(`/teams/${id}/team-dashboard`);
   }
+
+  static async AddSubscriptionPlan(id, payload) {
+    return HTTPClient.post(`/teams/${id}/subscription-plan`, payload);
+  }
 }

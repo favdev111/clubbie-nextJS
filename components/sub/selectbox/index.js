@@ -11,6 +11,8 @@ function TemplateSelectBox({
   placeholder,
   customProps,
   hint,
+  disabled,
+  className,
 }) {
   return (
     <>
@@ -19,12 +21,14 @@ function TemplateSelectBox({
           styles.selectBox,
           hint?.type === "error" && hint?.inputBorder && styles.errorInput,
           hint?.type === "info" && hint?.inputBorder && styles.infoInput,
-          hint?.type === "success" && hint?.inputBorder && styles.successInput
+          hint?.type === "success" && hint?.inputBorder && styles.successInput,
+          className
         )}
         name={name}
         id={id}
         onChange={onChange}
         {...customProps}
+        disabled={disabled}
       >
         <option value="" className={styles.option}>
           {placeholder}
