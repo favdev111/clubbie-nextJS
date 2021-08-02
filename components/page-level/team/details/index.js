@@ -292,61 +292,64 @@ function TeamMembers({ members, membership }) {
   );
 }
 
-function AddTeamSubscription({
+function TeamSubscriptionContentPopover({
   teamId,
   onCloseClick,
   showNotificationMsg,
   onPlanAdded,
+  addMode,
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { register, handleSubmit, errors, setValue } = useForm({
-    schema: addSubcriptionPlanSchema,
+    schema: addMode ? addSubcriptionPlanSchema : null,
   });
 
   const onSubmit = async (data) => {
-    setLoading(true);
+    if (addMode) {
+      setLoading(true);
 
-    const payload = { amount: data?.amount };
-    const response = await Teams.AddSubscriptionPlan(teamId, payload).catch(
-      () => null
-    );
+      const payload = { amount: data?.amount };
+      const response = await Teams.AddSubscriptionPlan(teamId, payload).catch(
+        () => null
+      );
 
-    const planAdded = response?.data?.subscriptionPlans?.find(
-      (x) => x?.type === "basic"
-    );
-    if (!response || !planAdded) {
-      setError("Error: Could Not Add Subcription Plan");
+      const planAdded = response?.data?.subscriptionPlans?.find(
+        (x) => x?.type === "basic"
+      );
+      if (!response || !planAdded) {
+        setError("Error: Could Not Add Subcription Plan");
+        setLoading(false);
+        return;
+      }
+
+      onPlanAdded(planAdded);
+      onCloseClick();
+      showNotificationMsg("Plan Added Successfully..!", {
+        variant: "success",
+        displayIcon: true,
+      });
       setLoading(false);
-      return;
     }
-
-    onPlanAdded(planAdded);
-    onCloseClick();
-    showNotificationMsg("Plan Added Successfully..!", {
-      variant: "success",
-      displayIcon: true,
-    });
-    setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.addTeamSubscriptionWrapper}>
+      <div className={styles.teamSubscriptionContentPopoverWrapper}>
         <TemplateSelect
           placeholder="Select Plan Type"
           options={["Basic"]}
           selected="Basic"
           disabled={true}
-          className={styles.addTeamSubscriptionSelectInput}
+          className={styles.teamSubscriptionContentPopoverSelectInput}
         />
         <TemplateSelect
           placeholder="Select Plan interval"
           options={["Monthly"]}
           selected="Monthly"
           disabled={true}
-          className={styles.addTeamSubscriptionSelectInput}
+          className={styles.teamSubscriptionContentPopoverSelectInput}
         />
         <TemplateInput
           placeholder="Amount Per Interval"
@@ -361,21 +364,25 @@ function AddTeamSubscription({
           }
         />
         {error && (
-          <div className={styles.addTeamSubscriptionErrorBox}>
+          <div className={styles.teamSubscriptionContentPopoverErrorBox}>
             <Alert variant="error" text={error} />
           </div>
         )}
-        <div className={styles.addTeamSubscriptionActionButtons}>
-          <Button
-            variant="transparent"
-            size="medium"
-            onClick={() => onCloseClick()}
-          >
-            Cancel
-          </Button>
-          <Button variant="info" size="medium" loading={loading}>
-            Add
-          </Button>
+        <div className={styles.teamSubscriptionContentPopoverActionButtons}>
+          {addMode && (
+            <>
+              <Button
+                variant="transparent"
+                size="medium"
+                onClick={() => onCloseClick()}
+              >
+                Cancel
+              </Button>
+              <Button variant="info" size="medium" loading={loading}>
+                Add
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </form>
@@ -466,11 +473,12 @@ function TeamSubscriptionPlans({
         title={"Add Team Subscription"}
         hideActionButtons={true}
         Body={() => (
-          <AddTeamSubscription
+          <TeamSubscriptionContentPopover
             teamId={teamId}
             onCloseClick={() => setAddTeamSubscriptionPlan(false)}
             showNotificationMsg={showNotificationMsg}
             onPlanAdded={onPlanAdded}
+            addMode={true}
           />
         )}
         className={styles.addTeamSubscriptionContentDialog}

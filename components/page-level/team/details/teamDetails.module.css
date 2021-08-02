@@ -218,22 +218,22 @@
   width: 50%;
   max-width: 50%;
 }
-.addTeamSubscriptionWrapper {
+.teamSubscriptionContentPopoverWrapper {
   margin-top: var(--space-12);
   margin-bottom: calc(var(--space-12) * -1);
 }
-.addTeamSubscriptionSelectInput {
+.teamSubscriptionContentPopoverSelectInput {
   border-radius: var(--radius-md);
   margin-bottom: var(--space-16);
 }
-.addTeamSubscriptionSelectInput:hover {
+.teamSubscriptionContentPopoverSelectInput:hover {
   cursor: not-allowed;
 }
-.addTeamSubscriptionErrorBox {
+.teamSubscriptionContentPopoverErrorBox {
   margin-top: var(--space-5);
   margin-bottom: var(--space-16);
 }
-.addTeamSubscriptionActionButtons {
+.teamSubscriptionContentPopoverActionButtons {
   display: flex;
   align-items: center;
   justify-content: flex-end;
