@@ -16,7 +16,13 @@ const addSubcriptionPlan = Joi.object().keys({
   }),
 });
 
+const updateSubcriptionPlan = Joi.object().keys({
+  active: Joi.boolean().optional(),
+  amount: Joi.any().optional(), //  Note: this is not used in api req
+});
+
 module.exports = {
   editTeam,
   addSubcriptionPlan,
+  updateSubcriptionPlan,
 };

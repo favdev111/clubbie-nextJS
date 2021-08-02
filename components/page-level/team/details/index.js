@@ -10,14 +10,19 @@ import ConfirmDialog from "@sub/confirm-dialog";
 import ContentDialog from "@sub/content-dialog";
 import useNotification from "@sub/hook-notification";
 import useForm from "@sub/hook-form";
+import SwitchInput from "@sub/switch";
 import ChatSVG from "@svg/messages";
 import TickMarkSVG from "@svg/tick-mark";
 import XMarkSVG from "@svg/x-mark";
 import PlusTurkSVG from "@svg/plus-turk";
+import EditSVG from "@svg/edit";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
 import styles from "./teamDetails.module.css";
-import { addSubcriptionPlan as addSubcriptionPlanSchema } from "@utils/schemas/team.schema";
+import {
+  addSubcriptionPlan as addSubcriptionPlanSchema,
+  updateSubcriptionPlan as updateSubcriptionPlanSchema,
+} from "@utils/schemas/team.schema";
 
 function TeamHeader({
   clubId,
@@ -294,17 +299,31 @@ function TeamMembers({ members, membership }) {
 
 function TeamSubscriptionContentPopover({
   teamId,
+  plan,
   onCloseClick,
   showNotificationMsg,
   onPlanAdded,
+  onPlanUpdated,
+  editMode,
   addMode,
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [_disableAmount, setDisableAmount] = useState(false);
 
   const { register, handleSubmit, errors, setValue } = useForm({
-    schema: addMode ? addSubcriptionPlanSchema : null,
+    schema:
+      (addMode && addSubcriptionPlanSchema) ||
+      (editMode && updateSubcriptionPlanSchema),
   });
+
+  useEffect(() => {
+    if (editMode && plan) {
+      setDisableAmount(true);
+      setValue("active", plan?.active);
+      setValue("amount", plan?.amount);
+    }
+  }, [editMode, plan]);
 
   const onSubmit = async (data) => {
     if (addMode) {
@@ -330,6 +349,35 @@ function TeamSubscriptionContentPopover({
         variant: "success",
         displayIcon: true,
       });
+      setLoading(false);
+    }
+    if (editMode) {
+      setLoading(true);
+
+      const payload = { active: data?.active };
+      const response = await Teams.UpdateSubscriptionPlan(
+        teamId,
+        plan?.type,
+        payload
+      ).catch(() => null);
+
+      const planUpdated = response?.data?.subscriptionPlans?.find(
+        (x) => x?.type === plan?.type
+      );
+
+      if (!response) {
+        setError("Error: Could Not Update Subcription Plan");
+        setLoading(false);
+        return;
+      }
+
+      onCloseClick();
+      onPlanUpdated(planUpdated);
+      showNotificationMsg("Plan Updated Successfully..!", {
+        variant: "success",
+        displayIcon: true,
+      });
+
       setLoading(false);
     }
   };
@@ -362,27 +410,35 @@ function TeamSubscriptionContentPopover({
               inputBorder: true,
             }
           }
+          disabled={_disableAmount}
+          inputClassName={
+            _disableAmount && styles.teamSubscriptionContentPopoverDisabledInput
+          }
         />
+        {editMode && (
+          <SwitchInput
+            name="active"
+            checkText="Active"
+            unCheckText="In Active"
+            customProps={{ ...register("active") }}
+          ></SwitchInput>
+        )}
         {error && (
           <div className={styles.teamSubscriptionContentPopoverErrorBox}>
             <Alert variant="error" text={error} />
           </div>
         )}
         <div className={styles.teamSubscriptionContentPopoverActionButtons}>
-          {addMode && (
-            <>
-              <Button
-                variant="transparent"
-                size="medium"
-                onClick={() => onCloseClick()}
-              >
-                Cancel
-              </Button>
-              <Button variant="info" size="medium" loading={loading}>
-                Add
-              </Button>
-            </>
-          )}
+          <Button
+            variant="transparent"
+            size="medium"
+            onClick={() => onCloseClick()}
+          >
+            Cancel
+          </Button>
+          <Button variant="info" size="medium" loading={loading}>
+            {(addMode && "Add") || (editMode && "Edit")}
+          </Button>
         </div>
       </div>
     </form>
@@ -391,27 +447,47 @@ function TeamSubscriptionContentPopover({
 
 function TeamSubscriptionPlanCard({
   planId,
+  planType,
   planName,
   planAmount,
   planCurrencySymbol,
   planInterval,
+  planIsActive,
   isSubscribed,
+  onEditClick,
 }) {
   return (
-    <div className={styles.teamSubscriptionPlanCard} key={planId}>
-      <div className={styles.teamSubscriptionPlanInfoWrapper}>
-        <span className={styles.teamSubscriptionPlanName}>{planName}</span>
-        <span className={styles.teamSubscriptionPlanPriceWrapper}>
-          Starting at&ensp;
-          <span className={styles.teamSubscriptionPlanPrice}>
-            {planAmount.toFixed(2)} {planCurrencySymbol}/ {planInterval}
+    <div className={styles.teamSubscriptionPlanCardWrapper} key={planId}>
+      <div className={styles.teamSubscriptionPlanCard}>
+        <div className={styles.teamSubscriptionPlanInfoWrapper}>
+          <span className={styles.teamSubscriptionPlanName}>{planName}</span>
+          <span className={styles.teamSubscriptionPlanPriceWrapper}>
+            Starting at&ensp;
+            <span className={styles.teamSubscriptionPlanPrice}>
+              {planAmount.toFixed(2)} {planCurrencySymbol}/ {planInterval}
+            </span>
           </span>
-        </span>
+        </div>
+        <div className={styles.teamSubscriptionPlanActions}>
+          {isSubscribed && (
+            <span className={styles.teamSubscriptionPlanActive}>
+              Subscribed
+            </span>
+          )}
+        </div>
       </div>
-      <div className={styles.teamSubscriptionPlanActions}>
-        {isSubscribed && (
-          <span className={styles.teamSubscriptionPlanActive}>Subscribed</span>
-        )}
+      <div className={styles.teamSubscriptionPlanCardActions}>
+        <span
+          onClick={() =>
+            onEditClick({
+              amount: planAmount,
+              active: planIsActive,
+              type: planType,
+            })
+          }
+        >
+          <EditSVG />
+        </span>
       </div>
     </div>
   );
@@ -426,6 +502,9 @@ function TeamSubscriptionPlans({
 }) {
   const [_plans, setPlans] = useState([]);
   const [addTeamSubscriptionPlan, setAddTeamSubscriptionPlan] = useState(false);
+  const [editTeamSubscriptionPlan, setEditTeamSubscriptionPlan] = useState(
+    false
+  );
 
   useEffect(() => {
     const toSet = [];
@@ -454,7 +533,7 @@ function TeamSubscriptionPlans({
     const toSet = [..._plans];
     toSet.push({
       type: planAdded?.type,
-      id: planAdded?.id,
+      id: planAdded?._id || planAdded?.id,
       amount: planAdded?.amount,
       active: planAdded?.active,
       // add these fields in api response
@@ -465,12 +544,29 @@ function TeamSubscriptionPlans({
     setPlans([...toSet]);
   };
 
+  const onPlanUpdated = (planUpdated) => {
+    console.log(planUpdated);
+    const toSet = [..._plans];
+    const index = toSet?.findIndex((x) => x?.type === planUpdated.type);
+    toSet[index] = {
+      type: planUpdated?.type,
+      id: planUpdated?.id || planUpdated?._id,
+      amount: planUpdated?.amount,
+      active: planUpdated?.active,
+      // add these fields in api response
+      isSubscribed: true,
+      currency: "£",
+      interval: "Month",
+    };
+    setPlans([...toSet]);
+  };
+
   return (
     <>
       <ContentDialog
         open={addTeamSubscriptionPlan}
         setOpen={setAddTeamSubscriptionPlan}
-        title={"Add Team Subscription"}
+        title={"Add Subscription Plan"}
         hideActionButtons={true}
         Body={() => (
           <TeamSubscriptionContentPopover
@@ -481,7 +577,24 @@ function TeamSubscriptionPlans({
             addMode={true}
           />
         )}
-        className={styles.addTeamSubscriptionContentDialog}
+        className={styles.teamSubscriptionContentDialog}
+      ></ContentDialog>
+      <ContentDialog
+        open={editTeamSubscriptionPlan}
+        setOpen={setEditTeamSubscriptionPlan}
+        title={"Update Subscription Plan"}
+        hideActionButtons={true}
+        Body={() => (
+          <TeamSubscriptionContentPopover
+            teamId={teamId}
+            plan={editTeamSubscriptionPlan}
+            onCloseClick={() => setEditTeamSubscriptionPlan(false)}
+            showNotificationMsg={showNotificationMsg}
+            onPlanUpdated={onPlanUpdated}
+            editMode={true}
+          />
+        )}
+        className={styles.teamSubscriptionContentDialog}
       ></ContentDialog>
       <div className={styles.teamSubscriptionPlansWrapper}>
         <div className={styles.teamSubscriptionPlansHeaderWrapper}>
@@ -504,11 +617,16 @@ function TeamSubscriptionPlans({
               plan?.active && (
                 <TeamSubscriptionPlanCard
                   planId={plan?.id || plan?._id}
+                  planType={plan?.type}
                   planName={planName(plan?.type)}
                   planAmount={plan?.amount}
                   planCurrencySymbol={plan?.currency}
                   planInterval={plan?.interval}
+                  planIsActive={plan?.active}
                   isSubscribed={plan?.isSubscribed}
+                  onEditClick={(planToEdit) =>
+                    setEditTeamSubscriptionPlan(planToEdit)
+                  }
                 ></TeamSubscriptionPlanCard>
               )
           )}

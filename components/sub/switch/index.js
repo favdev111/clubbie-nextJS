@@ -4,11 +4,13 @@ import styles from "./index.module.css";
 
 function Switch({
   className,
+  name,
   checked,
   onCheck,
   onUnCheck,
   checkText,
   unCheckText,
+  customProps,
 }) {
   const [_checked, setChecked] = useState(checked);
 
@@ -24,10 +26,12 @@ function Switch({
       <div>
         <input
           id="switch"
+          name={name}
           className={cn(styles.switch, className)}
           type="checkbox"
           defaultChecked={_checked}
           onChange={onSwitchChange}
+          {...customProps}
         />
         <label for="switch"></label>
       </div>
