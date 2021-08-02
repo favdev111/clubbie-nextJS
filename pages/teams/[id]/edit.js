@@ -18,6 +18,7 @@ export default Team;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const teamId = ctx.params.id;
+  const user = ctx.user;
 
   let team = null;
 
@@ -27,7 +28,9 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
     team =
       response?.data && response?.data?.length > 0 ? response?.data[0] : null;
 
-  const notFound = !team;
+  const isOwner = team?.owner?.id === user?.id ? true : false;
+
+  const notFound = !team || !isOwner;
 
   return {
     props: {
