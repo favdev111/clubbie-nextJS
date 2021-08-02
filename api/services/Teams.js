@@ -1,6 +1,10 @@
 import HTTPClient from "@api/HTTPClient";
 
 export default class TeamManagementRoutes {
+  static async Get(id) {
+    return HTTPClient.get(`/teams/details?id=${id}`);
+  }
+
   static async RegisterTeam(clubId, payload) {
     return HTTPClient.post(`/teams/register/${clubId}`, payload);
   }
@@ -13,7 +17,7 @@ export default class TeamManagementRoutes {
     return HTTPClient.patch(`/teams/${id}/member-status`);
   }
 
-  static async LeaveATeam() {
+  static async LeaveTeam(id) {
     return HTTPClient.patch(`/teams/${id}/leave`);
   }
 
