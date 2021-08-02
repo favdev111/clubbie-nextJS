@@ -480,14 +480,15 @@ function TeamSubscriptionPlans({
           <h2>
             Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}
           </h2>
-          {(isOwner || isLeader) && (
-            <span
-              className={styles.addSubscriptionPlan}
-              onClick={() => setAddTeamSubscriptionPlan(true)}
-            >
-              <PlusTurkSVG />
-            </span>
-          )}
+          {(isOwner || isLeader) &&
+            !_plans?.find((x) => x?.type.toLowerCase() === "basic") && (
+              <span
+                className={styles.addSubscriptionPlan}
+                onClick={() => setAddTeamSubscriptionPlan(true)}
+              >
+                <PlusTurkSVG />
+              </span>
+            )}
         </div>
         <div className={styles.teamSubscriptionPlans}>
           {_plans.map(
