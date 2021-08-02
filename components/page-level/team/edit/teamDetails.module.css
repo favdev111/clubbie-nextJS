@@ -20,6 +20,12 @@
   position: absolute;
   top: 15px;
   right: 0px;
+  cursor: pointer;
+}
+.teamClubCrestWrapper {
+  position: absolute;
+  top: 15px;
+  right: 0px;
 }
 .teamClubCrest {
   height: 70px;
