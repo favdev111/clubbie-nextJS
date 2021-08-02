@@ -146,7 +146,13 @@ function TeamHeader({
             <h1>{teamTitle}</h1>
             <span className={styles.teamHeaderAdminActionButtons}>
               <ActionButton type="settings" />
-              <ActionButton type="edit" />
+              {isOwner && (
+                <Link href={`/teams/${teamId}/edit`}>
+                  <a>
+                    <ActionButton type="edit" />
+                  </a>
+                </Link>
+              )}
               <ActionButton type="chat" />
             </span>
           </div>

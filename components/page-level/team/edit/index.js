@@ -6,7 +6,7 @@ import Button from "@sub/button";
 import useForm from "@sub/hook-form";
 import TemplateInput from "@sub/input";
 import useNotification from "@sub/hook-notification";
-import styles from "./teamDetails.module.css";
+import styles from "./teamEdit.module.css";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { editTeam as editTeamSchema } from "@utils/schemas/team.schema";
