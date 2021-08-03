@@ -4,7 +4,7 @@ import ContentEdit from "./edit";
 import ContentDetails from "./details";
 import styles from "./content.module.css";
 
-function Content({ mode, content, user }) {
+function Content({ mode, content, user, team }) {
   return (
     <div className={styles.content}>
       <h1 className={styles.contentTitle}>
@@ -15,7 +15,7 @@ function Content({ mode, content, user }) {
       </h1>
       <div className={styles.contentBody}>
         {mode
-          ? (mode === "add" && <ContentAdd user={user} />) ||
+          ? (mode === "add" && <ContentAdd user={user} team={team} />) ||
             (mode === "edit" && <ContentEdit content={content} />)
           : content && <ContentDetails content={content} user={user} />}
       </div>

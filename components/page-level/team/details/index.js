@@ -16,6 +16,7 @@ import TickMarkSVG from "@svg/tick-mark";
 import XMarkSVG from "@svg/x-mark";
 import PlusTurkSVG from "@svg/plus-turk";
 import EditSVG from "@svg/edit";
+import SettingsSVG from "@svg/settings";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
 import styles from "./teamDetails.module.css";
@@ -157,7 +158,6 @@ function TeamHeader({
           <div className={styles.teamHeaderTitleWrapper}>
             <h1>{teamTitle}</h1>
             <span className={styles.teamHeaderAdminActionButtons}>
-              <ActionButton type="settings" />
               {isOwner && (
                 <Link href={`/teams/${teamId}/edit`}>
                   <a>
@@ -359,14 +359,23 @@ function TeamSubscriptionContentPopover({
         teamId,
         plan?.type,
         payload
-      ).catch(() => null);
+      ).catch((e) => {
+        const error = e?.response?.data?.message
+          ?.toLowerCase()
+          ?.includes(
+            "At least one of free,basic plan must be active".toLowerCase()
+          )
+          ? "One Subscription plan must be active at all times."
+          : "Error: Could Not Update Subcription Plan";
+        return { error };
+      });
 
       const planUpdated = response?.data?.subscriptionPlans?.find(
         (x) => x?.type === plan?.type
       );
 
-      if (!response) {
-        setError("Error: Could Not Update Subcription Plan");
+      if (response?.error) {
+        setError(response?.error);
         setLoading(false);
         return;
       }
@@ -455,13 +464,13 @@ function TeamSubscriptionPlanCard({
   planIsActive,
   isSubscribed,
   onEditClick,
-  noHover,
+  showEditTray,
 }) {
   return (
     <div
       className={cn(
         styles.teamSubscriptionPlanCardWrapper,
-        !noHover && styles.teamSubscriptionPlanCardWrapperHover
+        !showEditTray && styles.teamSubscriptionPlanCardWrapperHover
       )}
       key={planId}
     >
@@ -483,22 +492,24 @@ function TeamSubscriptionPlanCard({
           )}
         </div>
       </div>
-      <div className={styles.teamSubscriptionPlanCardActions}>
-        <span>{planIsActive ? "Active" : "In Active"}</span>
-        <span>
-          <span
-            onClick={() =>
-              onEditClick({
-                amount: planAmount,
-                active: planIsActive,
-                type: planType,
-              })
-            }
-          >
-            <EditSVG />
+      {showEditTray && (
+        <div className={styles.teamSubscriptionPlanCardActions}>
+          <span>{planIsActive ? "Active" : "In Active"}</span>
+          <span>
+            <span
+              onClick={() =>
+                onEditClick({
+                  amount: planAmount,
+                  active: planIsActive,
+                  type: planType,
+                })
+              }
+            >
+              <EditSVG />
+            </span>
           </span>
-        </span>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -511,6 +522,7 @@ function TeamSubscriptionPlans({
   isLeader,
 }) {
   const [_plans, setPlans] = useState([]);
+  const [_manageMode, setManageMode] = useState(false);
   const [addTeamSubscriptionPlan, setAddTeamSubscriptionPlan] = useState(false);
   const [editTeamSubscriptionPlan, setEditTeamSubscriptionPlan] = useState(
     false
@@ -611,20 +623,40 @@ function TeamSubscriptionPlans({
           <h2>
             Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}
           </h2>
-          {(isOwner || isLeader) &&
-            !_plans?.find((x) => x?.type.toLowerCase() === "basic") && (
-              <span
-                className={styles.addSubscriptionPlan}
-                onClick={() => setAddTeamSubscriptionPlan(true)}
-              >
-                <PlusTurkSVG />
-              </span>
-            )}
+          {(isOwner || isLeader) && (
+            <div className={styles.teamSubscriptionPlansActionButtons}>
+              {!_manageMode && (
+                <span onClick={() => setManageMode(true)}>
+                  <SettingsSVG size="24" thickness={1} filled={false} />
+                </span>
+              )}
+              {_manageMode && (
+                <>
+                  {!_plans?.find((x) => x?.type.toLowerCase() === "basic") && (
+                    <span
+                      className={styles.addSubscriptionPlan}
+                      onClick={() => setAddTeamSubscriptionPlan(true)}
+                    >
+                      <PlusTurkSVG size="24" thickness={1} />
+                    </span>
+                  )}
+                  <span onClick={() => setManageMode(false)}>
+                    <TickMarkSVG
+                      size="24"
+                      thickness={1}
+                      filled={true}
+                      fillColor={"#00a056"} // Todo: replace with global css var
+                    />
+                  </span>
+                </>
+              )}
+            </div>
+          )}
         </div>
         <div className={styles.teamSubscriptionPlans}>
           {_plans.map(
             (plan) =>
-              (plan?.active || isOwner || isLeader) && (
+              (plan?.active || _manageMode) && (
                 <TeamSubscriptionPlanCard
                   planId={plan?.id || plan?._id}
                   planType={plan?.type}
@@ -637,28 +669,32 @@ function TeamSubscriptionPlans({
                   onEditClick={(planToEdit) =>
                     setEditTeamSubscriptionPlan(planToEdit)
                   }
-                  noHover={isOwner || isLeader}
+                  showEditTray={_manageMode}
                 ></TeamSubscriptionPlanCard>
               )
           )}
         </div>
-        <div className={styles.teamSubscriptionPlanUsageInfo}>
-          {_plans?.length > 0 ? (
-            <>
-              <span>Whats the benefit?</span>&ensp;You get access to specific
-              team events free of charge and more.
-            </>
-          ) : (
-            <>
-              <span>No Plans Offered.</span>&ensp;This team does not offer any
-              subscription plan currently.
-            </>
-          )}
-        </div>
-        {_plans?.length > 0 && (
-          <div className={styles.teamSubscriptionPlanCTA}>
-            Contact your Teamleader to add you to a subscription plan
-          </div>
+        {!_manageMode && (
+          <>
+            <div className={styles.teamSubscriptionPlanUsageInfo}>
+              {_plans?.length > 0 ? (
+                <>
+                  <span>Whats the benefit?</span>&ensp;You get access to
+                  specific team events free of charge and more.
+                </>
+              ) : (
+                <>
+                  <span>No Plans Offered.</span>&ensp;This team does not offer
+                  any subscription plan currently.
+                </>
+              )}
+            </div>
+            {_plans?.length > 0 && (
+              <div className={styles.teamSubscriptionPlanCTA}>
+                Contact your Teamleader to add you to a subscription plan
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

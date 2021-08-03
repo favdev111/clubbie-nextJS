@@ -9,7 +9,7 @@ function Team({ team, user }) {
   return (
     <Layout>
       <Seo title="Team" desc="Lorem ipsum dolor sit amet" />
-      <TeamPage team={team} user={user} />
+      <TeamPage team={team} user={user} postFeed={true} />
     </Layout>
   );
 }

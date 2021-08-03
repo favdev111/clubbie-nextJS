@@ -5,6 +5,10 @@ export default class PostManagementRoutes {
     return HTTPClient.post(`/posts/`, payload);
   }
 
+  static async CreatePostInTeam(teamId, payload) {
+    return HTTPClient.post(`/posts/${teamId}`, payload);
+  }
+
   static async GetPosts(query) {
     return HTTPClient.get(`/posts/?${new URLSearchParams(query).toString()}`);
   }

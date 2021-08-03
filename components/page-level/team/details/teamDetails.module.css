@@ -211,6 +211,15 @@
   justify-content: space-between;
   align-items: center;
 }
+.teamSubscriptionPlansActionButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.teamSubscriptionPlansActionButtons > span {
+  margin-left: var(--space-12);
+  cursor: pointer;
+}
 .addSubscriptionPlan {
   cursor: pointer;
 }
@@ -271,6 +280,7 @@
   background-color: var(--c-primary);
   margin: var(--space-5);
   flex: 1;
+  max-width: 48%;
   transition: 0.2s ease;
   cursor: pointer;
 }
@@ -308,6 +318,8 @@
   align-items: flex-start;
 }
 .teamSubscriptionPlanPriceWrapper {
+  display: flex;
+  flex-direction: column;
   margin-top: var(--space-5);
   color: var(--c-white-30);
 }

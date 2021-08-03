@@ -1,10 +1,25 @@
 import React from "react";
+import Link from "next/link";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
 import router from "next/router";
 import { createPost } from "@utils/schemas/post.schema";
+import styles from "./addContent.module.css";
 
-function ContentAdd({ user }) {
+function TeamHeader({ teamId, teamTitle }) {
+  return (
+    <div className={styles.addContentTeamHeader}>
+      Create a post in{" "}
+      <Link href={`/teams/${teamId}`}>
+        <a>
+          <span className={styles.addContentTeamName}>Title {teamTitle}</span>
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+function ContentAdd({ user, team }) {
   const handleOnSubmit = async ({
     _media,
     _caption,
@@ -88,8 +103,16 @@ function ContentAdd({ user }) {
       const payload = Object.fromEntries(
         Object.entries(body).filter(([_, v]) => v != null)
       );
-      const _post = await Posts.CreatePost(payload).catch((e) => undefined);
-
+      const _post = await (async () => {
+        if (!team?.id) {
+          return await Posts.CreatePost(payload).catch((e) => undefined);
+        }
+        if (team?.id) {
+          return await Posts.CreatePostInTeam(team?.id, payload).catch(
+            (e) => undefined
+          );
+        }
+      })();
       return _post?.data;
     })();
     if (!parentPost) {
@@ -130,15 +153,20 @@ function ContentAdd({ user }) {
     }
     setStatus({ loading: false, msg: "Post Created", type: "success" });
 
-    router.push(`/?createdPost=${parentPost.id}`, "/");
+    if (!team?.id) router.push(`/?createdPost=${parentPost.id}`, "/");
+    if (team?.id)
+      router.push(`/teams/${team?.id}/?createdPost=${parentPost.id}`);
   };
 
   return (
-    <ContentForm
-      actionText="Post"
-      onSubmitForm={handleOnSubmit}
-      validationSchema={createPost}
-    ></ContentForm>
+    <>
+      {team && <TeamHeader teamId={team?.id} teamTitle={team?.title} />}
+      <ContentForm
+        actionText="Post"
+        onSubmitForm={handleOnSubmit}
+        validationSchema={createPost}
+      ></ContentForm>
+    </>
   );
 }
 

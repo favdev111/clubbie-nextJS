@@ -1,10 +1,11 @@
-export default function PlusTurk() {
+export default function PlusTurk({ size, thickness }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="25.101"
-      height="25.101"
+      width={size || "25.101"}
+      height={size || "25.101"}
       viewBox="0 0 25.101 25.101"
+      strokeWidth={thickness}
     >
       <g id="plus_1_" data-name="plus (1)" transform="translate(0.5 0.5)">
         <path
