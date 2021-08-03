@@ -22,7 +22,7 @@
   position: relative;
   max-width: 700px;
 }
-.content p {
+.content > p {
   font-size: 22px;
   padding: 16px;
 }

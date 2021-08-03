@@ -6,6 +6,23 @@ const editTeam = Joi.object().keys({
   }),
 });
 
+const addSubcriptionPlan = Joi.object().keys({
+  amount: Joi.number().required().min(5000).max(10000).integer().messages({
+    "any.empty": "Amount is required",
+    "number.base": "Amount must be numeric",
+    "number.min": "Amount must be greater or equal to 5000",
+    "number.max": "Amount must be less or equal to 10000",
+    "number.integer": "Amount must not be decimal",
+  }),
+});
+
+const updateSubcriptionPlan = Joi.object().keys({
+  active: Joi.boolean().optional(),
+  amount: Joi.any().optional(), //  Note: this is not used in api req
+});
+
 module.exports = {
   editTeam,
+  addSubcriptionPlan,
+  updateSubcriptionPlan,
 };

@@ -3,9 +3,9 @@ import Link from "next/link";
 import Button from "@sub/button";
 import Table from "@sub/table";
 import ChatSVG from "@svg/messages";
-import styles from "./newclubDetails.module.css";
-import Team from "../../../../api/services/Teams"
-import Club from "../../../../api/services/Clubs"
+import styles from "./clubDetails.module.css";
+import Team from "@api/services/Teams";
+import Club from "@api/services/Clubs";
 import useNotification from "@sub/hook-notification";
 
 function ClubDetails({ club }) {
@@ -58,10 +58,10 @@ function ClubDetails({ club }) {
 
     const teamInfo = async (teamId) => {
       try {
-        const response = await Team.JoinTeam(teamId)
-        const status = response.status
+        const response = await Team.JoinTeam(teamId);
+        const status = response.status;
         if (status === 200) {
-          const team = response.data.title
+          const team = response.data.title;
           showNotificationMsg(team + " Team Joined!", {
             variant: "success",
             displayIcon: true,
@@ -78,7 +78,7 @@ function ClubDetails({ club }) {
           displayIcon: true,
         });
       }
-    }
+    };
 
     if (club?.teams) {
       const rows = club?.teams?.map((x) => {
@@ -104,7 +104,9 @@ function ClubDetails({ club }) {
             <div className={styles.clubMemberListAction}>
               <span>
                 <a>
-                  <Button size="x-small" onClick={teamInfo.bind(this, x?.id)}>Join</Button>
+                  <Button size="x-small" onClick={teamInfo.bind(this, x?.id)}>
+                    Join
+                  </Button>
                 </a>
               </span>
             </div>
@@ -157,10 +159,10 @@ function ClubDetails({ club }) {
 
   const clubInfo = async (clubId) => {
     try {
-      const response = await Club.JoinClub(clubId)
-      const status = response.status
+      const response = await Club.JoinClub(clubId);
+      const status = response.status;
       if (status === 200) {
-        const club = response.data.title
+        const club = response.data.title;
         showNotificationMsg(club + " Club Joined!", {
           variant: "success",
           displayIcon: true,
@@ -177,7 +179,7 @@ function ClubDetails({ club }) {
         displayIcon: true,
       });
     }
-  }
+  };
 
   return (
     <>
@@ -189,7 +191,9 @@ function ClubDetails({ club }) {
           />
           <h1>{club?.title}</h1>
           <div className={styles.clubActionButtons}>
-            <Button variant="success" onClick={clubInfo.bind(this, club?.id)}>Join</Button>
+            <Button variant="success" onClick={clubInfo.bind(this, club?.id)}>
+              Join
+            </Button>
             <Button variant="danger">Leave</Button>
             <Button>Manage</Button>
             <Button variant="cancel">Edit</Button>

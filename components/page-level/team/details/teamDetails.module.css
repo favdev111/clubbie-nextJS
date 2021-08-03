@@ -206,6 +206,47 @@
   padding: var(--space-16);
   border-radius: var(--radius);
 }
+.teamSubscriptionPlansHeaderWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addSubscriptionPlan {
+  cursor: pointer;
+}
+.manageSubscriptionPlans {
+  cursor: pointer;
+}
+.teamSubscriptionContentDialog {
+  width: 50%;
+  max-width: 50%;
+}
+.teamSubscriptionContentPopoverWrapper {
+  margin-top: var(--space-12);
+  margin-bottom: calc(var(--space-12) * -1);
+}
+.teamSubscriptionContentPopoverDisabledInput {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.teamSubscriptionContentPopoverDisabledInput:hover {
+  cursor: not-allowed;
+}
+.teamSubscriptionContentPopoverSelectInput {
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-16);
+}
+.teamSubscriptionContentPopoverSelectInput:hover {
+  cursor: not-allowed;
+}
+.teamSubscriptionContentPopoverErrorBox {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-16);
+}
+.teamSubscriptionContentPopoverActionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 .teamSubscriptionPlans {
   width: 100%;
   margin-top: var(--space-8);
@@ -223,23 +264,40 @@
 .teamSubscriptionPlans::-webkit-scrollbar-track {
   background-color: transparent;
 }
-.teamSubscriptionPlanCard {
+.teamSubscriptionPlanCardWrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   border-radius: var(--radius-md);
   background-color: var(--c-primary);
   margin: var(--space-5);
-  padding: var(--space-20) var(--space-10);
-  width: 48%;
+  flex: 1;
   transition: 0.2s ease;
   cursor: pointer;
 }
-.teamSubscriptionPlanCard:hover {
+.teamSubscriptionPlanCardWrapperHover:hover {
   transform: scale(1.1);
   margin-left: 20px;
   box-shadow: 0px 3px 15px rgba(255, 255, 255, 0.1);
   z-index: 999;
+}
+.teamSubscriptionPlanCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-20) var(--space-10);
+}
+.teamSubscriptionPlanCardActions {
+  border-bottom-right-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+  background-color: var(--c-black-50);
+  padding: var(--space-5) var(--space-16);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.teamSubscriptionPlanCardActions > span {
+  padding: var(--space-5);
+  cursor: pointer;
 }
 .teamSubscriptionPlanInfoWrapper {
   margin-right: auto;
