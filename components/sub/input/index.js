@@ -20,6 +20,7 @@ const TemplateInput = ({
   inputClassName,
   disabled,
   focused,
+  size,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
   const showPasswordHandler = (e) => {
@@ -54,6 +55,7 @@ const TemplateInput = ({
                 hint?.type === "success" &&
                   hint?.inputBorder &&
                   styles.successInput,
+                size === "large" && styles.largeText,
                 inputClassName
               )}
               disabled={disabled}
@@ -102,6 +104,7 @@ const TemplateInput = ({
               hint?.type === "success" &&
                 hint?.inputBorder &&
                 styles.successInput,
+              size === "large" && styles.largeText,
               inputClassName
             )}
             disabled={disabled}

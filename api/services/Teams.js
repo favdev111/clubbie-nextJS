@@ -21,6 +21,10 @@ export default class TeamManagementRoutes {
     return HTTPClient.patch(`/teams/${id}/leave`);
   }
 
+  static async UpdateTeam(id, payload) {
+    return HTTPClient.put(`/teams/${id}`, payload);
+  }
+
   static async GetTeamsWithDetail(query) {
     return HTTPClient.get(`/teams/details?${query}`);
   }
