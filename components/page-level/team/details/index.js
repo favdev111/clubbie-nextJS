@@ -618,7 +618,7 @@ function TeamSubscriptionPlans({
             <div className={styles.teamSubscriptionPlansActionButtons}>
               {!_manageMode && (
                 <span onClick={() => setManageMode(true)}>
-                  <SettingsSVG />
+                  <SettingsSVG size="24" thickness={1} filled={false} />
                 </span>
               )}
               {_manageMode && (
@@ -628,11 +628,16 @@ function TeamSubscriptionPlans({
                       className={styles.addSubscriptionPlan}
                       onClick={() => setAddTeamSubscriptionPlan(true)}
                     >
-                      <PlusTurkSVG />
+                      <PlusTurkSVG size="24" thickness={1} />
                     </span>
                   )}
                   <span onClick={() => setManageMode(false)}>
-                    <TickMarkSVG />
+                    <TickMarkSVG
+                      size="24"
+                      thickness={1}
+                      filled={true}
+                      fillColor={"#00a056"} // Todo: replace with global css var
+                    />
                   </span>
                 </>
               )}
