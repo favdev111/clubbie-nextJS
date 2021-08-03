@@ -254,7 +254,7 @@ function EndFeedMessage() {
   );
 }
 
-function Home({ posts, user }) {
+function Home({ posts, user, hideFilters }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
@@ -307,18 +307,22 @@ function Home({ posts, user }) {
         onConfirm={() => router.push("/auth/login")}
         type="info"
       ></ConfirmDialog>
-      <PostSearch
-        filter={filter}
-        setFilter={setFilter}
-        setLoading={setLoading}
-        fetchPosts={fetchPosts}
-      />
+      {!hideFilters && (
+        <PostSearch
+          filter={filter}
+          setFilter={setFilter}
+          setLoading={setLoading}
+          fetchPosts={fetchPosts}
+        />
+      )}
       <h1 className={styles.title}> Videos</h1>
-      <PostFilters
-        setFilter={setFilter}
-        setLoading={setLoading}
-        fetchPosts={fetchPosts}
-      />
+      {!hideFilters && (
+        <PostFilters
+          setFilter={setFilter}
+          setLoading={setLoading}
+          fetchPosts={fetchPosts}
+        />
+      )}
       <AddContent />
       {_posts?.results?.length === 0 && (
         <div className={styles.noPosts}>No posts for the applied filter</div>

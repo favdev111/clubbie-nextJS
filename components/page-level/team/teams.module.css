@@ -3,7 +3,10 @@
   margin-right: auto;
   max-width: var(--container-lg);
   padding-top: var(--space-50);
+}
+.teamMarginBottom {
   padding-bottom: var(--space-50);
+  margin-bottom: 0;
 }
 .teamTitle {
   margin-bottom: 20px;
@@ -14,6 +17,9 @@
   width: 100%;
   border-radius: var(--radius-lg);
   padding: var(--space-32);
+}
+.teamPostFeed {
+  margin-top: calc(var(--space-32) * -1);
 }
 
 @media (max-width: 640px) {
