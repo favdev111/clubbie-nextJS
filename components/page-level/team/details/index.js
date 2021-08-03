@@ -44,6 +44,7 @@ function TeamHeader({
   const [joiningTeam, setJoiningTeam] = useState(false);
   const [leaveTeamConfirm, setLeaveTeamConfirm] = useState(false);
   const [leavingTeam, setLeavingTeam] = useState(false);
+  const [displayCrestFullScreen, setDisplayCrestFullScreen] = useState(false);
 
   const handleJoinClick = async () => {
     setJoiningTeam(true);
@@ -105,6 +106,17 @@ function TeamHeader({
 
   return (
     <>
+      <ContentDialog
+        open={displayCrestFullScreen}
+        setOpen={setDisplayCrestFullScreen}
+        Body={() => (
+          <img
+            className={styles.teamCrestFullScreen}
+            src={teamCrest || "/assets/club-badge-placeholder.png"}
+          />
+        )}
+        hideActionButtons={true}
+      ></ContentDialog>
       <ConfirmDialog
         open={leaveTeamConfirm}
         setOpen={setLeaveTeamConfirm}
@@ -135,6 +147,7 @@ function TeamHeader({
             <img
               className={styles.teamCrest}
               src={teamCrest || "/assets/club-badge-placeholder.png"}
+              onClick={() => setDisplayCrestFullScreen(true)}
             />
             <span className={styles.teamClubCrestWrapper}>
               <img
