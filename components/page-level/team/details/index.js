@@ -665,23 +665,27 @@ function TeamSubscriptionPlans({
               )
           )}
         </div>
-        <div className={styles.teamSubscriptionPlanUsageInfo}>
-          {_plans?.length > 0 ? (
-            <>
-              <span>Whats the benefit?</span>&ensp;You get access to specific
-              team events free of charge and more.
-            </>
-          ) : (
-            <>
-              <span>No Plans Offered.</span>&ensp;This team does not offer any
-              subscription plan currently.
-            </>
-          )}
-        </div>
-        {_plans?.length > 0 && (
-          <div className={styles.teamSubscriptionPlanCTA}>
-            Contact your Teamleader to add you to a subscription plan
-          </div>
+        {!_manageMode && (
+          <>
+            <div className={styles.teamSubscriptionPlanUsageInfo}>
+              {_plans?.length > 0 ? (
+                <>
+                  <span>Whats the benefit?</span>&ensp;You get access to
+                  specific team events free of charge and more.
+                </>
+              ) : (
+                <>
+                  <span>No Plans Offered.</span>&ensp;This team does not offer
+                  any subscription plan currently.
+                </>
+              )}
+            </div>
+            {_plans?.length > 0 && (
+              <div className={styles.teamSubscriptionPlanCTA}>
+                Contact your Teamleader to add you to a subscription plan
+              </div>
+            )}
+          </>
         )}
       </div>
     </>
