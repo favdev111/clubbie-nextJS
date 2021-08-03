@@ -206,10 +206,10 @@ function PostFilters({ setFilter, fetchPosts, setLoading }) {
   );
 }
 
-function AddContent() {
+function AddContent({ teamId }) {
   return (
     <span>
-      <Link href="/content">
+      <Link href={`/content${teamId ? `?teamId=${teamId}` : ""}`}>
         <a>
           <div className={styles.addContent}>
             <div className={styles.addButton}>
@@ -254,10 +254,11 @@ function EndFeedMessage() {
   );
 }
 
-function Home({ posts, user, hideFilters }) {
+function Home({ posts, user, hideFilters, team }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
+  const [_team, setTeam] = useState(team);
   const [_posts, setPosts] = useState(posts);
   const [filter, setFilter] = useState({
     sortBy: "createdAt:desc",
@@ -323,7 +324,7 @@ function Home({ posts, user, hideFilters }) {
           fetchPosts={fetchPosts}
         />
       )}
-      <AddContent />
+      <AddContent teamId={_team?.id} />
       {_posts?.results?.length === 0 && (
         <div className={styles.noPosts}>No posts for the applied filter</div>
       )}

@@ -28,6 +28,7 @@ function Team({ team, user, editMode, postFeed }) {
             }}
             hideFilters={true}
             user={user}
+            team={team}
           />
         </div>
       )}
