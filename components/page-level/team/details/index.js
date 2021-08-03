@@ -359,14 +359,23 @@ function TeamSubscriptionContentPopover({
         teamId,
         plan?.type,
         payload
-      ).catch(() => null);
+      ).catch((e) => {
+        const error = e?.response?.data?.message
+          ?.toLowerCase()
+          ?.includes(
+            "At least one of free,basic plan must be active".toLowerCase()
+          )
+          ? "One Subscription plan must be active at all times."
+          : "Error: Could Not Update Subcription Plan";
+        return { error };
+      });
 
       const planUpdated = response?.data?.subscriptionPlans?.find(
         (x) => x?.type === plan?.type
       );
 
-      if (!response) {
-        setError("Error: Could Not Update Subcription Plan");
+      if (response?.error) {
+        setError(response?.error);
         setLoading(false);
         return;
       }
