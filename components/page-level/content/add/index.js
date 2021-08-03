@@ -160,7 +160,7 @@ function ContentAdd({ user, team }) {
 
   return (
     <>
-      <TeamHeader teamId={team?.id} teamTitle={team?.title} />
+      {team && <TeamHeader teamId={team?.id} teamTitle={team?.title} />}
       <ContentForm
         actionText="Post"
         onSubmitForm={handleOnSubmit}
