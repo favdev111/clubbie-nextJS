@@ -16,6 +16,7 @@ import TickMarkSVG from "@svg/tick-mark";
 import XMarkSVG from "@svg/x-mark";
 import PlusTurkSVG from "@svg/plus-turk";
 import EditSVG from "@svg/edit";
+import SettingsSVG from "@svg/settings";
 import Clubs from "@api/services/Clubs";
 import Teams from "@api/services/Teams";
 import styles from "./teamDetails.module.css";
@@ -157,7 +158,6 @@ function TeamHeader({
           <div className={styles.teamHeaderTitleWrapper}>
             <h1>{teamTitle}</h1>
             <span className={styles.teamHeaderAdminActionButtons}>
-              <ActionButton type="settings" />
               {isOwner && (
                 <Link href={`/teams/${teamId}/edit`}>
                   <a>
@@ -455,13 +455,13 @@ function TeamSubscriptionPlanCard({
   planIsActive,
   isSubscribed,
   onEditClick,
-  noHover,
+  showEditTray,
 }) {
   return (
     <div
       className={cn(
         styles.teamSubscriptionPlanCardWrapper,
-        !noHover && styles.teamSubscriptionPlanCardWrapperHover
+        !showEditTray && styles.teamSubscriptionPlanCardWrapperHover
       )}
       key={planId}
     >
@@ -483,22 +483,24 @@ function TeamSubscriptionPlanCard({
           )}
         </div>
       </div>
-      <div className={styles.teamSubscriptionPlanCardActions}>
-        <span>{planIsActive ? "Active" : "In Active"}</span>
-        <span>
-          <span
-            onClick={() =>
-              onEditClick({
-                amount: planAmount,
-                active: planIsActive,
-                type: planType,
-              })
-            }
-          >
-            <EditSVG />
+      {showEditTray && (
+        <div className={styles.teamSubscriptionPlanCardActions}>
+          <span>{planIsActive ? "Active" : "In Active"}</span>
+          <span>
+            <span
+              onClick={() =>
+                onEditClick({
+                  amount: planAmount,
+                  active: planIsActive,
+                  type: planType,
+                })
+              }
+            >
+              <EditSVG />
+            </span>
           </span>
-        </span>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -511,6 +513,7 @@ function TeamSubscriptionPlans({
   isLeader,
 }) {
   const [_plans, setPlans] = useState([]);
+  const [_manageMode, setManageMode] = useState(false);
   const [addTeamSubscriptionPlan, setAddTeamSubscriptionPlan] = useState(false);
   const [editTeamSubscriptionPlan, setEditTeamSubscriptionPlan] = useState(
     false
@@ -611,20 +614,35 @@ function TeamSubscriptionPlans({
           <h2>
             Subscription Plans {_plans?.length > 0 && `(${_plans?.length})`}
           </h2>
-          {(isOwner || isLeader) &&
-            !_plans?.find((x) => x?.type.toLowerCase() === "basic") && (
-              <span
-                className={styles.addSubscriptionPlan}
-                onClick={() => setAddTeamSubscriptionPlan(true)}
-              >
-                <PlusTurkSVG />
-              </span>
-            )}
+          {(isOwner || isLeader) && (
+            <div className={styles.teamSubscriptionPlansActionButtons}>
+              {!_manageMode && (
+                <span onClick={() => setManageMode(true)}>
+                  <SettingsSVG />
+                </span>
+              )}
+              {_manageMode && (
+                <>
+                  {!_plans?.find((x) => x?.type.toLowerCase() === "basic") && (
+                    <span
+                      className={styles.addSubscriptionPlan}
+                      onClick={() => setAddTeamSubscriptionPlan(true)}
+                    >
+                      <PlusTurkSVG />
+                    </span>
+                  )}
+                  <span onClick={() => setManageMode(false)}>
+                    <TickMarkSVG />
+                  </span>
+                </>
+              )}
+            </div>
+          )}
         </div>
         <div className={styles.teamSubscriptionPlans}>
           {_plans.map(
             (plan) =>
-              (plan?.active || isOwner || isLeader) && (
+              (plan?.active || _manageMode) && (
                 <TeamSubscriptionPlanCard
                   planId={plan?.id || plan?._id}
                   planType={plan?.type}
@@ -637,7 +655,7 @@ function TeamSubscriptionPlans({
                   onEditClick={(planToEdit) =>
                     setEditTeamSubscriptionPlan(planToEdit)
                   }
-                  noHover={isOwner || isLeader}
+                  showEditTray={_manageMode}
                 ></TeamSubscriptionPlanCard>
               )
           )}
