@@ -238,6 +238,15 @@
   margin-top: var(--space-12);
   margin-bottom: calc(var(--space-12) * -1);
 }
+.teamSubscriptionContentPopoverPlanTypeHeader {
+  margin-bottom: var(--space-16);
+}
+.teamSubscriptionContentPopoverPlanTypeHeader > span {
+  background-color: var(--c-green);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-8);
+  margin-left: var(--space-8);
+}
 .teamSubscriptionContentPopoverDisabledInput {
   background: rgba(255, 255, 255, 0.1) !important;
 }

@@ -407,20 +407,23 @@ function TeamSubscriptionContentPopover({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.teamSubscriptionContentPopoverWrapper}>
-        <TemplateSelect
+        <div className={styles.teamSubscriptionContentPopoverPlanTypeHeader}>
+          Plan Type<span>Standard</span>
+        </div>
+        {/* <TemplateSelect
           placeholder="Select Plan Type"
           options={["Basic"]}
           selected="Basic"
           disabled={true}
           className={styles.teamSubscriptionContentPopoverSelectInput}
-        />
-        <TemplateSelect
+        /> */}
+        {/* <TemplateSelect
           placeholder="Select Plan interval"
           options={["Monthly"]}
           selected="Monthly"
           disabled={true}
           className={styles.teamSubscriptionContentPopoverSelectInput}
-        />
+        /> */}
         <TemplateInput
           placeholder="Amount Per Interval"
           name="amount"
@@ -432,7 +435,7 @@ function TeamSubscriptionContentPopover({
               inputBorder: true,
             }
           }
-          disabled={_disableAmount}
+          // disabled={_disableAmount}
           inputClassName={
             _disableAmount && styles.teamSubscriptionContentPopoverDisabledInput
           }
