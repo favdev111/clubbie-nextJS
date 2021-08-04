@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PhotoCamera from "@svg/edit-profile-pic";
 import Button from "@sub/button";
+import useForm from "@sub/hook-form";
 import TemplateInput from "@sub/input";
 import useNotification from "@sub/hook-notification";
 import styles from "./clubEdit.module.css";
+import Files from "@api/services/Files";
+import Clubs from "@api/services/Clubs";
+import { editClub as editClubSchema } from "@utils/schemas/club.schema";
 
 function ClubHeader({
   clubId,
@@ -21,6 +25,14 @@ function ClubHeader({
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const { register, handleSubmit, errors, setValue } = useForm({
+    schema: editClubSchema,
+  });
+
+  useEffect(() => {
+    setValue("title", clubTitle);
+    setValue("description", clubDescription);
+  }, [clubTitle, clubDescription]);
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -36,9 +48,59 @@ function ClubHeader({
     reader.readAsDataURL(file);
   };
 
+  const onSubmit = async (data) => {
+    setLoading(true);
+
+    // upload club crest image if any
+    let clubCrestUploaded = null;
+    if (_clubCrest?.file) {
+      const imageForm = new FormData();
+      imageForm.append("files", _clubCrest.file);
+
+      const responseCrest = await Files.UploadFile("clubImg", imageForm, {
+        clubId,
+      }).catch(() => null);
+
+      clubCrestUploaded =
+        responseCrest?.data && responseCrest?.data[0]
+          ? responseCrest?.data[0]?.s3Url
+          : null;
+
+      if (!clubCrestUploaded) {
+        showNotificationMsg("Could Not Update Club", {
+          variant: "error",
+          displayIcon: true,
+        });
+        setLoading(false);
+        return;
+      }
+    }
+
+    const payload = { title: data?.title, description: data?.description };
+    if (clubCrestUploaded) payload.crest = clubCrestUploaded;
+
+    const response = await Clubs.UpdateClub(clubId, payload).catch(() => null);
+    if (!response) {
+      showNotificationMsg("Could Not Update Club", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    showNotificationMsg("Club Updated Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+
+    router.push(`/clubs/${clubId}`); //  redirect to club profile
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.clubHeaderWrapper}>
           <div>
             <div className={styles.clubCrestWrapper}>
@@ -64,6 +126,14 @@ function ClubHeader({
                   placeholder="Club Title..."
                   size="large"
                   name="title"
+                  customProps={{ ...register("title") }}
+                  hint={
+                    errors?.title && {
+                      type: "error",
+                      msg: errors?.title?.message,
+                      inputBorder: true,
+                    }
+                  }
                 ></TemplateInput>
               </span>
               <span>
@@ -71,6 +141,16 @@ function ClubHeader({
                   placeholder="Club Description..."
                   size="large"
                   name="description"
+                  customProps={{ ...register("description") }}
+                  hint={
+                    errors?.description && {
+                      type: "error",
+                      msg: errors?.description?.message,
+                      inputBorder: true,
+                    }
+                  }
+                  multiLine={true}
+                  rows={5}
                 ></TemplateInput>
               </span>
             </div>
