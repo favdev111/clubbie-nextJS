@@ -3,6 +3,7 @@ import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
 import useNotification from "@sub/hook-notification";
+import ChatSVG from "@svg/messages";
 import styles from "./clubDetails.module.css";
 
 function ClubHeader({
@@ -57,16 +58,126 @@ function ClubHeader({
   );
 }
 
+function ClubMemberCard({ id, image, name, roles, chatButton }) {
+  return (
+    <div className={styles.clubMemberCard} key={id}>
+      <Link href={`/profile/${id}`}>
+        <a>
+          <img src={image} className={styles.clubMemberImage} />
+        </a>
+      </Link>
+      <div className={styles.clubMemberInfoWrapper}>
+        <Link href={`/profile/${id}`}>
+          <a>
+            <span className={styles.clubMemberName}>{name}</span>
+          </a>
+        </Link>
+        <div className={styles.clubMemberRolesWrapper}>
+          {roles?.map((role) => (
+            <span className={styles.clubMemberRole}>{role}</span>
+          ))}
+        </div>
+      </div>
+      <div className={styles.clubMemberActionButtons}>
+        {chatButton && (
+          <span>
+            <ChatSVG />
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClubMembers({ members }) {
+  return (
+    <div className={styles.clubMembersBlock}>
+      <div className={styles.clubMembersWrapper}>
+        <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
+        {members?.length > 0 && (
+          <div className={styles.clubMembers}>
+            {members?.map((member) => (
+              <>
+                <ClubMemberCard
+                  id={member?.id}
+                  name={member?.name}
+                  image={member?.image}
+                  roles={member?.roles}
+                  chatButton={true}
+                ></ClubMemberCard>
+              </>
+            ))}
+          </div>
+        )}
+        {members?.length === 0 && (
+          <div className={styles.clubMembersNone}>
+            This Club has no members currently.
+            <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ClubDetails({ user, club }) {
   const { showNotificationMsg } = useNotification();
 
   const [_club] = useState(club);
+  const [_members, setMembers] = useState([]);
   const [_isOwner, setIsOwner] = useState(false);
   const [_isOfficial, setIsOfficial] = useState(false);
   const [_isPlayer, setIsPlayer] = useState(false);
 
   useEffect(() => {
+    const members = [];
     const { owner, officials, players } = _club;
+
+    // set members
+    if (owner) {
+      members.push({
+        id: owner?.id || "Owner-ID",
+        name: owner?.profile?.fullName || owner?.id || "Owner-ID",
+        roles: ["Owner"],
+        image: owner?.profile?.image || "/assets/person-placeholder.jpg",
+      });
+    }
+    if (officials) {
+      officials?.map((official) => {
+        const foundMember = members.find((x) => x?.id === official?.user?.id);
+        if (foundMember) {
+          foundMember?.roles?.push(official?.role);
+        } else {
+          members.push({
+            id: official?.user?.id || "Official-ID",
+            name:
+              official?.user?.profile?.fullName ||
+              official?.user?.id ||
+              "Official-ID",
+            roles: [official?.role],
+            image:
+              official?.user?.profile?.image ||
+              "/assets/person-placeholder.jpg",
+          });
+        }
+      });
+    }
+    if (players) {
+      players?.map((player) => {
+        const foundMember = members.find((x) => x?.id === player?.id);
+        if (foundMember) {
+          foundMember?.roles?.push("Player");
+        } else {
+          members.push({
+            id: player?.id || "Player-ID",
+            name: player?.profile?.fullName || player?.id || "Player-ID",
+            roles: ["Player"],
+            image: player?.profile?.image || "/assets/person-placeholder.jpg",
+          });
+        }
+      });
+    }
+    setMembers([...members]);
 
     // set user authority
     if (owner?.id === user?.id) {
@@ -94,6 +205,7 @@ function ClubDetails({ user, club }) {
         isOwner={_isOwner}
         isOfficial={_isOfficial}
       ></ClubHeader>
+      <ClubMembers members={_members}></ClubMembers>
     </>
   );
 }
