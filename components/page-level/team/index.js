@@ -5,7 +5,7 @@ import TeamEdit from "./edit";
 import ContentFeed from "@page/content/feed";
 import styles from "./teams.module.css";
 
-function Team({ team, user, editMode, postFeed }) {
+function Team({ team, user, editMode, postFeed, posts }) {
   return (
     <>
       <div className={cn(styles.team, !postFeed && styles.teamMarginBottom)}>
@@ -15,17 +15,10 @@ function Team({ team, user, editMode, postFeed }) {
           {editMode && <TeamEdit team={team} user={user} />}
         </div>
       </div>
-      {!editMode && postFeed && (
+      {!editMode && postFeed && posts && (
         <div className={styles.teamPostFeed}>
           <ContentFeed
-            posts={{
-              results: [],
-              page: 0,
-              limit: 10,
-              skip: 0,
-              totalPages: 0,
-              totalResults: 0,
-            }}
+            posts={posts}
             hideFilters={true}
             user={user}
             team={team}

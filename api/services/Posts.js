@@ -13,6 +13,12 @@ export default class PostManagementRoutes {
     return HTTPClient.get(`/posts/?${new URLSearchParams(query).toString()}`);
   }
 
+  static async GetTeamPosts(teamId, query) {
+    return HTTPClient.get(
+      `/posts/team/${teamId}/?${new URLSearchParams(query).toString()}`
+    );
+  }
+
   static async GetPostById(id) {
     return HTTPClient.get(`/posts/${id}`);
   }
