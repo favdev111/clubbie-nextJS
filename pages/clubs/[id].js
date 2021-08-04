@@ -5,11 +5,11 @@ import Seo from "@layout/seo";
 import Clubs from "@api/services/Clubs";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
-function Club({ club }) {
+function Club({ club, user }) {
   return (
     <Layout>
       <Seo title="Club" desc="Lorem ipsum dolor sit amet" />
-      <ClubPage club={club} />
+      <ClubPage club={club} user={user} />
     </Layout>
   );
 }
