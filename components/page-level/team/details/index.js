@@ -158,7 +158,7 @@ function TeamHeader({
           </div>
           {clubName && (
             <div className={styles.teamParentClubNameWrapper}>
-              Owned by&nbsp;
+              Club&nbsp;
               <Link href={`/clubs/${clubId}`}>
                 <a>
                   <span className={styles.teamParentClubName}>{clubName}</span>
