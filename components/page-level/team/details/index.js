@@ -178,7 +178,7 @@ function TeamHeader({
                   </a>
                 </Link>
               )}
-              <ActionButton type="chat" />
+              {/* <ActionButton type="chat" /> */}
             </span>
           </div>
           <div className={styles.teamHeaderActionButtons}>
