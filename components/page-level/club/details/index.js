@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
@@ -89,9 +90,30 @@ function ClubMemberCard({ id, image, name, roles, chatButton }) {
   );
 }
 
-function ClubMembers({ members }) {
+function ClubMembers({ members, membership }) {
   return (
     <div className={styles.clubMembersBlock}>
+      {membership?.status && membership?.statusText && (
+        <div className={styles.clubMembershipWrapper}>
+          <span className={styles.clubMembershipStatusWrapper}>
+            Membership
+            <span
+              className={cn(
+                styles.clubMembershipStatus,
+                ["active", "owner"].includes(
+                  membership?.status?.toLowerCase()
+                ) && styles.activeMemberShip,
+                membership.status?.toLowerCase() === "suspended" &&
+                  styles.suspendedMemberShip,
+                membership.status?.toLowerCase() === "unapproved" &&
+                  styles.unapprovedMemberShip
+              )}
+            >
+              {membership.statusText}
+            </span>
+          </span>
+        </div>
+      )}
       <div className={styles.clubMembersWrapper}>
         <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
         {members?.length > 0 && (
@@ -128,6 +150,10 @@ function ClubDetails({ user, club }) {
   const [_isOwner, setIsOwner] = useState(false);
   const [_isOfficial, setIsOfficial] = useState(false);
   const [_isPlayer, setIsPlayer] = useState(false);
+  const [_membership, setMembership] = useState({
+    status: null,
+    statusText: null,
+  });
 
   useEffect(() => {
     const members = [];
@@ -181,10 +207,12 @@ function ClubDetails({ user, club }) {
 
     // set user authority
     if (owner?.id === user?.id) {
+      setMembership({ status: "owner", statusText: "Owner" });
       setIsOwner(true);
     }
     const foundOfficial = officials?.find((x) => x?.user?.id === user?.id);
     if (foundOfficial) {
+      setMembership({ status: "official", statusText: "Official" });
       setIsOfficial(true);
     }
     const foundPlayer = players?.find((x) => x?.id === user?.id);
@@ -205,7 +233,7 @@ function ClubDetails({ user, club }) {
         isOwner={_isOwner}
         isOfficial={_isOfficial}
       ></ClubHeader>
-      <ClubMembers members={_members}></ClubMembers>
+      <ClubMembers members={_members} membership={_membership}></ClubMembers>
     </>
   );
 }
