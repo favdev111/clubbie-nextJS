@@ -6,7 +6,7 @@ export default class PostManagementRoutes {
   }
 
   static async CreatePostInTeam(teamId, payload) {
-    return HTTPClient.post(`/posts/${teamId}`, payload);
+    return HTTPClient.post(`/posts/team/${teamId}`, payload);
   }
 
   static async GetPosts(query) {
