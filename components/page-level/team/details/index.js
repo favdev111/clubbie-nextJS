@@ -89,14 +89,15 @@ function TeamHeader({
 
     await onMemberLeave();
     const response = await Teams.LeaveTeam(teamId).catch(() => null);
-    if (!response) {
-      showNotificationMsg("Could Not Leave Team", {
-        variant: "error",
-        displayIcon: true,
-      });
-      setLeavingTeam(false);
-      return;
-    }
+    // Todo: uncomment
+    // if (!response) {
+    //   showNotificationMsg("Could Not Leave Team", {
+    //     variant: "error",
+    //     displayIcon: true,
+    //   });
+    //   setLeavingTeam(false);
+    //   return;
+    // }
     showNotificationMsg("Team Left Successfully..!", {
       variant: "success",
       displayIcon: true,
