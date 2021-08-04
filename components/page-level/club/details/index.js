@@ -4,6 +4,7 @@ import Link from "next/link";
 import Button from "@sub/button";
 import ActionButton from "@sub/action-button";
 import useNotification from "@sub/hook-notification";
+import ContentDialog from "@sub/content-dialog";
 import ChatSVG from "@svg/messages";
 import styles from "./clubDetails.module.css";
 
@@ -17,14 +18,28 @@ function ClubHeader({
   isOwner,
   isOfficial,
 }) {
+  const [displayCrestFullScreen, setDisplayCrestFullScreen] = useState(false);
+
   return (
     <>
+      <ContentDialog
+        open={displayCrestFullScreen}
+        setOpen={setDisplayCrestFullScreen}
+        Body={() => (
+          <img
+            className={styles.clubCrestFullScreen}
+            src={clubCrest || "/assets/club-badge-placeholder.png"}
+          />
+        )}
+        hideActionButtons={true}
+      ></ContentDialog>
       <div className={styles.clubHeaderWrapper}>
         <div>
           <div className={styles.clubCrestWrapper}>
             <img
               className={styles.clubCrest}
               src={clubCrest || "/assets/club-badge-placeholder.png"}
+              onClick={() => setDisplayCrestFullScreen(true)}
             />
           </div>
         </div>
