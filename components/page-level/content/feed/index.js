@@ -326,7 +326,7 @@ function Home({ posts, user, hideFilters, team }) {
       )}
       <AddContent teamId={_team?.id} />
       {_posts?.results?.length === 0 && (
-        <div className={styles.noPosts}>No posts for the applied filter</div>
+        <div className={styles.noPosts}>No posts found.</div>
       )}
       <InfiniteScroll
         dataLength={_posts?.totalResults}
