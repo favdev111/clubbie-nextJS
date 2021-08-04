@@ -1,3 +1,7 @@
+.teamCrestFullScreen {
+  min-width: 550px;
+  min-height: 550px;
+}
 .teamHeaderWrapper {
   display: flex;
   flex-direction: row;
