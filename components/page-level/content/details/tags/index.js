@@ -10,12 +10,13 @@ function Tags({ tags }) {
     <div className={styles.tags}>
       {_tags.map((tag) => (
         <>
-          <Link href={`/?tagSearch=${tag}`}>
-            <a>
-              <Chip text={tag} className={styles.tagChip}></Chip>
-            </a>
-          </Link>
-          <span className={styles.spacing}></span>
+          <span className={styles.spacing}>
+            <Link href={`/?tagSearch=${tag}`}>
+              <a>
+                <Chip text={tag} className={styles.tagChip}></Chip>
+              </a>
+            </Link>
+          </span>
         </>
       ))}
     </div>
