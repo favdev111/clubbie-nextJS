@@ -493,7 +493,7 @@ function TeamSubscriptionPlanCard({
           <span className={styles.teamSubscriptionPlanPriceWrapper}>
             Starting at&ensp;
             <span className={styles.teamSubscriptionPlanPrice}>
-              {planAmount.toFixed(2)} {planCurrencySymbol}/ {planInterval}
+              {planCurrencySymbol} {planAmount.toFixed(2)}/ {planInterval}
             </span>
           </span>
         </div>
