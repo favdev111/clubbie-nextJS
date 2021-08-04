@@ -172,3 +172,127 @@
 .clubMembersNone > span {
   color: var(--c-turk);
 }
+.clubTeamsBlock {
+  margin-top: var(--space-50);
+}
+.clubTeamshipWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.clubTeamshipStatusWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clubTeamshipStatus {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-5);
+  margin-left: var(--space-5);
+  text-transform: capitalize;
+}
+.activeMemberShip {
+  background-color: var(--c-green);
+}
+.suspendedMemberShip {
+  background-color: var(--c-yellow);
+  color: var(--c-black);
+}
+.unapprovedMemberShip {
+  background-color: var(--c-red);
+}
+.clubTeamsWrapper {
+  width: 100%;
+  background-color: var(--c-white-05);
+  padding: var(--space-16);
+  border-radius: var(--radius);
+  margin-top: var(--space-5);
+}
+.clubTeams {
+  width: 100%;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding: var(--space-8);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  max-height: 280px;
+  overflow-y: scroll;
+}
+.clubTeams::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.clubTeamCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-md);
+  background-color: var(--c-primary);
+  margin: var(--space-5);
+  padding: var(--space-16) var(--space-10);
+  width: 48%;
+  transition: 0.1s ease;
+}
+.clubTeamCard:hover {
+  transform: scale(0.98);
+  box-shadow: 0px 3px 15px rgba(255, 255, 255, 0.1);
+}
+.clubTeamImage {
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+  max-width: 55px;
+  max-height: 55px;
+  cursor: pointer;
+}
+.clubTeamInfoWrapper {
+  margin-right: auto;
+  margin-left: var(--space-10); /*temp: use spacer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.clubTeamName {
+  cursor: pointer;
+  transition: 0.1s ease;
+  text-transform: capitalize;
+}
+.clubTeamRolesWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.clubTeamRole {
+  color: var(--c-black);
+  background-color: var(--c-turk);
+  padding: 2px 10px;
+  border-radius: var(--radius);
+  font-size: var(--fs-small);
+  margin-top: var(--space-3);
+  margin-right: var(--space-3);
+  text-transform: capitalize;
+}
+.clubTeamActionButtons {
+  margin-left: auto;
+}
+.clubTeamActionButtons > span {
+  cursor: pointer;
+  padding: var(--space-5);
+}
+.clubTeamsNone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-32);
+  color: var(--c-white-70);
+}
+.clubTeamsNone > span {
+  color: var(--c-turk);
+}

@@ -142,6 +142,55 @@ function ClubMembers({ members, membership }) {
   );
 }
 
+function ClubTeamCard({ id, title, crest }) {
+  return (
+    <div className={styles.clubTeamCard} key={id}>
+      <Link href={`/teams/${id}`}>
+        <a>
+          <img src={crest} className={styles.clubTeamImage} />
+        </a>
+      </Link>
+      <div className={styles.clubTeamInfoWrapper}>
+        <Link href={`/teams/${id}`}>
+          <a>
+            <span className={styles.clubTeamName}>{title}</span>
+          </a>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function ClubTeams({ teams }) {
+  return (
+    <div className={styles.clubTeamsBlock}>
+      <div className={styles.clubTeamsWrapper}>
+        <h2>Teams {teams?.length > 0 && `(${teams?.length})`}</h2>
+        {teams?.length > 0 && (
+          <div className={styles.clubTeams}>
+            {teams?.map((team) => (
+              <>
+                <ClubTeamCard
+                  id={team?.id}
+                  title={team?.title}
+                  crest={team?.crest}
+                ></ClubTeamCard>
+              </>
+            ))}
+          </div>
+        )}
+        {teams?.length === 0 && (
+          <div className={styles.clubTeamsNone}>
+            This Club has no teams currently.
+            <span>&nbsp;Wanna Create One?&nbsp;</span> Click the manage icon
+            above.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ClubDetails({ user, club }) {
   const { showNotificationMsg } = useNotification();
 
@@ -154,10 +203,12 @@ function ClubDetails({ user, club }) {
     status: null,
     statusText: null,
   });
+  const [_clubTeams, setClubTeams] = useState([]);
 
   useEffect(() => {
     const members = [];
-    const { owner, officials, players } = _club;
+    const clubTeams = [];
+    const { owner, officials, players, teams } = _club;
 
     // set members
     if (owner) {
@@ -219,6 +270,18 @@ function ClubDetails({ user, club }) {
     if (foundPlayer) {
       setIsPlayer(true);
     }
+
+    // set teams
+    if (teams) {
+      teams?.map((team) => {
+        clubTeams.push({
+          id: team?.id || "Team-ID",
+          title: team?.title || team?.id || "Team-Title",
+          crest: team?.crest || "/assets/club-badge-placeholder.png",
+        });
+      });
+    }
+    setClubTeams([...clubTeams]);
   }, [_club]);
 
   return (
@@ -234,6 +297,7 @@ function ClubDetails({ user, club }) {
         isOfficial={_isOfficial}
       ></ClubHeader>
       <ClubMembers members={_members} membership={_membership}></ClubMembers>
+      <ClubTeams teams={_clubTeams}></ClubTeams>
     </>
   );
 }
