@@ -22,4 +22,8 @@ export default class ClubManagementRoutes {
   static async JoinClub(id) {
     return HTTPClient.patch(`/clubs/${id}/join`);
   }
+
+  static async UpdateClub(id, payload) {
+    return HTTPClient.put(`/clubs/${id}`, payload);
+  }
 }

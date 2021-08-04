@@ -158,7 +158,7 @@ function TeamHeader({
           </div>
           {clubName && (
             <div className={styles.teamParentClubNameWrapper}>
-              Owned by&nbsp;
+              Club&nbsp;
               <Link href={`/clubs/${clubId}`}>
                 <a>
                   <span className={styles.teamParentClubName}>{clubName}</span>
@@ -407,20 +407,23 @@ function TeamSubscriptionContentPopover({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.teamSubscriptionContentPopoverWrapper}>
-        <TemplateSelect
+        <div className={styles.teamSubscriptionContentPopoverPlanTypeHeader}>
+          Plan Type<span>Standard</span>
+        </div>
+        {/* <TemplateSelect
           placeholder="Select Plan Type"
           options={["Basic"]}
           selected="Basic"
           disabled={true}
           className={styles.teamSubscriptionContentPopoverSelectInput}
-        />
-        <TemplateSelect
+        /> */}
+        {/* <TemplateSelect
           placeholder="Select Plan interval"
           options={["Monthly"]}
           selected="Monthly"
           disabled={true}
           className={styles.teamSubscriptionContentPopoverSelectInput}
-        />
+        /> */}
         <TemplateInput
           placeholder="Amount Per Interval"
           name="amount"
@@ -432,7 +435,7 @@ function TeamSubscriptionContentPopover({
               inputBorder: true,
             }
           }
-          disabled={_disableAmount}
+          // disabled={_disableAmount}
           inputClassName={
             _disableAmount && styles.teamSubscriptionContentPopoverDisabledInput
           }
@@ -493,7 +496,7 @@ function TeamSubscriptionPlanCard({
           <span className={styles.teamSubscriptionPlanPriceWrapper}>
             Starting at&ensp;
             <span className={styles.teamSubscriptionPlanPrice}>
-              {planAmount.toFixed(2)} {planCurrencySymbol}/ {planInterval}
+              {planCurrencySymbol} {planAmount.toFixed(2)}/ {planInterval}
             </span>
           </span>
         </div>

@@ -1,0 +1,91 @@
+.clubHeaderWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+.clubCrestWrapper {
+  position: relative;
+  min-width: 250px;
+  transition: 0.1s ease;
+}
+.clubCrestWrapper:hover > img {
+  opacity: 0.5;
+}
+.clubCrestWrapper:hover span {
+  display: block;
+}
+.clubCrest {
+  height: 250px;
+  width: 250px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 5px solid var(--c-white-70);
+  background-color: var(--c-white-70);
+}
+.clubClubCrestWrapper {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  cursor: pointer;
+}
+.clubClubCrest {
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 5px solid var(--c-primary);
+  background-color: var(--c-primary);
+}
+.clubParentClubNameWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-22);
+}
+.clubParentClubName {
+  color: var(--c-turk);
+  font-size: var(--fs-h3);
+  transition: 0.1s ease;
+  margin-left: var(--space-3);
+  cursor: pointer;
+}
+.clubParentClubName:hover {
+  transform: scale(1.1);
+}
+.clubHeaderDetailsWrapper {
+  margin-left: var(--space-32);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.clubHeaderTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.clubHeaderTitleWrapper > span {
+  margin-bottom: var(--space-8);
+  width: 100%;
+}
+.clubHeaderAdminActionButtons {
+  display: flex;
+}
+.clubHeaderActionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: var(--space-5);
+}
+.clubHeaderActionButtons > button {
+  margin-right: var(--space-5);
+}
