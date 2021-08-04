@@ -445,7 +445,7 @@ function TeamSubscriptionContentPopover({
           <SwitchInput
             name="active"
             checkText="Active"
-            unCheckText="In Active"
+            unCheckText="Inactive"
             customProps={{ ...register("active") }}
           ></SwitchInput>
         )}
@@ -511,7 +511,7 @@ function TeamSubscriptionPlanCard({
       </div>
       {showEditTray && (
         <div className={styles.teamSubscriptionPlanCardActions}>
-          <span>{planIsActive ? "Active" : "In Active"}</span>
+          <span>{planIsActive ? "Active" : "Inactive"}</span>
           <span>
             <span
               onClick={() =>
