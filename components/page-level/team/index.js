@@ -22,6 +22,9 @@ function Team({ team, user, editMode, postFeed, posts }) {
             hideFilters={true}
             user={user}
             team={team}
+            hideCreateContent={
+              team?.owner?.id !== user?.id || team?.leader?.id !== user?.id
+            }
           />
         </div>
       )}

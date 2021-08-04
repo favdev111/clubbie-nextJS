@@ -254,7 +254,7 @@ function EndFeedMessage() {
   );
 }
 
-function Home({ posts, user, hideFilters, team }) {
+function Home({ posts, user, hideCreateContent, hideFilters, team }) {
   const router = useRouter();
   const createdPost = router?.query?.createdPost; // highlight a post if it was created
 
@@ -324,7 +324,7 @@ function Home({ posts, user, hideFilters, team }) {
           fetchPosts={fetchPosts}
         />
       )}
-      <AddContent teamId={_team?.id} />
+      {!hideCreateContent && <AddContent teamId={_team?.id} />}
       {_posts?.results?.length === 0 && (
         <div className={styles.noPosts}>No posts found.</div>
       )}
