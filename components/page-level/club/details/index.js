@@ -161,7 +161,7 @@ function ClubTeamCard({ id, title, crest }) {
   );
 }
 
-function ClubTeams({ teams }) {
+function ClubTeams({ teams, isOwner }) {
   return (
     <div className={styles.clubTeamsBlock}>
       <div className={styles.clubTeamsWrapper}>
@@ -182,8 +182,12 @@ function ClubTeams({ teams }) {
         {teams?.length === 0 && (
           <div className={styles.clubTeamsNone}>
             This Club has no teams currently.
-            <span>&nbsp;Wanna Create One?&nbsp;</span> Click the manage icon
-            above.
+            {isOwner && (
+              <>
+                <span>&nbsp;Wanna Create One?&nbsp;</span> Click the manage icon
+                above.
+              </>
+            )}
           </div>
         )}
       </div>
@@ -297,7 +301,7 @@ function ClubDetails({ user, club }) {
         isOfficial={_isOfficial}
       ></ClubHeader>
       <ClubMembers members={_members} membership={_membership}></ClubMembers>
-      <ClubTeams teams={_clubTeams}></ClubTeams>
+      <ClubTeams teams={_clubTeams} isOwner={_isOwner}></ClubTeams>
     </>
   );
 }
