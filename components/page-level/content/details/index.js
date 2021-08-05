@@ -63,6 +63,7 @@ function ContentMediaTag({
 
 function ContentHeader({
   contentId,
+  teamId,
   author,
   isMyPost,
   showNotificationMsg,
@@ -88,7 +89,7 @@ function ContentHeader({
       variant: "success",
       displayIcon: true,
     });
-    router.push("/"); // Goto Home Page
+    router.push(teamId ? `/teams/${teamId}` : "/"); // Goto Home Page
   };
 
   return (
@@ -738,8 +739,9 @@ function ContentTags({ tags }) {
   );
 }
 
-function ContentDetails({ content, user }) {
+function ContentDetails({ content, user, team }) {
   const [_content, setContent] = useState(content);
+  const [_team, setTeam] = useState(team);
   const [activeMedia, setActiveMedia] = useState(_content?.media);
   const [showFullScreenGallery, setShowFullScreenGallery] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
@@ -781,6 +783,7 @@ function ContentDetails({ content, user }) {
       ></FullScreenGallery>
       <ContentHeader
         contentId={_content?.id}
+        teamId={_team?.id}
         author={_content?.author}
         isMyPost={_content?.author?.id === user?.id}
         showNotificationMsg={showNotificationMsg}

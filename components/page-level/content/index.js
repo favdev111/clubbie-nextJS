@@ -17,7 +17,9 @@ function Content({ mode, content, user, team }) {
         {mode
           ? (mode === "add" && <ContentAdd user={user} team={team} />) ||
             (mode === "edit" && <ContentEdit content={content} />)
-          : content && <ContentDetails content={content} user={user} />}
+          : content && (
+              <ContentDetails content={content} user={user} team={team} />
+            )}
       </div>
     </div>
   );

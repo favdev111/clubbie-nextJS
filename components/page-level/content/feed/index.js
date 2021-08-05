@@ -342,6 +342,7 @@ function Home({ posts, user, hideCreateContent, hideFilters, team }) {
             <HomeVideosCard
               key={post?.id}
               data={post}
+              teamId={_team?.id}
               createdPost={createdPost}
               isLoggedIn={!!user}
               setShowLoginPopup={setShowLoginPopup}
