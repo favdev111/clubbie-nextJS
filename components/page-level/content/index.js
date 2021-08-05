@@ -16,7 +16,7 @@ function Content({ mode, content, user, team }) {
       <div className={styles.contentBody}>
         {mode
           ? (mode === "add" && <ContentAdd user={user} team={team} />) ||
-            (mode === "edit" && <ContentEdit content={content} />)
+            (mode === "edit" && <ContentEdit content={content} team={team} />)
           : content && (
               <ContentDetails content={content} user={user} team={team} />
             )}

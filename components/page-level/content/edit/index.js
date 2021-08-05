@@ -4,7 +4,7 @@ import ContentForm from "../common/form";
 import router from "next/router";
 import { updatePost } from "@utils/schemas/post.schema";
 
-function ContentEdit({ content }) {
+function ContentEdit({ content, team }) {
   const handleOnSubmit = async ({
     _media,
     _caption,
@@ -158,7 +158,9 @@ function ContentEdit({ content }) {
       type: "success",
     });
 
-    router.push(`/content/${parentPost.id}`);
+    router.push(
+      `/content/${parentPost.id}${team?.id ? `\?teamId=${team?.id}` : ""}`
+    );
   };
 
   return (

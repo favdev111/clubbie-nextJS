@@ -131,7 +131,11 @@ function ContentHeader({
                 type="edit"
                 onClick={() => {
                   if (!verifyLoggedIn()) return;
-                  router.push(`/content/${contentId}/edit`);
+                  router.push(
+                    `/content/${contentId}/edit${
+                      teamId ? `\?teamId=${teamId}` : ""
+                    }`
+                  );
                 }}
               />
             </>
