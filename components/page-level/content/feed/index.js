@@ -139,14 +139,12 @@ function PostFilters({ setFilter, fetchPosts, setLoading }) {
     if (value === "recent") {
       setFilter((filter) => {
         const _filter = { ...filter, sortBy: "createdAt:desc" };
-        delete _filter["isFeatured"];
         return _filter;
       });
     }
     if (value === "featured") {
       setFilter((filter) => {
-        const _filter = { ...filter, isFeatured: true };
-        delete _filter["sortBy"];
+        const _filter = { ...filter, sortBy: "likedBy.count:desc" };
         return _filter;
       });
     }
@@ -167,7 +165,6 @@ function PostFilters({ setFilter, fetchPosts, setLoading }) {
       <div className={styles.mobileSort}>
         <span> Recent </span>
         <span> Following </span>
-        <span> Ranking </span>
       </div>
       <div className={styles.tagContent}>
         <div className={styles.tagInner}>
