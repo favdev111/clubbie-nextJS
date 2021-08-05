@@ -24,7 +24,11 @@ function Navbar() {
 
   return (
     <div className={styles.navbar}>
-      <ClubbieLogo />
+      <Link href="/">
+        <a>
+          <ClubbieLogo />
+        </a>
+      </Link>
       <ul className={styles.navbarList}>
         {navigation.map((nav) => (
           <li key={`${nav.title}index`} className={styles.navbarListItem}>
