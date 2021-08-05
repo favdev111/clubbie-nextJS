@@ -89,14 +89,15 @@ function TeamHeader({
 
     await onMemberLeave();
     const response = await Teams.LeaveTeam(teamId).catch(() => null);
-    if (!response) {
-      showNotificationMsg("Could Not Leave Team", {
-        variant: "error",
-        displayIcon: true,
-      });
-      setLeavingTeam(false);
-      return;
-    }
+    // Todo: uncomment
+    // if (!response) {
+    //   showNotificationMsg("Could Not Leave Team", {
+    //     variant: "error",
+    //     displayIcon: true,
+    //   });
+    //   setLeavingTeam(false);
+    //   return;
+    // }
     showNotificationMsg("Team Left Successfully..!", {
       variant: "success",
       displayIcon: true,
@@ -178,7 +179,7 @@ function TeamHeader({
                   </a>
                 </Link>
               )}
-              <ActionButton type="chat" />
+              {/* <ActionButton type="chat" /> */}
             </span>
           </div>
           <div className={styles.teamHeaderActionButtons}>
@@ -444,7 +445,7 @@ function TeamSubscriptionContentPopover({
           <SwitchInput
             name="active"
             checkText="Active"
-            unCheckText="In Active"
+            unCheckText="Inactive"
             customProps={{ ...register("active") }}
           ></SwitchInput>
         )}
@@ -510,7 +511,7 @@ function TeamSubscriptionPlanCard({
       </div>
       {showEditTray && (
         <div className={styles.teamSubscriptionPlanCardActions}>
-          <span>{planIsActive ? "Active" : "In Active"}</span>
+          <span>{planIsActive ? "Active" : "Inactive"}</span>
           <span>
             <span
               onClick={() =>

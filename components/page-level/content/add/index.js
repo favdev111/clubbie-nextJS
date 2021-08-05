@@ -12,7 +12,7 @@ function TeamHeader({ teamId, teamTitle }) {
       Create a post in{" "}
       <Link href={`/teams/${teamId}`}>
         <a>
-          <span className={styles.addContentTeamName}>Title {teamTitle}</span>
+          <span className={styles.addContentTeamName}>{teamTitle}</span>
         </a>
       </Link>
     </div>

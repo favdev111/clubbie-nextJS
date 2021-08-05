@@ -32,25 +32,12 @@
   border-radius: 50%;
 }
 
-@media screen and (max-width: 768px) and (min-width: 680px) {
-
+@media (min-width: 470px) {
   .profilePlayerImage {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 100px;
+    height: 100px;
   }
-
 }
-
-@media screen and (max-width: 680px)  {
-
-  .profilePlayerImage {
-    display: none;
-  }
-
-}
-
-
 
 @media (max-width: 470px) {
   .playerName {
@@ -63,8 +50,11 @@
     height: auto;
     width: 40px;
   }
-  .profilePlayerImage{
-    display: none;
-  }
+}
 
+@media (min-width: 640px) {
+  .profilePlayerImage {
+    width: 150px;
+    height: 150px;
+  }
 }
