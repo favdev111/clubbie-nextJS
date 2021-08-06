@@ -12,7 +12,13 @@ import { LikeButton } from "../../common/button-like";
 // import { RepostButton } from "../../common/button-repost";
 import { ShareButton } from "../../common/button-share";
 
-function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
+function HomeVideosCard({
+  createdPost,
+  data,
+  teamId,
+  isLoggedIn,
+  setShowLoginPopup,
+}) {
   const {
     id,
     title,
@@ -65,6 +71,12 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
     videoElRef?.current?.pause();
   };
 
+  const postLink = () => {
+    let base = `/content/${id}`;
+    if (teamId) base += `?teamId=${teamId}`;
+    return base;
+  };
+
   return (
     <div
       className={cn(
@@ -72,7 +84,7 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
         createdPost === id && styles.highLightPost
       )}
     >
-      <Link href={`/content/${id}`}>
+      <Link href={postLink()}>
         <a>
           <span>
             {content.includes("video") ? (
@@ -146,7 +158,7 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
             }}
           />
           {/* <SocialButton type="send" /> */}
-          <Link href={`/content/${id}?focusComment=true`}>
+          <Link href={`${postLink()}?focusComment=true`}>
             <a>
               <SocialButton type="comment">
                 {counts?.comments || "0"}
@@ -160,8 +172,9 @@ function HomeVideosCard({ createdPost, data, isLoggedIn, setShowLoginPopup }) {
         <h4 className={styles.desc}> {title}</h4>
         <p className={cn("opacity-50", styles.viewCount)}>
           {counts?.views || counts?.views === 0
-            ? `${counts?.views} View${counts?.views > 1 || counts?.views < 1 ? "s" : ""
-            }`
+            ? `${counts?.views} View${
+                counts?.views > 1 || counts?.views < 1 ? "s" : ""
+              }`
             : ""}
         </p>
       </div>

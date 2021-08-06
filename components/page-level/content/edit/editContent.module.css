@@ -1,0 +1,11 @@
+.editContentTeamHeader {
+  margin-bottom: var(--space-20);
+}
+.editContentTeamName {
+  padding: var(--space-1) var(--space-5);
+  margin-left: var(--space-5);
+  border-radius: var(--radius);
+  color: var(--c-black);
+  background-color: var(--c-turk);
+  cursor: pointer;
+}

@@ -1,10 +1,25 @@
 import React from "react";
+import Link from "next/link";
 import Posts from "@api/services/Posts";
 import ContentForm from "../common/form";
 import router from "next/router";
 import { updatePost } from "@utils/schemas/post.schema";
+import styles from "./editContent.module.css";
 
-function ContentEdit({ content }) {
+function TeamHeader({ teamId, teamTitle }) {
+  return (
+    <div className={styles.editContentTeamHeader}>
+      Edit post in{" "}
+      <Link href={`/teams/${teamId}`}>
+        <a>
+          <span className={styles.editContentTeamName}>{teamTitle}</span>
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+function ContentEdit({ content, team }) {
   const handleOnSubmit = async ({
     _media,
     _caption,
@@ -158,26 +173,31 @@ function ContentEdit({ content }) {
       type: "success",
     });
 
-    router.push(`/content/${parentPost.id}`);
+    router.push(
+      `/content/${parentPost.id}${team?.id ? `\?teamId=${team?.id}` : ""}`
+    );
   };
 
   return (
-    <ContentForm
-      actionText="Edit"
-      onSubmitForm={handleOnSubmit}
-      contentId={content?.id}
-      media={content?.media}
-      caption={content?.title}
-      description={content?.description}
-      relatedMediaItems={content?.childPosts}
-      sport={content?.tags[0]?.type || null}
-      tags={
-        content?.tags.length > 0
-          ? content?.tags.map((x) => x.value).join()
-          : null
-      }
-      validationSchema={updatePost}
-    ></ContentForm>
+    <>
+      {team && <TeamHeader teamId={team?.id} teamTitle={team?.title} />}
+      <ContentForm
+        actionText="Edit"
+        onSubmitForm={handleOnSubmit}
+        contentId={content?.id}
+        media={content?.media}
+        caption={content?.title}
+        description={content?.description}
+        relatedMediaItems={content?.childPosts}
+        sport={content?.tags[0]?.type || null}
+        tags={
+          content?.tags.length > 0
+            ? content?.tags.map((x) => x.value).join()
+            : null
+        }
+        validationSchema={updatePost}
+      ></ContentForm>
+    </>
   );
 }
 

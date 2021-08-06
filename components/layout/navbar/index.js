@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Logo from "@sub/logo";
+import ClubbieLogo from "@svg/clubbie-logo";
 import cn from "classnames";
 import styles from "./navbar.module.css";
 
@@ -24,7 +24,11 @@ function Navbar() {
 
   return (
     <div className={styles.navbar}>
-      <Logo />
+      <Link href="/">
+        <a>
+          <ClubbieLogo />
+        </a>
+      </Link>
       <ul className={styles.navbarList}>
         {navigation.map((nav) => (
           <li key={`${nav.title}index`} className={styles.navbarListItem}>
