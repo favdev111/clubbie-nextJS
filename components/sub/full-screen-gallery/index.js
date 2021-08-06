@@ -1,25 +1,35 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import cn from "classnames";
 import LeftAngleSVG from "@svg/left-angle";
 import RightAngleSVG from "@svg/right-angle";
 import styles from "./index.module.css";
 
-function FullScreenGallery({ display, setDisplay, galleryItems }) {
+function FullScreenGallery({ display, setDisplay, galleryItems, activeIndex }) {
   const [_galleryItems] = useState(galleryItems);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [_activeIndex, setActiveIndex] = useState(activeIndex || 0);
   const videoRef = useRef();
 
   const onPreviousButtonClick = () => {
     const index =
-      activeIndex - 1 < 0 ? _galleryItems.length - 1 : activeIndex - 1;
+      _activeIndex - 1 < 0 ? _galleryItems.length - 1 : _activeIndex - 1;
     setActiveIndex(index);
   };
 
   const onNextButtonClick = () => {
     const index =
-      activeIndex + 1 > _galleryItems.length - 1 ? 0 : activeIndex + 1;
+      _activeIndex + 1 > _galleryItems.length - 1 ? 0 : _activeIndex + 1;
     setActiveIndex(index);
   };
+
+  useEffect(() => {
+    if (display === true) {
+      document.addEventListener("keydown", handleEscape, false)
+    }
+  }, [display])
+
+  useEffect(() => {
+    setActiveIndex(activeIndex)
+  }, [activeIndex])
 
   const handleEscape = (e) => {
     if (e.key === "Escape") {
@@ -32,7 +42,7 @@ function FullScreenGallery({ display, setDisplay, galleryItems }) {
 
   return (
     <div className={cn(styles.fullScreen, display && styles.showfullScreen)}>
-      <div className={styles.gallery} onKeyDown={handleEscape} tabIndex="0">
+      <div className={styles.gallery} tabIndex="0">
         <div
           className={styles.previewItemButton}
           onClick={onPreviousButtonClick}
@@ -42,24 +52,22 @@ function FullScreenGallery({ display, setDisplay, galleryItems }) {
           </span>
         </div>
         <div className={styles.galleryItems}>
-          {_galleryItems[activeIndex]?.includes("video") && (
+          {_galleryItems[_activeIndex]?.includes("video") && (
             <video
               className={styles.galleryItemFocused}
-              src={_galleryItems[activeIndex]}
+              src={_galleryItems[_activeIndex]}
               autoPlay
               controls
               loop
               muted
-              onKeyDown={handleEscape}
               tabIndex="1"
               ref={videoRef}
             ></video>
           )}
-          {_galleryItems[activeIndex]?.includes("image") && (
+          {_galleryItems[_activeIndex]?.includes("image") && (
             <img
               className={styles.galleryItemFocused}
-              src={_galleryItems[activeIndex]}
-              onKeyDown={handleEscape}
+              src={_galleryItems[_activeIndex]}
               tabIndex="1"
             />
           )}
