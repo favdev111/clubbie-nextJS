@@ -10,7 +10,8 @@
   transition: 0.1s ease;
 }
 .teamCrestWrapper:hover > img {
-  opacity: 0.5;
+  /* opacity: 0.5; */
+  cursor: not-allowed;
 }
 .teamCrestWrapper:hover span {
   display: block;
