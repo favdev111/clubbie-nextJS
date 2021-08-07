@@ -26,16 +26,16 @@ export default function TeamHub({ className }) {
         <g class="st0">
           <path
             class="st2"
-            // fill="none"
-            fill="#E7BA19"
+            fill="none"
+            // fill="#E7BA19"
             stroke="#E1BD44"
             strokeWidth="0.4"
             d="M96.8,22v-5.6h-5.4V22h-3.4v-14h3.4v5.4h5.4V7.9h3.4v14H96.8z"
           />
           <path
             class="st2"
-            // fill="none"
-            fill="#E7BA19"
+            fill="none"
+            // fill="#E7BA19"
             stroke="#E1BD44"
             strokeWidth="0.4"
             d="M103.1,16.4V7.9h3.4v8.4c0,0.4,0.1,0.8,0.2,1.2c0.1,0.4,0.4,0.8,0.8,1c0.4,0.3,0.9,0.4,1.5,0.4
@@ -45,8 +45,8 @@ export default function TeamHub({ className }) {
           />
           <path
             class="st2"
-            // fill="none"
-            fill="#E7BA19"
+            fill="none"
+            // fill="#E7BA19"
             stroke="#E1BD44"
             strokeWidth="0.4"
             d="M128.4,17.9c0,1.3-0.4,2.3-1.2,3c-0.8,0.7-2,1-3.4,1h-6v-14h5.6c0.5,0,1,0.1,1.5,0.2c0.5,0.1,0.9,0.3,1.3,0.5
