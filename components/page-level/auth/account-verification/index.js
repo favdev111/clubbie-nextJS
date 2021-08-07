@@ -40,9 +40,7 @@ const AccountVerif = ({ user }) => {
           text: "Account Activated Successfully.! Redirecting...",
         });
         setLoading(false);
-        setTimeout(function () {
-          Router.push("/"); // redirect to home
-        }, 5000);
+        Router.push("/"); // redirect to home
       })
       .catch((err) => {
         setActivationStatus({

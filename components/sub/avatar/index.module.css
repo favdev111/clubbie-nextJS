@@ -7,6 +7,9 @@
 .pointer {
   cursor: pointer;
 }
+.image {
+  object-fit: cover;
+}
 .avatarHoverOpacity:hover .image {
   opacity: 0.3;
 }
@@ -24,4 +27,5 @@
 .imageFullScreen {
   min-width: 550px;
   min-height: 550px;
+  object-fit: cover;
 }

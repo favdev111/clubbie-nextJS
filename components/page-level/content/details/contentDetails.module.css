@@ -61,6 +61,7 @@
   border-radius: var(--radius-xl);
   height: var(--space-48);
   width: var(--space-48);
+  object-fit: cover;
 }
 .postAuthorProfile {
   display: flex;

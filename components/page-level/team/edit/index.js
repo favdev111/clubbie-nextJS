@@ -11,7 +11,13 @@ import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { editTeam as editTeamSchema } from "@utils/schemas/team.schema";
 
-function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
+function TeamHeader({
+  teamId,
+  teamCrest,
+  teamTitle,
+  clubCrest,
+  showNotificationMsg,
+}) {
   const [_teamCrest, setTeamCrest] = useState({
     src: teamCrest || "/assets/club-badge-placeholder.png",
     file: null,
@@ -97,8 +103,8 @@ function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
         <div className={styles.teamHeaderWrapper}>
           <div>
             <div className={styles.teamCrestWrapper}>
-              <img className={styles.teamCrest} src={_teamCrest?.src} />
-              <input
+              <img className={styles.teamCrest} src={clubCrest} />
+              {/* <input
                 hidden
                 accept="image/*"
                 id="icon-button-file"
@@ -109,7 +115,7 @@ function TeamHeader({ teamId, teamCrest, teamTitle, showNotificationMsg }) {
                 <span className={styles.teamClubCrestWrapper}>
                   <PhotoCamera></PhotoCamera>
                 </span>
-              </label>
+              </label> */}
             </div>
           </div>
           <div className={styles.teamHeaderDetailsWrapper}>
@@ -161,6 +167,7 @@ function TeamDetails({ team }) {
     <TeamHeader
       teamId={_team?.id}
       teamCrest={_team?.crest}
+      clubCrest={_team?.club?.crest}
       teamTitle={_team?.title}
       showNotificationMsg={showNotificationMsg}
     ></TeamHeader>

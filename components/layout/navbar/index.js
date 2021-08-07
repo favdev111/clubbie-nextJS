@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ClubbieLogo from "@svg/clubbie-logo";
+import TeamHubSVG from "@svg/teamhub";
 import cn from "classnames";
 import styles from "./navbar.module.css";
 
@@ -17,7 +18,7 @@ function Navbar() {
     {
       link: "/teamhub",
       title: "Teamhub",
-      image: "/assets/teamhub-logo.png",
+      svg: <TeamHubSVG />,
       active: router.route.includes("/teamhub"),
     },
   ];
@@ -40,11 +41,7 @@ function Navbar() {
                     nav.active && styles.navbarListItemLinkActive
                   )}
                 >
-                  {!!nav?.image ? (
-                    <img src={nav?.image} className={styles.navImage} />
-                  ) : (
-                    nav.title
-                  )}
+                  {!!nav?.svg ? nav.svg : nav.title}
                 </div>
               </a>
             </Link>

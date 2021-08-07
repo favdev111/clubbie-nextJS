@@ -113,7 +113,7 @@ function TeamHeader({
         Body={() => (
           <img
             className={styles.teamCrestFullScreen}
-            src={teamCrest || "/assets/club-badge-placeholder.png"}
+            src={clubCrest || "/assets/club-badge-placeholder.png"}
           />
         )}
         hideActionButtons={true}
@@ -147,15 +147,15 @@ function TeamHeader({
           <div className={styles.teamCrestWrapper}>
             <img
               className={styles.teamCrest}
-              src={teamCrest || "/assets/club-badge-placeholder.png"}
+              src={clubCrest || "/assets/club-badge-placeholder.png"}
               onClick={() => setDisplayCrestFullScreen(true)}
             />
-            <span className={styles.teamClubCrestWrapper}>
+            {/* <span className={styles.teamClubCrestWrapper}>
               <img
                 className={styles.teamClubCrest}
                 src={clubCrest || "/assets/club-badge-placeholder.png"}
               />
-            </span>
+            </span> */}
           </div>
           {clubName && (
             <div className={styles.teamParentClubNameWrapper}>
