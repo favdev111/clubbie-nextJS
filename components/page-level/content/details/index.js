@@ -132,8 +132,7 @@ function ContentHeader({
                 onClick={() => {
                   if (!verifyLoggedIn()) return;
                   router.push(
-                    `/content/${contentId}/edit${
-                      teamId ? `\?teamId=${teamId}` : ""
+                    `/content/${contentId}/edit${teamId ? `\?teamId=${teamId}` : ""
                     }`
                   );
                 }}
@@ -167,10 +166,14 @@ function ContentRelatedMedia({
   relatedMediaItems,
   activeMedia,
   setActiveMedia,
+  setActiveMediaIndex
 }) {
   return (
     <div className={styles.contentRelatedMediaWrapper}>
-      <span onClick={() => setActiveMedia(parentMedia)}>
+      <span onClick={() => {
+        setActiveMedia(parentMedia);
+        setActiveMediaIndex(0)
+      }}>
         <ContentMediaTag
           media={parentMedia}
           className={cn(
@@ -179,8 +182,11 @@ function ContentRelatedMedia({
           )}
         />
       </span>
-      {relatedMediaItems.map((x) => (
-        <span onClick={() => setActiveMedia(x.media)}>
+      {relatedMediaItems.map((x, index) => (
+        <span onClick={() => {
+          setActiveMedia(x.media);
+          setActiveMediaIndex(index + 1)
+        }}>
           <ContentMediaTag
             media={x?.media}
             className={cn(
@@ -749,6 +755,7 @@ function ContentDetails({ content, user, team }) {
   const [activeMedia, setActiveMedia] = useState(_content?.media);
   const [showFullScreenGallery, setShowFullScreenGallery] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
 
   const { showNotificationMsg } = useNotification();
 
@@ -784,6 +791,7 @@ function ContentDetails({ content, user, team }) {
           _content?.media,
           ..._content?.childPosts.map((x) => x.media),
         ]}
+        activeIndex={activeMediaIndex}
       ></FullScreenGallery>
       <ContentHeader
         contentId={_content?.id}
@@ -805,6 +813,7 @@ function ContentDetails({ content, user, team }) {
           relatedMediaItems={_content?.childPosts}
           activeMedia={activeMedia}
           setActiveMedia={setActiveMedia}
+          setActiveMediaIndex={setActiveMediaIndex}
         ></ContentRelatedMedia>
       )}
       <ContentBody
