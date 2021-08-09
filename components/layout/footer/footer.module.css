@@ -1,0 +1,26 @@
+
+.footer {
+  height: 100%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  max-width:var(--container-lg);
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.colMargin{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+.bottomMargin{
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px){
+  .footer{
+    display: none;
+  }
+}
