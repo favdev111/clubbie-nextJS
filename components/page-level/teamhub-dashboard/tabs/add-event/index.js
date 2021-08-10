@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import moment from "moment";
 import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
@@ -8,6 +9,7 @@ import useNotification from "@sub/hook-notification";
 import MatchSVG from "@svg/match";
 import TrainingSVG from "@svg/training";
 import SocialSVG from "@svg/Social";
+import Events from "@api/services/Event";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
 import styles from "./index.module.css";
 
@@ -88,8 +90,84 @@ function AddEventForm({
   const [eventType, setEventType] = useState("match");
   const [isRecurring, setIsRecurring] = useState(false);
 
+  const convertDateAndTimeToIso = (date, time) => {
+    const _date = date;
+    const _time = time + ":00";
+    const dateTime = moment(
+      `${_date} ${_time}`,
+      "YYYY-MM-DD HH:mm:ss"
+    ).format();
+    const isoDateTime = new Date(dateTime).toISOString();
+    return isoDateTime;
+  };
+
   const onSubmit = async (data) => {
-    console.log("data => ", data);
+    setLoading(true);
+
+    const commonBody = {
+      title: data?.title || null,
+      location: data?.location || null,
+      message: data?.message || null,
+      eventType: data?.eventType || null,
+      fee: data?.fee || null,
+      freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      freeForSubs: data?.freeForSubs || null,
+    };
+
+    const customBody = {
+      ...commonBody,
+      teams: (() => {
+        if (eventType === "match") {
+          const _arr = [];
+          data?.teamA &&
+            _arr.push(
+              teamAList.find(
+                (x) => x.title.toLowerCase() === data?.teamA?.toLowerCase()
+              )?.id
+            );
+          data?.teamB &&
+            _arr.push(
+              teamBList.find(
+                (x) => x.title.toLowerCase() === data?.teamB?.toLowerCase()
+              )?.id
+            );
+          return _arr;
+        }
+      })(),
+      eventDateTime: !data?.isRecurring
+        ? convertDateAndTimeToIso(data?.date, data?.time)
+        : null,
+      recurring: (() => {
+        if (data?.isRecurring) {
+          return {
+            startDate: new Date(data?.recurrStartDate).toISOString(),
+            totalEvents: data?.recurrTotalEvents,
+            onEvery: data?.recurrOnEvery,
+          };
+        }
+        return null;
+      })(),
+    };
+
+    const payload = Object.fromEntries(
+      Object.entries(customBody).filter(([_, v]) => v != null)
+    );
+
+    const response = await Events.CreateEvent(payload).catch(() => null);
+    if (!response) {
+      showNotificationMsg("Could not create event", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+
+      return;
+    }
+    showNotificationMsg("Event Created Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
