@@ -67,6 +67,15 @@ const createEvent = Joi.object().keys({
     .messages({
       "date.base": "Start Date is required",
     }),
+  team: Joi.string()
+    .when("eventType", {
+      is: Joi.string().valid(eventTypes.TRAINING),
+      then: Joi.required(),
+      otherwise: Joi.forbidden(),
+    })
+    .messages({
+      "string.empty": "Team is required",
+    }),
   teamA: Joi.string()
     .when("eventType", {
       is: Joi.string().valid(eventTypes.MATCH),

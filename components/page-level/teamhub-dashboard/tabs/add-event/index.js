@@ -117,8 +117,8 @@ function AddEventForm({
     const customBody = {
       ...commonBody,
       teams: (() => {
+        const _arr = [];
         if (eventType === "match") {
-          const _arr = [];
           data?.teamA &&
             _arr.push(
               teamAList.find(
@@ -131,8 +131,16 @@ function AddEventForm({
                 (x) => x.title.toLowerCase() === data?.teamB?.toLowerCase()
               )?.id
             );
-          return _arr;
         }
+        if (eventType === "training") {
+          data?.team &&
+            _arr.push(
+              teamAList.find(
+                (x) => x.title.toLowerCase() === data?.team?.toLowerCase()
+              )?.id
+            );
+        }
+        return _arr;
       })(),
       eventDateTime: !data?.isRecurring
         ? convertDateAndTimeToIso(data?.date, data?.time)
@@ -187,6 +195,15 @@ function AddEventForm({
     }
   }, [isRecurring]);
 
+  useEffect(() => {
+    if (eventType === "match") {
+      unregister("team");
+    } else {
+      unregister("teamA");
+      unregister("teamB");
+    }
+  }, [eventType]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formGridWrapper}>
@@ -215,40 +232,63 @@ function AddEventForm({
             }}
           />
         </div>
-        <div className={cn(styles.span1, styles.gridItem)}>
-          <p>Team A</p>
-          <TemplateSelect
-            name="playerTitle"
-            placeholder="Select Team A"
-            options={teamAList.map((x) => x.title)}
-            className={styles.addEventSelectInput}
-            customProps={{ ...register("teamA") }}
-            hint={
-              errors?.teamA && {
-                type: "error",
-                msg: errors?.teamA?.message,
-                inputBorder: true,
+        {(eventType === "training" || eventType === "social") && (
+          <div className={cn(styles.span1, styles.gridItem)}>
+            <p>Team</p>
+            <TemplateSelect
+              name="team"
+              placeholder="Select Team"
+              options={teamAList.map((x) => x.title)}
+              className={styles.addEventSelectInput}
+              customProps={{ ...register("team") }}
+              hint={
+                errors?.team && {
+                  type: "error",
+                  msg: errors?.team?.message,
+                  inputBorder: true,
+                }
               }
-            }
-          ></TemplateSelect>
-        </div>
-        <div className={cn(styles.span1, styles.gridItem)}>
-          <p>Team B</p>
-          <TemplateSelect
-            name="playerTitle"
-            placeholder="Select Team B"
-            options={teamBList.map((x) => x.title)}
-            className={styles.addEventSelectInput}
-            customProps={{ ...register("teamB") }}
-            hint={
-              errors?.teamB && {
-                type: "error",
-                msg: errors?.teamB?.message,
-                inputBorder: true,
-              }
-            }
-          ></TemplateSelect>
-        </div>
+            ></TemplateSelect>
+          </div>
+        )}
+        {eventType === "match" && (
+          <>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>Team A</p>
+              <TemplateSelect
+                name="teamA"
+                placeholder="Select Team A"
+                options={teamAList.map((x) => x.title)}
+                className={styles.addEventSelectInput}
+                customProps={{ ...register("teamA") }}
+                hint={
+                  errors?.teamA && {
+                    type: "error",
+                    msg: errors?.teamA?.message,
+                    inputBorder: true,
+                  }
+                }
+              ></TemplateSelect>
+            </div>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>Team B</p>
+              <TemplateSelect
+                name="teamB"
+                placeholder="Select Team B"
+                options={teamBList.map((x) => x.title)}
+                className={styles.addEventSelectInput}
+                customProps={{ ...register("teamB") }}
+                hint={
+                  errors?.teamB && {
+                    type: "error",
+                    msg: errors?.teamB?.message,
+                    inputBorder: true,
+                  }
+                }
+              ></TemplateSelect>
+            </div>
+          </>
+        )}{" "}
         {!isRecurring && (
           <>
             <div className={cn(styles.span1, styles.gridItem)}>
