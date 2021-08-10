@@ -5,6 +5,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 function useForm({ schema }) {
   const {
     register,
+    unregister,
     handleSubmit,
     setValue,
     getValues,
@@ -18,6 +19,7 @@ function useForm({ schema }) {
 
   return {
     register,
+    unregister,
     handleSubmit,
     setValue,
     getValues,

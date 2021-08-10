@@ -5,6 +5,9 @@
   outline: none;
   border: none;
   cursor: pointer;
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-white);
 }
 .btnXSmall {
   padding: var(--space-5) var(--space-30);
@@ -33,11 +36,6 @@
 .btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-.contTxt {
-  font-family: var(--ff-bold);
-  text-align: center;
-  color: var(--c-white);
 }
 .btnContent {
   position: relative;

@@ -1,412 +1,441 @@
 import React, { useState, useEffect } from "react";
-import styles from "./index.module.css";
 import cn from "classnames";
-import Link from "next/link";
+import TemplateInput from "@sub/input";
+import TemplateSelect from "@sub/selectbox";
+import Button from "@sub/button";
+import useForm from "@sub/hook-form";
+import useNotification from "@sub/hook-notification";
+import MatchSVG from "@svg/match";
+import TrainingSVG from "@svg/training";
+import SocialSVG from "@svg/Social";
+import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
+import styles from "./index.module.css";
 
-import Event from "@api/services/Event";
-import Files from "@api/services/Files";
-import Teams from "@api/services/Teams";
+function IntervalTypes({ intervals, onSelect }) {
+  const [active, setActive] = useState(intervals[0].type);
 
-import Training from "@svg/training";
-import Match from "@svg/match";
-import { useRouter } from "next/router";
-import MessageToUser from "@sub/messageAnimation";
-
-import { schema } from "@utils/schemas/addEvent";
-import { today } from "@utils/helpers/day";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-
-import FormSubmit from "../edit-event/submit";
-import UploadMedia from "@sub/upload";
-import FormCell from "@sub/event-form-cell";
-import EventFormGrid from "@sub/event-form-grid";
-
-/* Todo -> Display validate errors */
-
-function AddEvent({ user }) {
-  const [responseMessage, setResponseMessage] = useState();
-  const [isError, setError] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
-  const [recurringEvent, setRecurring] = useState(0);
-  const [interval, intervalSet] = useState(0);
-  const [userTeams, setUserTeams] = useState([]);
-  const [checked, setChecked] = useState(true);
-  const [media, setMedia] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const router = useRouter();
-
-  /* Media  */
-  const onFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const mediaPicked = {
-        src: e.target.result,
-        file,
-      };
-      setMedia(mediaPicked);
-    };
-    reader.readAsDataURL(file);
-  };
-  const deleteMedia = () => {
-    setMedia(null);
-  };
-  /* Get teams for team selectbox */
-  useEffect(() => {
-    const fetchUserTeams = async () => {
-      /* queries */
-      const arr = [];
-      user.teams.map((i) => {
-        arr.push(i.team);
-      });
-      const queries = arr.reduce((a, b) => {
-        let sum = `${a}` + `&id=${b}`;
-        return sum;
-      });
-
-      const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
-      const allUserTeams = response.data;
-      setUserTeams(allUserTeams);
-    };
-    fetchUserTeams();
-  }, []);
-
-  /* Form submit */
-  const onSubmit = async (data) => {
-    let mediaIdToUpload = null;
-    if (media?.src && media?.file) {
-      const mediaForm = new FormData();
-      mediaForm.append("files", media?.file);
-      await Files.UploadFile(
-        media?.src?.includes("image") && "resourceFile",
-        mediaForm
-      )
-        .then((res) => {
-          mediaIdToUpload = res?.data[0]?.s3Url;
-        })
-        .catch((err) => {
-          alert(err?.response?.data?.message); // TODO: error comp
-        });
-    }
-
-    const eventDateTime =
-      data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
-
-    const teamA = data?.teamA;
-
-    const teamB = data?.teamB;
-    const teams = [];
-    teams.push(teamA);
-    data?.eventType != "training" && teams.push(teamB);
-
-    const createRecurringObj = () => {
-      if (data?.recurring == "yes") {
-        const obj = {
-          startDate: data?.firstEventStartDate,
-          onEvery: data?.onEvery,
-          totalEvents: data?.totalEvents,
-        };
-        return obj;
-      }
-    };
-
-    const formBody = {
-      title: data?.title,
-      eventType: data?.eventType,
-      location: data?.location,
-      eventDateTime: eventDateTime,
-      message: data?.message || null,
-      fee: data?.fee || null,
-      teams: teams,
-      recurring: createRecurringObj(),
-      coverImage: mediaIdToUpload,
-    };
-    const updateBody = Object.fromEntries(
-      Object.entries(formBody).filter(([_, v]) => v != null)
-    );
-
-    await Event.CreateEvent(updateBody)
-      .then((res) => {
-        setResponseMessage("Succesfully created.");
-        setSuccess(true);
-        setTimeout(() => {
-          router.push(`/teamhub/event/${res.data.id}`);
-        }, 3000);
-      })
-      .catch((err) => {
-        setResponseMessage(err.response.data.message);
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 3000);
-      });
+  const _onSelect = (type) => {
+    setActive(type);
+    onSelect(type);
   };
 
   return (
-    <div className={styles.addEvent}>
-      {/* Header */}
-      <div className={styles.header}>
-        <h1> Create Event</h1>
-        <Link href="./">
-          <a>Cancel</a>
-        </Link>
+    <div className={cn(styles.span2, styles.gridItem, styles.intervalWrapper)}>
+      <p>Interval</p>
+      <div className={styles.recurringEventButtons}>
+        {intervals.map((x) => (
+          <span>
+            <Button
+              className={cn(
+                active === x.type
+                  ? styles.activeIntervalButton
+                  : styles.passiveIntervalButton
+              )}
+              onClick={() => _onSelect(x.type)}
+              type={"button"}
+            >
+              {x.value}
+            </Button>
+          </span>
+        ))}
       </div>
-      {/* Body */}
-      <div className={styles.content}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <input
-            className={styles.formTitle}
+    </div>
+  );
+}
+
+function EventTypes({ eventTypes, onSelect }) {
+  const [active, setActive] = useState("match");
+
+  const _onSelect = (type) => {
+    setActive(type);
+    onSelect(type);
+  };
+
+  return (
+    <div className={styles.eventTypesWrapper}>
+      {eventTypes.map((x) => (
+        <div
+          className={cn(
+            styles.eventType,
+            active === x.type && styles.eventTypeSelected
+          )}
+          onClick={() => _onSelect(x.type)}
+        >
+          {x.type === "match" && <MatchSVG />}
+          {x.type === "training" && <TrainingSVG />}
+          {x.type === "social" && <SocialSVG />}
+          <span>{x.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function AddEventForm({
+  teamAList,
+  teamBList,
+  eventTypes,
+  socialEventGroup,
+  recurringIntervals,
+}) {
+  const { showNotificationMsg } = useNotification();
+
+  const { register, unregister, handleSubmit, errors, setValue } = useForm({
+    schema: createEventSchema,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [eventType, setEventType] = useState("match");
+  const [isRecurring, setIsRecurring] = useState(false);
+
+  const onSubmit = async (data) => {
+    console.log("data => ", data);
+  };
+
+  useEffect(() => {
+    setValue("eventType", "match");
+    setValue("isRecurring", false);
+  }, []);
+
+  useEffect(() => {
+    if (!isRecurring) {
+      unregister("recurrTotalEvents");
+      unregister("recurrStartDate");
+      unregister("recurrOnEvery");
+    } else {
+      unregister("date");
+      unregister("time");
+      setValue("recurrOnEvery", "week");
+    }
+  }, [isRecurring]);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGridWrapper}>
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <TemplateInput
             type="text"
-            placeholder="Add title"
-            {...register("title", { required: true, maxLength: 20 })}
+            name="title"
+            placeholder="Add Title"
+            inputClassName={styles.addEventTitleInput}
+            customProps={{ ...register("title") }}
+            hint={
+              errors?.title && {
+                type: "error",
+                msg: errors?.title?.message,
+                inputBorder: true,
+              }
+            }
           />
-          <div className={styles.eventType}>
-            <div>
-              <input
-                defaultChecked={checked}
-                type="radio"
-                className={styles.eventTypeInput}
-                value="match"
-                {...register("eventType", { required: true })}
-              />
-              <label
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="match"
-                onClick={() => {
-                  setChecked(!checked);
-                  setValue("eventType", "match");
-                }}
-              >
-                <Match />
-                Match
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                value="training"
-                className={cn(styles.eventTypeInput)}
-                defaultChecked={!checked}
-                {...register("eventType", { required: true })}
-              />
-              <label
-                onClick={() => {
-                  setValue("eventType", "training");
-                  setChecked(!checked);
-                }}
-                className={cn(styles.eventTypeLabel, styles.checked)}
-                htmlFor="training"
-              >
-                <Training />
-                Training
-              </label>
-            </div>
-          </div>
-          <EventFormGrid>
-            <FormCell>
-              Team A
-              <select
-                {...register("teamA", { required: true })}
-                className={styles.inputStyle}
-              >
-                {userTeams.map((i) => (
-                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
-                    {i.title}
-                  </option>
-                ))}
-              </select>
-            </FormCell>
-            <FormCell>
-              Team B
-              <select
-                {...register("teamB", { required: true })}
-                className={styles.inputStyle}
-              >
-                {userTeams.map((i) => (
-                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
-                    {i.title}
-                  </option>
-                ))}
-              </select>
-            </FormCell>
-
-            <FormCell>
-              When?
-              <input
-                className={styles.inputStyle}
+        </div>
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <EventTypes
+            eventTypes={eventTypes}
+            onSelect={(eventType) => {
+              setValue("eventType", eventType);
+              setEventType(eventType);
+            }}
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Team A</p>
+          <TemplateSelect
+            name="playerTitle"
+            placeholder="Select Team A"
+            options={teamAList.map((x) => x.title)}
+            className={styles.addEventSelectInput}
+            customProps={{ ...register("teamA") }}
+            hint={
+              errors?.teamA && {
+                type: "error",
+                msg: errors?.teamA?.message,
+                inputBorder: true,
+              }
+            }
+          ></TemplateSelect>
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Team B</p>
+          <TemplateSelect
+            name="playerTitle"
+            placeholder="Select Team B"
+            options={teamBList.map((x) => x.title)}
+            className={styles.addEventSelectInput}
+            customProps={{ ...register("teamB") }}
+            hint={
+              errors?.teamB && {
+                type: "error",
+                msg: errors?.teamB?.message,
+                inputBorder: true,
+              }
+            }
+          ></TemplateSelect>
+        </div>
+        {!isRecurring && (
+          <>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>When?</p>
+              <TemplateInput
                 type="date"
-                min={today}
-                required
-                {...register("eventDate", { required: true })}
+                name="date"
+                customProps={{ ...register("date") }}
+                hint={
+                  errors?.date && {
+                    type: "error",
+                    msg: errors?.date?.message,
+                    inputBorder: true,
+                  }
+                }
               />
-            </FormCell>
-            <FormCell>
-              What time?
-              <input
-                className={styles.inputStyle}
+            </div>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>What Time?</p>
+              <TemplateInput
                 type="time"
-                required
-                {...register("eventDateTime", { required: true })}
+                name="time"
+                customProps={{ ...register("time") }}
+                hint={
+                  errors?.time && {
+                    type: "error",
+                    msg: errors?.time?.message,
+                    inputBorder: true,
+                  }
+                }
               />
-            </FormCell>
-            <FormCell>
-              Who?
-              <select className={styles.inputStyle}>
-                <option {...register("createdBy")}>1</option>
-              </select>
-            </FormCell>
-            <FormCell>
-              Where?
-              <input
-                className={styles.inputStyle}
-                type="text"
-                required
-                {...register("location", { required: true })}
-              />
-            </FormCell>
-            <FormCell>
-              Add Fee?
-              <input
-                className={styles.inputStyle}
-                defaultValue="0"
-                min="5000"
-                type="number"
-                {...register("fee")}
-              />
-            </FormCell>
-            <FormCell>
-              Add Message?
-              <input
-                className={styles.inputStyle}
-                type="text"
-                {...register("message")}
-              />
-            </FormCell>
-            <FormCell>
-              Cost Of Event
-              <input
-                className={styles.inputStyle}
-                type="number"
-                {...register("cost")}
-              />
-            </FormCell>
-          </EventFormGrid>
-          <div className={styles.buttonOptions}>
-            Recuring event?
-            <div className={styles.buttons}>
-              {["Yes", "No "].map((button, index) => (
-                <button
-                  type="button"
-                  key={`${index}buttonforform`}
+            </div>
+          </>
+        )}
+        {eventType === "social" && (
+          <div className={cn(styles.span1, styles.gridItem)}>
+            <p>Who?</p>
+            <TemplateSelect
+              name="socialEventGroup"
+              placeholder="Select Group"
+              options={socialEventGroup.map((x) => x.value)}
+              className={styles.addEventSelectInput}
+            ></TemplateSelect>
+          </div>
+        )}
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Where?</p>
+          <TemplateInput
+            type="text"
+            name="location"
+            placeholder="Add Match Location"
+            customProps={{ ...register("location") }}
+            hint={
+              errors?.location && {
+                type: "error",
+                msg: errors?.location?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Add Fee?</p>
+          <TemplateInput
+            type="number"
+            name="fee"
+            placeholder="Fee"
+            customProps={{ ...register("fee") }}
+            hint={
+              errors?.fee && {
+                type: "error",
+                msg: errors?.fee?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Add Message?</p>
+          <TemplateInput
+            type="text"
+            name="message"
+            placeholder="Message for Invitees"
+            customProps={{ ...register("message") }}
+            hint={
+              errors?.message && {
+                type: "error",
+                msg: errors?.message?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <p>Recurring Event?</p>
+          <div className={styles.recurringEventButtons}>
+            {["Yes", "No"].map((x) => (
+              <span>
+                <Button
+                  className={cn(
+                    ((isRecurring && x === "Yes") ||
+                      (!isRecurring && x === "No")) &&
+                      styles.activeRecurringButton,
+                    ((!isRecurring && x === "Yes") ||
+                      (isRecurring && x === "No")) &&
+                      styles.passiveRecurringButton
+                  )}
                   onClick={() => {
-                    setValue("recurring", index);
-                    setRecurring(index);
+                    setIsRecurring(x === "Yes" ? true : false);
+                    setValue("isRecurring", x === "Yes" ? true : false);
                   }}
-                  className={cn(
-                    recurringEvent == index ? styles.button : styles.passive
-                  )}
+                  type={"button"}
                 >
-                  {button}
-                </button>
-              ))}
-            </div>
-            {/* Hidden */}
-            <select className={styles.noShow}>
-              {recurringEvent == 0 ? (
-                <option value="0" {...register("recurring")}>
-                  Yes
-                </option>
-              ) : (
-                <option value="1" {...register("recurring")}>
-                  No
-                </option>
-              )}
-            </select>
+                  {x}
+                </Button>
+              </span>
+            ))}
           </div>
-          <div>
-            Interval
-            <div className={styles.buttons}>
-              {["Weekly", "Fortnight", "Monthly"].map((button, index) => (
-                <button
-                  type="button"
-                  key={`${index}buttonforform2`}
-                  onClick={() => intervalSet(index)}
-                  className={cn(
-                    interval == index ? styles.button : styles.passive
-                  )}
-                >
-                  {button}
-                </button>
-              ))}
-            </div>
-            {/* Hidden */}
-            <select className={styles.noShow}>
-              {interval == 0 && (
-                <option {...register("onEvery")} value="weekly">
-                  Weekly
-                </option>
-              )}
-              {interval == 1 && (
-                <option {...register("onEvery")} value="fortnight">
-                  Fortnight
-                </option>
-              )}
-              {interval == 2 && (
-                <option {...register("onEvery")} value="monthy">
-                  Monthly
-                </option>
-              )}
-            </select>
-          </div>
-          <EventFormGrid>
-            <FormCell>
-              Start Date
-              <input
-                className={styles.inputStyle}
-                type="date"
-                {...register("firstEventStartDate", { required: false })}
-              />
-            </FormCell>
-            <FormCell>
-              Number of Events
-              <input
-                className={styles.inputStyle}
-                defaultValue="0"
-                type="number"
-                {...register("totalEvents")}
-              />
-            </FormCell>
-          </EventFormGrid>
-          <FormCell>
-            Cover Image
-            <UploadMedia
-              onFileChange={onFileChange}
-              deleteMedia={deleteMedia}
-              media={media}
+        </div>
+        {isRecurring && (
+          <>
+            <IntervalTypes
+              intervals={recurringIntervals}
+              onSelect={(interval) => setValue("recurrOnEvery", interval)}
             />
-          </FormCell>
-          <FormSubmit>
-            <button type="submit" className={styles.button}>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>Start Date</p>
+              <TemplateInput
+                type="datetime-local"
+                name="recurrStartDate"
+                customProps={{ ...register("recurrStartDate") }}
+                hint={
+                  errors?.recurrStartDate && {
+                    type: "error",
+                    msg: errors?.recurrStartDate?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div className={cn(styles.span1, styles.gridItem)}>
+              <p>Number Of Events</p>
+              <TemplateInput
+                type="number"
+                name="recurrTotalEvents"
+                customProps={{ ...register("recurrTotalEvents") }}
+                hint={
+                  errors?.recurrTotalEvents && {
+                    type: "error",
+                    msg: errors?.recurrTotalEvents?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+          </>
+        )}
+        {/* Cover Image Here */}
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <div className={styles.submitButtonWrapper}>
+            <Button type="submit" loading={loading} disabled={loading}>
               Post
-            </button>
-          </FormSubmit>
-        </form>
+            </Button>
+          </div>
+        </div>
       </div>
-      {isError && <MessageToUser message={responseMessage} err={isError} />}
+    </form>
+  );
+}
 
-      {isSuccess && (
-        <MessageToUser message={responseMessage} err={!isSuccess} />
-      )}
+function AddEvent({ user, teams }) {
+  const [_teams, setTeams] = useState(teams);
+  const [_teamAList, setTeamAList] = useState([]);
+  const [_teamBList, setTeamBList] = useState([]);
+  const [_eventTypes, setEventTypes] = useState([]);
+  const [_socialEventGroup, setSocialEventGroup] = useState([]);
+  const [_recurringIntervals, setRecurringIntervals] = useState([]);
+
+  useEffect(() => {
+    const __socialEventGroup = [
+      {
+        name: "player",
+        value: "Player",
+      },
+      {
+        name: "teamLead",
+        value: "Team Leaders",
+      },
+      {
+        name: "clubOfficials",
+        value: "Club Officials",
+      },
+    ];
+    setSocialEventGroup(__socialEventGroup);
+
+    const __recurringIntervals = [
+      {
+        type: "week",
+        value: "Weekly",
+      },
+      {
+        type: "fortNight",
+        value: "Fortnight",
+      },
+      {
+        type: "month",
+        value: "Monthly",
+      },
+    ];
+    setRecurringIntervals(__recurringIntervals);
+
+    const __eventTypes = [
+      {
+        type: "match",
+        value: "Match",
+      },
+      {
+        type: "training",
+        value: "Training",
+      },
+      {
+        type: "social",
+        value: "Social",
+      },
+    ];
+    setEventTypes(__eventTypes);
+  }, []);
+
+  useEffect(() => {
+    const __teamAList = [];
+    const __teamBList = [];
+    _teams?.map((x) => {
+      if (x?.owner?.id === user?.id || x?.leader?.id === user?.id) {
+        __teamAList.push({
+          club: x?.club,
+          id: x?.id,
+          title: x?.title,
+          crest: x?.crest,
+        });
+      } else {
+        __teamBList.push({
+          club: x?.club,
+          id: x?.id,
+          title: x?.title,
+          crest: x?.crest,
+        });
+      }
+    });
+
+    setTeamAList(__teamAList);
+    setTeamBList(__teamBList);
+  }, [_teams]);
+
+  return (
+    <div className={styles.addEventWrapper}>
+      <h1 className={styles.addEventTitle}>Create Event</h1>
+      <div className={styles.addEventBodyWrapper}>
+        <AddEventForm
+          teamAList={_teamAList}
+          teamBList={_teamBList}
+          eventTypes={_eventTypes}
+          socialEventGroup={_socialEventGroup}
+          recurringIntervals={_recurringIntervals}
+        />
+      </div>
     </div>
   );
 }

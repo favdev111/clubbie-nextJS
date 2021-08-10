@@ -1,117 +1,166 @@
-.addEvent {
-  max-width: var(--container-lg);
+.addEventWrapper {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 48px;
+  max-width: var(--container-lg);
+  padding-top: var(--space-50);
+  padding-bottom: var(--space-50);
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.eventTypeInput {
-  opacity: 0;
-}
-.eventTypeInput:checked + .checked {
-  background-color: var(--c-white-50) !important;
-  color: var(--c-white);
-}
-
-.eventTypeLabel {
-  padding: 12px 24px 12px 24px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--c-white-10);
-  color: var(--c-white-50);
-  gap: 32px;
-  max-width: max-content;
-  cursor: pointer;
-}
-
-.content {
-  background-color: var(--c-primary);
-  border-radius: var(--radius-lg);
-  margin-top: 48px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-}
-
-.formTitle {
-  font-size: var(--fs-h1);
-  font-family: var(--ff-bold);
-  background-color: transparent;
-  border: none;
-  color: var(--c-white);
-  padding: 12px;
+.addEventBodyWrapper {
+  background: var(--c-primary) 0% 0% no-repeat padding-box;
   width: 100%;
-  border-bottom: 1px solid var(--c-white-10);
-  display: flex;
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
+  padding-top: 0;
 }
-.formTitle::placeholder {
-  color: var(--c-white);
+.addEventTitle {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+@media (max-width: 640px) {
+  .addEventTitle {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+  .addEventTitle {
+    padding-left: 30px;
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 760px) {
+  .addEventWrapper {
+    margin: 0 12px 12px 12px;
+  }
+}
+
+.formGridWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 30px;
+}
+.gridItem {
+  padding: 5px;
+  color: var(--c-white-50);
+  margin-bottom: var(--space-5);
+}
+.gridItem p {
+  padding-bottom: 10px;
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span2 {
+  grid-column: span 2 / span 2;
+}
+.span3 {
+  grid-column: span 3 / span 3;
+}
+
+@media (max-width: 760px) {
+  .span1 {
+    grid-column: span 2 / span 2;
+  }
+  .span2 {
+    grid-column: span 2 / span 2;
+  }
+}
+.addEventTitleInput {
+  font-size: var(--fs-h1) !important;
+  font-family: var(--ff-bold) !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--c-white) !important;
+  padding: 12px !important;
+  border-bottom: 1px solid var(--c-white-10) !important;
+  border-radius: initial !important;
+}
+
+.eventTypesWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: var(--space-16);
 }
 .eventType {
-  display: flex;
-  margin: 48px 0 48px;
-  gap: 32px;
-}
-
-.inputStyle {
-  display: block;
-  width: 100%;
-  height: 52px;
-  border: 0px solid;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.1);
-  outline: none;
-  font-family: var(--ff-regular);
-  font-size: var(--space-16);
-  line-height: var(--space-16);
-  text-align: left;
-  color: var(--c-white-50);
-  padding: var(--space-16) var(--space-16) var(--space-16) var(--space-16);
-  margin: 0px auto var(--space-24);
-}
-.inputStyle:focus {
+  margin-right: var(--space-16);
+  background-color: var(--c-white-10);
   color: var(--c-white);
-  background-color: var(--c-nav);
-}
-.buttonOptions {
+  padding: var(--space-36);
+  border-radius: var(--radius-md);
+  cursor: pointer;
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
-
-.noShow {
-  width: 0px;
-  opacity: 0;
-  height: 0px;
+.eventType > span {
+  padding-top: var(--space-8);
 }
 
-.buttons {
+.eventTypeSelected {
+  border: 2px solid var(--c-turk);
+  filter: brightness(1.1);
+}
+.addEventSelectInput {
+  border-radius: var(--radius-md);
+}
+.recurringEventButtons > span {
+  margin-right: var(--space-12);
+}
+.activeRecurringButton {
+  border: 2px solid var(--c-turk) !important;
+}
+.passiveRecurringButton {
+  background: transparent !important;
+  border: 2px solid var(--c-turk) !important;
+  font-family: var(--ff-regular) !important;
+}
+.intervalWrapper {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-16);
+}
+
+.activeIntervalButton {
+  border: 2px solid var(--c-turk) !important;
+  border-radius: var(--radius-lg);
+}
+.passiveIntervalButton {
+  background: var(--c-white-10) !important;
+  font-family: var(--ff-regular) !important;
+  border-radius: var(--radius-lg);
+}
+
+.dragDropVideos {
+  background: var(--c-white-10) 0% 0% no-repeat padding-box;
+  text-align: center;
+  vertical-align: middle;
+  padding: var(--space-95);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
   display: flex;
-  gap: 12px;
-  padding: 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+.marginTop {
+  margin-top: var(--space-24);
+}
+.dragDropVideosBrowseFiles {
+  font-family: var(--ff-bold);
+  text-align: center;
+  color: var(--c-turk) !important;
+  margin-bottom: var(--space-32);
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.button {
-  background-color: var(--c-turk);
-  border-radius: var(--radius-md);
-  font-family: var(--ff-bold);
-  border: none;
-  color: white;
-  outline: none;
-  padding: 16px;
-  cursor: pointer;
-}
-.passive {
-  cursor: pointer;
-  padding: 12px;
-  border: 1px solid var(--c-white-50);
-  outline: none;
-  border-radius: var(--radius-md);
-  color: var(--c-white-50);
-  background-color: transparent;
+.submitButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
 }
