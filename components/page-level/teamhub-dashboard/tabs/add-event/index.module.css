@@ -5,6 +5,15 @@
   padding-top: var(--space-50);
   padding-bottom: var(--space-50);
 }
+.addEventHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.addEventHeader span {
+  color: var(--c-white-50);
+  margin-right: var(--space-12);
+}
 .addEventBodyWrapper {
   background: var(--c-primary) 0% 0% no-repeat padding-box;
   width: 100%;

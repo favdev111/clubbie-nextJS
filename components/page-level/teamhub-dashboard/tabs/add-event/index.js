@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import moment from "moment";
+import Link from "next/link";
 import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
@@ -568,7 +569,14 @@ function AddEvent({ user, teams }) {
 
   return (
     <div className={styles.addEventWrapper}>
-      <h1 className={styles.addEventTitle}>Create Event</h1>
+      <div className={styles.addEventHeader}>
+        <h1 className={styles.addEventTitle}>Create Event</h1>
+        <Link href="/teamhub/event">
+          <a>
+            <span>Cancel</span>
+          </a>
+        </Link>
+      </div>
       <div className={styles.addEventBodyWrapper}>
         <AddEventForm
           teamAList={_teamAList}
