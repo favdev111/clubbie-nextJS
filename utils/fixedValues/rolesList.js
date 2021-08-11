@@ -1,4 +1,4 @@
-const rolesList = Object.freeze({
+module.exports = Object.freeze({
   ADMIN: "admin",
   NON_PLAYER: "nonPlayer",
   PLAYER: "player",

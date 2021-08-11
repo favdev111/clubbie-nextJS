@@ -69,7 +69,7 @@ const createEvent = Joi.object().keys({
     }),
   team: Joi.string()
     .when("eventType", {
-      is: Joi.string().valid(eventTypes.TRAINING),
+      is: Joi.string().valid(eventTypes.TRAINING, eventTypes.SOCIAL),
       then: Joi.required(),
       otherwise: Joi.forbidden(),
     })
@@ -93,6 +93,16 @@ const createEvent = Joi.object().keys({
     })
     .messages({
       "string.empty": "Team B is required",
+    }),
+  socialEventGroup: Joi.string()
+    .when("eventType", {
+      is: Joi.string().valid(eventTypes.SOCIAL),
+      then: Joi.required(),
+      otherwise: Joi.forbidden(),
+    })
+    .messages({
+      "any.only": "Social Group is Required",
+      "string.empty": "Social Group is Required",
     }),
 });
 

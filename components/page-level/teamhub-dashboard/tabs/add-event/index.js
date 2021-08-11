@@ -77,7 +77,7 @@ function AddEventForm({
   teamAList,
   teamBList,
   eventTypes,
-  socialEventGroup,
+  socialEventGroups,
   recurringIntervals,
 }) {
   const { showNotificationMsg } = useNotification();
@@ -132,7 +132,7 @@ function AddEventForm({
               )?.id
             );
         }
-        if (eventType === "training") {
+        if (eventType === "training" || eventType === "social") {
           data?.team &&
             _arr.push(
               teamAList.find(
@@ -152,6 +152,15 @@ function AddEventForm({
             totalEvents: data?.recurrTotalEvents,
             onEvery: data?.recurrOnEvery,
           };
+        }
+        return null;
+      })(),
+      socialEventGroup: (() => {
+        if (data?.socialEventGroup) {
+          return socialEventGroups.find(
+            (x) =>
+              x?.value?.toLowerCase() === data?.socialEventGroup?.toLowerCase()
+          )?.name;
         }
         return null;
       })(),
@@ -198,7 +207,14 @@ function AddEventForm({
   useEffect(() => {
     if (eventType === "match") {
       unregister("team");
-    } else {
+      unregister("socialEventGroup");
+    }
+    if (eventType === "training") {
+      unregister("teamA");
+      unregister("teamB");
+      unregister("socialEventGroup");
+    }
+    if (eventType === "social") {
       unregister("teamA");
       unregister("teamB");
     }
@@ -329,8 +345,16 @@ function AddEventForm({
             <TemplateSelect
               name="socialEventGroup"
               placeholder="Select Group"
-              options={socialEventGroup.map((x) => x.value)}
+              options={socialEventGroups.map((x) => x.value)}
               className={styles.addEventSelectInput}
+              customProps={{ ...register("socialEventGroup") }}
+              hint={
+                errors?.socialEventGroup && {
+                  type: "error",
+                  msg: errors?.socialEventGroup?.message,
+                  inputBorder: true,
+                }
+              }
             ></TemplateSelect>
           </div>
         )}
@@ -464,11 +488,11 @@ function AddEvent({ user, teams }) {
   const [_teamAList, setTeamAList] = useState([]);
   const [_teamBList, setTeamBList] = useState([]);
   const [_eventTypes, setEventTypes] = useState([]);
-  const [_socialEventGroup, setSocialEventGroup] = useState([]);
+  const [_socialEventGroups, setSocialEventGroup] = useState([]);
   const [_recurringIntervals, setRecurringIntervals] = useState([]);
 
   useEffect(() => {
-    const __socialEventGroup = [
+    const __socialEventGroups = [
       {
         name: "player",
         value: "Player",
@@ -482,7 +506,7 @@ function AddEvent({ user, teams }) {
         value: "Club Officials",
       },
     ];
-    setSocialEventGroup(__socialEventGroup);
+    setSocialEventGroup(__socialEventGroups);
 
     const __recurringIntervals = [
       {
@@ -550,7 +574,7 @@ function AddEvent({ user, teams }) {
           teamAList={_teamAList}
           teamBList={_teamBList}
           eventTypes={_eventTypes}
-          socialEventGroup={_socialEventGroup}
+          socialEventGroups={_socialEventGroups}
           recurringIntervals={_recurringIntervals}
         />
       </div>
