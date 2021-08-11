@@ -8,7 +8,7 @@ import useForm from "@sub/hook-form";
 import useNotification from "@sub/hook-notification";
 import MatchSVG from "@svg/match";
 import TrainingSVG from "@svg/training";
-import SocialSVG from "@svg/Social";
+import SocialSVG from "@svg/social";
 import Events from "@api/services/Event";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
 import styles from "./index.module.css";
