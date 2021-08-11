@@ -173,7 +173,6 @@
   display: flex;
   justify-content: flex-end;
 }
-
 .parentMediaItem {
   display: flex;
   align-items: flex-start;
@@ -193,10 +192,29 @@
   right: -10px;
   top: -10px;
 }
-
 .errorInput {
   border: 2px solid var(--c-red);
 }
 .errorMsg {
   color: var(--c-red);
+}
+.addEventCTAWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--space-48);
+  padding-bottom: var(--space-24);
+}
+.addEventCTAWrapper > p {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+.addEventCTA {
+  color: var(--c-turk);
+  font-size: var(--fs-h3);
+  cursor: pointer;
+}
+.addEventCTA:hover {
+  border-bottom: 2px solid var(--c-turk);
 }

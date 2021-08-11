@@ -745,13 +745,30 @@ function AddEvent({ user, teams }) {
         </Link>
       </div>
       <div className={styles.addEventBodyWrapper}>
-        <AddEventForm
-          teamAList={_teamAList}
-          teamBList={_teamBList}
-          eventTypes={_eventTypes}
-          socialEventGroups={_socialEventGroups}
-          recurringIntervals={_recurringIntervals}
-        />
+        {_teamAList?.length > 0 ? (
+          <AddEventForm
+            teamAList={_teamAList}
+            teamBList={_teamBList}
+            eventTypes={_eventTypes}
+            socialEventGroups={_socialEventGroups}
+            recurringIntervals={_recurringIntervals}
+          />
+        ) : (
+          <div className={styles.addEventCTAWrapper}>
+            <p>
+              You need to be a Team Leader or an Owner in one of your joined
+              teams to create an event for that team. Ask your team owner to
+              make you a team leader or
+            </p>
+            <Link href="/teamhub/register-club">
+              <a>
+                <p className={styles.addEventCTA}>
+                  Create your own Club &amp; Team now.
+                </p>
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
