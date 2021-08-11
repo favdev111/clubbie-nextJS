@@ -7,12 +7,36 @@ import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
 import useForm from "@sub/hook-form";
 import useNotification from "@sub/hook-notification";
+import DragDrop from "@sub/drag-drop";
 import MatchSVG from "@svg/match";
 import TrainingSVG from "@svg/training";
 import SocialSVG from "@svg/social";
+import UploadSVG from "@svg/upload";
 import Events from "@api/services/Event";
+import Files from "@api/services/Files";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
 import styles from "./index.module.css";
+
+// Todo: make a svg and replace this
+function CloseSVG() {
+  return (
+    <span
+      style={{
+        color: "#ffffff",
+        background: "#c41d24",
+        borderRadius: "50%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontWeight: "bold",
+        height: 35,
+        width: 35,
+      }}
+    >
+      x
+    </span>
+  );
+}
 
 function IntervalTypes({ intervals, onSelect }) {
   const [active, setActive] = useState(intervals[0].type);
@@ -90,6 +114,7 @@ function AddEventForm({
   const [loading, setLoading] = useState(false);
   const [eventType, setEventType] = useState("match");
   const [isRecurring, setIsRecurring] = useState(false);
+  const [media, setMedia] = useState(null);
 
   const convertDateAndTimeToIso = (date, time) => {
     const _date = date;
@@ -102,9 +127,61 @@ function AddEventForm({
     return isoDateTime;
   };
 
+  const handleImageDropped = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files[0].type.includes("video")) return;
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setValue("media", mediaPicked?.src);
+      setMedia(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImagePicked = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setValue("media", mediaPicked?.src);
+      setMedia(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const onSubmit = async (data) => {
     setLoading(true);
 
+    // Upload cover image
+    let coverImage = null;
+    const imageForm = new FormData();
+    imageForm.append("files", media?.file);
+    const responseCoverImage = await Files.UploadFile(
+      "userImg",
+      imageForm
+    ).catch(() => null);
+    coverImage = responseCoverImage?.data[0]?.s3Url;
+    if (!coverImage) {
+      showNotificationMsg("Error Uploading Cover Image", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    // common request body
     const commonBody = {
       title: data?.title || null,
       location: data?.location || null,
@@ -115,6 +192,7 @@ function AddEventForm({
       freeForSubs: data?.freeForSubs || null,
     };
 
+    // dynamic request body
     const customBody = {
       ...commonBody,
       teams: (() => {
@@ -167,12 +245,16 @@ function AddEventForm({
       })(),
     };
 
+    // final payload
     const payload = Object.fromEntries(
       Object.entries(customBody).filter(([_, v]) => v != null)
     );
 
-    const response = await Events.CreateEvent(payload).catch(() => null);
-    if (!response) {
+    // create event
+    const responseEventCreate = await Events.CreateEvent(payload).catch(
+      () => null
+    );
+    if (!responseEventCreate) {
       showNotificationMsg("Could not create event", {
         variant: "error",
         displayIcon: true,
@@ -181,6 +263,32 @@ function AddEventForm({
 
       return;
     }
+
+    // add coverImage to event/s created
+    const eventIds = (() => {
+      if (responseEventCreate?.data?.length > 0) {
+        return responseEventCreate?.data?.map((x) => x?.id);
+      }
+      return [responseEventCreate?.data?.id];
+    })();
+    let updateError = null;
+    await Promise.all(
+      eventIds.map(async (id) => {
+        const responseEventEdit = await Events.EditEventbyId(id, {
+          coverImage,
+        }).catch(() => null);
+        if (!responseEventEdit) updateError = true;
+      })
+    );
+    if (updateError) {
+      showNotificationMsg("Could not create event", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
     showNotificationMsg("Event Created Successfully..!", {
       variant: "success",
       displayIcon: true,
@@ -471,7 +579,55 @@ function AddEventForm({
             </div>
           </>
         )}
-        {/* Cover Image Here */}
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <p>Cover Image</p>
+          {!media ? (
+            <>
+              <DragDrop
+                className={cn(
+                  styles.dragDropVideos,
+                  errors?.media?.message && styles.errorInput
+                )}
+                onDrop={handleImageDropped}
+              >
+                <input
+                  hidden
+                  name="media"
+                  accept="image/*"
+                  id="pick-parent-media"
+                  type="file"
+                  onChange={handleImagePicked}
+                />
+                <label htmlFor="pick-parent-media">
+                  <UploadSVG></UploadSVG>
+                </label>
+                <span className={styles.marginTop}>
+                  <span>Drag and drop an Image or</span>
+                  &ensp;
+                  <a className={styles.dragDropVideosBrowseFiles}>
+                    <label htmlFor="pick-parent-media">Browse Files</label>
+                  </a>
+                </span>
+              </DragDrop>
+              {errors?.media?.message && (
+                <p className={styles.errorMsg}>{errors?.media?.message}</p>
+              )}
+            </>
+          ) : (
+            <div className={styles.parentMediaItem}>
+              {media?.src?.includes("image") && <img src={media?.src}></img>}
+              <span
+                className={styles.mediaCloseIcon}
+                onClick={() => {
+                  setMedia(null);
+                  setValue("media", null);
+                }}
+              >
+                <CloseSVG />
+              </span>
+            </div>
+          )}
+        </div>
         <div className={cn(styles.span2, styles.gridItem)}>
           <div className={styles.submitButtonWrapper}>
             <Button type="submit" loading={loading} disabled={loading}>

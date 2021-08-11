@@ -173,3 +173,30 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.parentMediaItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.parentMediaItem img {
+  height: 400px;
+  width: 100%;
+  border-radius: var(--space-16);
+  object-fit: cover;
+  object-position: top;
+}
+.mediaCloseIcon {
+  cursor: pointer;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+}
+
+.errorInput {
+  border: 2px solid var(--c-red);
+}
+.errorMsg {
+  color: var(--c-red);
+}
