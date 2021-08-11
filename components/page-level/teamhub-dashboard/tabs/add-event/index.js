@@ -6,8 +6,8 @@ import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
 import Button from "@sub/button";
 import useForm from "@sub/hook-form";
-import useNotification from "@sub/hook-notification";
 import DragDrop from "@sub/drag-drop";
+import Alert from "@sub/alert";
 import MatchSVG from "@svg/match";
 import TrainingSVG from "@svg/training";
 import SocialSVG from "@svg/social";
@@ -105,8 +105,6 @@ function AddEventForm({
   socialEventGroups,
   recurringIntervals,
 }) {
-  const { showNotificationMsg } = useNotification();
-
   const { register, unregister, handleSubmit, errors, setValue } = useForm({
     schema: createEventSchema,
   });
@@ -115,6 +113,11 @@ function AddEventForm({
   const [eventType, setEventType] = useState("match");
   const [isRecurring, setIsRecurring] = useState(false);
   const [media, setMedia] = useState(null);
+  const [statusMsg, setStatusMsg] = useState({
+    type: null,
+    text: null,
+    animateText: false,
+  });
 
   const convertDateAndTimeToIso = (date, time) => {
     const _date = date;
@@ -164,6 +167,11 @@ function AddEventForm({
     setLoading(true);
 
     // Upload cover image
+    setStatusMsg({
+      type: "info",
+      text: "Uploading Cover Image",
+      animateText: true,
+    });
     let coverImage = null;
     const imageForm = new FormData();
     imageForm.append("files", media?.file);
@@ -173,9 +181,9 @@ function AddEventForm({
     ).catch(() => null);
     coverImage = responseCoverImage?.data[0]?.s3Url;
     if (!coverImage) {
-      showNotificationMsg("Error Uploading Cover Image", {
-        variant: "error",
-        displayIcon: true,
+      setStatusMsg({
+        type: "error",
+        text: "Could Not Upload Cover Image..!",
       });
       setLoading(false);
       return;
@@ -255,12 +263,8 @@ function AddEventForm({
       () => null
     );
     if (!responseEventCreate) {
-      showNotificationMsg("Could not create event", {
-        variant: "error",
-        displayIcon: true,
-      });
+      setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
       setLoading(false);
-
       return;
     }
 
@@ -281,17 +285,15 @@ function AddEventForm({
       })
     );
     if (updateError) {
-      showNotificationMsg("Could not create event", {
-        variant: "error",
-        displayIcon: true,
-      });
+      setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
       setLoading(false);
       return;
     }
 
-    showNotificationMsg("Event Created Successfully..!", {
-      variant: "success",
-      displayIcon: true,
+    setStatusMsg({
+      type: "success",
+      text: "Event Created Successfully..! Redirecting",
+      animateText: true,
     });
     setLoading(false);
   };
@@ -628,6 +630,15 @@ function AddEventForm({
             </div>
           )}
         </div>
+        {statusMsg?.type && statusMsg?.text && (
+          <div className={cn(styles.span2, styles.gridItem)}>
+            <Alert
+              variant={statusMsg?.type}
+              text={statusMsg?.text}
+              animateText={statusMsg?.animateText}
+            />
+          </div>
+        )}
         <div className={cn(styles.span2, styles.gridItem)}>
           <div className={styles.submitButtonWrapper}>
             <Button type="submit" loading={loading} disabled={loading}>
