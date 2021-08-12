@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import cn from "classnames";
-import styles from "./teamhubcard.module.css";
+import Link from "next/link";
 import RightArrow from "@svg/right-arrow";
+import styles from "./teamhubcard.module.css";
 
 function TeamhubCard({ data, type, last }) {
   return (
