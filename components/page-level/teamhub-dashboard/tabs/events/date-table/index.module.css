@@ -1,8 +1,8 @@
 .table {
   display: flex;
   overflow-x: scroll;
-  border-radius: var(--radius-lg);
-  padding: 12px;
+  border-radius: var(--radius-md);
+  padding: 5px;
 }
 
 .table::-webkit-scrollbar {
@@ -14,8 +14,9 @@
 }
 .month {
   background-color: var(--c-white-20);
-  padding: 32px;
+  padding: var(--space-24);
   cursor: pointer;
+  transition: 0.3s ease;
 }
 .month:hover {
   background-color: var(--c-white-30);

@@ -41,7 +41,7 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/add-result`, payload);
   }
 
-  static async GetQueryEvents(query) {
+  static async QueryEvents(query) {
     return HTTPClient.get(`/event`, query);
   }
 
