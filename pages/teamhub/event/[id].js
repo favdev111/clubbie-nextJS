@@ -3,7 +3,7 @@ import Layout from "@layout";
 import { useRouter } from "next/router";
 import Seo from "@layout/seo";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
-import DashboardContent from "@page/teamhub-dashboard";
+import DashboardContent from "@page/teamhub/dashboard";
 import Users from "@api/services/Users";
 
 function EventDetailPage({ user, activeTeam, setTeam }) {

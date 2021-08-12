@@ -1,0 +1,555 @@
+TODO
+- fix replies order on https://dev-clubbie-api.techchaps.uk/v1/docs/#/Comment/get_comments__postId_
+- load more round arrow like facebook on home feed top, pull to refresh on mobile
+- comment focus
+- return like if it already exists
+- conditional re auth
+- fixed navbar
+- css fixes
+- tag input hide
+- tag input -> no multi search
+- may also want to delete userObj.profile.bio
+- change email in profile
+- remove laggy experience
+- babel pkg hint + resolve 
+- update team leaders section
+- list component with scroll 
+- lang en on html
+- theme color
+- close svg
+- also send currency with subscription plan
+- also send if i am subscribed with sbucsription plan
+- ux + improvements
+- smoothe flow
+- fix date/time input validation on add-event 
+- limit recurring events on add-event
+- limit fee on add-event
+
+Ownership
+TestClub_ = 6103e25e0e930a1bda40e51e
+TestTeam_ = 6103e2a80e930a1bda40e51f
+
+
+
+import React, { useState, useEffect } from "react";
+import cn from "classnames";
+import Link from "next/link";
+import Button from "@sub/button";
+import TemplateSelect from "@sub/selectbox";
+import TemplateInput from "@sub/input";
+import Alert from "@sub/alert";
+import ActionButton from "@sub/action-button";
+import ConfirmDialog from "@sub/confirm-dialog";
+import ContentDialog from "@sub/content-dialog";
+import useNotification from "@sub/hook-notification";
+import useForm from "@sub/hook-form";
+import SwitchInput from "@sub/switch";
+import ChatSVG from "@svg/messages";
+import TickMarkSVG from "@svg/tick-mark";
+import XMarkSVG from "@svg/x-mark";
+import PlusTurkSVG from "@svg/plus-turk";
+import EditSVG from "@svg/edit";
+import SettingsSVG from "@svg/settings";
+import Clubs from "@api/services/Clubs";
+import Teams from "@api/services/Teams";
+import styles from "./clubDetails.module.css";
+import {
+  addSubcriptionPlan as addSubcriptionPlanSchema,
+  updateSubcriptionPlan as updateSubcriptionPlanSchema,
+} from "@utils/schemas/team.schema";
+
+function ClubHeader({
+  clubId,
+  clubCrest,
+  clubName,
+  showNotificationMsg,
+  joinButton,
+  leaveButton,
+  onMemberJoin,
+  // onMemberLeave,
+  isOwner,
+  isOfficial,
+}) {
+  const [joiningClub, setJoiningClub] = useState(false);
+  const [leaveClubConfirm, setLeaveClubConfirm] = useState(false);
+  const [leavingClub, setLeavingClub] = useState(false);
+  const [displayCrestFullScreen, setDisplayCrestFullScreen] = useState(false);
+
+  const handleJoinClick = async () => {
+    setJoiningClub(true);
+    // join club
+    const responseClub = await Clubs.JoinClub(clubId).catch(() => null);
+    if (!responseClub) {
+      showNotificationMsg("Could Not Join Team's Club", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setJoiningClub(false);
+      return;
+    }
+
+    await onMemberJoin();
+    showNotificationMsg(
+      `${
+        responseClub?.data?.title
+          ? "You are now a member of " + responseClub?.data?.title.toUpperCase()
+          : "Club Joined Successfully..!"
+      }`,
+      {
+        variant: "success",
+        displayIcon: true,
+      }
+    );
+    setJoiningClub(false);
+  };
+
+  const handleLeaveClick = async () => {
+    setLeavingClub(true);
+    alert("Leave club here");
+    // await onMemberLeave();
+    // const response = await Clubs.LeaveTeam(teamId).catch(() => null);
+    // if (!response) {
+    //   showNotificationMsg("Could Not Leave Team", {
+    //     variant: "error",
+    //     displayIcon: true,
+    //   });
+    //   setLeavingClub(false);
+    //   return;
+    // }
+    // showNotificationMsg("Team Left Successfully..!", {
+    //   variant: "success",
+    //   displayIcon: true,
+    // });
+    setLeavingClub(false);
+  };
+
+  return (
+    <>
+      <ContentDialog
+        open={displayCrestFullScreen}
+        setOpen={setDisplayCrestFullScreen}
+        Body={() => (
+          <img
+            className={styles.clubCrestFullScreen}
+            src={clubCrest || "/assets/club-badge-placeholder.png"}
+          />
+        )}
+        hideActionButtons={true}
+      ></ContentDialog>
+      <ConfirmDialog
+        open={leaveClubConfirm}
+        setOpen={setLeaveClubConfirm}
+        message={`Are you sure to leave this club${
+          (isOwner || isOfficial) && " as a Player"
+        }?${
+          isOwner || isOfficial
+            ? ` You will still retain your role as a ${
+                (isOwner && isOfficial && "Club Owner and a Club Official") ||
+                (isOwner && "Club Owner") ||
+                (isOfficial && "Club Official")
+              }`
+            : // : " You might miss out on current events, feed, group chat and more."
+              " Update this message."
+        }`}
+        confirmText={"Leave"}
+        onConfirm={handleLeaveClick}
+        type={"danger"}
+      />
+      <div className={styles.clubHeaderWrapper}>
+        <div>
+          <div className={styles.clubCrestWrapper}>
+            <img
+              className={styles.clubCrest}
+              src={clubCrest || "/assets/club-badge-placeholder.png"}
+              onClick={() => setDisplayCrestFullScreen(true)}
+            />
+          </div>
+        </div>
+        <div className={styles.clubHeaderDetailsWrapper}>
+          <div className={styles.clubHeaderTitleWrapper}>
+            <h1>{clubName}</h1>
+            <span className={styles.clubHeaderAdminActionButtons}>
+              {isOwner && (
+                <Link href={`/clubs/${clubId}/edit`}>
+                  <a>
+                    <ActionButton type="edit" />
+                  </a>
+                </Link>
+              )}
+            </span>
+          </div>
+          <div className={styles.clubHeaderActionButtons}>
+            {joinButton && (
+              <Button
+                variant="success"
+                size="medium"
+                onClick={handleJoinClick}
+                loading={joiningClub}
+              >
+                {isOwner || isOfficial ? "Join as Player" : "Join"}
+              </Button>
+            )}
+            {leaveButton && (
+              <Button
+                variant="danger"
+                size="medium"
+                onClick={() => setLeaveClubConfirm(true)}
+                loading={leavingClub}
+              >
+                {isOwner || isOfficial ? "Leave as Player" : "Leave"}
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ClubMemberCard({
+  id,
+  image,
+  name,
+  roles,
+  chatButton,
+  acceptButton,
+  declineButton,
+}) {
+  return (
+    <div className={styles.clubMemberCard} key={id}>
+      <Link href={`/profile/${id}`}>
+        <a>
+          <img src={image} className={styles.clubMemberImage} />
+        </a>
+      </Link>
+      <div className={styles.clubMemberInfoWrapper}>
+        <Link href={`/profile/${id}`}>
+          <a>
+            <span className={styles.clubMemberName}>{name}</span>
+          </a>
+        </Link>
+        <div className={styles.clubMemberRolesWrapper}>
+          {roles?.map((role) => (
+            <span className={styles.clubMemberRole}>{role}</span>
+          ))}
+        </div>
+      </div>
+      <div className={styles.clubMemberActionButtons}>
+        {chatButton && (
+          <span>
+            <ChatSVG />
+          </span>
+        )}
+        {declineButton && (
+          <span>
+            <XMarkSVG />
+          </span>
+        )}
+        {acceptButton && (
+          <span>
+            <TickMarkSVG />
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClubMembers({ members, membership }) {
+  return (
+    <div className={styles.clubMembersBlock}>
+      {membership?.status && membership?.statusText && (
+        <div className={styles.clubMembershipWrapper}>
+          <span className={styles.clubMembershipStatusWrapper}>
+            Membership
+            <span
+              className={cn(
+                styles.clubMembershipStatus,
+                ["active", "owner"].includes(
+                  membership?.status?.toLowerCase()
+                ) && styles.activeMemberShip,
+                membership.status?.toLowerCase() === "suspended" &&
+                  styles.suspendedMemberShip,
+                membership.status?.toLowerCase() === "unapproved" &&
+                  styles.unapprovedMemberShip
+              )}
+            >
+              {membership.statusText}
+            </span>
+          </span>
+        </div>
+      )}
+      <div className={styles.clubMembersWrapper}>
+        <h2>Members {members?.length > 0 && `(${members?.length})`}</h2>
+        {members?.length > 0 && (
+          <div className={styles.clubMembers}>
+            {members?.map((member) => (
+              <>
+                <ClubMemberCard
+                  id={member?.id}
+                  name={member?.name}
+                  image={member?.image}
+                  roles={member?.roles}
+                  chatButton={true}
+                ></ClubMemberCard>
+              </>
+            ))}
+          </div>
+        )}
+        {members?.length === 0 && (
+          <div className={styles.clubMembersNone}>
+            This Club has no members currently.
+            <span>&nbsp;Wanna Join?&nbsp;</span> Click the Join Button above.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClubTeamCard({
+  id,
+  title,
+  crest,
+  // joinButton
+}) {
+  return (
+    <div className={styles.clubTeamCard} key={id}>
+      <Link href={`/teams/${id}`}>
+        <a>
+          <img src={crest} className={styles.clubTeamImage} />
+        </a>
+      </Link>
+      <div className={styles.clubTeamInfoWrapper}>
+        <Link href={`/teams/${id}`}>
+          <a>
+            <span className={styles.clubTeamName}>{title}</span>
+          </a>
+        </Link>
+      </div>
+      {/* <div className={styles.clubTeamActionButtons}>
+        {joinButton && <Button size="x-small">Join</Button>}
+      </div> */}
+    </div>
+  );
+}
+
+function ClubTeams({ teams, isOwner }) {
+  return (
+    <div className={styles.clubTeamsBlock}>
+      <div className={styles.clubTeamsWrapper}>
+        <h2>Teams {teams?.length > 0 && `(${teams?.length})`}</h2>
+        {teams?.length > 0 && (
+          <div className={styles.clubTeams}>
+            {teams?.map((team) => (
+              <>
+                <ClubTeamCard
+                  id={team?.id}
+                  title={team?.title}
+                  crest={team?.crest}
+                  // joinButton={true}
+                ></ClubTeamCard>
+              </>
+            ))}
+          </div>
+        )}
+        {teams?.length === 0 && (
+          <div className={styles.clubTeamsNone}>
+            This Club has no teams currently.
+            {isOwner && (
+              <>
+                <span>&nbsp;Wanna Create One?&nbsp;</span> Click the manage icon
+                above.
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClubDetails({ user, club }) {
+  const { showNotificationMsg } = useNotification();
+
+  console.log("club => ", club);
+
+  const [_club] = useState(club);
+  const [_members, setMembers] = useState([]);
+  const [_isOwner, setIsOwner] = useState(false);
+  const [_isOfficial, setIsOfficial] = useState(false);
+  const [_isPlayer, setIsPlayer] = useState(false);
+  const [_membership, setMembership] = useState({
+    status: null,
+    statusText: null,
+  });
+  const [_clubTeams, setClubTeams] = useState([]);
+
+  useEffect(() => {
+    const members = [];
+    const clubTeams = [];
+    const { owner, officials, players, teams } = _club;
+
+    // set members
+    if (owner) {
+      members.push({
+        id: owner?.id || "Owner-ID",
+        name: owner?.profile?.fullName || owner?.id || "Owner-ID",
+        roles: ["Owner"],
+        image: owner?.profile?.image || "/assets/person-placeholder.jpg",
+      });
+    }
+    if (officials) {
+      officials?.map((official) => {
+        const foundMember = members.find((x) => x?.id === official?.user?.id);
+        if (foundMember) {
+          foundMember?.roles?.push(official?.role);
+        } else {
+          members.push({
+            id: official?.user?.id || "Official-ID",
+            name:
+              official?.user?.profile?.fullName ||
+              official?.user?.id ||
+              "Official-ID",
+            roles: [official?.role],
+            image:
+              official?.user?.profile?.image ||
+              "/assets/person-placeholder.jpg",
+          });
+        }
+      });
+    }
+    if (players) {
+      players?.map((player) => {
+        const foundMember = members.find((x) => x?.id === player?.id);
+        if (foundMember) {
+          foundMember?.roles?.push("Player");
+        } else {
+          members.push({
+            id: player?.id || "Player-ID",
+            name: player?.profile?.fullName || player?.id || "Player-ID",
+            roles: ["Player"],
+            image: player?.profile?.image || "/assets/person-placeholder.jpg",
+          });
+        }
+      });
+    }
+
+    // set user authority
+    if (owner?.id === user?.id) {
+      setMembership({ status: "owner", statusText: "Owner" });
+      setIsOwner(true);
+    }
+    const foundOfficial = officials?.find((x) => x?.user?.id === user?.id);
+    if (foundOfficial) {
+      setMembership({ status: "official", statusText: "Official" });
+      setIsOfficial(true);
+    }
+    const foundPlayer = players?.find((x) => x?.id === user?.id);
+    if (foundPlayer) {
+      // if (
+      //   ["unapproved", "active", "suspended"].includes(
+      //     foundPlayer?.status.toLowerCase()
+      //   )
+      // ) {
+      //   setMembership({
+      //     status: foundPlayer?.status,
+      //     statusText: `${foundPlayer?.status}${
+      //       _isOwner || _isLeader || _isCoach ? " as Player" : ""
+      //     }`,
+      //   });
+      // }
+      setIsPlayer(true);
+    }
+
+    setMembers([...members]);
+
+    // set teams
+    if (teams) {
+      teams?.map((team) => {
+        clubTeams.push({
+          id: team?.id || "Team-ID",
+          title: team?.title || team?.id || "Team-Title",
+          crest: team?.crest || "/assets/club-badge-placeholder.png",
+        });
+      });
+    }
+    setClubTeams([...clubTeams]);
+  }, [_club]);
+
+  const addUserToTeamPlayers = () => {
+    alert("set this");
+    // const toSet = [..._members];
+    // const foundMember = toSet?.find((x) => x?.id === user?.id);
+    // if (!foundMember) {
+    //   toSet.push({
+    //     id: user?.id || "Player-ID",
+    //     name: user?.profile?.fullName || user?.id || "Player-ID",
+    //     roles: ["Player"],
+    //     image: user?.profile?.image || "/assets/person-placeholder.jpg",
+    //     status: "unapproved", // show green/red/yellow circles with box shadows and dropdown with unapproved etc
+    //   });
+    //   setMembership({
+    //     status: "unapproved",
+    //     statusText: `Unapproved${
+    //       _isOwner || _isLeader || _isCoach ? " as Player" : ""
+    //     }`,
+    //   });
+    // }
+    // if (
+    //   foundMember &&
+    //   !foundMember?.roles?.find((x) => x.toLowerCase() === "player")
+    // ) {
+    //   foundMember?.roles?.push("player");
+    //   setMembership({
+    //     status: "unapproved",
+    //     statusText: `Unapproved${
+    //       _isOwner || _isLeader || _isCoach ? " as Player" : ""
+    //     }`,
+    //   });
+    // }
+    // setMembers([...toSet]);
+    // setIsPlayer(true);
+  };
+
+  // const removeUserFromTeamPlayers = () => {
+  //   let toSet = [..._members];
+  //   const foundMember = toSet?.find((x) => x?.id === user?.id);
+  //   if (foundMember) {
+  //     foundMember.roles = foundMember?.roles?.filter(
+  //       (x) => x?.toLowerCase() !== "player"
+  //     );
+  //     if (foundMember?.roles?.length == 0) {
+  //       toSet = toSet?.filter((x) => x?.id !== user?.id);
+  //     }
+  //     setMembers([...toSet]);
+  //     setMembership({
+  //       status: _isOwner ? "owner" : null,
+  //       statusText: _isOwner ? "Owner" : null,
+  //     });
+  //     setIsPlayer(false);
+  //   }
+  // };
+
+  return (
+    <>
+      <ClubHeader
+        clubId={_club?.id}
+        clubCrest={_club?.crest}
+        clubName={_club?.title}
+        showNotificationMsg={showNotificationMsg}
+        joinButton={!_isPlayer}
+        leaveButton={_isPlayer}
+        isOwner={_isOwner}
+        isOfficial={_isOfficial}
+        onMemberJoin={addUserToTeamPlayers}
+        // onMemberLeave={removeUserFromTeamPlayers}
+      ></ClubHeader>
+      <ClubMembers members={_members} membership={_membership}></ClubMembers>
+      <ClubTeams teams={_clubTeams} isOwner={_isOwner}></ClubTeams>
+    </>
+  );
+}
+
+export default ClubDetails;
+
