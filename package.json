@@ -21,6 +21,7 @@
     "joi": "^17.4.0",
     "js-cookie": "^2.2.1",
     "luxon": "^1.27.0",
+    "moment": "^2.29.1",
     "next": "10.2.0",
     "next-redux-wrapper": "^6.0.2",
     "postcss-loader": "4.2.0",

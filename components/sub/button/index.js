@@ -18,18 +18,14 @@ const Button = (props) => {
           variant === "cancel" && styles.cancel,
           variant === "success" && styles.success,
           variant === "info" && styles.info,
-          variant === "transparent" && styles.transparent
+          variant === "transparent" && styles.transparent,
+          className
         )}
         disabled={loading}
       >
         <div className={styles.btnContent}>
           {loading && <div className={styles.loading}></div>}
-          <span
-            className={cn(
-              styles.contTxt,
-              variant === "transparent" && styles.grayColor
-            )}
-          >
+          <span className={variant === "transparent" && styles.grayColor}>
             {children}
           </span>
         </div>
