@@ -1,8 +1,8 @@
 import React from "react";
 import cn from "classnames";
 import Link from "next/link";
-import MatchInfo from "@sub/match-info";
 import MatchCard from "@sub/match-card";
+import MatchInfo from "@sub/match-info";
 import ThreeDots from "@svg/threedots";
 import styles from "./index.module.css";
 

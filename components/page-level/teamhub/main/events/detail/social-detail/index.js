@@ -1,8 +1,8 @@
 import React from "react";
 import { DateTime } from "luxon";
 import KickOff from "@svg/kickoff";
-import Date from "@svg/date";
 import Place from "@svg/place";
+import Date from "@svg/date";
 import Comment from "@svg/social/comment";
 import styles from "./index.module.css";
 

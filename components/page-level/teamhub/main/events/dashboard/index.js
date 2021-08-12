@@ -4,8 +4,8 @@ import { DateTime } from "luxon";
 import ProgressBar from "@sub/progress";
 import EditIcon from "@svg/edit.js";
 import DateTable from "./date-table";
-import Event from "@api/services/Event";
 import EventCard from "./card";
+import Event from "@api/services/Event";
 import styles from "./index.module.css";
 
 const newDate = new Date();

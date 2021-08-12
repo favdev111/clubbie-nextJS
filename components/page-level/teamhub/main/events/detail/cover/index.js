@@ -1,6 +1,6 @@
 import React from "react";
-import ThreeDots from "@svg/threedots";
 import styles from "./index.module.css";
+import ThreeDots from "@svg/threedots";
 
 function DetailCover({ img, data }) {
   return (

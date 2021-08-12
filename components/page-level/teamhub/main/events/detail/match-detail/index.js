@@ -2,8 +2,8 @@ import React from "react";
 import { DateTime } from "luxon";
 import Date from "@svg/date";
 import KickOff from "@svg/kickoff";
-import Available from "@svg/available";
 import Place from "@svg/place";
+import Available from "@svg/available";
 import styles from "./index.module.css";
 
 function MatchDetail({ data, players, userRole }) {
