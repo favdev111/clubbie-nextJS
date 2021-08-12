@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import DashboardContent from "@page/teamhub/dashboard";
+import DashboardContent from "@page/teamhub/main";
 import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import Users from "@api/services/Users";
