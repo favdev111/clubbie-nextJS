@@ -11,8 +11,8 @@ function MyTeam({ active, setactive, userTeams, user }) {
   });
   return (
     <>
-      <div className={styles.myTeam}>
-        <div className={styles.myTeamFlex}>
+      <div className={styles.myTeamWrapper}>
+        <div className={styles.myTeamHeader}>
           <h3>My team</h3>
           <Link href="/teamhub/initial">
             <a>
@@ -22,7 +22,7 @@ function MyTeam({ active, setactive, userTeams, user }) {
             </a>
           </Link>
         </div>
-        <div className={styles.myTeamFlex}>
+        <div className={styles.myTeamList}>
           {userTeams.map((team, index) => (
             <TeamCard
               key={team + index}

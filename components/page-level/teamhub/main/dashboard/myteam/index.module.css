@@ -1,13 +1,15 @@
-.myTeamFlex {
+.myTeamHeader {
+  display: flex;
+}
+.myTeamList {
   display: flex;
   overflow-x: scroll;
-}
-.myTeamFlex::-webkit-scrollbar {
-  display: none;
-}
-.myTeamFlex {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  margin-top: var(--space-24);
+}
+.myTeamList::-webkit-scrollbar {
+  display: none;
 }
 .teamhubInitial {
   margin-left: 15px;
@@ -15,56 +17,56 @@
 }
 
 @media screen and (max-width: 1024px) and (min-width: 766px) {
-  .myTeam {
+  .myTeamWrapper {
     background-color: var(--c-white-10);
     margin: 12px;
     padding: 12px;
     border-radius: var(--radius-lg);
     display: block;
   }
-  .myTeam h3 {
+  .myTeamWrapper h3 {
     font-size: 14px;
     color: var(--c-white-50);
     font-family: var(--ff-regular);
   }
-  .myTeamFlex {
+  .myTeamList {
     overflow-x: scroll;
   }
 }
 
 @media screen and (max-width: 766px) and (min-width: 360px) {
-  .myTeam {
+  .myTeamWrapper {
     background-color: var(--c-white-10);
     margin: 12px;
     padding: 12px;
     border-radius: var(--radius-lg);
     display: block;
   }
-  .myTeam h3 {
+  .myTeamWrapper h3 {
     font-size: 14px;
     color: var(--c-white-50);
     font-family: var(--ff-regular);
   }
-  .myTeamFlex {
+  .myTeamList {
     overflow-x: scroll;
   }
 }
 
 @media only screen and (max-width: 360px) {
   /* For mobile phones: */
- .myTeam {
+  .myTeamWrapper {
     background-color: var(--c-white-10);
     margin: 12px;
     padding: 12px;
     border-radius: var(--radius-lg);
     display: block;
   }
-  .myTeam h3 {
+  .myTeamWrapper h3 {
     font-size: 14px;
     color: var(--c-white-50);
     font-family: var(--ff-regular);
   }
-  .myTeamFlex {
+  .myTeamList {
     overflow-x: scroll;
   }
 }
