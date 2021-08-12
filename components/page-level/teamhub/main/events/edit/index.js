@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-
 import Link from "next/link";
-import Event from "@api/services/Event";
-import Files from "@api/services/Files";
-import Teams from "@api/services/Teams";
-
-import styles from "./index.module.css";
-
-import MessageToUser from "@sub/messageAnimation";
-
-import { schema } from "@utils/schemas/editEvent";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { DateTime } from "luxon";
-
-import FormSubmit from "./submit";
+import { yupResolver } from "@hookform/resolvers/yup";
+import MessageToUser from "@sub/messageAnimation";
 import UploadMedia from "@sub/upload";
 import FormCell from "@sub/event-form-cell";
 import EventFormGrid from "@sub/event-form-grid";
+import Event from "@api/services/Event";
+import Files from "@api/services/Files";
+import Teams from "@api/services/Teams";
+import { schema } from "@utils/schemas/editEvent";
+import styles from "./index.module.css";
+import FormSubmit from "./submit";
 
 /* Todo -> Display validate errors */
 
