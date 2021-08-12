@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import AllPayments from "./all-payments";
 import EventsPayments from "./event";
 import PaymentsSubscriptions from "./subscriptions";
-import RouteButton from "../route-button";
+import RouteButton from "../common/route-button";
 
 function Payments() {
   const [activeButton, setActive] = useState(0);

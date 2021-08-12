@@ -4,7 +4,7 @@ import Event from "@api/services/Event";
 import StatisticFixtures from "./fixtures";
 import LeagueTables from "./league-tables";
 import PlayerStats from "./player-stats";
-import RouteButton from "../route-button";
+import RouteButton from "../common/route-button";
 import styles from "./index.module.css";
 
 function Statistics({ activeTeam, user }) {
