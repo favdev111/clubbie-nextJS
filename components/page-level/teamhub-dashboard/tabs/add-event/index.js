@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import cn from "classnames";
 import moment from "moment";
 import Link from "next/link";
@@ -105,6 +106,7 @@ function AddEventForm({
   socialEventGroups,
   recurringIntervals,
 }) {
+  const router = useRouter();
   const { register, unregister, handleSubmit, errors, setValue } = useForm({
     schema: createEventSchema,
   });
@@ -296,6 +298,8 @@ function AddEventForm({
       animateText: true,
     });
     setLoading(false);
+    // TODO: redirect with some query params to get that event on the next page
+    router.push("/teamhub/event"); // redirect to event page
   };
 
   useEffect(() => {

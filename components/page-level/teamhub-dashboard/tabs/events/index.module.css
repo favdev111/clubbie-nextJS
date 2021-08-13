@@ -1,8 +1,7 @@
 .event {
   max-width: var(--container-lg);
-}
-.event h1 {
-  padding-bottom: 20px;
+  padding-top: var(--space-50);
+  padding-bottom: var(--space-50);
 }
 .eventHeader {
   display: flex;
@@ -57,7 +56,7 @@
   .event h1 {
     display: none;
   }
-   .event{
+  .event {
     margin-bottom: 70px;
   }
   .draft {
@@ -71,12 +70,11 @@
   }
 }
 
-
 @media screen and (max-width: 360px) {
   .event h1 {
     display: none;
   }
-  .event{
+  .event {
     margin-bottom: 70px;
   }
   .draft {

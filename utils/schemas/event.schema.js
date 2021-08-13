@@ -37,8 +37,9 @@ const createEvent = Joi.object().keys({
     "string.empty": "Location is required",
   }),
   message: Joi.string().optional().allow(""),
-  fee: Joi.number().optional().min(5000).allow("").messages({
-    "number.min": "Fee must be greater than £5000",
+  fee: Joi.number().optional().min(1).max(1000).allow("").messages({
+    "number.min": "Fee must be greater than or equal to £1",
+    "number.max": "Fee must be less or equal to £1000",
   }),
   isRecurring: Joi.boolean().optional(),
   recurrOnEvery: Joi.string()
@@ -53,6 +54,7 @@ const createEvent = Joi.object().keys({
     }),
   recurrTotalEvents: Joi.number()
     .min(2)
+    .max(10)
     .integer()
     .when("isRecurring", {
       is: Joi.boolean().valid(true),
@@ -62,6 +64,7 @@ const createEvent = Joi.object().keys({
     .messages({
       "number.base": "Events Count is required",
       "number.min": "Events Count must be greater than 2",
+      "number.max": "Events Count must be less than 10",
     }),
   recurrStartDate: Joi.date()
     .when("isRecurring", {

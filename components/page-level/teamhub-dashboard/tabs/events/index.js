@@ -22,11 +22,12 @@ function Events({ activeTeam, user }) {
 
   useEffect(() => {
     setDataLoaded(false);
+
     const fetchEvents = async () => {
-      const teamQuery = {
-        teamId: user.teams[activeTeam].team,
+      const query = {
+        teamId: user?.teams[0].team,
       };
-      const response = await Event.GetQueryEvents(teamQuery);
+      const response = await Event.QueryEvents(query).catch(() => null);
 
       setFiltered(
         response.data.results.filter((item) => {
@@ -52,19 +53,19 @@ function Events({ activeTeam, user }) {
     <>
       <div className={styles.event}>
         <div className={styles.eventHeader}>
-          <h1> Events</h1>
+          <h1>Events</h1>
 
           {/* Drafts, Add event etc */}
-          {userRole == "teamLead" && (
-            <Link href="/teamhub/event/add-event/">
-              <a>
-                <div className={styles.draft}>
-                  <EditIcon />
-                  <p>Add new event </p>
-                </div>
-              </a>
-            </Link>
-          )}
+          {/* {userRole == "teamLead" && ( */}
+          <Link href="/teamhub/event/add-event/">
+            <a>
+              <div className={styles.draft}>
+                <EditIcon />
+                <p>Add new event </p>
+              </div>
+            </a>
+          </Link>
+          {/* )} */}
         </div>
 
         {/* Date */}

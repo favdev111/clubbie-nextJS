@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import Teamhub from "@page/teamhub/";
+import Teamhub from "@page/teamhub/onboard";
 
 function TeamhubPage() {
   return (
