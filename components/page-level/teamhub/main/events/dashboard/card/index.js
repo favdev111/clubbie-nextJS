@@ -1,5 +1,6 @@
 import React from "react";
 import cn from "classnames";
+import Link from "next/link";
 import Button from "@sub/button";
 import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
@@ -45,7 +46,14 @@ function EventCardBody({
     <div className={styles.eventCardBody}>
       <div className={styles.eventTeamsWrapper}>
         <div className={styles.eventTeam}>
-          <img src={eventTeams[0]?.crest} />
+          <Link href={`/teams/${eventTeams[0]?.id}`}>
+            <a>
+              <img
+                className={styles.eventTeamCrest}
+                src={eventTeams[0]?.crest}
+              />
+            </a>
+          </Link>
           <span>{eventTeams[0]?.title}</span>
         </div>
         <div className={styles.eventTypeWrapper}>
@@ -65,7 +73,14 @@ function EventCardBody({
         </div>
         {eventTeams?.length > 1 && (
           <div className={styles.eventTeam}>
-            <img src={eventTeams[1]?.crest} />
+            <Link href={`/teams/${eventTeams[1]?.id}`}>
+              <a>
+                <img
+                  className={styles.eventTeamCrest}
+                  src={eventTeams[1]?.crest}
+                />
+              </a>
+            </Link>
             <span>{eventTeams[1]?.title}</span>
           </div>
         )}
