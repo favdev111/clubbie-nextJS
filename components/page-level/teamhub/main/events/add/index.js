@@ -299,7 +299,7 @@ function AddEventForm({
     });
     setLoading(false);
     // TODO: redirect with some query params to get that event on the next page
-    router.push("/teamhub/event"); // redirect to event page
+    router.push("/teamhub/events"); // redirect to event page
   };
 
   useEffect(() => {

@@ -31,10 +31,10 @@ function DashboardContent({ activeTeam, setTeam, user, eventId }) {
   const myRouter = useRouter();
 
   useEffect(() => {
-    if (myRouter.pathname == "/teamhub/event") setIndex(1);
+    if (myRouter.pathname == "/teamhub/events") setIndex(1);
     if (myRouter.pathname == "/teamhub/payments") setIndex(2);
     if (myRouter.pathname == "/teamhub/statistics") setIndex(3);
-    if (myRouter.pathname == "/teamhub/event/[id]") setIndex(4);
+    if (myRouter.pathname == "/teamhub/events/[id]") setIndex(4);
   }, [myRouter.pathname]);
 
   return (

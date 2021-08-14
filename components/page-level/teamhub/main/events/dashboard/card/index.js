@@ -12,7 +12,7 @@ function EventCard({ data, user, activeTeam }) {
   const userTeam = user.teams[activeTeam].team;
 
   return (
-    <Link href={`/teamhub/event/${id}`}>
+    <Link href={`/teamhub/events/${id}`}>
       <a>
         <div className={styles.card}>
           {/* Card upper *--* Image side */}

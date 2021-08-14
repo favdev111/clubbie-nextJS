@@ -110,7 +110,7 @@ function EventDetail({ eventId, activeTeam, user }) {
         {/*    <AvailablePlayers /> */}
         {/* Edit Event */}
         {userRole == "teamLead" && data?.eventType == "match" && (
-          <Link href={`/teamhub/event/edit-event/${eventId}`}>
+          <Link href={`/teamhub/events/edit-event/${eventId}`}>
             <a>
               <div className={styles.routeComponent}>
                 <div className={styles.center}>
@@ -123,7 +123,7 @@ function EventDetail({ eventId, activeTeam, user }) {
         )}
         {/* Confirm Line Up */}
         {userRole == "teamLead" && data?.eventType !== "social" && (
-          <Link href={`/teamhub/event/confirm-lineup/${eventId}`}>
+          <Link href={`/teamhub/events/confirm-lineup/${eventId}`}>
             <a>
               <div className={styles.routeComponent}>
                 <div className={styles.center}>
