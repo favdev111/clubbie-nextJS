@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
-import RouteButton from "../teamhub-dashboard/route-button";
+import RouteButton from "../teamhub/main/common/route-button";
 import AllNotifications from "./all-notifications";
 import Unread from "./unread";
 import Events from "./events";
