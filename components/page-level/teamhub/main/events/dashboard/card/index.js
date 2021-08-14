@@ -84,7 +84,6 @@ function EventCardBody({
             <span>{eventTeams[1]?.title}</span>
           </div>
         )}
-        {/* <p className="opacity-50 text-center"> Social </p> */}
       </div>
       <div className={styles.eventInfoWrapper}>
         {eventDate && (
