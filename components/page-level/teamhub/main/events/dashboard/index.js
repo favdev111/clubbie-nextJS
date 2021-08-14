@@ -48,7 +48,7 @@ function EventsList({ events, loading }) {
             eventCoverImage={
               x?.eventCoverImage || "/assets/person-placeholder.jpg"
             }
-            eventFee={x?.fee}
+            eventFee={x?.fee?.toFixed(2) || "0.00"}
             eventCurrency={"£"}
             currencySymbolBeforeFee={true}
             eventDateTime={x?.eventDateTime}
