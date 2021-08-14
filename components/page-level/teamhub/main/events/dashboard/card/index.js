@@ -1,6 +1,7 @@
 import React from "react";
-import cn from "classnames";
 import Link from "next/link";
+import cn from "classnames";
+import moment from "moment";
 import Button from "@sub/button";
 import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
@@ -137,8 +138,8 @@ function EventCard({
         <EventCardBody
           eventType={eventType}
           eventTeams={eventTeams}
-          eventDate={eventDateTime}
-          eventTime={eventDateTime}
+          eventDate={moment(eventDateTime).format("Do MMMM YYYY")}
+          eventTime={moment(eventDateTime).format("h:mm A")}
           eventLocation={eventLocation}
         />
         <EventCardActions />
