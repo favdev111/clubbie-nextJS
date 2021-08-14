@@ -72,8 +72,11 @@ function EventsDashboard({ user }) {
     currentMonthIndex
   );
 
-  const fetchEvents = async () => {
-    const response = await Events.QueryEvents({}).catch(() => null);
+  const fetchEvents = async (month = null) => {
+    const query = {};
+    if (month) query.month = month;
+
+    const response = await Events.QueryEvents(query).catch(() => null);
     if (response) {
       const _toSet = {
         ...response?.data,
@@ -97,7 +100,7 @@ function EventsDashboard({ user }) {
 
   useEffect(async () => {
     setLoading(true);
-    await fetchEvents();
+    await fetchEvents(selectedMonthIndex + 1);
     setLoading(false);
   }, [selectedMonthIndex]);
 
