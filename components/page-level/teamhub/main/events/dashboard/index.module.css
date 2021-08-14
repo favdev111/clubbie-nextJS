@@ -1,9 +1,9 @@
-.event {
+.eventsWrapper {
   max-width: var(--container-lg);
   padding-top: var(--space-50);
   padding-bottom: var(--space-50);
 }
-.eventHeader {
+.eventsHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,17 +28,17 @@
 }
 
 @media screen and (max-width: 1280px) and (min-width: 1024px) {
-  .event {
+  .eventsWrapper {
     max-width: 70%;
     padding-right: 24px;
   }
 }
 
 @media screen and (max-width: 1024px) and (min-width: 850px) {
-  .event {
+  .eventsWrapper {
     flex-direction: column;
   }
-  .event h1 {
+  .eventsWrapper h1 {
     display: none;
   }
   .draft {
@@ -53,10 +53,10 @@
 }
 
 @media screen and (max-width: 850px) and (min-width: 360px) {
-  .event h1 {
+  .eventsWrapper h1 {
     display: none;
   }
-  .event {
+  .eventsWrapper {
     margin-bottom: 70px;
   }
   .draft {
@@ -71,10 +71,10 @@
 }
 
 @media screen and (max-width: 360px) {
-  .event h1 {
+  .eventsWrapper h1 {
     display: none;
   }
-  .event {
+  .eventsWrapper {
     margin-bottom: 70px;
   }
   .draft {
@@ -86,4 +86,20 @@
     margin-top: unset;
     margin-bottom: unset;
   }
+}
+
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-50);
+}
+.span1 {
+  grid-column: span 1 / span 1;
+}
+.span2 {
+  grid-column: span 2 / span 2;
+}
+.span3 {
+  grid-column: span 3 / span 3;
 }

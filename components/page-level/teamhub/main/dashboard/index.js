@@ -32,10 +32,10 @@ function Dashboard({ user, activeTeam, setTeam }) {
 
     const fetchSelectedTeam = async () => {
       const dashboardResponse = await Teams.GetTeamDashboard(
-        user.teams[activeTeam].team
-      );
-      setSelectedTeam(dashboardResponse.data.team);
-      setDashData(dashboardResponse.data);
+        user?.teams[activeTeam]?.team
+      ).catch(() => null);
+      setSelectedTeam(dashboardResponse?.data?.team);
+      setDashData(dashboardResponse?.data);
     };
     fetchUserTeams();
     fetchSelectedTeam();
