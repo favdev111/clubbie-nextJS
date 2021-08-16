@@ -1,94 +1,119 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 import Link from "next/link";
-import { DateTime } from "luxon";
 import ProgressBar from "@sub/progress";
 import EditIcon from "@svg/edit.js";
-import DateTable from "./date-table";
+import EventsMonthSelector from "./month-selector";
 import EventCard from "./card";
-import Event from "@api/services/Event";
+import Events from "@api/services/Event";
 import styles from "./index.module.css";
 
-const newDate = new Date();
-const currentMonth = newDate.getMonth();
-
-function Events({ activeTeam, user }) {
-  const [selectedMonth, setSelected] = useState(currentMonth);
-  const [filteredEvents, setFiltered] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
-
-  const userRole = user.teams[activeTeam].role;
-
-  useEffect(() => {
-    setDataLoaded(false);
-
-    const fetchEvents = async () => {
-      const query = {
-        teamId: user?.teams[0].team,
-      };
-      const response = await Event.QueryEvents(query).catch(() => null);
-
-      setFiltered(
-        response.data.results.filter((item) => {
-          if (userRole == "teamLead")
-            return (
-              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
-              selectedMonth + 1
-            );
-          else
-            return (
-              DateTime.fromISO(item.eventDateTime, { zone: "utc" }).month ==
-                selectedMonth + 1 && item.status == "published"
-            );
-        })
-      );
-
-      setDataLoaded(true);
-    };
-    fetchEvents();
-  }, [user, selectedMonth]);
-
+function EventsHeader() {
   return (
-    <>
-      <div className={styles.event}>
-        <div className={styles.eventHeader}>
-          <h1>Events</h1>
-
-          {/* Drafts, Add event etc */}
-          {/* {userRole == "teamLead" && ( */}
-          <Link href="/teamhub/event/add-event/">
-            <a>
-              <div className={styles.draft}>
-                <EditIcon />
-                <p>Add new event </p>
-              </div>
-            </a>
-          </Link>
-          {/* )} */}
-        </div>
-
-        {/* Date */}
-        <DateTable setSelected={setSelected} selected={selectedMonth} />
-
-        {/* Cards */}
-        <div className={styles.eventCardsRow}>
-          {!dataLoaded ? (
-            <ProgressBar />
-          ) : filteredEvents.length > 0 ? (
-            filteredEvents.map((card) => (
-              <EventCard
-                activeTeam={activeTeam}
-                user={user}
-                key={Math.random() + 12}
-                data={card}
-              />
-            ))
-          ) : (
-            <p> There is no event in selected month. </p>
-          )}
-        </div>
-      </div>
-    </>
+    <div className={styles.eventsHeader}>
+      <h1>Events</h1>
+      <span>
+        <Link href="/teamhub/events/add-event/">
+          <a>
+            <span className={styles.draft}>
+              <EditIcon />
+              <p>Add new event </p>
+            </span>
+          </a>
+        </Link>
+      </span>
+    </div>
   );
 }
 
-export default Events;
+function EventsList({ events, loading }) {
+  return (
+    <div className={styles.eventCardsRow}>
+      {loading ? (
+        <div className={cn(styles.loadingWrapper, styles.span2)}>
+          <ProgressBar />
+        </div>
+      ) : events?.results?.length > 0 ? (
+        events?.results?.map((x) => (
+          <EventCard
+            eventId={x?.id}
+            eventType={x?.eventType}
+            eventTeams={x?.teams.map((y) => {
+              return {
+                id: y?.team?.id,
+                title: y?.team?.title,
+                crest: y?.team?.crest || "/assets/club-badge-placeholder.png",
+              };
+            })}
+            eventCoverImage={
+              x?.eventCoverImage || "/assets/person-placeholder.jpg"
+            }
+            eventFee={x?.fee?.toFixed(2) || "0.00"}
+            eventCurrency={"£"}
+            currencySymbolBeforeFee={true}
+            eventDateTime={x?.eventDateTime}
+            eventLocation={x?.location}
+          />
+        ))
+      ) : (
+        <span>There are no events in the selected month.</span>
+      )}
+    </div>
+  );
+}
+
+function EventsDashboard({ user }) {
+  const currentMonthIndex = new Date().getMonth();
+
+  const [_user] = useState(user);
+  const [_events, setEvents] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(
+    currentMonthIndex
+  );
+
+  const fetchEvents = async (month = null) => {
+    const query = {};
+    if (month) query.month = month;
+
+    const response = await Events.QueryEvents(query).catch(() => null);
+    if (response) {
+      const _toSet = {
+        ...response?.data,
+        results: response?.data?.results?.map((x) => {
+          return {
+            ...x,
+            teams: x?.teams?.map((y) => {
+              const temp = {
+                ...y,
+                team: y?.teamId,
+              };
+              delete temp["teamId"];
+              return temp;
+            }),
+          };
+        }),
+      };
+      setEvents(_toSet);
+    }
+  };
+
+  useEffect(async () => {
+    setLoading(true);
+    await fetchEvents(selectedMonthIndex + 1);
+    setLoading(false);
+  }, [selectedMonthIndex]);
+
+  return (
+    <div className={styles.eventsWrapper}>
+      <EventsHeader />
+      <EventsMonthSelector
+        setSelectedMonthIndex={setSelectedMonthIndex}
+        selectedMonthIndex={selectedMonthIndex}
+      />
+      <EventsList events={_events} loading={loading} />
+    </div>
+  );
+}
+
+export default EventsDashboard;

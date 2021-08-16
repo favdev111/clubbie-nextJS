@@ -159,7 +159,7 @@ function EditEvent({ user, activeTeam }) {
         setResponseMessage("Succesfully changed.");
         setSuccess(true);
         setTimeout(() => {
-          router.push(`/teamhub/event/${res.data.id}`);
+          router.push(`/teamhub/events/${res.data.id}`);
         }, 3000);
       })
       .catch((err) => {
@@ -181,7 +181,7 @@ function EditEvent({ user, activeTeam }) {
       {/* Header */}
       <div className={styles.header}>
         <h1> Edit Event</h1>
-        <Link href={`/teamhub/event/${router.query.eventId}`}>
+        <Link href={`/teamhub/events/${router.query.eventId}`}>
           <a>Cancel</a>
         </Link>
       </div>

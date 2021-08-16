@@ -1,77 +1,105 @@
-.card {
+.eventCardWrapper {
   display: flex;
   flex-direction: column;
   background-color: var(--c-primary);
   border-radius: var(--radius-lg);
-  height: max-content;
 }
-
-.cardImg {
+.eventImageWrapper {
   position: relative;
   cursor: pointer;
 }
-.cardImg img {
-  display: flex;
+.eventImageWrapper img {
   width: 100%;
-  object-fit: contain;
+  height: 250px;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  object-fit: cover;
 }
-
-.price {
-  display: none;
-}
-.cardImg:hover .price {
-  display: block;
-  transition: all;
-}
-.price {
+.eventFee {
   background-color: var(--c-turk);
   padding: 12px;
   position: absolute;
   bottom: 12px;
   right: 12px;
 }
-.cardImg:hover .more {
-  display: block;
-  transition: all;
-}
-.more {
+.eventManageOptionsWrapper {
   display: none;
   position: absolute;
   top: 12px;
   right: 12px;
 }
-.score {
+.eventImageWrapper:hover .eventManageOptionsWrapper {
+  display: block;
+}
+.eventCardBody {
+  padding: var(--space-12);
+}
+.eventTeamsWrapper {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
-
-.cardDetail {
-  padding-top: 12px;
-}
-
-.cardInfo {
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-}
-
-.infoInner {
+.eventTeam {
   display: flex;
   align-items: center;
-  padding: 4px;
+  flex-direction: column;
+  text-transform: capitalize;
 }
-.infoInner p {
-  padding-left: 5px;
-}
-
-.availableCard {
-  background-color: var(--c-turk);
-  padding: 16px;
-  text-align: center;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+.eventTeamCrest {
+  width: 50px;
+  height: 50px;
   cursor: pointer;
+  border-radius: 50% 50% 45% 45% / 9% 9% 91% 91%;
+  margin-bottom: var(--space-5);
 }
-.unavailable {
-  background-color: var(--c-red);
+.eventTypeWrapper {
+  margin: 0 var(--space-40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.eventTypeMatch {
+  color: var(--c-white-50);
+  text-transform: capitalize;
+}
+.eventTypeTraining {
+  font-size: var(--fs-h3);
+  background-color: var(--c-yellow);
+  color: var(--c-white-70);
+  padding: var(--space-5) var(--space-12);
+  transform: skew(-0.02turn, 0deg);
+  text-transform: capitalize;
+}
+.eventTypeSocial {
+  font-size: var(--fs-h3);
+  background-color: var(--c-green);
+  color: var(--c-white-70);
+  padding: var(--space-5) var(--space-12);
+  transform: skew(-0.02turn, 0deg);
+  text-transform: capitalize;
+}
+.eventVerses {
+  margin-top: var(--space-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--ff-bold);
+}
+.eventInfoWrapper {
+  padding: var(--space-12);
+  padding-bottom: 0;
+  margin-top: var(--space-24);
+  display: flex;
+  flex-direction: column;
+}
+.eventInfoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-10);
+}
+.eventInfoItem > span {
+  margin-left: var(--space-12);
+  text-transform: capitalize;
+}
+.eventCardActionButton {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

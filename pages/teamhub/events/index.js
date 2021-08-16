@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import router from "next/router";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub/main";
-import Router from "next/router";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import Users from "@api/services/Users";
 
-function TeamhubEvent({ user, activeTeam, setTeam }) {
+function TeamhubEvent({ user }) {
   useEffect(() => {
     if (user?.clubs.length === 0) {
-      Router.push("./teamhub/initial");
+      router.push("./teamhub/initial");
     }
   }, [user]);
 
   return (
     <Layout>
-      <Seo title="Dashboard" desc="Lorem ipsum dolor sit amet" />
-      <DashboardContent
-        activeTeam={activeTeam}
-        setTeam={setTeam}
-        user={user}
-      ></DashboardContent>
+      <Seo title="Events" desc="Lorem ipsum dolor sit amet" />
+      <DashboardContent user={user} />
     </Layout>
   );
 }

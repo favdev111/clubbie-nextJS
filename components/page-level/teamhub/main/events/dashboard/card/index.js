@@ -1,93 +1,152 @@
 import React from "react";
-import cn from "classnames";
 import Link from "next/link";
-import MatchCard from "@sub/match-card";
-import MatchInfo from "@sub/match-info";
+import cn from "classnames";
+import moment from "moment";
+import Button from "@sub/button";
 import ThreeDots from "@svg/threedots";
+import DateSVG from "@svg/date";
+import KickOffSVG from "@svg/kickoff";
+import PlaceSVG from "@svg/place";
 import styles from "./index.module.css";
 
-function EventCard({ data, user, activeTeam }) {
-  const { id, location, eventDateTime, fee, eventType } = data;
-  const userRole = user.teams[activeTeam].role;
-  const userTeam = user.teams[activeTeam].team;
-
+function EventCardHeader({
+  eventCoverImage,
+  eventFee,
+  eventCurrency,
+  currencySymbolBeforeFee,
+}) {
   return (
-    <Link href={`/teamhub/event/${id}`}>
-      <a>
-        <div className={styles.card}>
-          {/* Card upper *--* Image side */}
-          <div className={styles.cardImg}>
-            {data.coverImage && <img src={data?.coverImage} />}
-            <div className={styles.price}>
-              <p> {fee}£ </p>
-            </div>
-            <div className={styles.more}>
-              <ThreeDots />
-            </div>
-          </div>
+    <div className={styles.eventImageWrapper}>
+      {eventCoverImage && <img src={eventCoverImage} />}
+      {/* only if authoritarian role */}
+      <div className={styles.eventManageOptionsWrapper}>
+        <span>
+          <ThreeDots />
+        </span>
+      </div>
+      {/* only if fee */}
+      <div className={styles.eventFee}>
+        <span>
+          {currencySymbolBeforeFee
+            ? `${eventCurrency} ${eventFee}`
+            : `${eventFee} ${eventCurrency}`}
+        </span>
+      </div>
+    </div>
+  );
+}
 
-          {/* Card lower *--* Below image */}
-
-          <div className={styles.cardDetail}>
-            {/* Event Type  */}
-            {eventType == "match" && (
-              <MatchCard user={user} activeTeam={activeTeam} eventId={id} />
-            )}
-
-            {eventType == "social" && (
-              <p className="opacity-50 text-center"> Social </p>
-            )}
-            {eventType == "training" && (
-              <p className="opacity-50 text-center"> Training </p>
-            )}
-
-            {/* Info */}
-            <MatchInfo data={{ eventDateTime, eventDateTime, location }} />
-            {/* Avaibility */}
-            <div
-              className={cn(
-                styles.availableCard,
-                userRole == "teamLead" &&
-                  data?.status !== "published" &&
-                  styles.unavailable,
-                userRole == "player" &&
-                  data?.eventType != "match" &&
-                  data?.teams[0].attendees.filter((i) => i.user == user.id)
-                    .length < 1 &&
-                  styles.unavailable
-              )}
-            >
-              {/* Owner */}
-              {userRole == "owner" &&
-                data?.status == "published" &&
-                "Published"}
-              {/* Teamleader */}
-              {userRole == "teamLead" &&
-                data?.status == "published" &&
-                "Published"}
-              {userRole == "teamLead" && data?.status == "draft" && "Draft"}
-              {userRole == "teamLead" &&
-                data?.status == "canceled" &&
-                "Canceled"}
-              {/* Player */}
-              {data?.eventType != "match" && userRole == "player"
-                ? data?.teams[0].attendees.filter((i) => i.user == user.id)
-                    .length < 1
-                  ? "Unavailable"
-                  : "Available"
-                : null}
-              {data?.eventType == "match" && userRole == "player"
-                ? data?.teams
-                    .filter((t) => t.teamId == userTeam)[0]
-                    .attendees?.filter((i) => i.user == user.id).length < 1
-                  ? "Unavailable"
-                  : "Available"
-                : null}
-            </div>
-          </div>
+function EventCardBody({
+  eventType,
+  eventTeams,
+  eventDate,
+  eventTime,
+  eventLocation,
+}) {
+  return (
+    <div className={styles.eventCardBody}>
+      <div className={styles.eventTeamsWrapper}>
+        <div className={styles.eventTeam}>
+          <Link href={`/teams/${eventTeams[0]?.id}`}>
+            <a>
+              <img
+                className={styles.eventTeamCrest}
+                src={eventTeams[0]?.crest}
+              />
+            </a>
+          </Link>
+          <span>{eventTeams[0]?.title}</span>
         </div>
-      </a>
-    </Link>
+        <div className={styles.eventTypeWrapper}>
+          <span
+            className={cn(
+              eventType?.toLowerCase() === "match" && styles.eventTypeMatch,
+              eventType?.toLowerCase() === "training" &&
+                styles.eventTypeTraining,
+              eventType?.toLowerCase() === "social" && styles.eventTypeSocial
+            )}
+          >
+            {eventType}
+          </span>
+          {eventType?.toLowerCase() === "match" && (
+            <span className={styles.eventVerses}>VS</span>
+          )}
+        </div>
+        {eventTeams?.length > 1 && (
+          <div className={styles.eventTeam}>
+            <Link href={`/teams/${eventTeams[1]?.id}`}>
+              <a>
+                <img
+                  className={styles.eventTeamCrest}
+                  src={eventTeams[1]?.crest}
+                />
+              </a>
+            </Link>
+            <span>{eventTeams[1]?.title}</span>
+          </div>
+        )}
+      </div>
+      <div className={styles.eventInfoWrapper}>
+        {eventDate && (
+          <span className={styles.eventInfoItem}>
+            <DateSVG />
+            <span>{eventDate}</span>
+          </span>
+        )}
+        {eventTime && (
+          <span className={styles.eventInfoItem}>
+            <KickOffSVG /> <span>{eventTime} Kick-off</span>
+          </span>
+        )}
+        {eventLocation && (
+          <span className={styles.eventInfoItem}>
+            <PlaceSVG /> <span>{eventLocation}</span>
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function EventCardActions() {
+  return <Button className={styles.eventCardActionButton}>Available?</Button>;
+}
+
+function EventCard({
+  eventId,
+  eventType,
+  eventTeams,
+  eventStatus,
+  eventLocation,
+  eventDateTime,
+  eventCoverImage,
+  eventFee,
+  eventCurrency,
+  currencySymbolBeforeFee,
+}) {
+  return (
+    <div key={eventId}>
+      {/* <Link href={`/teamhub/events/${eventId}`}>
+        <a> */}
+      <div className={styles.eventCardWrapper}>
+        <EventCardHeader
+          eventFee={eventFee}
+          eventCurrency={eventCurrency}
+          eventCoverImage={eventCoverImage}
+          currencySymbolBeforeFee={currencySymbolBeforeFee}
+        />
+        <EventCardBody
+          eventType={eventType}
+          eventTeams={eventTeams}
+          eventDate={moment(eventDateTime).format("Do MMMM YYYY")}
+          eventTime={moment(eventDateTime).format("h:mm A")}
+          eventLocation={eventLocation}
+        />
+        <EventCardActions />
+      </div>
+      {/* </a>
+      </Link> */}
+    </div>
   );
 }
 
