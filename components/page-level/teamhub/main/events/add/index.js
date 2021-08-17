@@ -716,8 +716,29 @@ function AddEvent({ user, teams }) {
   useEffect(() => {
     const __teamAList = [];
     const __teamBList = [];
+
     _teams?.map((x) => {
-      if (x?.owner?.id === user?.id || x?.leader?.id === user?.id) {
+      let membership = null;
+      x?.members?.map((y) => {
+        if (y?.user?.id === user?.id) {
+          if (
+            membership?.roles &&
+            !membership?.roles?.find((z) => z === y.role)
+          ) {
+            membership.roles.push(y.role.toLowerCase());
+            return;
+          }
+          membership = {
+            ...y.user,
+            roles: [y.role.toLowerCase()],
+          };
+        }
+      });
+
+      if (
+        membership?.roles?.includes("owner".toLowerCase()) ||
+        membership?.roles?.includes("teamLead".toLowerCase())
+      ) {
         __teamAList.push({
           club: x?.club,
           id: x?.id,
