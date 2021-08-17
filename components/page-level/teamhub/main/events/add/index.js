@@ -16,6 +16,7 @@ import UploadSVG from "@svg/upload";
 import Events from "@api/services/Event";
 import Files from "@api/services/Files";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
+import statusTypes from "@utils/fixedValues/eventStatusTypes";
 import styles from "./index.module.css";
 
 // Todo: make a svg and replace this
@@ -198,8 +199,9 @@ function AddEventForm({
       message: data?.message || null,
       eventType: data?.eventType || null,
       fee: data?.fee || null,
-      freeForSubs: data?.freeForSubs || false, // TODO: update with switch
       freeForSubs: data?.freeForSubs || null,
+      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
     // dynamic request body
