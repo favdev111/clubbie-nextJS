@@ -391,10 +391,10 @@ function AddEventForm({
         {eventType === "match" && (
           <>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Team A</p>
+              <p>Home Team</p>
               <TemplateSelect
                 name="teamA"
-                placeholder="Select Team A"
+                placeholder="Select Home Team"
                 options={teamAList.map((x) => x.title)}
                 className={styles.addEventSelectInput}
                 customProps={{ ...register("teamA") }}
@@ -408,10 +408,10 @@ function AddEventForm({
               ></TemplateSelect>
             </div>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Team B</p>
+              <p>Away Team</p>
               <TemplateSelect
                 name="teamB"
-                placeholder="Select Team B"
+                placeholder="Select Away Team"
                 options={teamBList.map((x) => x.title)}
                 className={styles.addEventSelectInput}
                 customProps={{ ...register("teamB") }}
