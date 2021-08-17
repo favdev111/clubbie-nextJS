@@ -1,0 +1,76 @@
+
+.collapsable {
+  position: relative;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  margin-top: 24px;
+  background-color: var(--c-primary);
+}
+
+.collapseHead{
+    margin-bottom: 10px;
+    transition: all .5s ease-out;
+}
+
+.showContent{
+    display: block;
+    font-size: 15px;
+}
+
+.content{
+    display: none;
+}
+
+.question{
+    font-size: default;
+    color: var(--c-turk);
+    margin-bottom: 10px;
+}
+
+.text{
+    margin-bottom: 10px;
+}
+
+.teamhub {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--container-lg);
+  float: center;
+}
+
+.search{
+    margin: 20px 0;
+}
+
+.rightFloat{
+    float: right;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 766px) {
+  .teamhub {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 30px;
+  }
+  .eventCard {
+    margin-top: -20px;
+  }
+}
+
+@media screen and (max-width: 766px) and (min-width: 360px) {
+  .eventCard {
+    padding: 16px;
+    margin-top: -40px;
+  }
+  
+  .teamhub {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 10px;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .marginBottom{
+    margin-bottom: 80px;
+  }
+}

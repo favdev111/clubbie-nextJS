@@ -18,10 +18,10 @@ function Footer() {
                 </div>
                 <div className={styles.colMargin}>
                     <div className={styles.bottomMargin}>
-                        <Link href="">Terms and Conditions</Link>
+                        <Link href="/terms-of-use">Terms and Conditions</Link>
                     </div>
                     <div className={styles.bottomMargin}>
-                        <Link href="">Privacy Policy</Link>
+                        <Link href="/privacy-policy">Privacy Policy</Link>
                     </div>
                     <div className={styles.bottomMargin}>
                         <Link href="">Cookies Policy</Link>
@@ -35,7 +35,7 @@ function Footer() {
                         <Link href="">Contact Us</Link>
                     </div>
                     <div className={styles.bottomMargin}>
-                        <Link href="">FAQ</Link>
+                        <Link href="/faqs">FAQs</Link>
                     </div>
                 </div>
                 <div className={styles.colMargin}>

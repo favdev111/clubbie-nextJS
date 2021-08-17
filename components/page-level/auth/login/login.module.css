@@ -49,6 +49,14 @@
   margin-bottom: var(--space-5);
 }
 
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 72px;
+  gap: 10px;
+  font-size: 14px;
+}
+
 
 @media screen and (max-width: 766px) and (min-width: 360px) {
  

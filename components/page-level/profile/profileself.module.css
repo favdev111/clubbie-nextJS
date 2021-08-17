@@ -90,6 +90,15 @@
   display: none;
 }
 
+.footer {
+  display: flex;
+  background-color: var(--c-nav);
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  padding: 20px;
+}
+
 @media (min-width: 470px) {
   .profile .profilePlayerImage {
     width: 100px;
