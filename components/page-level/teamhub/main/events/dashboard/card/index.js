@@ -60,7 +60,11 @@ function EventCardBody({
               />
             </a>
           </Link>
-          <span>{eventTeams[0]?.title}</span>
+          <Link href={`/teams/${eventTeams[0]?.id}`}>
+            <a className={styles.eventTeamTitle}>
+              <span>{eventTeams[0]?.title}</span>
+            </a>
+          </Link>
         </div>
         <div className={styles.eventTypeWrapper}>
           <span
@@ -87,7 +91,11 @@ function EventCardBody({
                 />
               </a>
             </Link>
-            <span>{eventTeams[1]?.title}</span>
+            <Link href={`/teams/${eventTeams[1]?.id}`}>
+              <a className={styles.eventTeamTitle}>
+                <span>{eventTeams[1]?.title}</span>
+              </a>
+            </Link>
           </div>
         )}
       </div>
