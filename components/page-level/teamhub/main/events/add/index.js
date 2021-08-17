@@ -170,26 +170,28 @@ function AddEventForm({
     setLoading(true);
 
     // Upload cover image
-    setStatusMsg({
-      type: "info",
-      text: "Uploading Cover Image",
-      animateText: true,
-    });
     let coverImage = null;
-    const imageForm = new FormData();
-    imageForm.append("files", media?.file);
-    const responseCoverImage = await Files.UploadFile(
-      "userImg",
-      imageForm
-    ).catch(() => null);
-    coverImage = responseCoverImage?.data[0]?.s3Url;
-    if (!coverImage) {
+    if (media?.file) {
       setStatusMsg({
-        type: "error",
-        text: "Could Not Upload Cover Image..!",
+        type: "info",
+        text: "Uploading Cover Image",
+        animateText: true,
       });
-      setLoading(false);
-      return;
+      const imageForm = new FormData();
+      imageForm.append("files", media?.file);
+      const responseCoverImage = await Files.UploadFile(
+        "userImg",
+        imageForm
+      ).catch(() => null);
+      coverImage = responseCoverImage?.data[0]?.s3Url;
+      if (!coverImage) {
+        setStatusMsg({
+          type: "error",
+          text: "Could Not Upload Cover Image..!",
+        });
+        setLoading(false);
+        return;
+      }
     }
 
     // common request body
@@ -273,25 +275,27 @@ function AddEventForm({
     }
 
     // add coverImage to event/s created
-    const eventIds = (() => {
-      if (responseEventCreate?.data?.length > 0) {
-        return responseEventCreate?.data?.map((x) => x?.id);
+    if (coverImage) {
+      const eventIds = (() => {
+        if (responseEventCreate?.data?.length > 0) {
+          return responseEventCreate?.data?.map((x) => x?.id);
+        }
+        return [responseEventCreate?.data?.id];
+      })();
+      let updateError = null;
+      await Promise.all(
+        eventIds.map(async (id) => {
+          const responseEventEdit = await Events.EditEventbyId(id, {
+            coverImage,
+          }).catch(() => null);
+          if (!responseEventEdit) updateError = true;
+        })
+      );
+      if (updateError) {
+        setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
+        setLoading(false);
+        return;
       }
-      return [responseEventCreate?.data?.id];
-    })();
-    let updateError = null;
-    await Promise.all(
-      eventIds.map(async (id) => {
-        const responseEventEdit = await Events.EditEventbyId(id, {
-          coverImage,
-        }).catch(() => null);
-        if (!responseEventEdit) updateError = true;
-      })
-    );
-    if (updateError) {
-      setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
-      setLoading(false);
-      return;
     }
 
     setStatusMsg({

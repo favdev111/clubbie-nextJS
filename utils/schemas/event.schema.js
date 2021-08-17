@@ -3,7 +3,7 @@ import eventTypes from "../fixedValues/eventTypes";
 import recurringTypes from "../fixedValues/recurringTypes";
 
 const createEvent = Joi.object().keys({
-  media: Joi.string().required().messages({
+  media: Joi.string().optional().messages({
     "any.required": "Media is required",
     "string.empty": "Media is required",
     "string.base": "Media is required",
