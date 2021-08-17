@@ -15,6 +15,7 @@ import eventTypes from "@utils/fixedValues/eventTypes";
 import styles from "./index.module.css";
 
 function EventCardHeader({
+  eventId,
   eventCoverImage,
   eventFee,
   eventCurrency,
@@ -22,7 +23,9 @@ function EventCardHeader({
 }) {
   return (
     <div className={styles.eventImageWrapper}>
-      {eventCoverImage && <img src={eventCoverImage} />}
+      <Link href={`/teamhub/events/${eventId}`}>
+        <a>{eventCoverImage && <img src={eventCoverImage} />}</a>
+      </Link>
       {/* only if authoritarian role */}
       <div className={styles.eventManageOptionsWrapper}>
         <span>
@@ -214,10 +217,9 @@ function EventCard({
 }) {
   return (
     <div key={eventId}>
-      {/* <Link href={`/teamhub/events/${eventId}`}>
-        <a> */}
       <div className={styles.eventCardWrapper}>
         <EventCardHeader
+          eventId={eventId}
           eventFee={eventFee}
           eventCurrency={eventCurrency}
           eventCoverImage={eventCoverImage}
@@ -258,8 +260,6 @@ function EventCard({
           })()}
         />
       </div>
-      {/* </a>
-      </Link> */}
     </div>
   );
 }
