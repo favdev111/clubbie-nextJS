@@ -55,19 +55,20 @@ function FAQ() {
                 </div>
 
                 {/* Sports Collapse */}
-                <div className={styles.collapsable} onClick={() => {
-                    if (sportActive === true) sportSetActive(false);
-                    else if (sportActive === false) sportSetActive(true);
-                }}>
-                    <h3 className={cn(sportActive ? styles.collapseHead : '')}>Sports Stuff<span className={styles.rightFloat}>{sportActive ? <UpAngle></UpAngle> : <DownAngle></DownAngle>}</span></h3>
-                    <div className={cn(sportActive ? styles.showContent : styles.content)}>
-                        <h5 className={styles.question}>Do you allow all sports?</h5>
-                        <div className={styles.text}>Yes, as long as it's amateur. We want you to share your sporting moments, not those of the professionals you follow. Sports, activities, games - whatever you want to call them, if you love your pastime, share it with us and others here at Clubbie.</div>
-                        <h5 className={styles.question}>I can't find my sport, what should I do?</h5>
-                        <div className={styles.text}>We've tried to add as many sports as possible to Clubbie right from the off. But if yours is missing from our list, drop us a message, and we'll do our best to get it added asap.</div>
+                <div className={styles.marginBottom}>
+                    <div className={styles.collapsable} onClick={() => {
+                        if (sportActive === true) sportSetActive(false);
+                        else if (sportActive === false) sportSetActive(true);
+                    }}>
+                        <h3 className={cn(sportActive ? styles.collapseHead : '')}>Sports Stuff<span className={styles.rightFloat}>{sportActive ? <UpAngle></UpAngle> : <DownAngle></DownAngle>}</span></h3>
+                        <div className={cn(sportActive ? styles.showContent : styles.content)}>
+                            <h5 className={styles.question}>Do you allow all sports?</h5>
+                            <div className={styles.text}>Yes, as long as it's amateur. We want you to share your sporting moments, not those of the professionals you follow. Sports, activities, games - whatever you want to call them, if you love your pastime, share it with us and others here at Clubbie.</div>
+                            <h5 className={styles.question}>I can't find my sport, what should I do?</h5>
+                            <div className={styles.text}>We've tried to add as many sports as possible to Clubbie right from the off. But if yours is missing from our list, drop us a message, and we'll do our best to get it added asap.</div>
+                        </div>
                     </div>
                 </div>
-
 
             </div>
         </>

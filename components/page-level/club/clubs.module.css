@@ -33,7 +33,14 @@
   .club {
     margin: 0 12px 12px 12px;
   }
-  .club h1 {
-    display: none;
+}
+
+@media screen and (max-width: 360px){
+ .club {
+  margin: 0;
+}
+  .clubContent{
+    border-radius: 0;
+    padding: 0;
   }
 }

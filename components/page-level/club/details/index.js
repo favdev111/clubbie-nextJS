@@ -119,9 +119,9 @@ function ClubMembers({ members, membership }) {
                   membership?.status?.toLowerCase()
                 ) && styles.activeMemberShip,
                 membership.status?.toLowerCase() === "suspended" &&
-                  styles.suspendedMemberShip,
+                styles.suspendedMemberShip,
                 membership.status?.toLowerCase() === "unapproved" &&
-                  styles.unapprovedMemberShip
+                styles.unapprovedMemberShip
               )}
             >
               {membership.statusText}
