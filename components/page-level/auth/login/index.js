@@ -48,9 +48,9 @@ const Login = ({ previousURL }) => {
       .catch((err) => {
         setError(
           err?.response?.data?.message ||
-            err?.message ||
-            err?.request ||
-            "Some Error Occured"
+          err?.message ||
+          err?.request ||
+          "Some Error Occured"
         );
       });
     setLoading(false);
@@ -115,6 +115,9 @@ const Login = ({ previousURL }) => {
         <Link href="/auth/sign-up">
           <a className={styles.signUp}>&ensp;Sign Up</a>
         </Link>
+      </div>
+      <div className={styles.footer}>
+        <Link href="/privacy-policy">Privacy Policy </Link><Link href="/terms-of-use">Terms of Use</Link><Link href="/faqs">FAQs</Link>
       </div>
     </div>
   );

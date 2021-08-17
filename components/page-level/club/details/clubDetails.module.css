@@ -13,7 +13,6 @@
   min-width: 250px;
 }
 .clubCrest {
-  height: 250px;
   width: 250px;
   cursor: pointer;
   border-radius: 50%;
@@ -130,10 +129,6 @@
 .clubMemberInfoWrapper {
   margin-right: auto;
   margin-left: var(--space-10); /*temp: use spacer */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 }
 .clubMemberName {
   cursor: pointer;
@@ -296,3 +291,195 @@
 .clubTeamsNone > span {
   color: var(--c-turk);
 }
+
+@media screen and (max-width: 830px) and (min-width: 510px) {
+  .clubMemberCard {
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-md);
+    width: 100%;
+    padding: var(--space-16) var(--space-10);
+    transition: 0.1s ease;
+  }
+
+  .clubTeamCard{
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-md);
+    width: 100%;
+    padding: var(--space-16) var(--space-10);
+    transition: 0.1s ease;
+  }
+
+}
+
+@media screen and  (max-width: 680px) and (min-width: 360px){
+  .clubCrest{
+    width: 150px; 
+  }
+  .clubCrestWrapper {
+    min-width: 0;
+  }
+  .clubHeaderTitleWrapper {
+    border-bottom: 5px solid var(--c-white-70);
+    width: 100%;
+  }
+  .clubHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .clubHeaderDetailsWrapper {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media screen and  (max-width: 360px) and (min-width: 280px){
+  .clubCrest{
+    width: 150px; 
+  }
+  .clubCrestWrapper {
+    min-width: 0;
+    padding: 10px;
+  }
+  .clubHeaderTitleWrapper {
+    border-bottom: 5px solid var(--c-white-70);
+    width: 100%;
+    padding: 10px;
+  }
+  .clubHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+  }
+  .clubHeaderDetailsWrapper {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+
+
+@media screen and (max-width: 510px) and (min-width: 460px) {
+  .clubCrest{
+    width: 150px; 
+  }
+  .clubCrestWrapper {
+    min-width: 0;
+  }
+  
+  .clubHeaderDetailsWrapper {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+   .clubMemberCard {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      background-color: var(--c-primary);
+      margin: var(--space-5);
+      padding: var(--space-16) var(--space-10);
+      transition: 0.1s ease;
+      width: 100%;
+    }
+    .clubMemberRolesWrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      width: 100%;
+    }
+    .clubMemberInfoWrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      align-content: center;
+    }
+     .clubTeamCard {
+     display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      background-color: var(--c-primary);
+      margin: var(--space-5);
+      padding: var(--space-16) var(--space-10);
+      transition: 0.1s ease;
+      width: 100%;
+    }
+    .clubTeamInfoWrapper{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      align-content: center;
+    }
+}
+
+@media screen and (max-width: 460px) {
+   .clubMemberCard {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      background-color: var(--c-primary);
+      margin: var(--space-5) 0;
+      padding: var(--space-16) 0;
+      transition: 0.1s ease;
+      width: 100%;
+    }
+    .clubMemberRolesWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+     .clubMemberInfoWrapper {
+      display: flex;
+      margin-right: auto;
+      margin-left: auto;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .clubMembersWrapper {
+      width: 100%;
+      background-color: var(--c-white-05);
+      padding: 5px;
+      border-radius: var(--radius);
+    }
+    .clubTeamCard {
+     display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      background-color: var(--c-primary);
+      margin: var(--space-5) 0;
+      padding: var(--space-16) 0;
+      transition: 0.1s ease;
+      width: 100%;
+    }
+
+    .clubTeamInfoWrapper{
+       display: flex;
+      margin-right: auto;
+      margin-left: auto;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+}
+
