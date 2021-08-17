@@ -9,8 +9,8 @@ export default class TeamManagementRoutes {
     return HTTPClient.post(`/teams/register/${clubId}`, payload);
   }
 
-  static async JoinTeam(id) {
-    return HTTPClient.patch(`/teams/${id}/join`);
+  static async JoinTeamAsPlayer(id) {
+    return HTTPClient.post(`/teams/${id}/player/join`);
   }
 
   static async ChangeMemberStatusOfTeam() {

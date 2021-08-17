@@ -310,7 +310,9 @@ function Join({
       }
 
       // join team of club
-      const responseTeam = await Teams.JoinTeam(item?.id).catch(() => null);
+      const responseTeam = await Teams.JoinTeamAsPlayer(item?.id).catch(
+        () => null
+      );
       if (!responseTeam) {
         showNotificationMsg("Could Not Join Team", {
           variant: "error",

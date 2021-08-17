@@ -60,7 +60,7 @@ function TeamHeader({
     }
 
     // join team of club
-    const responseTeam = await Teams.JoinTeam(teamId).catch(() => null);
+    const responseTeam = await Teams.JoinTeamAsPlayer(teamId).catch(() => null);
     if (!responseTeam) {
       showNotificationMsg("Could Not Join Team", {
         variant: "error",
