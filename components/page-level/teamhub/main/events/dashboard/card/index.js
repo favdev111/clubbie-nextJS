@@ -10,7 +10,7 @@ import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
-import Events from "@api/services/Event";
+import Events from "@api/services/Events";
 import eventTypes from "@utils/fixedValues/eventTypes";
 import styles from "./index.module.css";
 

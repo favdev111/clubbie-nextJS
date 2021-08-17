@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StatisticResults from "./results";
-import Event from "@api/services/Event";
+import Event from "@api/services/Events";
 import StatisticFixtures from "./fixtures";
 import LeagueTables from "./league-tables";
 import PlayerStats from "./player-stats";

@@ -13,7 +13,7 @@ import MatchSVG from "@svg/match";
 import TrainingSVG from "@svg/training";
 import SocialSVG from "@svg/social";
 import UploadSVG from "@svg/upload";
-import Events from "@api/services/Event";
+import Events from "@api/services/Events";
 import Files from "@api/services/Files";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
 import statusTypes from "@utils/fixedValues/eventStatusTypes";
@@ -501,7 +501,7 @@ function AddEventForm({
             type="number"
             name="fee"
             placeholder="Fee"
-            customProps={{ ...register("fee") }}
+            customProps={{ ...register("fee"), min: "0", step: ".01" }}
             hint={
               errors?.fee && {
                 type: "error",

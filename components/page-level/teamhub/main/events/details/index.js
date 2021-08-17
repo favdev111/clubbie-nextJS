@@ -9,7 +9,7 @@ import Save from "@svg/save";
 import RightArrow from "@svg/right-arrow";
 import styles from "./index.module.css";
 import DetailCover from "./cover";
-import Event from "@api/services/Event";
+import Event from "@api/services/Events";
 import MatchDetail from "./match-detail";
 import SocialDetail from "./social-detail";
 

@@ -8,7 +8,7 @@ import MessageToUser from "@sub/messageAnimation";
 import UploadMedia from "@sub/upload";
 import FormCell from "@sub/event-form-cell";
 import EventFormGrid from "@sub/event-form-grid";
-import Event from "@api/services/Event";
+import Event from "@api/services/Events";
 import Files from "@api/services/Files";
 import Teams from "@api/services/Teams";
 import { schema } from "@utils/schemas/editEvent";

@@ -5,7 +5,7 @@ import ProgressBar from "@sub/progress";
 import EditIcon from "@svg/edit.js";
 import EventsMonthSelector from "./month-selector";
 import EventCard from "./card";
-import Events from "@api/services/Event";
+import Events from "@api/services/Events";
 import styles from "./index.module.css";
 
 function EventsHeader() {

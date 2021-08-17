@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TeamhubNav from "./navigation";
 import Dashboard from "./dashboard";
 import Events from "./events/dashboard";
-import EventDetail from "./events/detail";
+import EventDetails from "./events/details";
 import Payments from "./payments";
 import Statistics from "./statistics";
 import { useRouter } from "next/router";
