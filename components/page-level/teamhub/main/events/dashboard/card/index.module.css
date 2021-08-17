@@ -21,6 +21,7 @@
   position: absolute;
   bottom: 12px;
   right: 12px;
+  font-weight: 700;
 }
 .eventManageOptionsWrapper {
   display: none;
