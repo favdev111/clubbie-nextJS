@@ -26,7 +26,7 @@ function EventsHeader() {
   );
 }
 
-function EventsList({ events, loading }) {
+function EventsList({ userId, events, loading }) {
   return (
     <div className={styles.eventCardsRow}>
       {loading ? (
@@ -34,27 +34,43 @@ function EventsList({ events, loading }) {
           <ProgressBar />
         </div>
       ) : events?.results?.length > 0 ? (
-        events?.results?.map((x) => (
-          <EventCard
-            eventId={x?.id}
-            eventType={x?.eventType}
-            eventTeams={x?.teams.map((y) => {
-              return {
-                id: y?.team?.id,
-                title: y?.team?.title,
-                crest: y?.team?.crest || "/assets/club-badge-placeholder.png",
-              };
-            })}
-            eventCoverImage={
-              x?.eventCoverImage || "/assets/person-placeholder.jpg"
-            }
-            eventFee={x?.fee?.toFixed(2) || "0.00"}
-            eventCurrency={"£"}
-            currencySymbolBeforeFee={true}
-            eventDateTime={x?.eventDateTime}
-            eventLocation={x?.location}
-          />
-        ))
+        events?.results?.map((x) => {
+          const [homeTeam, setHomeTeam] = useState();
+
+          useEffect(() => {
+            setHomeTeam(
+              x?.teams?.find((x) =>
+                x?.attendees?.find((a) => a?.user === userId)
+              )
+            );
+          }, []);
+
+          return (
+            <EventCard
+              eventId={x?.id}
+              eventType={x?.eventType}
+              eventHomeTeamLineUpConfirmed={homeTeam?.lineUpConfirmed}
+              userAvailable={
+                homeTeam?.attendees?.find((a) => a?.user === userId)?.available
+              }
+              eventTeams={x?.teams.map((y) => {
+                return {
+                  id: y?.team?.id,
+                  title: y?.team?.title,
+                  crest: y?.team?.crest || "/assets/club-badge-placeholder.png",
+                };
+              })}
+              eventCoverImage={
+                x?.eventCoverImage || "/assets/person-placeholder.jpg"
+              }
+              eventFee={x?.fee?.toFixed(2) || "0.00"}
+              eventCurrency={"£"}
+              currencySymbolBeforeFee={true}
+              eventDateTime={x?.eventDateTime}
+              eventLocation={x?.location}
+            />
+          );
+        })
       ) : (
         <span>There are no events in the selected month.</span>
       )}
@@ -111,7 +127,7 @@ function EventsDashboard({ user }) {
         setSelectedMonthIndex={setSelectedMonthIndex}
         selectedMonthIndex={selectedMonthIndex}
       />
-      <EventsList events={_events} loading={loading} />
+      <EventsList userId={_user?.id} events={_events} loading={loading} />
     </div>
   );
 }

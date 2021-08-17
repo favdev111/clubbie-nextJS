@@ -24,6 +24,7 @@ function ContentDialog({
   title,
   Body,
   confirmText,
+  dismissText,
   onConfirm,
   onDismiss,
   type,
@@ -44,14 +45,17 @@ function ContentDialog({
           <div className={styles.buttons}>
             <Button
               variant="cancel"
-              onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
+              onClick={async () => {
+                onDismiss && (await onDismiss());
+                setOpen(false);
+              }}
             >
-              Cancel
+              {dismissText || "Cancel"}
             </Button>
             <Button
               variant={type || "danger"}
-              onClick={() => {
-                onConfirm();
+              onClick={async () => {
+                await onConfirm();
                 setOpen(false);
               }}
             >
