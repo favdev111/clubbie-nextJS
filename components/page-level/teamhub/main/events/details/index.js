@@ -8,6 +8,8 @@ import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
 import AvailableSVG from "@svg/available";
+import eventTypes from "@utils/fixedValues/eventTypes";
+import EventAvailabilityButton from "../common/button-availability";
 import styles from "./index.module.css";
 
 function EventCover({
@@ -82,11 +84,13 @@ function EventTeams({ eventType, eventTeams }) {
 }
 
 function EventInfo({
+  eventId,
   eventType,
   eventTeams,
   eventDate,
   eventTime,
   eventLocation,
+  actionButton,
 }) {
   return (
     <div className={styles.eventInfoWrapper}>
@@ -111,13 +115,18 @@ function EventInfo({
           </span>
         )}
       </div>
-      <Button className={styles.eventActionButton}>Available?</Button>
+      <EventAvailabilityButton
+        eventId={eventId}
+        buttonType={actionButton?.type}
+        buttonText={actionButton?.text}
+        disabled={actionButton?.disabled}
+        className={styles.eventActionButton}
+      />
     </div>
   );
 }
 
 function EventPlayersList({ availablePlayers }) {
-  console.log("availablePlayers => ", availablePlayers);
   return (
     <div className={styles.eventPlayersListWrapper}>
       <div className={styles.eventPlayersListHeader}>
@@ -139,11 +148,25 @@ function EventPlayersList({ availablePlayers }) {
   );
 }
 
-function EventDetails({ event }) {
+function EventDetails({ event, user }) {
   const [_event, setEvent] = useState({ ...event });
+  const [_eventHomeTeam, setEventHomeTeam] = useState(null);
+  const [_userAvailable, setUserAvailable] = useState(null);
 
   useEffect(() => {
     setEvent({ ...event });
+    const homeTeam = (() => {
+      const _temp = event?.teams?.find((x) =>
+        x?.attendees?.find((a) => a?.user?.id === user?.id)
+      );
+      _temp.team = _temp?.teamId;
+      delete _temp["teamId"];
+      return _temp;
+    })();
+    setEventHomeTeam({ ...homeTeam });
+    setUserAvailable(
+      homeTeam?.attendees?.find((a) => a?.user?.id === user?.id)?.available
+    );
   }, []);
 
   return (
@@ -157,6 +180,7 @@ function EventDetails({ event }) {
       />
       <div className={styles.eventBodyWrapper}>
         <EventInfo
+          eventId={_event?.id}
           eventType={_event?.eventType}
           eventTeams={_event?.teams?.map((x) => {
             return {
@@ -168,7 +192,34 @@ function EventDetails({ event }) {
           eventDate={moment(_event?.eventDateTime).format("Do MMMM YYYY")}
           eventTime={moment(_event?.eventDateTime).format("h:mm A")}
           eventLocation={_event?.location}
-          eventStatus={_event?.status}
+          actionButton={(() => {
+            if (new Date(_event?.eventDateTime) < new Date()) {
+              return {
+                text: "Event Taken Place!",
+                type: "cancel",
+                disabled: true,
+              };
+            }
+            if (
+              _eventHomeTeam?.lineUpConfirmed &&
+              _event?.eventType !== eventTypes.SOCIAL
+            ) {
+              return {
+                text: "Line-up Confirmed",
+                type: "info",
+                disabled: true,
+              };
+            }
+            if (_userAvailable === true) {
+              return { text: "Available", type: "success" };
+            }
+            if (_userAvailable === false) {
+              return { text: "Not Available", type: "danger" };
+            }
+            if (!_userAvailable) {
+              return { text: "Available?", type: "info" };
+            }
+          })()}
         />
         <EventPlayersList
           availablePlayers={_event?.teams
