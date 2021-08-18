@@ -91,6 +91,7 @@ function EventInfo({
   eventTime,
   eventLocation,
   actionButton,
+  onAvailabilitySet,
 }) {
   return (
     <div className={styles.eventInfoWrapper}>
@@ -121,6 +122,7 @@ function EventInfo({
         buttonText={actionButton?.text}
         disabled={actionButton?.disabled}
         className={styles.eventActionButton}
+        onAvailabilitySet={onAvailabilitySet}
       />
     </div>
   );
@@ -152,6 +154,7 @@ function EventDetails({ event, user }) {
   const [_event, setEvent] = useState({ ...event });
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
   const [_userAvailable, setUserAvailable] = useState(null);
+  const [_availablePlayers, setAvailablePlayers] = useState([]);
 
   useEffect(() => {
     setEvent({ ...event });
@@ -167,7 +170,32 @@ function EventDetails({ event, user }) {
     setUserAvailable(
       homeTeam?.attendees?.find((a) => a?.user?.id === user?.id)?.available
     );
+    const availablePlayers = _event?.teams
+      ?.map((x) => x?.attendees?.filter((y) => y?.available))
+      ?.flat(1)
+      ?.map((x) => {
+        return {
+          id: x?.user?.id,
+          name: x?.user?.profile?.fullName || x?.user?.id,
+        };
+      });
+    setAvailablePlayers([...availablePlayers]);
   }, []);
+
+  const onAvailabilitySet = (available) => {
+    if (_userAvailable && available) return;
+    setUserAvailable(available);
+    if (available) {
+      setAvailablePlayers([
+        ...[
+          ..._availablePlayers,
+          { id: user?.id, name: user?.profile?.fullName || user?.id },
+        ],
+      ]);
+    } else {
+      setAvailablePlayers(_availablePlayers.filter((x) => x?.id !== user?.id));
+    }
+  };
 
   return (
     <div className={styles.eventsWrapper}>
@@ -220,18 +248,9 @@ function EventDetails({ event, user }) {
               return { text: "Available?", type: "info" };
             }
           })()}
+          onAvailabilitySet={onAvailabilitySet}
         />
-        <EventPlayersList
-          availablePlayers={_event?.teams
-            ?.map((x) => x?.attendees?.filter((y) => y?.available))
-            ?.flat(1)
-            ?.map((x) => {
-              return {
-                id: x?.user?.id,
-                name: x?.user?.profile?.fullName || x?.user?.id,
-              };
-            })}
-        />
+        <EventPlayersList availablePlayers={_availablePlayers} />
       </div>
     </div>
   );

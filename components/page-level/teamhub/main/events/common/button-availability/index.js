@@ -10,6 +10,7 @@ function EventAvailabilityButton({
   buttonText,
   disabled,
   eventId,
+  onAvailabilitySet,
   className,
 }) {
   const [loading, setLoading] = useState(false);
@@ -53,6 +54,7 @@ function EventAvailabilityButton({
     });
     setButtonType(available ? "success" : "danger");
     setButtonText(available ? "Available" : "Not Available");
+    onAvailabilitySet && onAvailabilitySet(available);
     setLoading(false);
   };
 
