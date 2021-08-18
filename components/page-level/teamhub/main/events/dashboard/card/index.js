@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
-import ThreeDots from "@svg/threedots";
+// import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
@@ -23,11 +23,11 @@ function EventCardHeader({
         <a>{eventCoverImage && <img src={eventCoverImage} />}</a>
       </Link>
       {/* only if authoritarian role */}
-      <div className={styles.eventManageOptionsWrapper}>
+      {/* <div className={styles.eventManageOptionsWrapper}>
         <span>
           <ThreeDots />
         </span>
-      </div>
+      </div> */}
       {/* only if fee */}
       <div className={styles.eventFee}>
         <span>
