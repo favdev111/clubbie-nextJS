@@ -133,7 +133,13 @@ function EventPlayersList({ availablePlayers }) {
     <div className={styles.eventPlayersListWrapper}>
       <div className={styles.eventPlayersListHeader}>
         <AvailableSVG />
-        <span>{availablePlayers?.length || 0} Players Available</span>
+        <span>
+          {availablePlayers?.length > 0
+            ? `${availablePlayers?.length} `
+            : `No `}
+          Player
+          {availablePlayers?.length !== 1 && `s`} Available
+        </span>
       </div>
       {availablePlayers?.length > 0 && (
         <div className={styles.eventPlayersList}>
