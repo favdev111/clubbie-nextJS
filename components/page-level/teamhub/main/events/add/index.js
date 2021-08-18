@@ -16,6 +16,7 @@ import UploadSVG from "@svg/upload";
 import Events from "@api/services/Event";
 import Files from "@api/services/Files";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
+import statusTypes from "@utils/fixedValues/eventStatusTypes";
 import styles from "./index.module.css";
 
 // Todo: make a svg and replace this
@@ -169,26 +170,28 @@ function AddEventForm({
     setLoading(true);
 
     // Upload cover image
-    setStatusMsg({
-      type: "info",
-      text: "Uploading Cover Image",
-      animateText: true,
-    });
     let coverImage = null;
-    const imageForm = new FormData();
-    imageForm.append("files", media?.file);
-    const responseCoverImage = await Files.UploadFile(
-      "userImg",
-      imageForm
-    ).catch(() => null);
-    coverImage = responseCoverImage?.data[0]?.s3Url;
-    if (!coverImage) {
+    if (media?.file) {
       setStatusMsg({
-        type: "error",
-        text: "Could Not Upload Cover Image..!",
+        type: "info",
+        text: "Uploading Cover Image",
+        animateText: true,
       });
-      setLoading(false);
-      return;
+      const imageForm = new FormData();
+      imageForm.append("files", media?.file);
+      const responseCoverImage = await Files.UploadFile(
+        "userImg",
+        imageForm
+      ).catch(() => null);
+      coverImage = responseCoverImage?.data[0]?.s3Url;
+      if (!coverImage) {
+        setStatusMsg({
+          type: "error",
+          text: "Could Not Upload Cover Image..!",
+        });
+        setLoading(false);
+        return;
+      }
     }
 
     // common request body
@@ -198,8 +201,9 @@ function AddEventForm({
       message: data?.message || null,
       eventType: data?.eventType || null,
       fee: data?.fee || null,
-      freeForSubs: data?.freeForSubs || false, // TODO: update with switch
       freeForSubs: data?.freeForSubs || null,
+      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
     // dynamic request body
@@ -271,25 +275,27 @@ function AddEventForm({
     }
 
     // add coverImage to event/s created
-    const eventIds = (() => {
-      if (responseEventCreate?.data?.length > 0) {
-        return responseEventCreate?.data?.map((x) => x?.id);
+    if (coverImage) {
+      const eventIds = (() => {
+        if (responseEventCreate?.data?.length > 0) {
+          return responseEventCreate?.data?.map((x) => x?.id);
+        }
+        return [responseEventCreate?.data?.id];
+      })();
+      let updateError = null;
+      await Promise.all(
+        eventIds.map(async (id) => {
+          const responseEventEdit = await Events.EditEventbyId(id, {
+            coverImage,
+          }).catch(() => null);
+          if (!responseEventEdit) updateError = true;
+        })
+      );
+      if (updateError) {
+        setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
+        setLoading(false);
+        return;
       }
-      return [responseEventCreate?.data?.id];
-    })();
-    let updateError = null;
-    await Promise.all(
-      eventIds.map(async (id) => {
-        const responseEventEdit = await Events.EditEventbyId(id, {
-          coverImage,
-        }).catch(() => null);
-        if (!responseEventEdit) updateError = true;
-      })
-    );
-    if (updateError) {
-      setStatusMsg({ type: "error", text: "Could Not Create Event..!" });
-      setLoading(false);
-      return;
     }
 
     setStatusMsg({
@@ -385,10 +391,10 @@ function AddEventForm({
         {eventType === "match" && (
           <>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Team A</p>
+              <p>Home Team</p>
               <TemplateSelect
                 name="teamA"
-                placeholder="Select Team A"
+                placeholder="Select Home Team"
                 options={teamAList.map((x) => x.title)}
                 className={styles.addEventSelectInput}
                 customProps={{ ...register("teamA") }}
@@ -402,10 +408,10 @@ function AddEventForm({
               ></TemplateSelect>
             </div>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Team B</p>
+              <p>Away Team</p>
               <TemplateSelect
                 name="teamB"
-                placeholder="Select Team B"
+                placeholder="Select Away Team"
                 options={teamBList.map((x) => x.title)}
                 className={styles.addEventSelectInput}
                 customProps={{ ...register("teamB") }}
@@ -716,8 +722,29 @@ function AddEvent({ user, teams }) {
   useEffect(() => {
     const __teamAList = [];
     const __teamBList = [];
+
     _teams?.map((x) => {
-      if (x?.owner?.id === user?.id || x?.leader?.id === user?.id) {
+      let membership = null;
+      x?.members?.map((y) => {
+        if (y?.user?.id === user?.id) {
+          if (
+            membership?.roles &&
+            !membership?.roles?.find((z) => z === y.role)
+          ) {
+            membership.roles.push(y.role.toLowerCase());
+            return;
+          }
+          membership = {
+            ...y.user,
+            roles: [y.role.toLowerCase()],
+          };
+        }
+      });
+
+      if (
+        membership?.roles?.includes("owner".toLowerCase()) ||
+        membership?.roles?.includes("teamLead".toLowerCase())
+      ) {
         __teamAList.push({
           club: x?.club,
           id: x?.id,

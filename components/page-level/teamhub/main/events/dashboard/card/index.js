@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
 import Button from "@sub/button";
+import ContentDialog from "@sub/content-dialog";
+import BackDropLoader from "@sub/backdrop-loader";
+import useNotification from "@sub/hook-notification";
 import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
+import Events from "@api/services/Event";
+import eventTypes from "@utils/fixedValues/eventTypes";
 import styles from "./index.module.css";
 
 function EventCardHeader({
@@ -55,7 +60,11 @@ function EventCardBody({
               />
             </a>
           </Link>
-          <span>{eventTeams[0]?.title}</span>
+          <Link href={`/teams/${eventTeams[0]?.id}`}>
+            <a className={styles.eventTeamTitle}>
+              <span>{eventTeams[0]?.title}</span>
+            </a>
+          </Link>
         </div>
         <div className={styles.eventTypeWrapper}>
           <span
@@ -82,7 +91,11 @@ function EventCardBody({
                 />
               </a>
             </Link>
-            <span>{eventTeams[1]?.title}</span>
+            <Link href={`/teams/${eventTeams[1]?.id}`}>
+              <a className={styles.eventTeamTitle}>
+                <span>{eventTeams[1]?.title}</span>
+              </a>
+            </Link>
           </div>
         )}
       </div>
@@ -108,21 +121,96 @@ function EventCardBody({
   );
 }
 
-function EventCardActions() {
-  return <Button className={styles.eventCardActionButton}>Available?</Button>;
+function EventCardActions({ actionButton, eventId }) {
+  const [loading, setLoading] = useState(false);
+  const [_actionButton, setActionButton] = useState(null);
+  const [
+    openAvailabilityConfirmationDialog,
+    setOpenAvailabilityConfirmationDialog,
+  ] = useState(false);
+
+  useEffect(() => {
+    setActionButton({ ...actionButton });
+  }, [actionButton]);
+
+  const { showNotificationMsg } = useNotification();
+
+  const setEventAvailability = async (available) => {
+    setLoading(true);
+
+    const response = await Events.SetAvailability(eventId, {
+      available,
+    }).catch(() => null);
+
+    // show error
+    if (!response) {
+      showNotificationMsg("Could not set availability", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    // show success
+    showNotificationMsg("Availability set Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setActionButton({
+      text: available ? "Available" : "Not Available",
+      type: available ? "success" : "danger",
+    });
+    setLoading(false);
+  };
+
+  return (
+    <>
+      {loading && <BackDropLoader />}
+      <ContentDialog
+        open={openAvailabilityConfirmationDialog}
+        setOpen={setOpenAvailabilityConfirmationDialog}
+        title={"Event Availability"}
+        Body={() => <p>Are you available?</p>}
+        confirmText={"Available"}
+        dismissText={"Not Available"}
+        onConfirm={async () => {
+          setOpenAvailabilityConfirmationDialog(false);
+          await setEventAvailability(true);
+        }}
+        onDismiss={async () => {
+          setOpenAvailabilityConfirmationDialog(false);
+          await setEventAvailability(false);
+        }}
+        type={"success"}
+      />
+      <Button
+        className={styles.eventCardActionButton}
+        variant={_actionButton?.type}
+        onClick={() =>
+          !_actionButton?.disabled &&
+          setOpenAvailabilityConfirmationDialog(true)
+        }
+        disabled={loading}
+      >
+        {_actionButton?.text}
+      </Button>
+    </>
+  );
 }
 
 function EventCard({
   eventId,
   eventType,
+  eventHomeTeamLineUpConfirmed,
   eventTeams,
-  eventStatus,
   eventLocation,
   eventDateTime,
   eventCoverImage,
   eventFee,
   eventCurrency,
   currencySymbolBeforeFee,
+  userAvailable,
 }) {
   return (
     <div key={eventId}>
@@ -142,7 +230,33 @@ function EventCard({
           eventTime={moment(eventDateTime).format("h:mm A")}
           eventLocation={eventLocation}
         />
-        <EventCardActions />
+        <EventCardActions
+          eventId={eventId}
+          actionButton={(() => {
+            if (new Date(eventDateTime) < new Date()) {
+              return {
+                text: "Event Taken Place!",
+                type: "cancel",
+                disabled: true,
+              };
+            }
+            if (
+              eventHomeTeamLineUpConfirmed &&
+              eventType !== eventTypes.SOCIAL
+            ) {
+              return { text: "Line-up Confirmed", type: "info" };
+            }
+            if (userAvailable === true) {
+              return { text: "Available", type: "success" };
+            }
+            if (userAvailable === false) {
+              return { text: "Not Available", type: "danger" };
+            }
+            if (!userAvailable) {
+              return { text: "Available?", type: "info" };
+            }
+          })()}
+        />
       </div>
       {/* </a>
       </Link> */}

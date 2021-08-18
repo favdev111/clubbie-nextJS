@@ -3,7 +3,7 @@ import eventTypes from "../fixedValues/eventTypes";
 import recurringTypes from "../fixedValues/recurringTypes";
 
 const createEvent = Joi.object().keys({
-  media: Joi.string().required().messages({
+  media: Joi.string().optional().messages({
     "any.required": "Media is required",
     "string.empty": "Media is required",
     "string.base": "Media is required",
@@ -91,7 +91,7 @@ const createEvent = Joi.object().keys({
       otherwise: Joi.forbidden(),
     })
     .messages({
-      "string.empty": "Team A is required",
+      "string.empty": "Home Team is required",
     }),
   teamB: Joi.string()
     .when("eventType", {
@@ -100,7 +100,7 @@ const createEvent = Joi.object().keys({
       otherwise: Joi.forbidden(),
     })
     .messages({
-      "string.empty": "Team B is required",
+      "string.empty": "Away Team is required",
     }),
   socialEventGroup: Joi.string()
     .when("eventType", {

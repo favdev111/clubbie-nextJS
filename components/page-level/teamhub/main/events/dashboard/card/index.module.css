@@ -21,6 +21,7 @@
   position: absolute;
   bottom: 12px;
   right: 12px;
+  font-weight: 700;
 }
 .eventManageOptionsWrapper {
   display: none;
@@ -50,6 +51,15 @@
   cursor: pointer;
   border-radius: 50% 50% 45% 45% / 9% 9% 91% 91%;
   margin-bottom: var(--space-5);
+}
+.eventTeamTitle {
+  max-width: 100px;
+  word-wrap: break-word;
+  text-align: center;
+}
+.eventTeamTitle:hover {
+  font-weight: bold;
+  cursor: pointer;
 }
 .eventTypeWrapper {
   margin: 0 var(--space-40);
