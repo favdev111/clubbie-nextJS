@@ -8,7 +8,7 @@ import Statistics from "./statistics";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
 
-function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, eventId }) {
+function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, event }) {
   return (
     <>
       {selectedIndex == 0 && (
@@ -17,14 +17,12 @@ function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, eventId }) {
       {selectedIndex == 1 && <Events user={user} />}
       {selectedIndex == 2 && <Payments />}
       {selectedIndex == 3 && <Statistics activeTeam={activeTeam} user={user} />}
-      {selectedIndex == 4 && (
-        <EventDetail activeTeam={activeTeam} user={user} eventId={eventId} />
-      )}
+      {selectedIndex == 4 && <EventDetails user={user} event={event} />}
     </>
   );
 }
 
-function DashboardContent({ activeTeam, setTeam, user, eventId }) {
+function DashboardContent({ activeTeam, setTeam, user, event }) {
   const [selectedIndex, setIndex] = useState(0);
   const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
@@ -44,7 +42,7 @@ function DashboardContent({ activeTeam, setTeam, user, eventId }) {
         activeTeam={activeTeam}
         setTeam={setTeam}
         user={user}
-        eventId={eventId}
+        event={event}
         selectedIndex={selectedIndex}
       />
     </div>

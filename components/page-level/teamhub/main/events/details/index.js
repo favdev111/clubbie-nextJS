@@ -1,179 +1,189 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import MessageToUser from "@sub/messageAnimation";
-import EditEvent from "@svg/edit-event";
-import ConfirmLineup from "@svg/confirm-lineup";
-import CancelEvent from "@svg/cancel-event";
-import Save from "@svg/save";
-import RightArrow from "@svg/right-arrow";
+import cn from "classnames";
+import moment from "moment";
+import Button from "@sub/button";
+import ThreeDotsSVG from "@svg/threedots";
+import DateSVG from "@svg/date";
+import KickOffSVG from "@svg/kickoff";
+import PlaceSVG from "@svg/place";
+import AvailableSVG from "@svg/available";
 import styles from "./index.module.css";
-import DetailCover from "./cover";
-import Event from "@api/services/Events";
-import MatchDetail from "./match-detail";
-import SocialDetail from "./social-detail";
 
-function EventDetail({ eventId, activeTeam, user }) {
-  const [data, setData] = useState();
-  const [responseMessage, setResponseMessage] = useState();
-  const [isError, setError] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
-
-  const userTeam = user.teams[activeTeam].team;
-
-  /* For team leader */
-
-  const availablePlayersForEvent = data?.teams?.filter(
-    (t) => t.teamId.id == userTeam
-  )[0].attendees;
-
-  /* For player */
-  const playerUnavailable =
-    data?.teams[0].attendees.filter((i) => i.user == user.id).length < 1;
-
-  const playerUnavailableForMatch =
-    data?.teams
-      .filter((t) => t.teamId.id == userTeam)[0]
-      .attendees?.filter((i) => i.user.id == user.id).length < 1;
-
-  const userRole = user.teams[activeTeam].role;
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const teamId = user?.teams[activeTeam].team;
-
-    const fetchEvents = async () => {
-      const response = await Event.FetchSingleEvent(eventId, teamId);
-      setData(response.data);
-    };
-    fetchEvents();
-  }, [activeTeam]);
-
-  const cancelEvent = (e) => {
-    e.preventDefault();
-    const patch = async () => {
-      const response = await Event.CancelEventbyId(eventId);
-    };
-    patch()
-      .then((res) => {
-        setResponseMessage("Succesfully changed.");
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setResponseMessage(err.response.data.message);
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 3000);
-      });
-  };
-
-  const setAvailability = (e) => {
-    e.preventDefault();
-
-    const patchAvailability = async () => {
-      const res = await Event.SetAvailability(data.id, {
-        available: !playerUnavailable,
-      });
-    };
-    patchAvailability()
-      .then((res) => {
-        setResponseMessage("Succesfully changed.");
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setResponseMessage(err.response.data.message);
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 3000);
-      });
-    setError(false);
-    setSuccess(false);
-  };
-
+function EventCover({
+  eventCoverImage,
+  eventCurrency,
+  eventFee,
+  currencyBeforeFee,
+}) {
   return (
-    <div className={styles.eventDetail}>
-      <h1>{data?.title}</h1>
-      <DetailCover data={data} img={data?.coverImage} />
-      <div className={styles.twoRows}>
-        {data?.eventType == "match" && (
-          <MatchDetail
-            players={availablePlayersForEvent}
-            userRole={userRole}
-            data={data}
-          />
-        )}
-        {data?.eventType == "training" && <h1> Training </h1>}
-        {data?.eventType == "social" && <SocialDetail data={data} />}
-        {/*    <AvailablePlayers /> */}
-        {/* Edit Event */}
-        {userRole == "teamLead" && data?.eventType == "match" && (
-          <Link href={`/teamhub/events/edit-event/${eventId}`}>
-            <a>
-              <div className={styles.routeComponent}>
-                <div className={styles.center}>
-                  <EditEvent /> Edit event
-                </div>
-                <RightArrow />
-              </div>
-            </a>
-          </Link>
-        )}
-        {/* Confirm Line Up */}
-        {userRole == "teamLead" && data?.eventType !== "social" && (
-          <Link href={`/teamhub/events/confirm-lineup/${eventId}`}>
-            <a>
-              <div className={styles.routeComponent}>
-                <div className={styles.center}>
-                  <ConfirmLineup /> Confirm Line-up
-                </div>
-                <RightArrow />
-              </div>
-            </a>
-          </Link>
-        )}
-        {userRole == "teamLead" && (
-          <button
-            disabled={data?.status !== "published"}
-            onClick={cancelEvent}
-            className={styles.routeComponent}
-          >
-            <div className={styles.center}>
-              <CancelEvent /> Cancel event
-            </div>
-            <RightArrow />
-          </button>
-        )}
+    <div className={styles.eventCoverImageWrapper}>
+      <img className={styles.eventCoverImage} src={eventCoverImage} />
+      <span className={styles.eventManageOptionsWrapper}>
+        <ThreeDotsSVG />
+      </span>
+      <span className={styles.eventFeeWrapper}>
+        {currencyBeforeFee && `${eventCurrency} `}
+        {eventFee}
+        {!currencyBeforeFee && ` ${eventCurrency}`}
+      </span>
+    </div>
+  );
+}
 
-        {userRole == "player" && (
-          <button
-            disabled={data?.status !== "published"}
-            onClick={setAvailability}
-            className={styles.routeComponent}
-          >
-            <div className={styles.center}>
-              <Save />
-              {data?.eventType == "match"
-                ? playerUnavailableForMatch
-                  ? "Be available"
-                  : "Be unavailable"
-                : playerUnavailable
-                ? "Be available"
-                : "Be unavailable"}
-            </div>
-            <RightArrow />
-          </button>
+function EventTeams({ eventType, eventTeams }) {
+  return (
+    <div className={styles.eventTeamsWrapper}>
+      <div className={styles.eventTeam}>
+        <Link href={`/teams/${eventTeams[0]?.id}`}>
+          <a>
+            <img className={styles.eventTeamCrest} src={eventTeams[0]?.crest} />
+          </a>
+        </Link>
+        <Link href={`/teams/${eventTeams[0]?.id}`}>
+          <a className={styles.eventTeamTitle}>
+            <span>{eventTeams[0]?.title}</span>
+          </a>
+        </Link>
+      </div>
+      <div className={styles.eventTypeWrapper}>
+        <span
+          className={cn(
+            eventType?.toLowerCase() === "match" && styles.eventTypeMatch,
+            eventType?.toLowerCase() === "training" && styles.eventTypeTraining,
+            eventType?.toLowerCase() === "social" && styles.eventTypeSocial
+          )}
+        >
+          {eventType}
+        </span>
+        {eventType?.toLowerCase() === "match" && (
+          <span className={styles.eventVerses}>VS</span>
         )}
       </div>
-      {isError && <MessageToUser message={responseMessage} err={isError} />}
-
-      {isSuccess && (
-        <MessageToUser message={responseMessage} err={!isSuccess} />
+      {eventTeams?.length > 1 && (
+        <div className={styles.eventTeam}>
+          <Link href={`/teams/${eventTeams[1]?.id}`}>
+            <a>
+              <img
+                className={styles.eventTeamCrest}
+                src={eventTeams[1]?.crest}
+              />
+            </a>
+          </Link>
+          <Link href={`/teams/${eventTeams[1]?.id}`}>
+            <a className={styles.eventTeamTitle}>
+              <span>{eventTeams[1]?.title}</span>
+            </a>
+          </Link>
+        </div>
       )}
     </div>
   );
 }
 
-export default EventDetail;
+function EventInfo({
+  eventType,
+  eventTeams,
+  eventDate,
+  eventTime,
+  eventLocation,
+}) {
+  return (
+    <div className={styles.eventInfoWrapper}>
+      <div className={styles.eventTeamsAndTypeWrapper}>
+        <EventTeams eventType={eventType} eventTeams={eventTeams} />
+      </div>
+      <div className={styles.eventDateAndLocationWrapper}>
+        {eventDate && (
+          <span className={styles.eventInfoItem}>
+            <DateSVG />
+            <span>{eventDate}</span>
+          </span>
+        )}
+        {eventTime && (
+          <span className={styles.eventInfoItem}>
+            <KickOffSVG /> <span>{eventTime} Kick-off</span>
+          </span>
+        )}
+        {eventLocation && (
+          <span className={styles.eventInfoItem}>
+            <PlaceSVG /> <span>{eventLocation}</span>
+          </span>
+        )}
+      </div>
+      <Button className={styles.eventActionButton}>Available?</Button>
+    </div>
+  );
+}
+
+function EventPlayersList({ availablePlayers }) {
+  console.log("availablePlayers => ", availablePlayers);
+  return (
+    <div className={styles.eventPlayersListWrapper}>
+      <div className={styles.eventPlayersListHeader}>
+        <AvailableSVG />
+        <span>{availablePlayers?.length || 0} Players Available</span>
+      </div>
+      {availablePlayers?.length > 0 && (
+        <div className={styles.eventPlayersList}>
+          {availablePlayers?.map((player) => (
+            <div className={styles.eventPlayerName}>
+              <Link href={`/profile/${player?.id}`}>
+                <a>{player?.name}</a>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EventDetails({ event }) {
+  const [_event, setEvent] = useState({ ...event });
+
+  useEffect(() => {
+    setEvent({ ...event });
+  }, []);
+
+  return (
+    <div className={styles.eventsWrapper}>
+      <h1>{_event?.title}</h1>
+      <EventCover
+        eventFee={_event?.fee?.toFixed(2) || "0.00"}
+        eventCurrency={_event?.currency || "£"}
+        eventCoverImage={_event?.coverImage || "/assets/placeholder-event.png"}
+        currencyBeforeFee={true}
+      />
+      <div className={styles.eventBodyWrapper}>
+        <EventInfo
+          eventType={_event?.eventType}
+          eventTeams={_event?.teams?.map((x) => {
+            return {
+              id: x?.teamId?.id,
+              title: x?.teamId?.title,
+              crest: x?.teamId?.crest || "/assets/club-badge-placeholder.png",
+            };
+          })}
+          eventDate={moment(_event?.eventDateTime).format("Do MMMM YYYY")}
+          eventTime={moment(_event?.eventDateTime).format("h:mm A")}
+          eventLocation={_event?.location}
+          eventStatus={_event?.status}
+        />
+        <EventPlayersList
+          availablePlayers={_event?.teams
+            ?.map((x) => x?.attendees?.filter((y) => y?.available))
+            ?.flat(1)
+            ?.map((x) => {
+              return {
+                id: x?.user?.id,
+                name: x?.user?.profile?.fullName || x?.user?.id,
+              };
+            })}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default EventDetails;

@@ -1,66 +1,156 @@
-.eventDetail {
+.eventsWrapper {
   max-width: var(--container-lg);
-  margin-bottom: 200px;
+  padding-top: var(--space-50);
+  padding-bottom: var(--space-50);
 }
-.twoRows {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: 32px;
+.eventCoverImageWrapper {
+  position: relative;
 }
-
-.routeComponent {
+.eventCoverImage {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+.eventManageOptionsWrapper {
+  position: absolute;
+  top: var(--space-10);
+  right: var(--space-10);
+  cursor: pointer;
+}
+.eventManageOptionsWrapper:hover {
+  opacity: 0.8;
+}
+.eventFeeWrapper {
+  position: absolute;
+  bottom: var(--space-10);
+  right: var(--space-10);
+  background-color: var(--c-turk);
+  padding: var(--space-10) var(--space-24);
+  border-radius: var(--radius-md);
+  font-weight: bold;
+}
+.eventBodyWrapper {
+  display: flex;
+  margin-top: var(--space-30);
+  gap: var(--space-30);
+}
+.eventInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   background-color: var(--c-primary);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: var(--space-24);
+}
+.eventTeamsAndTypeWrapper {
   display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  color: var(--c--white);
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
-.routeComponent:disabled {
-  opacity: 0.5;
+.eventTeamsWrapper {
+  display: flex;
+  justify-content: center;
 }
-.routeComponent:hover {
-  background-color: var(--c-black-50);
-}
-.center {
+.eventTeam {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  text-transform: capitalize;
+}
+.eventTeamCrest {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50% 50% 45% 45% / 9% 9% 91% 91%;
+  margin-bottom: var(--space-5);
+}
+.eventTeamTitle {
+  max-width: 100px;
+  word-wrap: break-word;
+  text-align: center;
+}
+.eventTeamTitle:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+.eventTypeWrapper {
+  margin: 0 var(--space-40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
 }
-
-@media screen and (max-width: 1684px) and (min-width: 1024px) {
-  .eventDetail {
-    padding-right: 24px;
-  }
+.eventTypeMatch {
+  color: var(--c-white-50);
+  text-transform: capitalize;
 }
-
-@media screen and (max-width: 1024px) and (min-width: 766px) {
-  .eventDetail {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 24px;
-    margin-bottom: 50px;
-  }
-  .eventDetail h1 {
-    display: none;
-  }
+.eventTypeTraining {
+  font-size: var(--fs-h3);
+  background-color: var(--c-yellow);
+  color: var(--c-white-70);
+  padding: var(--space-5) var(--space-12);
+  transform: skew(-0.02turn, 0deg);
+  text-transform: capitalize;
 }
-
-@media screen and (max-width: 766px) and (min-width: 360px) {
-  .eventDetail {
-    padding: 12px;
-    margin-bottom: unset;
-  }
-  .eventDetail h1 {
-    display: none;
-  }
-  .twoRows {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    margin-bottom: 100px;
-  }
+.eventTypeSocial {
+  font-size: var(--fs-h3);
+  background-color: var(--c-green);
+  color: var(--c-white-70);
+  padding: var(--space-5) var(--space-12);
+  transform: skew(-0.02turn, 0deg);
+  text-transform: capitalize;
+}
+.eventVerses {
+  margin-top: var(--space-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--ff-bold);
+}
+.eventDateAndLocationWrapper {
+  padding: var(--space-12);
+  padding-bottom: 0;
+  margin-top: var(--space-24);
+  display: flex;
+  flex-direction: column;
+}
+.eventInfoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-10);
+}
+.eventInfoItem > span {
+  margin-left: var(--space-12);
+  text-transform: capitalize;
+}
+.eventCardActionButton {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.eventActionButton {
+  margin-top: var(--space-16);
+}
+.eventPlayersListWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: var(--c-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+}
+.eventPlayersListHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+.eventPlayersList {
+  margin-top: var(--space-10);
+}
+.eventPlayerName {
+  margin-top: var(--space-5);
+  text-transform: capitalize;
+}
+.eventPlayerName:hover {
+  font-weight: bold;
+  cursor: pointer;
 }
