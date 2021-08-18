@@ -212,9 +212,12 @@ function EventDetails({ event, user }) {
           eventType={_event?.eventType}
           eventTeams={_event?.teams?.map((x) => {
             return {
-              id: x?.teamId?.id,
-              title: x?.teamId?.title,
-              crest: x?.teamId?.crest || "/assets/club-badge-placeholder.png",
+              id: x?.teamId?.id | x?.team?.id,
+              title: x?.teamId?.title || x?.team?.title,
+              crest:
+                x?.teamId?.crest ||
+                x?.team?.crest ||
+                "/assets/club-badge-placeholder.png",
             };
           })}
           eventDate={moment(_event?.eventDateTime).format("Do MMMM YYYY")}
