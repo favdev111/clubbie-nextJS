@@ -23,7 +23,7 @@ function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, event }) {
 }
 
 function DashboardContent({ activeTeam, setTeam, user, event }) {
-  const [selectedIndex, setIndex] = useState(0);
+  const [selectedIndex, setIndex] = useState(null);
   const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
   const myRouter = useRouter();
