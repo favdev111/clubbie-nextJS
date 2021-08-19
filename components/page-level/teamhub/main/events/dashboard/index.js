@@ -5,7 +5,7 @@ import ProgressBar from "@sub/progress";
 import EditIcon from "@svg/edit.js";
 import EventsMonthSelector from "./month-selector";
 import EventCard from "./card";
-import Events from "@api/services/Event";
+import Events from "@api/services/Events";
 import styles from "./index.module.css";
 
 function EventsHeader() {
@@ -60,9 +60,7 @@ function EventsList({ userId, events, loading }) {
                   crest: y?.team?.crest || "/assets/club-badge-placeholder.png",
                 };
               })}
-              eventCoverImage={
-                x?.coverImage || "/assets/person-placeholder.jpg"
-              }
+              eventCoverImage={x?.coverImage || "/assets/placeholder-event.png"}
               eventFee={x?.fee?.toFixed(2) || "0.00"}
               eventCurrency={"£"}
               currencySymbolBeforeFee={true}
@@ -82,7 +80,7 @@ function EventsDashboard({ user }) {
   const currentMonthIndex = new Date().getMonth();
 
   const [_user] = useState(user);
-  const [_events, setEvents] = useState({});
+  const [_events, setEvents] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(
     currentMonthIndex

@@ -1,8 +1,16 @@
 import HTTPClient from "../HTTPClient";
 
 export default class EventManagementRoutes {
+  static async QueryEvents(query) {
+    return HTTPClient.get(`/event`, query);
+  }
+
   static async CreateEvent(payload) {
     return HTTPClient.post(`/event/register`, payload);
+  }
+
+  static async GetEventById(eventId, teamId) {
+    return HTTPClient.get(`/event/${eventId}?teamId=${teamId}`);
   }
 
   static async EditEventbyId(id, payload) {
@@ -29,20 +37,12 @@ export default class EventManagementRoutes {
     return HTTPClient.patch(`/event/${id}/create-lineup`, payload);
   }
 
-  static async FetchSingleEvent(eventId, teamId) {
-    return HTTPClient.get(`/event/${eventId}?teamId=${teamId}`);
-  }
-
   static async ConfirmLineup(id, payload) {
     return HTTPClient.patch(`/event/${id}/confirm-lineup`, payload);
   }
 
   static async AddResult(id, payload) {
     return HTTPClient.patch(`/event/${id}/add-result`, payload);
-  }
-
-  static async QueryEvents(query) {
-    return HTTPClient.get(`/event`, query);
   }
 
   static async RequestPayment(id) {

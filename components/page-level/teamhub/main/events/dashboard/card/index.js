@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
-import Button from "@sub/button";
-import ContentDialog from "@sub/content-dialog";
-import BackDropLoader from "@sub/backdrop-loader";
-import useNotification from "@sub/hook-notification";
 import ThreeDots from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
-import Events from "@api/services/Event";
 import eventTypes from "@utils/fixedValues/eventTypes";
+import EventAvailabilityButton from "../../common/button-availability";
 import styles from "./index.module.css";
 
 function EventCardHeader({
+  eventId,
   eventCoverImage,
   eventFee,
   eventCurrency,
@@ -22,7 +19,9 @@ function EventCardHeader({
 }) {
   return (
     <div className={styles.eventImageWrapper}>
-      {eventCoverImage && <img src={eventCoverImage} />}
+      <Link href={`/teamhub/events/${eventId}`}>
+        <a>{eventCoverImage && <img src={eventCoverImage} />}</a>
+      </Link>
       {/* only if authoritarian role */}
       <div className={styles.eventManageOptionsWrapper}>
         <span>
@@ -122,80 +121,14 @@ function EventCardBody({
 }
 
 function EventCardActions({ actionButton, eventId }) {
-  const [loading, setLoading] = useState(false);
-  const [_actionButton, setActionButton] = useState(null);
-  const [
-    openAvailabilityConfirmationDialog,
-    setOpenAvailabilityConfirmationDialog,
-  ] = useState(false);
-
-  useEffect(() => {
-    setActionButton({ ...actionButton });
-  }, [actionButton]);
-
-  const { showNotificationMsg } = useNotification();
-
-  const setEventAvailability = async (available) => {
-    setLoading(true);
-
-    const response = await Events.SetAvailability(eventId, {
-      available,
-    }).catch(() => null);
-
-    // show error
-    if (!response) {
-      showNotificationMsg("Could not set availability", {
-        variant: "error",
-        displayIcon: true,
-      });
-      setLoading(false);
-      return;
-    }
-
-    // show success
-    showNotificationMsg("Availability set Successfully..!", {
-      variant: "success",
-      displayIcon: true,
-    });
-    setActionButton({
-      text: available ? "Available" : "Not Available",
-      type: available ? "success" : "danger",
-    });
-    setLoading(false);
-  };
-
   return (
-    <>
-      {loading && <BackDropLoader />}
-      <ContentDialog
-        open={openAvailabilityConfirmationDialog}
-        setOpen={setOpenAvailabilityConfirmationDialog}
-        title={"Event Availability"}
-        Body={() => <p>Are you available?</p>}
-        confirmText={"Available"}
-        dismissText={"Not Available"}
-        onConfirm={async () => {
-          setOpenAvailabilityConfirmationDialog(false);
-          await setEventAvailability(true);
-        }}
-        onDismiss={async () => {
-          setOpenAvailabilityConfirmationDialog(false);
-          await setEventAvailability(false);
-        }}
-        type={"success"}
-      />
-      <Button
-        className={styles.eventCardActionButton}
-        variant={_actionButton?.type}
-        onClick={() =>
-          !_actionButton?.disabled &&
-          setOpenAvailabilityConfirmationDialog(true)
-        }
-        disabled={loading}
-      >
-        {_actionButton?.text}
-      </Button>
-    </>
+    <EventAvailabilityButton
+      eventId={eventId}
+      buttonType={actionButton?.type}
+      buttonText={actionButton?.text}
+      disabled={actionButton?.disabled}
+      className={styles.eventCardActionButton}
+    />
   );
 }
 
@@ -214,10 +147,9 @@ function EventCard({
 }) {
   return (
     <div key={eventId}>
-      {/* <Link href={`/teamhub/events/${eventId}`}>
-        <a> */}
       <div className={styles.eventCardWrapper}>
         <EventCardHeader
+          eventId={eventId}
           eventFee={eventFee}
           eventCurrency={eventCurrency}
           eventCoverImage={eventCoverImage}
@@ -244,7 +176,11 @@ function EventCard({
               eventHomeTeamLineUpConfirmed &&
               eventType !== eventTypes.SOCIAL
             ) {
-              return { text: "Line-up Confirmed", type: "info" };
+              return {
+                text: "Line-up Confirmed",
+                type: "info",
+                disabled: true,
+              };
             }
             if (userAvailable === true) {
               return { text: "Available", type: "success" };
@@ -258,8 +194,6 @@ function EventCard({
           })()}
         />
       </div>
-      {/* </a>
-      </Link> */}
     </div>
   );
 }
