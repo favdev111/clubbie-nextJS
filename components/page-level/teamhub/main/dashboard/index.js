@@ -42,39 +42,35 @@ function Dashboard({ user, activeTeam, setTeam }) {
   }, [activeTeam]);
 
   return (
-    <div className={styles.dashboardContent}>
-      <div className={styles.dashboard}>
-        <h1 className={styles.title}> Dashboard</h1>
-        {/* teamcard */}
-        <MyTeam
-          data={selectedTeam}
-          user={user}
-          userTeams={userTeams}
-          setactive={setTeam}
-          active={activeTeam}
-        />
-        {/* recent videos */}
-        {dashboardData?.recentPosts?.length > 0 && (
-          <RecentVideos data={dashboardData.recentPosts} />
-        )}
-        {/* up next */}
-        {dashboardData?.nextMatch?.length > 0 && (
-          <UpNext data={dashboardData.nextMatch} />
-        )}
-        {/* last result */}
-        {dashboardData?.lastMatchResult && (
-          <LastResult data={dashboardData.lastMatchResult} />
-        )}
-
-        {/* League table */}
-        {dashboardData?.leagueTable && (
-          <LeagueTable data={dashboardData.leagueTable} />
-        )}
-
-        {/* No data yet */}
-        {/* Payments overview */}
-        {dashboardData?.payment && <PaymentOverview />}
-      </div>
+    <div className={styles.dashboard}>
+      <h1 className={styles.title}> Dashboard</h1>
+      {/* teamcard */}
+      <MyTeam
+        data={selectedTeam}
+        user={user}
+        userTeams={userTeams}
+        setactive={setTeam}
+        active={activeTeam}
+      />
+      {/* recent videos */}
+      {dashboardData?.recentPosts?.length > 0 && (
+        <RecentVideos data={dashboardData.recentPosts} />
+      )}
+      {/* up next */}
+      {dashboardData?.nextMatch?.length > 0 && (
+        <UpNext data={dashboardData.nextMatch} />
+      )}
+      {/* last result */}
+      {dashboardData?.lastMatchResult && (
+        <LastResult data={dashboardData.lastMatchResult} />
+      )}
+      {/* League table */}
+      {dashboardData?.leagueTable && (
+        <LeagueTable data={dashboardData.leagueTable} />
+      )}
+      No data yet
+      {/* Payments overview */}
+      {dashboardData?.payment && <PaymentOverview />}
     </div>
   );
 }

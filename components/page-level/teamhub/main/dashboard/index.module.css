@@ -1,4 +1,5 @@
 .dashboard {
+  width: 100%;
   max-width: var(--container-lg);
 }
 .title {
@@ -27,11 +28,10 @@
   }
 }
 
-
 @media only screen and (max-width: 360px) {
   /* For mobile phones: */
 
-  .title{
+  .title {
     display: none;
   }
 }
