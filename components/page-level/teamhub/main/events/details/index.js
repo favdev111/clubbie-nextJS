@@ -3,7 +3,7 @@ import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
 import Button from "@sub/button";
-import ThreeDotsSVG from "@svg/threedots";
+// import ThreeDotsSVG from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
@@ -21,9 +21,9 @@ function EventCover({
   return (
     <div className={styles.eventCoverImageWrapper}>
       <img className={styles.eventCoverImage} src={eventCoverImage} />
-      <span className={styles.eventManageOptionsWrapper}>
+      {/* <span className={styles.eventManageOptionsWrapper}>
         <ThreeDotsSVG />
-      </span>
+      </span> */}
       <span className={styles.eventFeeWrapper}>
         {currencyBeforeFee && `${eventCurrency} `}
         {eventFee}

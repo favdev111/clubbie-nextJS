@@ -23,10 +23,7 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const responseProfile = await Users.GetMyProfile().catch(() => false);
   const _user = responseProfile?.data;
 
-  const teamId = "611cd9d72f1ed04fc549f2f2"; // TODO: refactor api to not use teamId
-  const responseEvent = await Events.GetEventById(eventId, teamId).catch(
-    () => false
-  );
+  const responseEvent = await Events.GetEventById(eventId).catch(() => false);
   const event = responseEvent?.data;
 
   const notFound = !_user || !event;
