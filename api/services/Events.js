@@ -9,8 +9,8 @@ export default class EventManagementRoutes {
     return HTTPClient.post(`/event/register`, payload);
   }
 
-  static async GetEventById(eventId, teamId) {
-    return HTTPClient.get(`/event/${eventId}?teamId=${teamId}`);
+  static async GetEventById(id) {
+    return HTTPClient.get(`/event/${id}`);
   }
 
   static async EditEventbyId(id, payload) {
