@@ -27,7 +27,7 @@
   margin-bottom: 200px;
 }
 
-@media screen and (max-width: 1280px) and (min-width: 1024px) {
+@media screen and (max-width: 1280px) and (min-width: 1025px) {
   .eventsWrapper {
     max-width: 70%;
     padding-right: 24px;
