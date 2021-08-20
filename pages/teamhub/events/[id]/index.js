@@ -2,8 +2,8 @@ import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
 import DashboardContent from "@page/teamhub/main";
-import Users from "@api/services/Users";
 import Events from "@api/services/Events";
+import Users from "@api/services/Users";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 function EventDetailPage({ user, event }) {

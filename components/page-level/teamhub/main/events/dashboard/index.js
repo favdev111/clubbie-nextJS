@@ -13,7 +13,7 @@ function EventsHeader() {
     <div className={styles.eventsHeader}>
       <h1>Events</h1>
       <span>
-        <Link href="/teamhub/events/add-event/">
+        <Link href="/teamhub/events/add">
           <a>
             <span className={styles.draft}>
               <EditIcon />
