@@ -115,7 +115,7 @@ const createEvent = Joi.object().keys({
 });
 
 const editEvent = Joi.object().keys({
-  media: Joi.string().optional(),
+  media: Joi.string().optional().allow(""),
   title: Joi.string().min(3).optional().allow("").messages({
     "string.min": "Title must be 3 characters long",
   }),
