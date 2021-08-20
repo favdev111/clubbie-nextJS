@@ -1,6 +1,7 @@
 .addEventWrapper {
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
   max-width: var(--container-lg);
   padding-top: var(--space-50);
   padding-bottom: var(--space-50);

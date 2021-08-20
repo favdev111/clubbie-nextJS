@@ -23,17 +23,18 @@ function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, event }) {
 }
 
 function DashboardContent({ activeTeam, setTeam, user, event }) {
-  const [selectedIndex, setIndex] = useState(0);
+  const [selectedIndex, setIndex] = useState(null);
   const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
-  const myRouter = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    if (myRouter.pathname == "/teamhub/events") setIndex(1);
-    if (myRouter.pathname == "/teamhub/payments") setIndex(2);
-    if (myRouter.pathname == "/teamhub/statistics") setIndex(3);
-    if (myRouter.pathname == "/teamhub/events/[id]") setIndex(4);
-  }, [myRouter.pathname]);
+    if (router?.pathname?.includes(`/teamhub/events/[id]`)) setIndex(4);
+    else if (router?.pathname?.includes("/teamhub/events")) setIndex(1);
+    else if (router?.pathname?.includes("/teamhub/payments")) setIndex(2);
+    else if (router?.pathname?.includes("/teamhub/statistics")) setIndex(3);
+    else if (router?.pathname?.includes("/teamhub")) setIndex(0);
+  }, [router.pathname]);
 
   return (
     <div className={styles.dashboard}>
