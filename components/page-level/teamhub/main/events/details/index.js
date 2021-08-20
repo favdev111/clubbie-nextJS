@@ -367,6 +367,13 @@ function EventDetails({
           eventTime={moment(_event?.eventDateTime).format("h:mm A")}
           eventLocation={_event?.location}
           actionButton={(() => {
+            if (_event?.status === eventStatusTypes?.CANCELED) {
+              return {
+                text: "Event Canceled!",
+                type: "danger",
+                disabled: true,
+              };
+            }
             if (new Date(_event?.eventDateTime) < new Date()) {
               return {
                 text: "Event Taken Place!",

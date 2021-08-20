@@ -49,6 +49,7 @@ function EventsList({ userId, events, loading }) {
             <EventCard
               eventId={x?.id}
               eventType={x?.eventType}
+              eventStatus={x?.status}
               eventHomeTeamLineUpConfirmed={homeTeam?.lineUpConfirmed}
               userAvailable={
                 homeTeam?.attendees?.find((a) => a?.user === userId)?.available

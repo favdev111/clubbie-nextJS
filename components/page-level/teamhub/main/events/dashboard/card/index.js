@@ -7,6 +7,7 @@ import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
 import eventTypes from "@utils/fixedValues/eventTypes";
+import eventStatusTypes from "@utils/fixedValues/eventStatusTypes";
 import EventAvailabilityButton from "../../common/button-availability";
 import styles from "./index.module.css";
 
@@ -135,6 +136,7 @@ function EventCardActions({ actionButton, eventId }) {
 function EventCard({
   eventId,
   eventType,
+  eventStatus,
   eventHomeTeamLineUpConfirmed,
   eventTeams,
   eventLocation,
@@ -165,6 +167,13 @@ function EventCard({
         <EventCardActions
           eventId={eventId}
           actionButton={(() => {
+            if (eventStatus === eventStatusTypes?.CANCELED) {
+              return {
+                text: "Event Canceled!",
+                type: "danger",
+                disabled: true,
+              };
+            }
             if (new Date(eventDateTime) < new Date()) {
               return {
                 text: "Event Taken Place!",
