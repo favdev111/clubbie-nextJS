@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
-import Button from "@sub/button";
 // import ThreeDotsSVG from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
@@ -160,6 +159,7 @@ function EventDetails({ event, user }) {
   const [_event, setEvent] = useState({ ...event });
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
   const [_userAvailable, setUserAvailable] = useState(null);
+  const [_eventTeams, setEventTeams] = useState([]);
   const [_availablePlayers, setAvailablePlayers] = useState([]);
 
   useEffect(() => {
@@ -176,6 +176,15 @@ function EventDetails({ event, user }) {
     setUserAvailable(
       homeTeam?.attendees?.find((a) => a?.user?.id === user?.id)?.available
     );
+    const eventTeams = event?.teams?.map((x) => {
+      const team = x?.teamId || x?.team;
+      return {
+        id: team?.id,
+        title: team?.title,
+        crest: team?.crest || "/assets/club-badge-placeholder.png",
+      };
+    });
+    setEventTeams([...eventTeams]);
     const availablePlayers = _event?.teams
       ?.map((x) => x?.attendees?.filter((y) => y?.available))
       ?.flat(1)
@@ -216,16 +225,7 @@ function EventDetails({ event, user }) {
         <EventInfo
           eventId={_event?.id}
           eventType={_event?.eventType}
-          eventTeams={_event?.teams?.map((x) => {
-            return {
-              id: x?.teamId?.id | x?.team?.id,
-              title: x?.teamId?.title || x?.team?.title,
-              crest:
-                x?.teamId?.crest ||
-                x?.team?.crest ||
-                "/assets/club-badge-placeholder.png",
-            };
-          })}
+          eventTeams={_eventTeams}
           eventDate={moment(_event?.eventDateTime).format("Do MMMM YYYY")}
           eventTime={moment(_event?.eventDateTime).format("h:mm A")}
           eventLocation={_event?.location}

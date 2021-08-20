@@ -1,10 +1,10 @@
 import React from "react";
 import Layout from "@layout";
 import Seo from "@layout/seo";
-import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import DashboardContent from "@page/teamhub/main";
 import Users from "@api/services/Users";
 import Events from "@api/services/Events";
+import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 function EventDetailPage({ user, event }) {
   return (
@@ -24,14 +24,14 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const _user = responseProfile?.data;
 
   const responseEvent = await Events.GetEventById(eventId).catch(() => false);
-  const event = responseEvent?.data;
+  const _event = responseEvent?.data;
 
-  const notFound = !_user || !event;
+  const notFound = !_user || !_event;
 
   return {
     props: {
       user: _user,
-      event: event,
+      event: { ..._event },
     },
     notFound: notFound,
   };
