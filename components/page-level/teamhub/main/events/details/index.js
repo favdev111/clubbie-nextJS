@@ -227,15 +227,23 @@ function EventManageOptions({ eventId, isEventCancelable, onEventCancel }) {
         onConfirm={cancelEvent}
       />
       <div className={styles.eventManageOptionsWrapper}>
-        <div className={cn(styles.manageOption, styles.manageOptionHover)}>
-          <div>
-            <EditEventSVG />
-            <span className={styles.manageOptionTitle}>Edit Event</span>
-          </div>
-          <span>
-            <RightArrowSVG />
-          </span>
-        </div>
+        <span>
+          <Link href={`/teamhub/events/${eventId}/edit`}>
+            <a>
+              <div
+                className={cn(styles.manageOption, styles.manageOptionHover)}
+              >
+                <div>
+                  <EditEventSVG />
+                  <span className={styles.manageOptionTitle}>Edit Event</span>
+                </div>
+                <span>
+                  <RightArrowSVG />
+                </span>
+              </div>
+            </a>
+          </Link>
+        </span>
         <div className={cn(styles.manageOption, styles.manageOptionHover)}>
           <div>
             <ConfirmLineupSVG />
