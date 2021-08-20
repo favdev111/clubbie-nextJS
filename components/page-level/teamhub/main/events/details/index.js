@@ -3,6 +3,9 @@ import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
 import Button from "@sub/button";
+import useNotifications from "@sub/hook-notification";
+import ConfirmDialog from "@sub/confirm-dialog";
+import BackDropLoader from "@sub/backdrop-loader";
 // import ThreeDotsSVG from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
@@ -12,6 +15,7 @@ import EditEventSVG from "@svg/edit-event";
 import ConfirmLineupSVG from "@svg/confirm-lineup";
 import CancelEventSVG from "@svg/cancel-event";
 import RightArrowSVG from "@svg/right-arrow";
+import Events from "@api/services/Events";
 import eventTypes from "@utils/fixedValues/eventTypes";
 import eventStatusTypes from "@utils/fixedValues/eventStatusTypes";
 import EventAvailabilityButton from "../common/button-availability";
@@ -175,43 +179,90 @@ function EventPlayersList({ availablePlayers }) {
   );
 }
 
-function EventManageOptions({ isEventCancelable }) {
+function EventManageOptions({ eventId, isEventCancelable, onEventCancel }) {
+  const [loading, setLoading] = useState(false);
+  const [confirmCancelEvent, setConfirmCancelEvent] = useState(false);
+  const { showNotificationMsg } = useNotifications();
+
+  const cancelEvent = async () => {
+    setLoading(true);
+
+    // api call
+    const response = await Events.CancelEventbyId(eventId).catch((e) => {
+      console.log("err => ", e?.response);
+      return null;
+    });
+
+    // error
+    if (!response) {
+      showNotificationMsg("Could Not Cancel Event...!", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    // success
+    showNotificationMsg("Event Canceled Successfully...!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setLoading(false);
+    onEventCancel && onEventCancel();
+    return;
+  };
+
   return (
-    <div className={styles.eventManageOptionsWrapper}>
-      <div className={cn(styles.manageOption, styles.manageOptionHover)}>
-        <div>
-          <EditEventSVG />
-          <span className={styles.manageOptionTitle}>Edit Event</span>
+    <>
+      {loading && <BackDropLoader />}
+      <ConfirmDialog
+        open={confirmCancelEvent}
+        setOpen={setConfirmCancelEvent}
+        message={
+          "Are you sure to cancel this event?. This action is irreversible."
+        }
+        confirmText={"Yes"}
+        dismissText={"No"}
+        onConfirm={cancelEvent}
+      />
+      <div className={styles.eventManageOptionsWrapper}>
+        <div className={cn(styles.manageOption, styles.manageOptionHover)}>
+          <div>
+            <EditEventSVG />
+            <span className={styles.manageOptionTitle}>Edit Event</span>
+          </div>
+          <span>
+            <RightArrowSVG />
+          </span>
         </div>
-        <span>
-          <RightArrowSVG />
-        </span>
-      </div>
-      <div className={cn(styles.manageOption, styles.manageOptionHover)}>
-        <div>
-          <ConfirmLineupSVG />
-          <span className={styles.manageOptionTitle}>Confirm Lineup</span>
+        <div className={cn(styles.manageOption, styles.manageOptionHover)}>
+          <div>
+            <ConfirmLineupSVG />
+            <span className={styles.manageOptionTitle}>Confirm Lineup</span>
+          </div>
+          <span>
+            <RightArrowSVG />
+          </span>
         </div>
-        <span>
-          <RightArrowSVG />
-        </span>
-      </div>
-      <div
-        className={cn(
-          styles.manageOption,
-          isEventCancelable && styles.manageOptionHover,
-          !isEventCancelable && styles.manageOptionDisabled
-        )}
-      >
-        <div>
-          <CancelEventSVG />
-          <span className={styles.manageOptionTitle}>Cancel Event</span>
+        <div
+          className={cn(
+            styles.manageOption,
+            isEventCancelable && styles.manageOptionHover,
+            !isEventCancelable && styles.manageOptionDisabled
+          )}
+          onClick={() => isEventCancelable && setConfirmCancelEvent(true)}
+        >
+          <div>
+            <CancelEventSVG />
+            <span className={styles.manageOptionTitle}>Cancel Event</span>
+          </div>
+          <span>
+            <RightArrowSVG />
+          </span>
         </div>
-        <span>
-          <RightArrowSVG />
-        </span>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -280,6 +331,13 @@ function EventDetails({
     }
   };
 
+  const onEventCancel = () => {
+    setEvent({
+      ..._event,
+      status: eventStatusTypes.CANCELED,
+    });
+  };
+
   return (
     <div className={styles.eventsWrapper}>
       <h1>{_event?.title}</h1>
@@ -345,11 +403,13 @@ function EventDetails({
         )}
         {manageMode && (
           <EventManageOptions
+            eventId={_event?.id}
             isEventCancelable={(() => {
               if (new Date(_event?.eventDateTime) < new Date()) return false;
               if (_event?.status === eventStatusTypes.CANCELED) return false;
               return true;
             })()}
+            onEventCancel={onEventCancel}
           />
         )}
       </div>
