@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import cn from "classnames";
 import moment from "moment";
+import Button from "@sub/button";
 // import ThreeDotsSVG from "@svg/threedots";
 import DateSVG from "@svg/date";
 import KickOffSVG from "@svg/kickoff";
 import PlaceSVG from "@svg/place";
 import AvailableSVG from "@svg/available";
+import EditEventSVG from "@svg/edit-event";
+import ConfirmLineupSVG from "@svg/confirm-lineup";
+import CancelEventSVG from "@svg/cancel-event";
+import RightArrowSVG from "@svg/right-arrow";
 import eventTypes from "@utils/fixedValues/eventTypes";
+import eventStatusTypes from "@utils/fixedValues/eventStatusTypes";
 import EventAvailabilityButton from "../common/button-availability";
 import styles from "./index.module.css";
 
@@ -91,6 +97,8 @@ function EventInfo({
   eventLocation,
   actionButton,
   onAvailabilitySet,
+  manageMode,
+  totalAvailablePlayers,
 }) {
   return (
     <div className={styles.eventInfoWrapper}>
@@ -114,15 +122,27 @@ function EventInfo({
             <PlaceSVG /> <span>{eventLocation}</span>
           </span>
         )}
+        {manageMode && (
+          <div className={styles.eventPlayersListHeader}>
+            <AvailableSVG />
+            <span>
+              {totalAvailablePlayers > 0 ? `${totalAvailablePlayers} ` : `No `}
+              Player
+              {totalAvailablePlayers !== 1 && `s`} Available
+            </span>
+          </div>
+        )}
       </div>
-      <EventAvailabilityButton
-        eventId={eventId}
-        buttonType={actionButton?.type}
-        buttonText={actionButton?.text}
-        disabled={actionButton?.disabled}
-        className={styles.eventActionButton}
-        onAvailabilitySet={onAvailabilitySet}
-      />
+      {!manageMode && (
+        <EventAvailabilityButton
+          eventId={eventId}
+          buttonType={actionButton?.type}
+          buttonText={actionButton?.text}
+          disabled={actionButton?.disabled}
+          className={styles.eventActionButton}
+          onAvailabilitySet={onAvailabilitySet}
+        />
+      )}
     </div>
   );
 }
@@ -155,12 +175,60 @@ function EventPlayersList({ availablePlayers }) {
   );
 }
 
-function EventDetails({ event, user }) {
+function EventManageOptions({ isEventCancelable }) {
+  return (
+    <div className={styles.eventManageOptionsWrapper}>
+      <div className={cn(styles.manageOption, styles.manageOptionHover)}>
+        <div>
+          <EditEventSVG />
+          <span className={styles.manageOptionTitle}>Edit Event</span>
+        </div>
+        <span>
+          <RightArrowSVG />
+        </span>
+      </div>
+      <div className={cn(styles.manageOption, styles.manageOptionHover)}>
+        <div>
+          <ConfirmLineupSVG />
+          <span className={styles.manageOptionTitle}>Confirm Lineup</span>
+        </div>
+        <span>
+          <RightArrowSVG />
+        </span>
+      </div>
+      <div
+        className={cn(
+          styles.manageOption,
+          isEventCancelable && styles.manageOptionHover,
+          !isEventCancelable && styles.manageOptionDisabled
+        )}
+      >
+        <div>
+          <CancelEventSVG />
+          <span className={styles.manageOptionTitle}>Cancel Event</span>
+        </div>
+        <span>
+          <RightArrowSVG />
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function EventDetails({
+  event,
+  user,
+  ownerInTeams,
+  leaderInTeams,
+  coachInTeams,
+  playerInTeams,
+}) {
   const [_event, setEvent] = useState({ ...event });
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
   const [_userAvailable, setUserAvailable] = useState(null);
   const [_eventTeams, setEventTeams] = useState([]);
   const [_availablePlayers, setAvailablePlayers] = useState([]);
+  const [manageMode, setManageMode] = useState(false);
 
   useEffect(() => {
     setEvent({ ...event });
@@ -221,6 +289,17 @@ function EventDetails({ event, user }) {
         eventCoverImage={_event?.coverImage || "/assets/placeholder-event.png"}
         currencyBeforeFee={true}
       />
+      {(ownerInTeams?.length > 0 || leaderInTeams?.length > 0) && (
+        <div className={styles.eventManageOptionButtonsWrapper}>
+          <Button
+            size="medium"
+            variant={!manageMode ? "info" : "success"}
+            onClick={() => setManageMode((mode) => !mode)}
+          >
+            {!manageMode ? "Manage" : "Done"}
+          </Button>
+        </div>
+      )}
       <div className={styles.eventBodyWrapper}>
         <EventInfo
           eventId={_event?.id}
@@ -258,8 +337,21 @@ function EventDetails({ event, user }) {
             }
           })()}
           onAvailabilitySet={onAvailabilitySet}
+          manageMode={manageMode}
+          totalAvailablePlayers={_availablePlayers?.length}
         />
-        <EventPlayersList availablePlayers={_availablePlayers} />
+        {!manageMode && (
+          <EventPlayersList availablePlayers={_availablePlayers} />
+        )}
+        {manageMode && (
+          <EventManageOptions
+            isEventCancelable={(() => {
+              if (new Date(_event?.eventDateTime) < new Date()) return false;
+              if (_event?.status === eventStatusTypes.CANCELED) return false;
+              return true;
+            })()}
+          />
+        )}
       </div>
     </div>
   );

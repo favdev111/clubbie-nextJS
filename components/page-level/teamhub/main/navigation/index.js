@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./index.module.css";
 import router from "next/router";
 
-function TeamhubNav({ nav, selectedIndex, setIndex }) {
+function TeamhubNav({ nav, selectedIndex }) {
   return (
     <div className={styles.teamhubNav}>
       <ul className={styles.navList}>
