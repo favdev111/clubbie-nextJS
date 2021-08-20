@@ -47,6 +47,7 @@ function EditEventForm({ event }) {
     text: null,
     animateText: false,
   });
+  const [isDateTimeChangable, setIsDateTimeChangeable] = useState(true);
 
   const convertDateAndTimeToIso = (date, time) => {
     const _date = date;
@@ -71,6 +72,14 @@ function EditEventForm({ event }) {
       src: event?.coverImage || null,
       file: null,
     });
+
+    // check if date/time is changeable
+    if (
+      event?.status === statusTypes?.CANCELED ||
+      new Date(event?.eventDateTime) < new Date()
+    ) {
+      setIsDateTimeChangeable(false);
+    }
   }, []);
 
   const handleImageDropped = (e) => {
@@ -197,6 +206,7 @@ function EditEventForm({ event }) {
           <TemplateInput
             type="date"
             name="date"
+            disabled={!isDateTimeChangable}
             customProps={{ ...register("date") }}
             hint={
               errors?.date && {
@@ -212,6 +222,7 @@ function EditEventForm({ event }) {
           <TemplateInput
             type="time"
             name="time"
+            disabled={!isDateTimeChangable}
             customProps={{ ...register("time") }}
             hint={
               errors?.time && {
@@ -311,7 +322,7 @@ function EditEventForm({ event }) {
                 className={styles.mediaCloseIcon}
                 onClick={() => {
                   setMedia(null);
-                  setValue("media", null);
+                  setValue("media", "");
                 }}
               >
                 <CloseSVG />
