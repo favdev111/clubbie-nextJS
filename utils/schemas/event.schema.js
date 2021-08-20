@@ -114,6 +114,22 @@ const createEvent = Joi.object().keys({
     }),
 });
 
+const editEvent = Joi.object().keys({
+  media: Joi.string().optional(),
+  title: Joi.string().min(3).optional().allow("").messages({
+    "string.min": "Title must be 3 characters long",
+  }),
+  date: Joi.string().optional().allow(""),
+  time: Joi.string().optional().allow(""),
+  location: Joi.string().optional().allow(""),
+  message: Joi.string().optional().allow(""),
+  fee: Joi.number().min(1).max(1000).optional().allow("").messages({
+    "number.min": "Fee must be greater than or equal to £1",
+    "number.max": "Fee must be less or equal to £1000",
+  }),
+});
+
 module.exports = {
   createEvent,
+  editEvent,
 };
