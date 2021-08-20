@@ -6,7 +6,7 @@
   margin-bottom: 30px;
 }
 .pastPaymentTable {
-  margin-bottom: 200px;
+  margin-bottom: 100px;
   margin-top: 30px;
 }
 .buttons {
@@ -41,11 +41,6 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 766px) and (min-width: 360px) {
-  .pastPaymentTable {
-    margin-bottom: unset;
-  }
-}
 
 @media screen and (max-width: 360px){
   .duePaymentTable{
