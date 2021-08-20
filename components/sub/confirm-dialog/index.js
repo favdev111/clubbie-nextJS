@@ -24,6 +24,7 @@ function ConfirmDialog({
   message,
   Component,
   confirmText,
+  dismissText,
   onConfirm,
   onDismiss,
   type,
@@ -44,7 +45,7 @@ function ConfirmDialog({
                 variant="cancel"
                 onClick={() => (onDismiss ? onDismiss() : setOpen(false))}
               >
-                Cancel
+                {dismissText || "Cancel"}
               </Button>
               <Button
                 variant={type || "danger"}
