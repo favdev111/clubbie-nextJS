@@ -8,7 +8,10 @@ import useForm from "@sub/hook-form";
 import DragDrop from "@sub/drag-drop";
 import Alert from "@sub/alert";
 import UploadSVG from "@svg/upload";
+import Events from "@api/services/Events";
+import Files from "@api/services/Files";
 import { editEvent as editEventSchema } from "@utils/schemas/event.schema";
+import statusTypes from "@utils/fixedValues/eventStatusTypes";
 import styles from "./index.module.css";
 
 // Todo: make a svg and replace this
@@ -44,6 +47,17 @@ function EditEventForm({ event }) {
     text: null,
     animateText: false,
   });
+
+  const convertDateAndTimeToIso = (date, time) => {
+    const _date = date;
+    const _time = time + ":00";
+    const dateTime = moment(
+      `${_date} ${_time}`,
+      "YYYY-MM-DD HH:mm:ss"
+    ).format();
+    const isoDateTime = new Date(dateTime).toISOString();
+    return isoDateTime;
+  };
 
   useEffect(() => {
     setValue("title", event?.title || "");
@@ -93,7 +107,70 @@ function EditEventForm({ event }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("data => ", data);
+    setLoading(true);
+
+    // upload cover image if any
+    let coverImage = media?.src;
+    if (media?.file) {
+      setStatusMsg({
+        type: "info",
+        text: "Uploading Cover Image",
+        animateText: true,
+      });
+      const imageForm = new FormData();
+      imageForm.append("files", media?.file);
+      const responseCoverImage = await Files.UploadFile(
+        "userImg",
+        imageForm
+      ).catch(() => null);
+      coverImage = responseCoverImage?.data[0]?.s3Url;
+      if (!coverImage) {
+        setStatusMsg({
+          type: "error",
+          text: "Could Not Upload Cover Image..!",
+        });
+        setLoading(false);
+        return;
+      }
+    }
+
+    // common body
+    const commonBody = {
+      title: data?.title || null,
+      eventDateTime: convertDateAndTimeToIso(data?.date, data?.time),
+      location: data?.location || null,
+      fee: data?.fee || null,
+      message: data?.message || null,
+      coverImage: coverImage || null,
+      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      status: statusTypes.PUBLISHED, // TODO: update it with draft
+    };
+
+    // final payload
+    const payload = Object.fromEntries(
+      Object.entries(commonBody).filter(([_, v]) => v != null)
+    );
+
+    // edit event
+    const responseEventEdit = await Events.EditEventbyId(
+      event?.id,
+      payload
+    ).catch(() => null);
+
+    // error
+    if (!responseEventEdit) {
+      setStatusMsg({ type: "error", text: "Could Not Update Event..!" });
+      setLoading(false);
+      return;
+    }
+
+    // success
+    setStatusMsg({
+      type: "success",
+      text: "Event Updated Successfully..! Redirecting",
+      animateText: true,
+    });
+    setLoading(false);
   };
 
   return (
