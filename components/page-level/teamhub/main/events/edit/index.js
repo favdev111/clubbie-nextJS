@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import cn from "classnames";
 import moment from "moment";
 import Link from "next/link";
@@ -36,6 +37,7 @@ function CloseSVG() {
 }
 
 function EditEventForm({ event }) {
+  const router = useRouter();
   const { register, handleSubmit, errors, setValue } = useForm({
     schema: editEventSchema,
   });
@@ -180,6 +182,7 @@ function EditEventForm({ event }) {
       animateText: true,
     });
     setLoading(false);
+    router.push(`/teamhub/events/${event?.id}`);
   };
 
   return (
@@ -358,7 +361,7 @@ function EditEvent({ event }) {
     <div className={styles.editEventWrapper}>
       <div className={styles.editEventHeader}>
         <h1 className={styles.editEventTitle}>Edit Event</h1>
-        <Link href="/teamhub/event">
+        <Link href={`/teamhub/events/${event?.id}`}>
           <a>
             <span>Cancel</span>
           </a>
