@@ -157,6 +157,11 @@ function EditEventForm({ event }) {
       status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
+    // remove date/time from payload if event took place or canceled
+    if (!isDateTimeChangable) {
+      delete commonBody["eventDateTime"];
+    }
+
     // final payload
     const payload = Object.fromEntries(
       Object.entries(commonBody).filter(([_, v]) => v != null)
