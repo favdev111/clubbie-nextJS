@@ -235,9 +235,7 @@ function EventManageOptions({
         <span>
           <Link href={`/teamhub/events/${eventId}/edit`}>
             <a>
-              <div
-                className={cn(styles.manageOption, styles.manageOptionHover)}
-              >
+              <div className={styles.manageOption}>
                 <div>
                   <EditEventSVG />
                   <span className={styles.manageOptionTitle}>Edit Event</span>
@@ -250,7 +248,7 @@ function EventManageOptions({
           </Link>
         </span>
         {eventType !== eventTypes.SOCIAL && (
-          <div className={cn(styles.manageOption, styles.manageOptionHover)}>
+          <div className={styles.manageOption}>
             <div>
               <ConfirmLineupSVG />
               <span className={styles.manageOptionTitle}>Confirm Lineup</span>
@@ -260,22 +258,20 @@ function EventManageOptions({
             </span>
           </div>
         )}
-        <div
-          className={cn(
-            styles.manageOption,
-            isEventCancelable && styles.manageOptionHover,
-            !isEventCancelable && styles.manageOptionDisabled
-          )}
-          onClick={() => isEventCancelable && setConfirmCancelEvent(true)}
-        >
-          <div>
-            <CancelEventSVG />
-            <span className={styles.manageOptionTitle}>Cancel Event</span>
+        {isEventCancelable && (
+          <div
+            className={cn(styles.manageOption)}
+            onClick={() => isEventCancelable && setConfirmCancelEvent(true)}
+          >
+            <div>
+              <CancelEventSVG />
+              <span className={styles.manageOptionTitle}>Cancel Event</span>
+            </div>
+            <span>
+              <RightArrowSVG />
+            </span>
           </div>
-          <span>
-            <RightArrowSVG />
-          </span>
-        </div>
+        )}
       </div>
     </>
   );

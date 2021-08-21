@@ -177,13 +177,9 @@
   cursor: pointer;
   transition: 0.1s ease;
 }
-.manageOptionHover:hover {
+.manageOption:hover {
   opacity: 0.95;
   transform: scale(0.95);
-}
-.manageOptionDisabled {
-  cursor: not-allowed;
-  background-color: var(--c-white-20);
 }
 .manageOption > div {
   display: flex;
