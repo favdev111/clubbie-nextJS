@@ -6,48 +6,73 @@ import EventDetails from "./events/details";
 import Payments from "./payments";
 import Statistics from "./statistics";
 import { useRouter } from "next/router";
+import roles from "@utils/fixedValues/rolesList";
 import styles from "./index.module.css";
 
-function TeamhubRouter({ activeTeam, setTeam, selectedIndex, user, event }) {
+function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
+  const router = useRouter();
+  const nav = ["Dashboard", "Events", "Payments", "Statistics"];
+
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [ownerInTeams, setOwnerInTeams] = useState([]);
+  const [leaderInTeams, setLeaderInTeams] = useState([]);
+  const [playerInTeams, setPlayerInTeams] = useState([]);
+  const [coachInTeams, setCoachInTeams] = useState([]);
+
+  useEffect(() => {
+    // set auth roles for user from event teams
+    const _ownerInTeams = [];
+    const _leaderInTeams = [];
+    const _coachInTeams = [];
+    const _playerInTeams = [];
+    const teamIds = event?.teams?.map((x) => x?.teamId?.id || x?.team?.id);
+    user?.teams?.map((x) => {
+      if (teamIds?.includes(x?.team)) {
+        x?.role?.toLowerCase() === roles?.OWNER && _ownerInTeams?.push(x?.team);
+        x?.role?.toLowerCase() === roles?.TEAM_LEAD &&
+          _leaderInTeams?.push(x?.team);
+        x?.role?.toLowerCase() === roles?.TEAM_COACH &&
+          _coachInTeams?.push(x?.team);
+        x?.role?.toLowerCase() === roles?.PLAYER &&
+          _playerInTeams?.push(x?.team);
+      }
+    });
+    setOwnerInTeams([..._ownerInTeams]);
+    setLeaderInTeams([..._leaderInTeams]);
+    setCoachInTeams([..._coachInTeams]);
+    setPlayerInTeams([..._playerInTeams]);
+
+    // set active component
+    if (router?.pathname?.includes(`/teamhub/events/[id]`)) setSelectedIndex(4);
+    else if (router?.pathname?.includes("/teamhub/events")) setSelectedIndex(1);
+    else if (router?.pathname?.includes("/teamhub/payments"))
+      setSelectedIndex(2);
+    else if (router?.pathname?.includes("/teamhub/statistics"))
+      setSelectedIndex(3);
+    else if (router?.pathname?.includes("/teamhub")) setSelectedIndex(0);
+  }, []);
+
   return (
-    <>
+    <div className={styles.dashboard}>
+      <TeamhubNav nav={nav} selectedIndex={selectedIndex} />
       {selectedIndex == 0 && (
         <Dashboard activeTeam={activeTeam} setTeam={setTeam} user={user} />
       )}
       {selectedIndex == 1 && <Events user={user} />}
       {selectedIndex == 2 && <Payments />}
       {selectedIndex == 3 && <Statistics activeTeam={activeTeam} user={user} />}
-      {selectedIndex == 4 && <EventDetails user={user} event={event} />}
-    </>
-  );
-}
-
-function DashboardContent({ activeTeam, setTeam, user, event }) {
-  const [selectedIndex, setIndex] = useState(null);
-  const nav = ["Dashboard", "Events", "Payments", "Statistics"];
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router?.pathname?.includes(`/teamhub/events/[id]`)) setIndex(4);
-    else if (router?.pathname?.includes("/teamhub/events")) setIndex(1);
-    else if (router?.pathname?.includes("/teamhub/payments")) setIndex(2);
-    else if (router?.pathname?.includes("/teamhub/statistics")) setIndex(3);
-    else if (router?.pathname?.includes("/teamhub")) setIndex(0);
-  }, [router.pathname]);
-
-  return (
-    <div className={styles.dashboard}>
-      <TeamhubNav nav={nav} selectedIndex={selectedIndex} setIndex={setIndex} />
-      <TeamhubRouter
-        activeTeam={activeTeam}
-        setTeam={setTeam}
-        user={user}
-        event={event}
-        selectedIndex={selectedIndex}
-      />
+      {selectedIndex == 4 && (
+        <EventDetails
+          user={user}
+          event={event}
+          ownerInTeams={ownerInTeams}
+          leaderInTeams={leaderInTeams}
+          coachInTeams={coachInTeams}
+          playerInTeams={playerInTeams}
+        />
+      )}
     </div>
   );
 }
 
-export default DashboardContent;
+export default TeamhubDashboard;

@@ -13,7 +13,7 @@
   object-fit: cover;
   border-radius: var(--radius-lg);
 }
-.eventManageOptionsWrapper {
+/* .eventManageOptionsWrapper {
   position: absolute;
   top: var(--space-10);
   right: var(--space-10);
@@ -21,7 +21,7 @@
 }
 .eventManageOptionsWrapper:hover {
   opacity: 0.8;
-}
+} */
 .eventFeeWrapper {
   position: absolute;
   bottom: var(--space-10);
@@ -30,6 +30,11 @@
   padding: var(--space-10) var(--space-24);
   border-radius: var(--radius-md);
   font-weight: bold;
+}
+.eventManageOptionButtonsWrapper {
+  display: flex;
+  margin-top: var(--space-30);
+  justify-content: flex-end;
 }
 .eventBodyWrapper {
   display: flex;
@@ -154,4 +159,37 @@
 .eventPlayerName:hover {
   font-weight: bold;
   cursor: pointer;
+}
+.eventManageOptionsWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 var(--space-24);
+}
+.manageOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--c-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  margin-bottom: var(--space-24);
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+.manageOptionHover:hover {
+  opacity: 0.95;
+  transform: scale(0.95);
+}
+.manageOptionDisabled {
+  cursor: not-allowed;
+  background-color: var(--c-white-20);
+}
+.manageOption > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.manageOptionTitle {
+  margin-left: var(--space-16);
 }
