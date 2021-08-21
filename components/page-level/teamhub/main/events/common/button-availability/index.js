@@ -77,6 +77,7 @@ function EventAvailabilityButton({
           await setEventAvailability(false);
         }}
         type={"success"}
+        cancelType={"danger"}
       />
       <Button
         className={className}
