@@ -2,9 +2,9 @@ import React from "react";
 import Layout from "@layout/index";
 import Seo from "@layout/seo";
 import AddEvent from "@page/teamhub/main/events/add";
-import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import Users from "@api/services/Users";
 import Teams from "@api/services/Teams";
+import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
 function AddNewEvent({ user, teams }) {
   return (
