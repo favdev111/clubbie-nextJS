@@ -228,3 +228,13 @@
   color: var(--c-white-50);
   margin-bottom: var(--space-5);
 }
+/* Chrome, Safari, Edge, Opera */
+.removeInputerNumericCounter::-webkit-outer-spin-button,
+.removeInputerNumericCounter::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.removeInputerNumericCounter[type="number"] {
+  -moz-appearance: textfield;
+}

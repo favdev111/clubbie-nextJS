@@ -612,6 +612,7 @@ function AddEventForm({
                 type="number"
                 name="recurrTotalEvents"
                 customProps={{ ...register("recurrTotalEvents") }}
+                inputClassName={styles.removeInputerNumericCounter}
                 hint={
                   errors?.recurrTotalEvents && {
                     type: "error",
