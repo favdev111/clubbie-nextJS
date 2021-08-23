@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "../../../../components/layout/index";
-import Seo from "../../../../components/layout/seo";
-import { requiresPageAuth } from "../../../../utils/middlewares/requiresPageAuth";
-import auth from "../../../../utils/helpers/auth";
-import PitchBlock from "../../../../components/page-level/pitch/PitchBlock";
+import Layout from "@layout/index";
+import Seo from "@layout/seo";
+import PitchBlock from "@page/pitch/PitchBlock";
 import Users from "@api/services/Users";
+import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
+import auth from "@utils/helpers/auth";
 
 function PitchPage() {
   const authUser = auth.getUser();

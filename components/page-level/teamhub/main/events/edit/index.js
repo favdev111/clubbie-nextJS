@@ -1,41 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import cn from "classnames";
+import moment from "moment";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { DateTime } from "luxon";
-import { yupResolver } from "@hookform/resolvers/yup";
-import MessageToUser from "@sub/messageAnimation";
-import UploadMedia from "@sub/upload";
-import FormCell from "@sub/event-form-cell";
-import EventFormGrid from "@sub/event-form-grid";
-import Event from "@api/services/Events";
+import TemplateInput from "@sub/input";
+import Button from "@sub/button";
+import useForm from "@sub/hook-form";
+import DragDrop from "@sub/drag-drop";
+import Alert from "@sub/alert";
+import UploadSVG from "@svg/upload";
+import Events from "@api/services/Events";
 import Files from "@api/services/Files";
-import Teams from "@api/services/Teams";
-import { schema } from "@utils/schemas/editEvent";
+import { editEvent as editEventSchema } from "@utils/schemas/event.schema";
+import statusTypes from "@utils/fixedValues/eventStatusTypes";
 import styles from "./index.module.css";
-import FormSubmit from "./submit";
 
-/* Todo -> Display validate errors */
+// Todo: make a svg and replace this
+function CloseSVG() {
+  return (
+    <span
+      style={{
+        color: "#ffffff",
+        background: "#c41d24",
+        borderRadius: "50%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontWeight: "bold",
+        height: 35,
+        width: 35,
+      }}
+    >
+      x
+    </span>
+  );
+}
 
-function EditEvent({ user, activeTeam }) {
-  const [responseMessage, setResponseMessage] = useState();
-  const [isError, setError] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
-  const [eventData, setData] = useState(null);
-  const [userTeams, setUserTeams] = useState([]);
-  const [media, setMedia] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+function EditEventForm({ event }) {
   const router = useRouter();
+  const { register, handleSubmit, errors, setValue } = useForm({
+    schema: editEventSchema,
+  });
 
-  /* Media */
-  const onFileChange = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [media, setMedia] = useState(null);
+  const [statusMsg, setStatusMsg] = useState({
+    type: null,
+    text: null,
+    animateText: false,
+  });
+  const [isDateTimeChangable, setIsDateTimeChangeable] = useState(true);
+
+  const convertDateAndTimeToIso = (date, time) => {
+    const _date = date;
+    const _time = time + ":00";
+    const dateTime = moment(
+      `${_date} ${_time}`,
+      "YYYY-MM-DD HH:mm:ss"
+    ).format();
+    const isoDateTime = new Date(dateTime).toISOString();
+    return isoDateTime;
+  };
+
+  useEffect(() => {
+    setValue("title", event?.title || "");
+    setValue("date", moment(event?.eventDateTime).format("YYYY-MM-DD"));
+    setValue("time", moment(event?.eventDateTime).format("hh:mm:ss"));
+    setValue("location", event?.location || "");
+    setValue("fee", event?.fee || "");
+    setValue("message", event?.message || "");
+    setValue("media", event?.coverImage || "");
+    setMedia({
+      src: event?.coverImage || null,
+      file: null,
+    });
+
+    // check if date/time is changeable
+    if (
+      event?.status === statusTypes?.CANCELED ||
+      new Date(event?.eventDateTime) < new Date()
+    ) {
+      setIsDateTimeChangeable(false);
+    }
+  }, []);
+
+  const handleImageDropped = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files[0].type.includes("video")) return;
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const mediaPicked = {
+        src: e.target.result,
+        file,
+      };
+      setValue("media", mediaPicked?.src);
+      setMedia(mediaPicked);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImagePicked = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
@@ -44,267 +111,270 @@ function EditEvent({ user, activeTeam }) {
         src: e.target.result,
         file,
       };
+      setValue("media", mediaPicked?.src);
       setMedia(mediaPicked);
     };
     reader.readAsDataURL(file);
   };
 
-  const deleteMedia = () => {
-    setMedia(null);
-  };
-
-  /* Fetch teams for selectbox */
-  useEffect(() => {
-    const fetchUserTeams = async () => {
-      /* queries */
-      const arr = [];
-      user.teams.map((i) => {
-        arr.push(i.team);
-      });
-      const queries = arr.reduce((a, b) => {
-        let sum = `${a}` + `&id=${b}`;
-        return sum;
-      });
-
-      const response = await Teams.GetTeamsWithDetail(`id=${queries}`);
-      const allUserTeams = response.data;
-      setUserTeams(allUserTeams);
-    };
-
-    fetchUserTeams();
-  }, []);
-
-  /* Fetch current values for form */
-  useEffect(() => {
-    const fetchPromise = new Promise((resolve, reject) => {
-      const eventData = async () => {
-        const response = await Event.FetchSingleEvent(
-          router.query.eventId,
-          activeTeam
-        );
-        return response;
-      };
-      eventData().then((response) => {
-        const data = response.data;
-        setData(data);
-      });
-      resolve(eventData());
-    });
-
-    fetchPromise
-      .then((res) => {
-        const dateValue = DateTime.fromISO(res.data.eventDateTime, {
-          zone: "utc",
-        });
-        const date =
-          `${dateValue.year}` +
-          "-" +
-          `${n(dateValue.month)}` +
-          "-" +
-          `${n(dateValue.day)}`;
-
-        const values = {
-          title: res.data?.title,
-          location: res.data?.location,
-          message: res.data?.message,
-          fee: res.data?.fee,
-          eventDate: date,
-        };
-        return values;
-      })
-      .then((values) => {
-        setTimeout(() => {
-          reset(values);
-        }, 1000);
-      });
-
-    return;
-  }, [reset]);
-
-  /* Submit */
   const onSubmit = async (data) => {
-    let mediaIdToUpload = null;
-    if (media?.src && media?.file) {
-      const mediaForm = new FormData();
-      mediaForm.append("files", media?.file);
-      await Files.UploadFile(
-        media?.src?.includes("image") && "resourceFile",
-        mediaForm
-      )
-        .then((res) => {
-          mediaIdToUpload = res?.data[0]?.s3Url;
-        })
-        .catch((err) => {
-          alert(err?.response?.data?.message); // TODO: error comp
+    setLoading(true);
+
+    // upload cover image if any
+    let coverImage = media?.src;
+    if (media?.file) {
+      setStatusMsg({
+        type: "info",
+        text: "Uploading Cover Image",
+        animateText: true,
+      });
+      const imageForm = new FormData();
+      imageForm.append("files", media?.file);
+      const responseCoverImage = await Files.UploadFile(
+        "userImg",
+        imageForm
+      ).catch(() => null);
+      coverImage = responseCoverImage?.data[0]?.s3Url;
+      if (!coverImage) {
+        setStatusMsg({
+          type: "error",
+          text: "Could Not Upload Cover Image..!",
         });
+        setLoading(false);
+        return;
+      }
     }
 
-    const eventDateTime =
-      data?.eventDate + "T" + data?.eventDateTime + ":00.000Z";
-
-    const formBody = {
-      title: data?.title,
-      location: data?.location,
-      eventDateTime: eventDateTime,
-      message: data?.message,
+    // common body
+    const commonBody = {
+      title: data?.title || null,
+      eventDateTime: convertDateAndTimeToIso(data?.date, data?.time),
+      location: data?.location || null,
       fee: data?.fee || null,
-      coverImage: mediaIdToUpload,
+      message: data?.message || null,
+      coverImage: coverImage || null,
+      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
-    const updateBody = Object.fromEntries(
-      Object.entries(formBody).filter(([_, v]) => v != null)
+
+    // remove date/time from payload if event took place or canceled
+    if (!isDateTimeChangable) {
+      delete commonBody["eventDateTime"];
+    }
+
+    // final payload
+    const payload = Object.fromEntries(
+      Object.entries(commonBody).filter(([_, v]) => v != null)
     );
 
-    await Event.EditEventbyId(router.query.eventId, updateBody)
-      .then((res) => {
-        setResponseMessage("Succesfully changed.");
-        setSuccess(true);
-        setTimeout(() => {
-          router.push(`/teamhub/events/${res.data.id}`);
-        }, 3000);
-      })
-      .catch((err) => {
-        setResponseMessage(err.response.data.message);
-        setError(true);
-      });
+    // edit event
+    const responseEventEdit = await Events.EditEventbyId(
+      event?.id,
+      payload
+    ).catch(() => null);
+
+    // error
+    if (!responseEventEdit) {
+      setStatusMsg({ type: "error", text: "Could Not Update Event..!" });
+      setLoading(false);
+      return;
+    }
+
+    // success
+    setStatusMsg({
+      type: "success",
+      text: "Event Updated Successfully..! Redirecting",
+      animateText: true,
+    });
+    setLoading(false);
+    router.push(`/teamhub/events/${event?.id}`);
   };
 
-  /* Get min date */
-  function n(n) {
-    return n > 9 ? "" + n : "0" + n;
-  }
-  const dateIso = DateTime.fromISO(eventData?.eventDateTime, { zone: "utc" });
-  const minDate =
-    `${dateIso.year}` + "-" + `${n(dateIso.month)}` + "-" + `${n(dateIso.day)}`;
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGridWrapper}>
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <TemplateInput
+            type="text"
+            name="title"
+            placeholder="Edit Title"
+            inputClassName={styles.editEventTitleInput}
+            customProps={{ ...register("title") }}
+            hint={
+              errors?.title && {
+                type: "error",
+                msg: errors?.title?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>When?</p>
+          <TemplateInput
+            type="date"
+            name="date"
+            disabled={!isDateTimeChangable}
+            customProps={{ ...register("date") }}
+            hint={
+              errors?.date && {
+                type: "error",
+                msg: errors?.date?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>What Time?</p>
+          <TemplateInput
+            type="time"
+            name="time"
+            disabled={!isDateTimeChangable}
+            customProps={{ ...register("time") }}
+            hint={
+              errors?.time && {
+                type: "error",
+                msg: errors?.time?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Where?</p>
+          <TemplateInput
+            type="text"
+            name="location"
+            placeholder="Edit Match Location"
+            customProps={{ ...register("location") }}
+            hint={
+              errors?.location && {
+                type: "error",
+                msg: errors?.location?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Add Fee?</p>
+          <TemplateInput
+            type="number"
+            name="fee"
+            placeholder="Fee"
+            customProps={{ ...register("fee"), min: "0", step: ".01" }}
+            hint={
+              errors?.fee && {
+                type: "error",
+                msg: errors?.fee?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span1, styles.gridItem)}>
+          <p>Add Message?</p>
+          <TemplateInput
+            type="text"
+            name="message"
+            placeholder="Message for Invitees"
+            customProps={{ ...register("message") }}
+            hint={
+              errors?.message && {
+                type: "error",
+                msg: errors?.message?.message,
+                inputBorder: true,
+              }
+            }
+          />
+        </div>
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <p>Cover Image</p>
+          {!media ? (
+            <>
+              <DragDrop
+                className={cn(
+                  styles.dragDropVideos,
+                  errors?.media?.message && styles.errorInput
+                )}
+                onDrop={handleImageDropped}
+              >
+                <input
+                  hidden
+                  name="media"
+                  accept="image/*"
+                  id="pick-parent-media"
+                  type="file"
+                  onChange={handleImagePicked}
+                />
+                <label htmlFor="pick-parent-media">
+                  <UploadSVG></UploadSVG>
+                </label>
+                <span className={styles.marginTop}>
+                  <span>Drag and drop an Image or</span>
+                  &ensp;
+                  <a className={styles.dragDropVideosBrowseFiles}>
+                    <label htmlFor="pick-parent-media">Browse Files</label>
+                  </a>
+                </span>
+              </DragDrop>
+              {errors?.media?.message && (
+                <p className={styles.errorMsg}>{errors?.media?.message}</p>
+              )}
+            </>
+          ) : (
+            <div className={styles.parentMediaItem}>
+              {media?.src?.includes("image") && <img src={media?.src}></img>}
+              <span
+                className={styles.mediaCloseIcon}
+                onClick={() => {
+                  setMedia(null);
+                  setValue("media", "");
+                }}
+              >
+                <CloseSVG />
+              </span>
+            </div>
+          )}
+        </div>
+        {statusMsg?.type && statusMsg?.text && (
+          <div className={cn(styles.span2, styles.gridItem)}>
+            <Alert
+              variant={statusMsg?.type}
+              text={statusMsg?.text}
+              animateText={statusMsg?.animateText}
+            />
+          </div>
+        )}
+        <div className={cn(styles.span2, styles.gridItem)}>
+          <div className={styles.submitButtonWrapper}>
+            <Button type="submit" loading={loading} disabled={loading}>
+              Post
+            </Button>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+function EditEvent({ event }) {
+  const [_event] = useState({ ...event });
 
   return (
-    <div className={styles.addEvent}>
-      {/* Header */}
-      <div className={styles.header}>
-        <h1> Edit Event</h1>
-        <Link href={`/teamhub/events/${router.query.eventId}`}>
-          <a>Cancel</a>
+    <div className={styles.editEventWrapper}>
+      <div className={styles.editEventHeader}>
+        <h1 className={styles.editEventTitle}>Edit Event</h1>
+        <Link href={`/teamhub/events/${event?.id}`}>
+          <a>
+            <span>Cancel</span>
+          </a>
         </Link>
       </div>
-
-      {/* Body */}
-      <div className={styles.content}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <input
-            className={styles.formTitle}
-            type="text"
-            placeholder={eventData?.title}
-            {...register("title", { required: true, maxLength: 20 })}
-          />
-          <p> {errors.title?.message} </p>
-          <div className={styles.eventType} /> {/*  Space */}
-          <EventFormGrid>
-            <FormCell>
-              Team A
-              <select
-                disabled
-                {...register("teamA", { required: true })}
-                className={styles.inputStyle}
-              >
-                {userTeams.map((i) => (
-                  <option value={i.id} key={`${i}12 +${Math.random()}`}>
-                    {i.title}
-                  </option>
-                ))}
-              </select>
-            </FormCell>
-            <FormCell>
-              Team B
-              <select
-                disabled
-                {...register("teamB", { required: true })}
-                className={styles.inputStyle}
-              >
-                <option value="60d371268ffc8b40e175fb4b">Team 2</option>
-              </select>
-            </FormCell>
-            <FormCell>
-              When?
-              <input
-                className={styles.inputStyle}
-                type="date"
-                min={minDate}
-                required
-                {...register("eventDate", { required: true })}
-              />
-            </FormCell>
-            <FormCell>
-              What time?
-              <input
-                className={styles.inputStyle}
-                type="time"
-                required
-                {...register("eventDateTime", { required: true })}
-              />
-            </FormCell>
-            <FormCell>
-              Who?
-              <select className={styles.inputStyle}>
-                <option {...register("createdBy")}>1</option>
-              </select>
-            </FormCell>
-            <FormCell>
-              Where?
-              <input
-                className={styles.inputStyle}
-                type="text"
-                placeholder={eventData?.location}
-                required
-                {...register("location", { required: true })}
-              />
-            </FormCell>
-            <FormCell>
-              Add Fee?
-              <input
-                className={styles.inputStyle}
-                min="5000"
-                type="number"
-                {...register("fee")}
-              />
-            </FormCell>
-            <FormCell>
-              Add Message?
-              <input
-                className={styles.inputStyle}
-                type="text"
-                placeholder={eventData?.message}
-                {...register("message")}
-              />
-            </FormCell>
-            <FormCell>
-              Cost Of Event
-              <input
-                className={styles.inputStyle}
-                type="number"
-                {...register("cost")}
-              />
-            </FormCell>
-          </EventFormGrid>
-          <FormCell>
-            Change Cover Image
-            <UploadMedia
-              onFileChange={onFileChange}
-              deleteMedia={deleteMedia}
-              media={media}
-            />
-          </FormCell>
-          <FormSubmit>
-            <button type="submit" className={styles.button}>
-              Post
-            </button>
-          </FormSubmit>
-        </form>
+      <div className={styles.editEventBodyWrapper}>
+        <EditEventForm event={_event} />
       </div>
-      {/* Form success/error messages */}
-      {isError && <MessageToUser message={responseMessage} err={isError} />}
-
-      {isSuccess && (
-        <MessageToUser message={responseMessage} err={!isSuccess} />
-      )}
     </div>
   );
 }

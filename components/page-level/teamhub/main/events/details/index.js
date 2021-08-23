@@ -179,7 +179,12 @@ function EventPlayersList({ availablePlayers }) {
   );
 }
 
-function EventManageOptions({ eventId, isEventCancelable, onEventCancel }) {
+function EventManageOptions({
+  eventId,
+  eventType,
+  isEventCancelable,
+  onEventCancel,
+}) {
   const [loading, setLoading] = useState(false);
   const [confirmCancelEvent, setConfirmCancelEvent] = useState(false);
   const { showNotificationMsg } = useNotifications();
@@ -227,40 +232,46 @@ function EventManageOptions({ eventId, isEventCancelable, onEventCancel }) {
         onConfirm={cancelEvent}
       />
       <div className={styles.eventManageOptionsWrapper}>
-        <div className={cn(styles.manageOption, styles.manageOptionHover)}>
-          <div>
-            <EditEventSVG />
-            <span className={styles.manageOptionTitle}>Edit Event</span>
+        <span>
+          <Link href={`/teamhub/events/${eventId}/edit`}>
+            <a>
+              <div className={styles.manageOption}>
+                <div>
+                  <EditEventSVG />
+                  <span className={styles.manageOptionTitle}>Edit Event</span>
+                </div>
+                <span>
+                  <RightArrowSVG />
+                </span>
+              </div>
+            </a>
+          </Link>
+        </span>
+        {eventType !== eventTypes.SOCIAL && (
+          <div className={styles.manageOption}>
+            <div>
+              <ConfirmLineupSVG />
+              <span className={styles.manageOptionTitle}>Confirm Lineup</span>
+            </div>
+            <span>
+              <RightArrowSVG />
+            </span>
           </div>
-          <span>
-            <RightArrowSVG />
-          </span>
-        </div>
-        <div className={cn(styles.manageOption, styles.manageOptionHover)}>
-          <div>
-            <ConfirmLineupSVG />
-            <span className={styles.manageOptionTitle}>Confirm Lineup</span>
+        )}
+        {isEventCancelable && (
+          <div
+            className={cn(styles.manageOption)}
+            onClick={() => isEventCancelable && setConfirmCancelEvent(true)}
+          >
+            <div>
+              <CancelEventSVG />
+              <span className={styles.manageOptionTitle}>Cancel Event</span>
+            </div>
+            <span>
+              <RightArrowSVG />
+            </span>
           </div>
-          <span>
-            <RightArrowSVG />
-          </span>
-        </div>
-        <div
-          className={cn(
-            styles.manageOption,
-            isEventCancelable && styles.manageOptionHover,
-            !isEventCancelable && styles.manageOptionDisabled
-          )}
-          onClick={() => isEventCancelable && setConfirmCancelEvent(true)}
-        >
-          <div>
-            <CancelEventSVG />
-            <span className={styles.manageOptionTitle}>Cancel Event</span>
-          </div>
-          <span>
-            <RightArrowSVG />
-          </span>
-        </div>
+        )}
       </div>
     </>
   );
@@ -411,6 +422,7 @@ function EventDetails({
         {manageMode && (
           <EventManageOptions
             eventId={_event?.id}
+            eventType={_event?.eventType}
             isEventCancelable={(() => {
               if (new Date(_event?.eventDateTime) < new Date()) return false;
               if (_event?.status === eventStatusTypes.CANCELED) return false;
