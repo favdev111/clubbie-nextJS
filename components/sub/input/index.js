@@ -21,8 +21,10 @@ const TemplateInput = ({
   disabled,
   focused,
   size,
+  postFixLabel,
 }) => {
   const [typeInput, setTypeInput] = useState(type);
+
   const showPasswordHandler = (e) => {
     e.preventDefault();
     if (typeInput === "password") {
@@ -78,6 +80,9 @@ const TemplateInput = ({
                 <Eye />
               </a>
             ) : null}
+            {type !== "password" && postFixLabel && (
+              <span className={styles.postFixLabel}>{postFixLabel}</span>
+            )}
           </span>
           {hint?.type && hint?.msg && (
             <p
