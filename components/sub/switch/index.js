@@ -12,6 +12,8 @@ function Switch({
   unCheckText,
   customProps,
 }) {
+  const key = `switch${Math.floor(Math.random() * 1234567890)}`;
+
   const [_checked, setChecked] = useState(checked);
 
   const onSwitchChange = async (e) => {
@@ -25,7 +27,7 @@ function Switch({
     <div className={styles.switchInput}>
       <div>
         <input
-          id="switch"
+          id={key}
           name={name}
           className={cn(styles.switch, className)}
           type="checkbox"
@@ -33,7 +35,7 @@ function Switch({
           onChange={onSwitchChange}
           {...customProps}
         />
-        <label for="switch"></label>
+        <label for={key}></label>
       </div>
       {checkText && _checked && (
         <span className={styles.checkStatus}>{checkText}</span>
