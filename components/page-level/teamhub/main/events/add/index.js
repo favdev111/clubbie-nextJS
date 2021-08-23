@@ -18,6 +18,7 @@ import Events from "@api/services/Events";
 import Files from "@api/services/Files";
 import { createEvent as createEventSchema } from "@utils/schemas/event.schema";
 import statusTypes from "@utils/fixedValues/eventStatusTypes";
+import { getRecurringDates } from "@utils/global/recurringDates";
 import styles from "./index.module.css";
 
 // Todo: make a svg and replace this
@@ -109,7 +110,14 @@ function AddEventForm({
   recurringIntervals,
 }) {
   const router = useRouter();
-  const { register, unregister, handleSubmit, errors, setValue } = useForm({
+  const {
+    register,
+    unregister,
+    handleSubmit,
+    errors,
+    setValue,
+    watch,
+  } = useForm({
     schema: createEventSchema,
   });
 
@@ -122,6 +130,7 @@ function AddEventForm({
     text: null,
     animateText: false,
   });
+  const [endRecurringDate, setEndRecurringDate] = useState(null);
 
   const convertDateAndTimeToIso = (date, time) => {
     const _date = date;
@@ -344,6 +353,57 @@ function AddEventForm({
       unregister("teamB");
     }
   }, [eventType]);
+
+  const setRecurringDatesEnd = (startDate, recurringInterval, totalEvents) => {
+    if (totalEvents < 2 || totalEvents > 100) {
+      endRecurringDate !== null && setEndRecurringDate(null);
+      return;
+    }
+    if (startDate && recurringInterval && totalEvents) {
+      // get isoDateTime
+      const dateTime = moment(
+        `${startDate + ":00"}`,
+        "YYYY-MM-DD HH:mm:ss"
+      ).format();
+      const isoDateTime = new Date(dateTime).toISOString();
+
+      // get recurring dates
+      const recurringDates = getRecurringDates(
+        isoDateTime,
+        totalEvents,
+        recurringInterval
+      );
+
+      // get date to display
+      const _endDate = (() => {
+        const temp = recurringDates[recurringDates.length - 1];
+        return `End Date ${moment(temp).format("DD/MM/YYYY")}`;
+      })();
+
+      if (endRecurringDate !== _endDate) setEndRecurringDate(_endDate);
+    } else {
+      endRecurringDate !== null && setEndRecurringDate(null);
+    }
+  };
+
+  watch("recurrStartDate") &&
+    setRecurringDatesEnd(
+      watch("recurrStartDate"),
+      watch("recurrOnEvery"),
+      watch("recurrTotalEvents")
+    );
+  watch("recurrOnEvery") &&
+    setRecurringDatesEnd(
+      watch("recurrStartDate"),
+      watch("recurrOnEvery"),
+      watch("recurrTotalEvents")
+    );
+  watch("recurrTotalEvents") &&
+    setRecurringDatesEnd(
+      watch("recurrStartDate"),
+      watch("recurrOnEvery"),
+      watch("recurrTotalEvents")
+    );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -611,6 +671,7 @@ function AddEventForm({
               <TemplateInput
                 type="number"
                 name="recurrTotalEvents"
+                postFixLabel={endRecurringDate}
                 customProps={{ ...register("recurrTotalEvents") }}
                 inputClassName={styles.removeInputerNumericCounter}
                 hint={
