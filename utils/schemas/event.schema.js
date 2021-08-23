@@ -60,7 +60,7 @@ const createEvent = Joi.object().keys({
     }),
   recurrTotalEvents: Joi.number()
     .min(2)
-    .max(10)
+    .max(100)
     .integer()
     .when("isRecurring", {
       is: Joi.boolean().valid(true),
@@ -69,8 +69,8 @@ const createEvent = Joi.object().keys({
     })
     .messages({
       "number.base": "Events Count is required",
-      "number.min": "Events Count must be greater than 2",
-      "number.max": "Events Count must be less than 10",
+      "number.min": "Events Count must be greater or equal to 2",
+      "number.max": "Events Count must be less or equal to 100",
     }),
   recurrStartDate: Joi.date()
     .when("isRecurring", {
