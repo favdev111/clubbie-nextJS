@@ -10,6 +10,7 @@ function useForm({ schema }) {
     setValue,
     getValues,
     setError,
+    watch,
     formState: { errors },
   } = _useForm(
     schema && {
@@ -25,6 +26,7 @@ function useForm({ schema }) {
     getValues,
     setError,
     errors,
+    watch,
   };
 }
 
