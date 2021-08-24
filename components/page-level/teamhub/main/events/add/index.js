@@ -177,9 +177,6 @@ function AddEventForm({
   };
 
   const onSubmit = async (data) => {
-    // TODO: remove return after api update
-    console.log("data => ", data);
-    return;
     setLoading(true);
 
     // Upload cover image
@@ -213,9 +210,10 @@ function AddEventForm({
       location: data?.location || null,
       message: data?.message || null,
       eventType: data?.eventType || null,
-      fee: data?.fee || null,
-      freeForSubs: data?.freeForSubs || null,
-      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      fee: {
+        forSub: data?.feeForSubscribers || 0.0,
+        forNonSub: data?.feeForNonSubscribers || 0.0,
+      },
       status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
