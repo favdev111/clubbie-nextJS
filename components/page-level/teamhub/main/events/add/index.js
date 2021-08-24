@@ -571,6 +571,7 @@ function AddEventForm({
                 inputPrefix="£"
                 onInActive={() => unregister("feeForSubscribers")}
                 customProps={{ ...register("feeForSubscribers") }}
+                inputClassName={styles.removeInputNumericCounter}
                 hint={
                   errors?.feeForSubscribers && {
                     type: "error",
@@ -592,6 +593,7 @@ function AddEventForm({
                 customProps={{
                   ...register("feeForNonSubscribers"),
                 }}
+                inputClassName={styles.removeInputNumericCounter}
                 hint={
                   errors?.feeForNonSubscribers && {
                     type: "error",
@@ -673,7 +675,7 @@ function AddEventForm({
                 name="recurrTotalEvents"
                 postFixLabel={endRecurringDate}
                 customProps={{ ...register("recurrTotalEvents") }}
-                inputClassName={styles.removeInputerNumericCounter}
+                inputClassName={styles.removeInputNumericCounter}
                 hint={
                   errors?.recurrTotalEvents && {
                     type: "error",

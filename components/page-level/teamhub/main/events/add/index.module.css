@@ -229,12 +229,12 @@
   margin-bottom: var(--space-5);
 }
 /* Chrome, Safari, Edge, Opera */
-.removeInputerNumericCounter::-webkit-outer-spin-button,
-.removeInputerNumericCounter::-webkit-inner-spin-button {
+.removeInputNumericCounter::-webkit-outer-spin-button,
+.removeInputNumericCounter::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 /* Firefox */
-.removeInputerNumericCounter[type="number"] {
+.removeInputNumericCounter[type="number"] {
   -moz-appearance: textfield;
 }
