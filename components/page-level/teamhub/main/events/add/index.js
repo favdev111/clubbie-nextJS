@@ -349,7 +349,7 @@ function AddEventForm({
     if (eventType === "social") {
       unregister("teamA");
       unregister("teamB");
-      setValue("socialEventGroup", "all");
+      setValue("socialEventGroup", "Everyone in Team");
     }
   }, [eventType]);
 
@@ -768,7 +768,7 @@ function AddEvent({ user, teams }) {
     const __socialEventGroups = [
       {
         name: "player",
-        value: "Player",
+        value: "Players",
       },
       {
         name: "teamLead",
@@ -777,6 +777,10 @@ function AddEvent({ user, teams }) {
       {
         name: "clubOfficials",
         value: "Club Officials",
+      },
+      {
+        name: "all",
+        value: "Everyone in Team",
       },
     ];
     setSocialEventGroup(__socialEventGroups);
