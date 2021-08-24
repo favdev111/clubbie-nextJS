@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "@sub/button";
 import styles from "./top.module.css";
+import Button from "@sub/button";
 
 const Top = ({ lineUp, formationHandler }) => {
   return (
