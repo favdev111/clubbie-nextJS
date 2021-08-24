@@ -291,7 +291,7 @@ function EditEventForm({ event }) {
         </div>
         <div className={cn(styles.span2, styles.gridItem)}>
           <p>Cover Image</p>
-          {!media ? (
+          {!media?.src ? (
             <>
               <DragDrop
                 className={cn(
