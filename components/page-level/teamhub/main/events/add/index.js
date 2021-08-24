@@ -351,6 +351,7 @@ function AddEventForm({
     if (eventType === "social") {
       unregister("teamA");
       unregister("teamB");
+      setValue("socialEventGroup", "all");
     }
   }, [eventType]);
 
@@ -524,7 +525,7 @@ function AddEventForm({
             </div>
           </>
         )}
-        {eventType === "social" && (
+        {/* {eventType === "social" && (
           <div className={cn(styles.span1, styles.gridItem)}>
             <p>Who?</p>
             <TemplateSelect
@@ -542,7 +543,7 @@ function AddEventForm({
               }
             ></TemplateSelect>
           </div>
-        )}
+        )} */}
         <div className={cn(styles.span1, styles.gridItem)}>
           <p>Where?</p>
           <TemplateInput
