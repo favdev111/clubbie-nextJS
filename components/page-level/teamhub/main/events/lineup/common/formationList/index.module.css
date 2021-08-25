@@ -1,0 +1,30 @@
+.formationList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: fit-content;
+  margin: var(--space-24) auto 0;
+  list-style-type: none;
+}
+.formationListCenter {
+  justify-content: center;
+}
+.formationListItem {
+  font-size: 24px;
+  line-height: 24px;
+  text-align: left;
+  color: var(--c-white);
+  opacity: 0.5;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: 0.1s ease;
+}
+.formationListItemHover:hover {
+  transform: scale(1.1);
+}
+.activeFormation {
+  color: var(--c-turk);
+  opacity: 1;
+  font-weight: bold;
+}
