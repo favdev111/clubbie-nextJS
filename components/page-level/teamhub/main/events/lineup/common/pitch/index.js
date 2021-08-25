@@ -5,7 +5,14 @@ import Formation451 from "./formations/451";
 import matchFormationTypes from "@utils/fixedValues/matchFormations";
 import styles from "./index.module.css";
 
-function Pitch({ formation, playerShirtColor, goalKeeperShirtColor, lineup }) {
+function Pitch({
+  formation,
+  editMode,
+  playerShirtColor,
+  goalKeeperShirtColor,
+  lineup,
+}) {
+  const [_editMode, setEditMode] = useState(false);
   const [_formation, setFormation] = useState(matchFormationTypes["442"]);
   const [_playerShirtColor, setPlayerShirtColor] = useState(null);
   const [_goalKeeperShirtColor, setGoalKeeperShirtColor] = useState(null);
@@ -13,7 +20,12 @@ function Pitch({ formation, playerShirtColor, goalKeeperShirtColor, lineup }) {
 
   useEffect(() => {
     formation && setFormation(formation);
+    editMode && setEditMode(editMode);
   }, []);
+
+  useEffect(() => {
+    setEditMode(editMode);
+  }, [editMode]);
 
   useEffect(() => {
     formation && setFormation(formation);
@@ -36,6 +48,7 @@ function Pitch({ formation, playerShirtColor, goalKeeperShirtColor, lineup }) {
       <img className={styles.pitchImg} src="/assets/field.png" alt="pitch" />
       {_formation === matchFormationTypes["433"] && (
         <Formation433
+          editMode={_editMode}
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
@@ -43,6 +56,7 @@ function Pitch({ formation, playerShirtColor, goalKeeperShirtColor, lineup }) {
       )}
       {_formation === matchFormationTypes["442"] && (
         <Formation442
+          editMode={_editMode}
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
@@ -50,6 +64,7 @@ function Pitch({ formation, playerShirtColor, goalKeeperShirtColor, lineup }) {
       )}
       {_formation === matchFormationTypes["451"] && (
         <Formation451
+          editMode={_editMode}
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
