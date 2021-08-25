@@ -353,7 +353,7 @@ function EventDetails({
     <div className={styles.eventsWrapper}>
       <h1>{_event?.title}</h1>
       <EventCover
-        eventFee={_event?.fee?.toFixed(2) || "0.00"}
+        eventFee={_event?.fee?.forNonSub?.toFixed(2) || "0.00"} // TODO: conditional render if user is sub/non-sub
         eventCurrency={_event?.currency || "£"}
         eventCoverImage={_event?.coverImage || "/assets/placeholder-event.png"}
         currencyBeforeFee={true}

@@ -14,6 +14,7 @@ const SwitchInput = ({
   onInActive,
   hint,
   inputClassName,
+  defaultActive,
 }) => {
   const inputRef = useRef(null);
 
@@ -23,6 +24,14 @@ const SwitchInput = ({
   useEffect(() => {
     setPlaceholder(inActiveText || "");
   }, []);
+
+  useEffect(() => {
+    if (defaultActive) {
+      setSwitchActive(true);
+      setPlaceholder(placeholder || "");
+      onActive && onActive();
+    }
+  }, [defaultActive]);
 
   const onSwitchCheck = () => {
     setSwitchActive(true);
@@ -64,7 +73,11 @@ const SwitchInput = ({
           }
         }}
       >
-        <Switch onCheck={onSwitchCheck} onUnCheck={onSwitchUnCheck} />
+        <Switch
+          checked={!!defaultActive}
+          onCheck={onSwitchCheck}
+          onUnCheck={onSwitchUnCheck}
+        />
         {!_switchActive && inActiveText && (
           <span className={styles.inActiveText}>{inActiveText}</span>
         )}

@@ -62,7 +62,7 @@ function EventsList({ userId, events, loading }) {
                 };
               })}
               eventCoverImage={x?.coverImage || "/assets/placeholder-event.png"}
-              eventFee={x?.fee?.toFixed(2) || "0.00"}
+              eventFee={x?.fee?.forNonSub?.toFixed(2) || "0.00"} // TODO: conditional render if user is sub/non-sub
               eventCurrency={"£"}
               currencySymbolBeforeFee={true}
               eventDateTime={x?.eventDateTime}

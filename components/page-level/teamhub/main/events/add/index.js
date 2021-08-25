@@ -177,9 +177,6 @@ function AddEventForm({
   };
 
   const onSubmit = async (data) => {
-    // TODO: remove return after api update
-    console.log("data => ", data);
-    return;
     setLoading(true);
 
     // Upload cover image
@@ -213,9 +210,10 @@ function AddEventForm({
       location: data?.location || null,
       message: data?.message || null,
       eventType: data?.eventType || null,
-      fee: data?.fee || null,
-      freeForSubs: data?.freeForSubs || null,
-      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
+      fee: {
+        forSub: data?.feeForSubscribers || 0.0,
+        forNonSub: data?.feeForNonSubscribers || 0.0,
+      },
       status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
@@ -351,6 +349,7 @@ function AddEventForm({
     if (eventType === "social") {
       unregister("teamA");
       unregister("teamB");
+      setValue("socialEventGroup", "Everyone in Team");
     }
   }, [eventType]);
 
@@ -524,7 +523,7 @@ function AddEventForm({
             </div>
           </>
         )}
-        {eventType === "social" && (
+        {/* {eventType === "social" && (
           <div className={cn(styles.span1, styles.gridItem)}>
             <p>Who?</p>
             <TemplateSelect
@@ -542,7 +541,7 @@ function AddEventForm({
               }
             ></TemplateSelect>
           </div>
-        )}
+        )} */}
         <div className={cn(styles.span1, styles.gridItem)}>
           <p>Where?</p>
           <TemplateInput
@@ -769,7 +768,7 @@ function AddEvent({ user, teams }) {
     const __socialEventGroups = [
       {
         name: "player",
-        value: "Player",
+        value: "Players",
       },
       {
         name: "teamLead",
@@ -778,6 +777,10 @@ function AddEvent({ user, teams }) {
       {
         name: "clubOfficials",
         value: "Club Officials",
+      },
+      {
+        name: "all",
+        value: "Everyone in Team",
       },
     ];
     setSocialEventGroup(__socialEventGroups);

@@ -4,6 +4,7 @@ import cn from "classnames";
 import moment from "moment";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
+import TemplateSwitchInput from "@sub/switch-input";
 import Button from "@sub/button";
 import useForm from "@sub/hook-form";
 import DragDrop from "@sub/drag-drop";
@@ -38,7 +39,7 @@ function CloseSVG() {
 
 function EditEventForm({ event }) {
   const router = useRouter();
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, unregister, handleSubmit, errors, setValue } = useForm({
     schema: editEventSchema,
   });
 
@@ -67,7 +68,9 @@ function EditEventForm({ event }) {
     setValue("date", moment(event?.eventDateTime).format("YYYY-MM-DD"));
     setValue("time", moment(event?.eventDateTime).format("hh:mm:ss"));
     setValue("location", event?.location || "");
-    setValue("fee", event?.fee || "");
+    event?.fee?.forSub > 0 && setValue("feeForSubscribers", event?.fee?.forSub);
+    event?.fee?.forNonSub > 0 &&
+      setValue("feeForNonSubscribers", event?.fee?.forNonSub);
     setValue("message", event?.message || "");
     setValue("media", event?.coverImage || "");
     setMedia({
@@ -150,10 +153,12 @@ function EditEventForm({ event }) {
       title: data?.title || null,
       eventDateTime: convertDateAndTimeToIso(data?.date, data?.time),
       location: data?.location || null,
-      fee: data?.fee || null,
+      fee: {
+        forSub: data?.feeForSubscribers || 0.0,
+        forNonSub: data?.feeForNonSubscribers || 0.0,
+      },
       message: data?.message || null,
       coverImage: coverImage || null,
-      // freeForSubs: data?.freeForSubs || false, // TODO: update with switch
       status: statusTypes.PUBLISHED, // TODO: update it with draft
     };
 
@@ -258,20 +263,52 @@ function EditEventForm({ event }) {
           />
         </div>
         <div className={cn(styles.span1, styles.gridItem)}>
-          <p>Add Fee?</p>
-          <TemplateInput
-            type="number"
-            name="fee"
-            placeholder="Fee"
-            customProps={{ ...register("fee"), min: "0", step: ".01" }}
-            hint={
-              errors?.fee && {
-                type: "error",
-                msg: errors?.fee?.message,
-                inputBorder: true,
-              }
-            }
-          />
+          <div className={styles.subcriptionFeeBlocksWrapper}>
+            <div className={cn(styles.span1, styles.subcriptionFeeBlock)}>
+              <p>Subscriber Fee?</p>
+              <TemplateSwitchInput
+                type="number"
+                name="feeForSubscribers"
+                placeholder="Add Fee"
+                inActiveText="No Fee"
+                inputPrefix="£"
+                onInActive={() => unregister("feeForSubscribers")}
+                customProps={{ ...register("feeForSubscribers") }}
+                defaultActive={event?.fee?.forSub}
+                inputClassName={styles.removeInputNumericCounter}
+                hint={
+                  errors?.feeForSubscribers && {
+                    type: "error",
+                    msg: errors?.feeForSubscribers?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div className={cn(styles.span1, styles.subcriptionFeeBlock)}>
+              <p>Non-Subscriber Fee?</p>
+              <TemplateSwitchInput
+                type="number"
+                name="feeForNonSubscribers"
+                placeholder="Add Fee"
+                inActiveText="No Fee"
+                inputPrefix="£"
+                onInActive={() => unregister("feeForNonSubscribers")}
+                customProps={{
+                  ...register("feeForNonSubscribers"),
+                }}
+                defaultActive={event?.fee?.forNonSub}
+                inputClassName={styles.removeInputNumericCounter}
+                hint={
+                  errors?.feeForNonSubscribers && {
+                    type: "error",
+                    msg: errors?.feeForNonSubscribers?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+          </div>
         </div>
         <div className={cn(styles.span1, styles.gridItem)}>
           <p>Add Message?</p>
@@ -291,7 +328,7 @@ function EditEventForm({ event }) {
         </div>
         <div className={cn(styles.span2, styles.gridItem)}>
           <p>Cover Image</p>
-          {!media ? (
+          {!media?.src ? (
             <>
               <DragDrop
                 className={cn(

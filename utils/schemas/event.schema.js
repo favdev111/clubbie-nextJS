@@ -132,9 +132,17 @@ const editEvent = Joi.object().keys({
   time: Joi.string().optional().allow(""),
   location: Joi.string().optional().allow(""),
   message: Joi.string().optional().allow(""),
-  fee: Joi.number().min(1).max(1000).optional().allow("").messages({
+  feeForSubscribers: Joi.number().optional().min(1).max(1000).messages({
+    "number.base": "Fee must be greater than or equal to £1",
     "number.min": "Fee must be greater than or equal to £1",
     "number.max": "Fee must be less or equal to £1000",
+    "number.unsafe": "Fee must be between £1 and £1000",
+  }),
+  feeForNonSubscribers: Joi.number().optional().min(1).max(1000).messages({
+    "number.base": "Fee must be greater than or equal to £1",
+    "number.min": "Fee must be greater than or equal to £1",
+    "number.max": "Fee must be less or equal to £1000",
+    "number.unsafe": "Fee must be between £1 and £1000",
   }),
 });
 

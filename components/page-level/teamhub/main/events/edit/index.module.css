@@ -144,3 +144,22 @@
 .errorMsg {
   color: var(--c-red);
 }
+.subcriptionFeeBlocksWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.subcriptionFeeBlock {
+  color: var(--c-white-50);
+  margin-bottom: var(--space-5);
+}
+/* Chrome, Safari, Edge, Opera */
+.removeInputNumericCounter::-webkit-outer-spin-button,
+.removeInputNumericCounter::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.removeInputNumericCounter[type="number"] {
+  -moz-appearance: textfield;
+}
