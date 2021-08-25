@@ -26,7 +26,11 @@ export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const responseEvent = await Events.GetEventById(eventId).catch(() => false);
   const _event = responseEvent?.data;
 
-  const notFound = !_user || !_event;
+  // validate if auth user can access this event
+  const eventTeamIds = _event?.teams?.map((x) => x?.teamId?.id || x?.team?.id);
+  const hasAccess = _user?.teams?.find((x) => eventTeamIds?.includes(x?.team));
+
+  const notFound = !_user || !_event || !hasAccess;
 
   return {
     props: {
