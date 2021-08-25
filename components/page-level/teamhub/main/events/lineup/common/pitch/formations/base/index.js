@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import Player from "../../player";
 
 const FormationBase = ({
+  editMode,
   playerShirtColor,
   goalKeeperShirtColor,
   defaultLineup,
   lineup,
   styleSheet,
 }) => {
+  const [_editMode, setEditMode] = useState(false);
   const [_playerShirtColor, setPlayerShirtColor] = useState(null);
   const [_goalKeeperShirtColor, setGoalKeeperShirtColor] = useState(null);
   const [_lineup, setLineup] = useState([...defaultLineup]);
@@ -31,8 +33,13 @@ const FormationBase = ({
   };
 
   useEffect(() => {
+    editMode && setEditMode(editMode);
     lineup && findAndSetLineup(defaultLineup, lineup);
   }, []);
+
+  useEffect(() => {
+    setEditMode(editMode);
+  }, [editMode]);
 
   useEffect(() => {
     setPlayerShirtColor(playerShirtColor);
@@ -55,6 +62,7 @@ const FormationBase = ({
             className={styleSheet[`position${player?.position}`]}
           >
             <Player
+              editMode={_editMode}
               formationCode={`${player?.position}`}
               shirtColor={
                 player?.position === "GK"
