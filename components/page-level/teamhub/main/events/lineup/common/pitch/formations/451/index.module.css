@@ -1,0 +1,355 @@
+.positionA1,
+.positionB1,
+.positionB2,
+.positionB4,
+.positionB5,
+.positionB3,
+.positionC1,
+.positionC2,
+.positionC3,
+.positionC4,
+.positionGK {
+  width: 50px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+.positionA1 {
+  top: -5px;
+  left: 250px;
+}
+.positionB1 {
+  top: 50px;
+  left: 100px;
+}
+.positionB2 {
+  top: 80px;
+  left: 175px;
+}
+.positionB4 {
+  top: 80px;
+  right: 175px;
+}
+.positionB5 {
+  top: 50px;
+  right: 100px;
+}
+.positionB3 {
+  top: 115px;
+  left: 250px;
+  z-index: 500;
+}
+.positionC1 {
+  top: 90px;
+  left: 50px;
+}
+.positionC2 {
+  top: 105px;
+  left: 110px;
+}
+.positionC3 {
+  top: 105px;
+  right: 110px;
+}
+.positionC4 {
+  top: 90px;
+  right: 50px;
+}
+.positionGK {
+  top: 150px;
+  left: 160px;
+}
+@media only screen and (max-width: 600px) {
+  .positionA1,
+  .positionB1,
+  .positionB2,
+  .positionB4,
+  .positionB5,
+  .positionB3,
+  .positionC1,
+  .positionC2,
+  .positionC3,
+  .positionC4,
+  .positionGK {
+    width: 50px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+  }
+  .positionA1 {
+    top: -10px;
+    left: 160px;
+  }
+  .positionB1 {
+    top: 30px;
+    left: 70px;
+  }
+  .positionB2 {
+    top: 50px;
+    left: 118px;
+  }
+  .positionB4 {
+    top: 50px;
+    right: 118px;
+  }
+  .positionB5 {
+    top: 30px;
+    right: 70px;
+  }
+  .positionB3 {
+    top: 70px;
+    left: 160px;
+    z-index: 500;
+  }
+  .positionC1 {
+    top: 90px;
+    left: 50px;
+  }
+  .positionC2 {
+    top: 105px;
+    left: 110px;
+  }
+  .positionC3 {
+    top: 105px;
+    right: 110px;
+  }
+  .positionC4 {
+    top: 90px;
+    right: 50px;
+  }
+  .positionGK {
+    top: 150px;
+    left: 160px;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .positionA1,
+  .positionB1,
+  .positionB2,
+  .positionB4,
+  .positionB5,
+  .positionB3,
+  .positionC1,
+  .positionC2,
+  .positionC3,
+  .positionC4,
+  .positionGK {
+    width: 100px;
+    display: block;
+  }
+  .positionA1 {
+    top: -5px;
+    left: 250px;
+  }
+  .positionB1 {
+    top: 50px;
+    left: 100px;
+  }
+  .positionB2 {
+    top: 80px;
+    left: 175px;
+  }
+  .positionB4 {
+    top: 80px;
+    right: 175px;
+  }
+  .positionB5 {
+    top: 50px;
+    right: 100px;
+  }
+  .positionB3 {
+    top: 115px;
+    left: 250px;
+    z-index: 500;
+  }
+  .positionC1 {
+    top: 165px;
+    left: 55px;
+  }
+  .positionC2 {
+    top: 200px;
+    left: 140px;
+  }
+  .positionC3 {
+    top: 200px;
+    right: 140px;
+  }
+  .positionC4 {
+    top: 165px;
+    right: 55px;
+  }
+  .positionGK {
+    top: 240px;
+    left: 250px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .positionA1,
+  .positionB1,
+  .positionB2,
+  .positionB4,
+  .positionB5,
+  .positionB3,
+  .positionC1,
+  .positionC2,
+  .positionC3,
+  .positionC4,
+  .positionGK {
+    width: 100px;
+    display: block;
+    position: absolute;
+  }
+  .positionA1 {
+    top: 15px;
+    left: 350px;
+  }
+  .positionB1 {
+    top: 120px;
+    left: 145px;
+  }
+  .positionB2 {
+    top: 160px;
+    left: 250px;
+  }
+  .positionB4 {
+    top: 160px;
+    right: 250px;
+  }
+  .positionB5 {
+    top: 120px;
+    right: 145px;
+  }
+  .positionB3 {
+    top: 200px;
+    left: 350px;
+  }
+  .positionC1 {
+    top: 260px;
+    left: 95px;
+  }
+  .positionC2 {
+    top: 300px;
+    left: 220px;
+  }
+  .positionC3 {
+    top: 300px;
+    right: 220px;
+  }
+  .positionC4 {
+    top: 260px;
+    right: 95px;
+  }
+  .positionGK {
+    top: 340px;
+    left: 350px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .positionA1 {
+    top: 15px;
+    left: 350px;
+  }
+  .positionB1 {
+    top: 120px;
+    left: 145px;
+  }
+  .positionB2 {
+    top: 160px;
+    left: 250px;
+  }
+  .positionB4 {
+    top: 160px;
+    right: 250px;
+  }
+  .positionB5 {
+    top: 120px;
+    right: 145px;
+  }
+  .positionB3 {
+    top: 200px;
+    left: 350px;
+  }
+  .positionC1 {
+    top: 260px;
+    left: 95px;
+  }
+  .positionC2 {
+    top: 300px;
+    left: 220px;
+  }
+  .positionC3 {
+    top: 300px;
+    right: 220px;
+  }
+  .positionC4 {
+    top: 260px;
+    right: 95px;
+  }
+  .positionGK {
+    top: 340px;
+    left: 350px;
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .positionA1,
+  .positionB1,
+  .positionB2,
+  .positionB4,
+  .positionB5,
+  .positionB3,
+  .positionC1,
+  .positionC2,
+  .positionC3,
+  .positionC4,
+  .positionGK {
+    width: 250px;
+  }
+  .positionA1 {
+    top: 45px;
+    left: 344px;
+  }
+  .positionB1 {
+    top: 135px;
+    left: 105px;
+  }
+  .positionB2 {
+    top: 195px;
+    left: 225px;
+  }
+  .positionB4 {
+    top: 195px;
+    right: 225px;
+  }
+  .positionB5 {
+    top: 135px;
+    right: 105px;
+  }
+  .positionB3 {
+    top: 254px;
+    left: 344px;
+  }
+  .positionC1 {
+    top: 330px;
+    left: 35px;
+  }
+  .positionC2 {
+    top: 375px;
+    left: 185px;
+  }
+  .positionC3 {
+    top: 375px;
+    right: 185px;
+  }
+  .positionC4 {
+    top: 330px;
+    right: 35px;
+  }
+  .positionGK {
+    top: 414px;
+    left: 344px;
+  }
+}
