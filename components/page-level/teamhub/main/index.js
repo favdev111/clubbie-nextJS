@@ -43,13 +43,11 @@ function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
     setPlayerInTeams([..._playerInTeams]);
 
     // set active component
-    if (router?.pathname?.includes(`/teamhub/events/[id]`)) setSelectedIndex(4);
-    else if (router?.pathname?.includes("/teamhub/events")) setSelectedIndex(1);
-    else if (router?.pathname?.includes("/teamhub/payments"))
-      setSelectedIndex(2);
-    else if (router?.pathname?.includes("/teamhub/statistics"))
-      setSelectedIndex(3);
-    else if (router?.pathname?.includes("/teamhub")) setSelectedIndex(0);
+    if (router?.pathname === "/teamhub") setSelectedIndex(0);
+    if (router?.pathname === "/teamhub/events") setSelectedIndex(1);
+    if (router?.pathname === "/teamhub/payments") setSelectedIndex(2);
+    if (router?.pathname === "/teamhub/statistics") setSelectedIndex(3);
+    if (router?.pathname === `/teamhub/events/[id]`) setSelectedIndex(4);
   }, []);
 
   return (
