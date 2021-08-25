@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import NoEntrySVG from "@svg/no-entry";
 import PlusSVG from "@svg/plus-icon";
 import PlayerShirtSVG from "@svg/player";
 import styles from "./index.module.css";
@@ -69,7 +70,7 @@ const Player = ({
       >
         <PlayerShirtSVG
           fillColor={_shirtColor}
-          strokeColor={_selected && "#c41d24"} // TODO: make theme file
+          strokeColor={_selected && "#c41d24"}
         />
       </div>
       {_name ? (
@@ -94,12 +95,16 @@ const Player = ({
             )
           )}
         </>
-      ) : (
+      ) : _editMode ? (
         <div
           className={styles.playerPlusIconWrapper}
           onClick={handlePlayerBodyClick}
         >
           <PlusSVG />
+        </div>
+      ) : (
+        <div className={styles.playerPlusIconWrapper}>
+          <NoEntrySVG />
         </div>
       )}
     </div>
