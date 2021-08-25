@@ -50,14 +50,19 @@
   align-items: center;
   justify-content: center;
 }
-.inputCont .showPassword {
+.showPassword {
   position: absolute;
   right: var(--space-10);
 }
-.inputCont .showPassword img {
+.showPassword img {
   width: 100%;
   background: transparent;
   opacity: 1;
+}
+.postFixLabel {
+  position: absolute;
+  right: var(--space-10);
+  color: var(--c-yellow);
 }
 .textArea {
   resize: none;

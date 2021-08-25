@@ -13,6 +13,7 @@ const SwitchInput = ({
   onActive,
   onInActive,
   hint,
+  inputClassName,
 }) => {
   const inputRef = useRef(null);
 
@@ -75,7 +76,7 @@ const SwitchInput = ({
             type={type}
             name={name}
             ref={inputRef}
-            className={styles.input}
+            className={cn(styles.input, inputClassName)}
             placeholder={_placeholder}
             {...customProps}
           />
