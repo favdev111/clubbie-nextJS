@@ -28,6 +28,7 @@ function ContentDialog({
   onConfirm,
   onDismiss,
   type,
+  cancelType,
   hideActionButtons,
   className,
 }) {
@@ -44,7 +45,7 @@ function ContentDialog({
         {!hideActionButtons && (
           <div className={styles.buttons}>
             <Button
-              variant="cancel"
+              variant={cancelType || "cancel"}
               onClick={async () => {
                 onDismiss && (await onDismiss());
                 setOpen(false);

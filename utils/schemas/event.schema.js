@@ -37,7 +37,13 @@ const createEvent = Joi.object().keys({
     "string.empty": "Location is required",
   }),
   message: Joi.string().optional().allow(""),
-  fee: Joi.number().optional().min(1).max(1000).allow("").messages({
+  feeForSubscribers: Joi.number().optional().min(1).max(1000).messages({
+    "number.base": "Fee must be greater than or equal to £1",
+    "number.min": "Fee must be greater than or equal to £1",
+    "number.max": "Fee must be less or equal to £1000",
+  }),
+  feeForNonSubscribers: Joi.number().optional().min(1).max(1000).messages({
+    "number.base": "Fee must be greater than or equal to £1",
     "number.min": "Fee must be greater than or equal to £1",
     "number.max": "Fee must be less or equal to £1000",
   }),

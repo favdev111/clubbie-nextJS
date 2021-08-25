@@ -5,6 +5,7 @@ import moment from "moment";
 import Link from "next/link";
 import TemplateInput from "@sub/input";
 import TemplateSelect from "@sub/selectbox";
+import TemplateSwitchInput from "@sub/switch-input";
 import Button from "@sub/button";
 import useForm from "@sub/hook-form";
 import DragDrop from "@sub/drag-drop";
@@ -167,6 +168,9 @@ function AddEventForm({
   };
 
   const onSubmit = async (data) => {
+    // TODO: remove return after api update
+    console.log("data => ", data);
+    return;
     setLoading(true);
 
     // Upload cover image
@@ -391,7 +395,7 @@ function AddEventForm({
         {eventType === "match" && (
           <>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Home Team</p>
+              <p>My Team</p>
               <TemplateSelect
                 name="teamA"
                 placeholder="Select Home Team"
@@ -408,10 +412,10 @@ function AddEventForm({
               ></TemplateSelect>
             </div>
             <div className={cn(styles.span1, styles.gridItem)}>
-              <p>Away Team</p>
+              <p>Opposition Team</p>
               <TemplateSelect
                 name="teamB"
-                placeholder="Select Away Team"
+                placeholder="Select Opposing Team"
                 options={teamBList.map((x) => x.title)}
                 className={styles.addEventSelectInput}
                 customProps={{ ...register("teamB") }}
@@ -496,20 +500,48 @@ function AddEventForm({
           />
         </div>
         <div className={cn(styles.span1, styles.gridItem)}>
-          <p>Add Fee?</p>
-          <TemplateInput
-            type="number"
-            name="fee"
-            placeholder="Fee"
-            customProps={{ ...register("fee"), min: "0", step: ".01" }}
-            hint={
-              errors?.fee && {
-                type: "error",
-                msg: errors?.fee?.message,
-                inputBorder: true,
-              }
-            }
-          />
+          <div className={styles.subcriptionFeeBlocksWrapper}>
+            <div className={cn(styles.span1, styles.subcriptionFeeBlock)}>
+              <p>Subscriber Fee?</p>
+              <TemplateSwitchInput
+                type="number"
+                name="feeForSubscribers"
+                placeholder="Add Fee"
+                inActiveText="No Fee"
+                inputPrefix="£"
+                onInActive={() => unregister("feeForSubscribers")}
+                customProps={{ ...register("feeForSubscribers") }}
+                hint={
+                  errors?.feeForSubscribers && {
+                    type: "error",
+                    msg: errors?.feeForSubscribers?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+            <div className={cn(styles.span1, styles.subcriptionFeeBlock)}>
+              <p>Non-Subscriber Fee?</p>
+              <TemplateSwitchInput
+                type="number"
+                name="feeForNonSubscribers"
+                placeholder="Add Fee"
+                inActiveText="No Fee"
+                inputPrefix="£"
+                onInActive={() => unregister("feeForNonSubscribers")}
+                customProps={{
+                  ...register("feeForNonSubscribers"),
+                }}
+                hint={
+                  errors?.feeForNonSubscribers && {
+                    type: "error",
+                    msg: errors?.feeForNonSubscribers?.message,
+                    inputBorder: true,
+                  }
+                }
+              />
+            </div>
+          </div>
         </div>
         <div className={cn(styles.span1, styles.gridItem)}>
           <p>Add Message?</p>

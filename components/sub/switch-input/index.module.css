@@ -1,0 +1,62 @@
+.switchInput {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border: 0px solid;
+  border-radius: var(--radius-md);
+  background: var(--c-white-10);
+  outline: none;
+  font-family: var(--ff-regular);
+  font-size: var(--space-16);
+  line-height: var(--space-16);
+  text-align: left;
+  color: var(--c-white-50);
+  padding: var(--space-12) var(--space-16);
+  margin: 0px auto var(--space-5);
+  cursor: text;
+}
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--c-white-50);
+  padding: var(--space-5);
+  margin-left: var(--space-5);
+  font-size: var(--space-16);
+  line-height: var(--space-16);
+  width: 100%;
+}
+.inputPrefix {
+  margin-left: var(--space-10);
+  color: var(--c-white-50);
+  font-size: var(--space-20);
+  line-height: var(--space-16);
+}
+.inActiveText {
+  padding: var(--space-5);
+  margin: var(--space-2);
+  margin-left: var(--space-5);
+}
+.errorMsg {
+  color: var(--c-red);
+  padding-left: var(--space-5);
+}
+.infoMsg {
+  color: var(--c-white-30);
+  padding-left: var(--space-5);
+}
+.successMsg {
+  color: var(--c-green);
+  padding-left: var(--space-5);
+}
+.errorInput {
+  border: 2px solid var(--c-red) !important;
+}
+.infoInput {
+  border: 2px solid var(--c-white-30) !important;
+}
+.successInput {
+  border: 2px solid var(--c-green) !important;
+}
