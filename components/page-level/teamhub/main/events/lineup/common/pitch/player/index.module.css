@@ -1,0 +1,171 @@
+.playerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.playerShirtIconWrapper {
+  display: block;
+  position: relative;
+  width: 82px;
+  height: 78px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.playerShirtIconWrapperActive {
+  transform: scale(1.2);
+}
+.playerPlusIconWrapper {
+  display: block;
+  position: absolute;
+  top: 33px;
+  cursor: pointer;
+}
+.playerNameWrapper {
+  display: block;
+  width: fit-content;
+  height: 28px;
+  padding: 2px 18px;
+  border-radius: 3px;
+  background: #00a056;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  margin-top: 2px;
+  cursor: default;
+}
+.playerName {
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #fff;
+  white-space: nowrap;
+  user-select: none;
+}
+.playerIsCaptainWrapper {
+  display: block;
+  position: absolute;
+  top: 33px;
+}
+.playerIsCaptain {
+  font-size: 22px;
+  text-align: center;
+  color: #fff;
+}
+.playerSetCaptainWrapper {
+  width: fit-content;
+  height: 21px;
+  margin-top: 5px;
+  cursor: default;
+}
+.playerSetCaptain {
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  user-select: none;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+.playerSetCaptain:hover {
+  font-size: 15px;
+}
+@media only screen and (max-width: 600px) {
+  .playerWrapper {
+    transform: scale(0.47);
+  }
+  .playerNameWrapper {
+    padding: var(--space-1) 10px;
+  }
+  .playerName {
+    font-size: var(--fs-h3);
+    line-height: 20px;
+    z-index: 7000;
+  }
+  .playerPlusIconWrapper {
+    transform: scale(1.6);
+  }
+  .playerSetCaptainWrapper {
+    margin-top: 0;
+    height: 14px;
+  }
+  .playerSetCaptain {
+    line-height: 16px;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .playerWrapper {
+    transform: scale(0.85);
+  }
+  .playerNameWrapper {
+    padding: var(--space-1) 10px;
+  }
+  .playerName {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .playerPlusIconWrapper {
+    transform: scale(1.2);
+  }
+  .playerSetCaptainWrapper {
+    margin-top: 0;
+    height: 14px;
+  }
+  .playerSetCaptain {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .playerWrapper {
+    transform: scale(1);
+  }
+  .playerNameWrapper {
+    padding: var(--space-1) 10px;
+  }
+  .playerName {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .playerSetCaptainWrapper {
+    margin-top: 0;
+    height: 16px;
+  }
+  .playerSetCaptain {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .playerNameWrapper {
+    padding: 1px 10px;
+  }
+  .playerName {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .playerSetCaptainWrapper {
+    margin-top: 0;
+    height: 16px;
+  }
+  .playerSetCaptain {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .playerWrapper {
+    transform: scale(1);
+  }
+  .playerNameWrapper {
+    padding: 2px 18px;
+  }
+  .playerName {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .playerSetCaptainWrapper {
+    margin-top: 5px;
+    height: 21px;
+  }
+  .playerSetCaptain {
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
