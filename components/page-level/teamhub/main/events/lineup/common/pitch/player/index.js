@@ -13,18 +13,25 @@ const Player = ({
   onCaptionSet,
   shirtColor,
   formationCode,
+  editMode,
 }) => {
   const [_name, setName] = useState(null);
   const [_selected, setSelected] = useState(false);
   const [_isCaptain, setIsCaptain] = useState(false);
   const [_shirtColor, setShirtColor] = useState(null);
+  const [_editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     name && setName(name);
     selected && setSelected(selected);
     isCaptain && setIsCaptain(isCaptain);
     shirtColor && setShirtColor(shirtColor);
+    editMode && setEditMode(editMode);
   }, []);
+
+  useEffect(() => {
+    setEditMode(editMode);
+  }, [editMode]);
 
   useEffect(() => {
     setShirtColor(shirtColor);
@@ -39,12 +46,14 @@ const Player = ({
   }, [isCaptain]);
 
   const handlePlayerBodyClick = async () => {
+    if (!_editMode) return;
     !_selected && onSelect && (await onSelect(formation));
     _selected && onUnSelect && (await onUnSelect(formation));
     setSelected(!_selected);
   };
 
   const handleSetCaptainClick = async () => {
+    if (!_editMode) return;
     setIsCaptain(true);
     onCaptionSet && (await onCaptainSet(formationCode));
   };
@@ -73,14 +82,16 @@ const Player = ({
               <span className={styles.playerIsCaptain}>C</span>
             </div>
           ) : (
-            <div className={styles.playerSetCaptainWrapper}>
-              <span
-                className={styles.playerSetCaptain}
-                onClick={handleSetCaptainClick}
-              >
-                Set Captain
-              </span>
-            </div>
+            _editMode && (
+              <div className={styles.playerSetCaptainWrapper}>
+                <span
+                  className={styles.playerSetCaptain}
+                  onClick={handleSetCaptainClick}
+                >
+                  Set Captain
+                </span>
+              </div>
+            )
           )}
         </>
       ) : (
