@@ -33,8 +33,15 @@
 }
 .eventManageOptionButtonsWrapper {
   display: flex;
-  margin-top: var(--space-30);
-  justify-content: flex-end;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 20%;
+  margin-left: auto;
+  padding-top: var(--space-30);
+  gap: 10px;
+}
+.eventLineupButton {
+  width: 100%;
 }
 .eventBodyWrapper {
   display: flex;

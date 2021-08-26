@@ -42,6 +42,43 @@ function EventCover({
   );
 }
 
+function EventOptionButtons({
+  eventId,
+  hasLineup,
+  showManageButton,
+  manageMode,
+  setManageMode,
+}) {
+  return hasLineup || showManageButton ? (
+    <div className={styles.eventManageOptionButtonsWrapper}>
+      {hasLineup && !manageMode && (
+        <Link href={`/teamhub/events/${eventId}/lineup`}>
+          <a>
+            <Button
+              size="medium"
+              variant="info"
+              className={styles.eventLineupButton}
+            >
+              View Lineup
+            </Button>
+          </a>
+        </Link>
+      )}
+      {showManageButton && (
+        <Button
+          size="medium"
+          variant={!manageMode ? "cancel" : "success"}
+          onClick={() => setManageMode((mode) => !mode)}
+        >
+          {!manageMode ? "Manage" : "Done"}
+        </Button>
+      )}
+    </div>
+  ) : (
+    <></>
+  );
+}
+
 function EventTeams({ eventType, eventTeams }) {
   return (
     <div className={styles.eventTeamsWrapper}>
@@ -358,17 +395,13 @@ function EventDetails({
         eventCoverImage={_event?.coverImage || "/assets/placeholder-event.png"}
         currencyBeforeFee={true}
       />
-      {(ownerInTeams?.length > 0 || leaderInTeams?.length > 0) && (
-        <div className={styles.eventManageOptionButtonsWrapper}>
-          <Button
-            size="medium"
-            variant={!manageMode ? "info" : "success"}
-            onClick={() => setManageMode((mode) => !mode)}
-          >
-            {!manageMode ? "Manage" : "Done"}
-          </Button>
-        </div>
-      )}
+      <EventOptionButtons
+        eventId={_event?.id}
+        hasLineup={_event?.eventType === eventTypes.MATCH}
+        showManageButton={ownerInTeams?.length > 0 || leaderInTeams?.length > 0}
+        manageMode={manageMode}
+        setManageMode={setManageMode}
+      />
       <div className={styles.eventBodyWrapper}>
         <EventInfo
           eventId={_event?.id}
