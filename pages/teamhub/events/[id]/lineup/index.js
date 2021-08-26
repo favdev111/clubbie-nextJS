@@ -21,7 +21,7 @@ function MatchEventLineupPage({ user, event }) {
 export default MatchEventLineupPage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
-  const eventId = "612629df8a068d0006c491cc"; // ctx.params.id;
+  const eventId = ctx.params.id;
 
   const responseProfile = await Users.GetMyProfile().catch(() => false);
   const _user = responseProfile?.data;
