@@ -44,6 +44,7 @@ function LineupOptions({ eventId }) {
 
 function LineupDashboard({ user, event }) {
   const [_event, setEvent] = useState(null);
+  const [_eventTitle, setEventTitle] = useState(null);
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
   const [_eventHomeTeamPlayers, setEventHomeTeamPlayers] = useState(null);
   const [
@@ -53,6 +54,12 @@ function LineupDashboard({ user, event }) {
 
   useEffect(() => {
     setEvent({ ...event });
+
+    // set event title
+    const eventTeamTitles = event?.teams?.map(
+      (x) => x?.teamId?.title || x?.team?.title
+    );
+    setEventTitle(`${eventTeamTitles[0]} v. ${eventTeamTitles[1]}`);
 
     // set home team
     const homeTeam = (() => {
@@ -85,7 +92,7 @@ function LineupDashboard({ user, event }) {
 
   return (
     <div className={styles.eventLineupWrapper}>
-      <h1>Shottery United v. Shottery Not United</h1>
+      <h1>{_eventTitle}</h1>
       <div className={styles.eventFormationsListWrapper}>
         <FormationList
           selectMode={false}
