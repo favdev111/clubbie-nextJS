@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Button from "@sub/button";
 import matchFormations from "@utils/fixedValues/matchFormations";
 import playerRoles from "@utils/fixedValues/playerRoles";
 import FormationList from "../common/formationList";
@@ -23,6 +24,20 @@ function SubstitutesList({ substitues }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function LineupOptions({ eventId }) {
+  return (
+    <div className={styles.eventOptionsWrapper}>
+      <Link href={`/teamhub/events/${eventId}`}>
+        <a>
+          <Button size="medium" varinat="info">
+            Details
+          </Button>
+        </a>
+      </Link>
     </div>
   );
 }
@@ -89,6 +104,7 @@ function LineupDashboard({ user, event }) {
         />
       </div>
       <SubstitutesList substitues={_eventHomeTeamSubstituesPlayers} />
+      <LineupOptions eventId={_event?.id} />
     </div>
   );
 }
