@@ -12,7 +12,6 @@ import styles from "./index.module.css";
 
 function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
   const router = useRouter();
-  const nav = ["Dashboard", "Events", "Payments", "Statistics"];
 
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [ownerInTeams, setOwnerInTeams] = useState([]);
@@ -54,7 +53,7 @@ function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
 
   return (
     <div className={styles.dashboard}>
-      <TeamhubNav nav={nav} selectedIndex={selectedIndex} />
+      <TeamhubNav />
       {selectedIndex == 0 && (
         <Dashboard activeTeam={activeTeam} setTeam={setTeam} user={user} />
       )}

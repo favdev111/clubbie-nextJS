@@ -1,27 +1,39 @@
 import React from "react";
+import { useRouter } from "next/router";
 import cn from "classnames";
 import styles from "./index.module.css";
-import router from "next/router";
 
-function TeamhubNav({ nav, selectedIndex }) {
+function TeamhubNav() {
+  const router = useRouter();
+
+  const navItems = [
+    { title: "Dashboard", active: router?.pathname === "/teamhub" },
+    { title: "Events", active: router?.pathname?.includes("/teamhub/events") },
+    {
+      title: "Payments",
+      active: router?.pathname?.includes("/teamhub/payments"),
+    },
+    {
+      title: "Statistics",
+      active: router?.pathname?.includes("/teamhub/statistics"),
+    },
+  ];
+
   return (
     <div className={styles.teamhubNav}>
       <ul className={styles.navList}>
-        {nav.map((item, index) => (
+        {navItems.map((item) => (
           <li
-            className={cn(
-              styles.navItem,
-              index == selectedIndex && styles.selected
-            )}
+            className={cn(styles.navItem, item?.active && styles.selected)}
             onClick={() => {
               index == 0 && router.push("/teamhub");
               index == 1 && router.push("/teamhub/events");
               index == 2 && router.push("/teamhub/payments");
               index == 3 && router.push("/teamhub/statistics");
             }}
-            key={item + index}
+            key={item?.title}
           >
-            {item}
+            {item?.title}
           </li>
         ))}
       </ul>
