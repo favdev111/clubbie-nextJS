@@ -1,0 +1,42 @@
+.pitchImgWrapper {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+}
+.pitchImg {
+  width: var(--container-lg);
+  height: 575px;
+}
+
+@media only screen and (max-width: 600px) {
+  .pitchImg {
+    width: 375px;
+    height: 230px;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .pitchImg {
+    width: 600px;
+    height: 367px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .pitchImg {
+    width: 800px;
+    height: 490px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .pitchImg {
+    width: 800px;
+    height: 490px;
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .pitchImg {
+    width: var(--container-lg);
+    height: 575px;
+  }
+}

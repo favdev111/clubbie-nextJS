@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "@layout/index";
 import Seo from "@layout/seo";
-import PitchBlock from "@page/pitch/PitchBlock";
+import PitchBlock from "@page/teamhub/main/events/pitch/PitchBlock";
 import Users from "@api/services/Users";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 import auth from "@utils/helpers/auth";

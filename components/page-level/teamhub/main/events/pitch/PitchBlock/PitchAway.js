@@ -1,14 +1,14 @@
 import React from "react";
-import styles from "./pitchAway.module.css";
+import { useDispatch, useSelector } from "react-redux";
 import Form442 from "@sub/formations/Form442";
 import Form433 from "@sub/formations/Form433";
 import Form451 from "@sub/formations/Form451";
-import { useDispatch, useSelector } from "react-redux";
 import {
   setCaptainAway433,
   setCaptainAway442,
   setCaptainAway451,
 } from "@redux/pitch.slice";
+import styles from "./pitchAway.module.css";
 
 const Pitch = ({ lineUp, addNameHandler }) => {
   const dispatch = useDispatch();

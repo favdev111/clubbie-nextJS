@@ -3,6 +3,7 @@ import TeamhubNav from "./navigation";
 import Dashboard from "./dashboard";
 import Events from "./events/dashboard";
 import EventDetails from "./events/details";
+import EventLineupDashboard from "./events/lineup/dashboard";
 import Payments from "./payments";
 import Statistics from "./statistics";
 import { useRouter } from "next/router";
@@ -43,13 +44,12 @@ function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
     setPlayerInTeams([..._playerInTeams]);
 
     // set active component
-    if (router?.pathname?.includes(`/teamhub/events/[id]`)) setSelectedIndex(4);
-    else if (router?.pathname?.includes("/teamhub/events")) setSelectedIndex(1);
-    else if (router?.pathname?.includes("/teamhub/payments"))
-      setSelectedIndex(2);
-    else if (router?.pathname?.includes("/teamhub/statistics"))
-      setSelectedIndex(3);
-    else if (router?.pathname?.includes("/teamhub")) setSelectedIndex(0);
+    if (router?.pathname === "/teamhub") setSelectedIndex(0);
+    if (router?.pathname === "/teamhub/events") setSelectedIndex(1);
+    if (router?.pathname === "/teamhub/payments") setSelectedIndex(2);
+    if (router?.pathname === "/teamhub/statistics") setSelectedIndex(3);
+    if (router?.pathname === `/teamhub/events/[id]`) setSelectedIndex(4);
+    if (router?.pathname === `/teamhub/events/[id]/lineup`) setSelectedIndex(5);
   }, []);
 
   return (
@@ -63,6 +63,16 @@ function TeamhubDashboard({ activeTeam, setTeam, user, event }) {
       {selectedIndex == 3 && <Statistics activeTeam={activeTeam} user={user} />}
       {selectedIndex == 4 && (
         <EventDetails
+          user={user}
+          event={event}
+          ownerInTeams={ownerInTeams}
+          leaderInTeams={leaderInTeams}
+          coachInTeams={coachInTeams}
+          playerInTeams={playerInTeams}
+        />
+      )}
+      {selectedIndex == 5 && (
+        <EventLineupDashboard
           user={user}
           event={event}
           ownerInTeams={ownerInTeams}

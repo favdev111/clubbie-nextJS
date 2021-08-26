@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styles from "./pitchBlock.module.css";
 import Top from "./Top";
+import Navigation from "./navigation";
+import PitchCore from "./PitchCore";
 import { useDispatch, useSelector } from "react-redux";
+import ColorPlayersModal from "@sub/modal/color-players";
+import ColorGoalKModal from "@sub/modal/color-goalkeeper";
 import {
   addColorAwayGoalkeeper,
   addColorAwayPlayers,
@@ -18,10 +22,6 @@ import {
   getUnavailPlayers,
   selectActiveKit,
 } from "@redux/pitch.slice";
-import Navigation from "./navigation";
-import ColorPlayersModal from "@sub/modal/color-players";
-import PitchCore from "./PitchCore";
-import ColorGoalKModal from "@sub/modal/color-goalkeeper";
 
 const PitchBlock = () => {
   const [activeHomeKit, setActiveHomeKit] = useState(true);

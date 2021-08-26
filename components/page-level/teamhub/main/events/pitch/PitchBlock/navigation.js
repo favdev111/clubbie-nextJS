@@ -1,6 +1,6 @@
+import React from "react";
 import Link from "next/link";
 import Button from "@sub/button/";
-import React from "react";
 import styles from "./navigation.module.css";
 
 const Navigation = () => {
