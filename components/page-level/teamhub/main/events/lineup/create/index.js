@@ -363,11 +363,13 @@ function LineupCreate({ user, event }) {
         type={"danger"}
       />
       <div className={styles.eventLineupWrapper}>
-        <PlayersList
-          availablePlayers={_availablePlayers}
-          activePlayerId={_activeAvailablePlayerIdFromList}
-          setActivePlayerId={handleAvailablePlayerListItemClick}
-        />
+        {_availablePlayers?.length > 0 && (
+          <PlayersList
+            availablePlayers={_availablePlayers}
+            activePlayerId={_activeAvailablePlayerIdFromList}
+            setActivePlayerId={handleAvailablePlayerListItemClick}
+          />
+        )}
         <div className={styles.eventPitchAndFormationWrappper}>
           <h1>{_eventTitle}</h1>
           <div className={styles.eventFormationsListWrapper}>
@@ -434,7 +436,9 @@ function LineupCreate({ user, event }) {
             </Button>
           </div>
         </div>
-        <PlayersList unAvailablePlayers={_unAvailablePlayers} />
+        {_unAvailablePlayers?.length > 0 && (
+          <PlayersList unAvailablePlayers={_unAvailablePlayers} />
+        )}
       </div>
     </>
   );
