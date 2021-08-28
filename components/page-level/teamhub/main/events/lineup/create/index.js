@@ -77,6 +77,10 @@ function LineupCreate({ user, event }) {
   const [_isActivePitchPlayerCaptain, setIsActivePitchPlayerCaptain] = useState(
     false
   );
+  const [
+    _isActivePitchPlayerAssigned,
+    setIsActivePitchPlayerAssigned,
+  ] = useState(false);
   /* 
     lineups state will handle all lineup formations (current and future)
     and player positions in array - like commented below.
@@ -201,6 +205,7 @@ function LineupCreate({ user, event }) {
 
     // unset active player captain flag
     setIsActivePitchPlayerCaptain(false);
+    setIsActivePitchPlayerAssigned(false);
   };
 
   const handleAvailablePlayerListItemClick = (playerId) => {
@@ -218,21 +223,29 @@ function LineupCreate({ user, event }) {
 
   const handlePitchPlayerClick = (formationCode) => {
     if (!formationCode) return;
-    formationCode === _activePlayerFormationCodeFromPitch
-      ? setActivePlayerFormationCodeFromPitch(null)
-      : setActivePlayerFormationCodeFromPitch(formationCode);
+    if (formationCode === _activePlayerFormationCodeFromPitch) {
+      setIsActivePitchPlayerAssigned(null);
+      setActivePlayerFormationCodeFromPitch(null);
+      return;
+    }
+    // update active formation code
+    setActivePlayerFormationCodeFromPitch(formationCode);
 
+    // assign player to position if position and player both are selected
     _activeAvailablePlayerIdFromList &&
       assignPitchPositionToListPlayer(
         _activeAvailablePlayerIdFromList,
         formationCode
       );
 
-    // check if player with formationCode is captain
-    const foundCaptain = _activeLineup?.players?.find(
-      (x) => x?.captain === true && x?.position === formationCode
+    // find player at current position(formationCode)
+    const foundPlayer = _activeLineup?.players?.find(
+      (x) => x?.position === formationCode
     );
-    setIsActivePitchPlayerCaptain(foundCaptain ? true : false);
+
+    // update state values
+    setIsActivePitchPlayerAssigned(foundPlayer ? true : false);
+    setIsActivePitchPlayerCaptain(!!foundPlayer?.captain);
   };
 
   const resetPitchFormation = () => {
@@ -366,7 +379,7 @@ function LineupCreate({ user, event }) {
               <ResetSVG />
               Reset
             </div>
-            {_activePlayerFormationCodeFromPitch && (
+            {_isActivePitchPlayerAssigned && (
               <div>
                 <Button
                   className={styles.eventManageCaptainButton}
