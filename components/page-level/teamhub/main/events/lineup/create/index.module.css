@@ -91,6 +91,13 @@
   font-size: var(--fs-h3);
   cursor: pointer;
 }
+.eventPitchResetButtonDisabled {
+  cursor: not-allowed;
+  color: var(--c-white-50);
+}
+.eventPitchResetButtonDisabled svg {
+  fill: var(--c-white-50);
+}
 .eventPitchWrapper {
   margin-top: var(--space-50);
   display: block;

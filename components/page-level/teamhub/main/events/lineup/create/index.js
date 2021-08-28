@@ -308,8 +308,12 @@ function LineupCreate({ user, event }) {
           </div>
           <div className={styles.eventLineupPitchActionButtons}>
             <span
-              className={styles.eventPitchResetButton}
-              onClick={() => setResetPitch(true)}
+              className={cn(
+                styles.eventPitchResetButton,
+                (!_activeLineup || _activeLineup?.players?.length === 0) &&
+                  styles.eventPitchResetButtonDisabled
+              )}
+              onClick={() => _activeLineup && setResetPitch(true)}
             >
               <ResetSVG />
               Reset
