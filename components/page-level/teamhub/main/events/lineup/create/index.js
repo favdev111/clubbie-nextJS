@@ -199,11 +199,9 @@ function LineupCreate({ user, event }) {
     ];
     setLineups([..._newLineups]);
 
-    // unset active player from list and pitch
+    // unset state values
     setActiveAvailablePlayerIdFromList(null);
     setActivePlayerFormationCodeFromPitch(null);
-
-    // unset active player captain flag
     setIsActivePitchPlayerCaptain(false);
     setIsActivePitchPlayerAssigned(false);
   };
@@ -232,11 +230,13 @@ function LineupCreate({ user, event }) {
     setActivePlayerFormationCodeFromPitch(formationCode);
 
     // assign player to position if position and player both are selected
-    _activeAvailablePlayerIdFromList &&
+    if (_activeAvailablePlayerIdFromList) {
       assignPitchPositionToListPlayer(
         _activeAvailablePlayerIdFromList,
         formationCode
       );
+      return;
+    }
 
     // find player at current position(formationCode)
     const foundPlayer = _activeLineup?.players?.find(
