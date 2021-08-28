@@ -132,6 +132,8 @@ function LineupCreate({ user, event }) {
 
   const handleFormationSet = (formation) => {
     setFormation(formation);
+    const activeLineup = lineups?.find((x) => x?.formation === formation);
+    setActiveLineup(activeLineup ? { ...activeLineup } : null);
   };
 
   const assignPitchPositionToListPlayer = (listPlayerId, pitchPosition) => {
