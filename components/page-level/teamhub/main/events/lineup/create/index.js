@@ -4,7 +4,12 @@ import FormationList from "../common/formationList";
 import Pitch from "../common/pitch";
 import styles from "./index.module.css";
 
-function PlayersList({ availablePlayers, unAvailablePlayers }) {
+function PlayersList({
+  availablePlayers,
+  unAvailablePlayers,
+  activePlayerId,
+  setActivePlayerId,
+}) {
   return (
     <div
       className={cn(
@@ -22,7 +27,16 @@ function PlayersList({ availablePlayers, unAvailablePlayers }) {
       </div>
       <div className={styles.eventPlayersList}>
         {(availablePlayers || unAvailablePlayers)?.map((player) => (
-          <div className={cn(styles.eventPlayerItem)}>
+          <div
+            className={cn(
+              styles.eventPlayerItem,
+              activePlayerId === player?.user?.id &&
+                styles.eventPlayerItemActive
+            )}
+            onClick={async () =>
+              setActivePlayerId && (await setActivePlayerId(player?.user?.id))
+            }
+          >
             <span>{player?.user?.profile?.fullName || player?.user?.id}</span>
             {availablePlayers && (
               <span>{player?.lastMatchPlayedDate || "-"}</span>
@@ -40,6 +54,10 @@ function LineupCreate({ user, event }) {
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
   const [_availablePlayers, setAvailablePlayers] = useState(null);
   const [_unAvailablePlayers, setUnAvailablePlayers] = useState(null);
+  const [
+    _activeAvailablePlayerIdFromList,
+    setActiveAvailablePlayerIdFromList,
+  ] = useState(null);
 
   useEffect(() => {
     setEvent({ ...event });
@@ -71,9 +89,20 @@ function LineupCreate({ user, event }) {
     setUnAvailablePlayers([...unAvailablePlayers]);
   }, []);
 
+  const handleAvailablePlayerListItemClick = (playerId) => {
+    if (!playerId) return;
+    _activeAvailablePlayerIdFromList === playerId
+      ? setActiveAvailablePlayerIdFromList(null)
+      : setActiveAvailablePlayerIdFromList(playerId);
+  };
+
   return (
     <div className={styles.eventLineupWrapper}>
-      <PlayersList availablePlayers={_availablePlayers} />
+      <PlayersList
+        availablePlayers={_availablePlayers}
+        activePlayerId={_activeAvailablePlayerIdFromList}
+        setActivePlayerId={handleAvailablePlayerListItemClick}
+      />
       <div className={styles.eventPitchAndFormationWrappper}>
         <h1>{_eventTitle}</h1>
         <div className={styles.eventFormationsListWrapper}>
