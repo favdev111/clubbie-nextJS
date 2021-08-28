@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@sub/button";
 import useNotification from "@sub/hook-notification";
+import ConfirmDialog from "@sub/confirm-dialog";
 import ResetSVG from "@svg/undo";
 import Events from "@api/services/Events";
 import matchFormations from "@utils/fixedValues/matchFormations";
@@ -85,6 +86,7 @@ function LineupCreate({ user, event }) {
   ]);
   const [_activeLineup, setActiveLineup] = useState(null);
   const [_loading, setLoading] = useState(false);
+  const [_resetPitch, setResetPitch] = useState(false);
 
   const { showNotificationMsg } = useNotification();
 
@@ -280,58 +282,68 @@ function LineupCreate({ user, event }) {
   };
 
   return (
-    <div className={styles.eventLineupWrapper}>
-      <PlayersList
-        availablePlayers={_availablePlayers}
-        activePlayerId={_activeAvailablePlayerIdFromList}
-        setActivePlayerId={handleAvailablePlayerListItemClick}
+    <>
+      <ConfirmDialog
+        open={_resetPitch}
+        setOpen={setResetPitch}
+        message={`Are you sure to reset the pitch lineup for ${_formation}`}
+        confirmText={"Yes"}
+        onConfirm={resetPitchFormation}
+        type={"danger"}
       />
-      <div className={styles.eventPitchAndFormationWrappper}>
-        <h1>{_eventTitle}</h1>
-        <div className={styles.eventFormationsListWrapper}>
-          <FormationList
-            selectMode={true}
-            selected={_formation}
-            onFormationSet={handleFormationSet}
-          />
+      <div className={styles.eventLineupWrapper}>
+        <PlayersList
+          availablePlayers={_availablePlayers}
+          activePlayerId={_activeAvailablePlayerIdFromList}
+          setActivePlayerId={handleAvailablePlayerListItemClick}
+        />
+        <div className={styles.eventPitchAndFormationWrappper}>
+          <h1>{_eventTitle}</h1>
+          <div className={styles.eventFormationsListWrapper}>
+            <FormationList
+              selectMode={true}
+              selected={_formation}
+              onFormationSet={handleFormationSet}
+            />
+          </div>
+          <div className={styles.eventLineupPitchActionButtons}>
+            <span
+              className={styles.eventPitchResetButton}
+              onClick={() => setResetPitch(true)}
+            >
+              <ResetSVG />
+              Reset
+            </span>
+          </div>
+          <div className={styles.eventPitchWrapper}>
+            <Pitch
+              formation={_formation}
+              editMode={true}
+              activePlayer={_activePlayerFormationCodeFromPitch}
+              onPlayerClick={handlePitchPlayerClick}
+              lineup={_activeLineup?.players?.map((x) => {
+                return {
+                  name: x?.user?.profile?.fullName || x?.user?.id,
+                  captain: x?.captain,
+                  position: x?.position,
+                };
+              })}
+            />
+          </div>
+          <div className={styles.eventLineupFormActionButton}>
+            <Link href={`/teamhub/events/${_event?.id}`}>
+              <a>
+                <Button variant="transparent">Cancel</Button>
+              </a>
+            </Link>
+            <Button loading={_loading} onClick={handleSaveButtonClick}>
+              Save
+            </Button>
+          </div>
         </div>
-        <div className={styles.eventLineupPitchActionButtons}>
-          <span
-            className={styles.eventPitchResetButton}
-            onClick={resetPitchFormation}
-          >
-            <ResetSVG />
-            Reset
-          </span>
-        </div>
-        <div className={styles.eventPitchWrapper}>
-          <Pitch
-            formation={_formation}
-            editMode={true}
-            activePlayer={_activePlayerFormationCodeFromPitch}
-            onPlayerClick={handlePitchPlayerClick}
-            lineup={_activeLineup?.players?.map((x) => {
-              return {
-                name: x?.user?.profile?.fullName || x?.user?.id,
-                captain: x?.captain,
-                position: x?.position,
-              };
-            })}
-          />
-        </div>
-        <div className={styles.eventLineupFormActionButton}>
-          <Link href={`/teamhub/events/${_event?.id}`}>
-            <a>
-              <Button variant="transparent">Cancel</Button>
-            </a>
-          </Link>
-          <Button loading={_loading} onClick={handleSaveButtonClick}>
-            Save
-          </Button>
-        </div>
+        <PlayersList unAvailablePlayers={_unAvailablePlayers} />
       </div>
-      <PlayersList unAvailablePlayers={_unAvailablePlayers} />
-    </div>
+    </>
   );
 }
 
