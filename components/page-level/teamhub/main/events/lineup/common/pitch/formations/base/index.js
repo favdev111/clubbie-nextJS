@@ -48,7 +48,7 @@ const FormationBase = ({
   }, [goalKeeperShirtColor]);
 
   useEffect(() => {
-    lineup && findAndSetLineup(defaultLineup, lineup);
+    findAndSetLineup(defaultLineup, lineup);
   }, [lineup]);
 
   useEffect(() => {
