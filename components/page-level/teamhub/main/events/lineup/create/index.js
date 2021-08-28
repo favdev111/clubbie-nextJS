@@ -224,7 +224,7 @@ function LineupCreate({ user, event }) {
   const handlePitchPlayerClick = (formationCode) => {
     if (!formationCode) return;
     if (formationCode === _activePlayerFormationCodeFromPitch) {
-      setIsActivePitchPlayerAssigned(null);
+      setIsActivePitchPlayerAssigned(false);
       setActivePlayerFormationCodeFromPitch(null);
       return;
     }
@@ -295,6 +295,11 @@ function LineupCreate({ user, event }) {
       Object.assign({}, _currentLineupNew),
     ];
     setLineups([..._newLineups]);
+
+    // update state values
+    setIsActivePitchPlayerCaptain(false);
+    setIsActivePitchPlayerAssigned(false);
+    setActivePlayerFormationCodeFromPitch(null);
   };
 
   const handleSaveButtonClick = async () => {
