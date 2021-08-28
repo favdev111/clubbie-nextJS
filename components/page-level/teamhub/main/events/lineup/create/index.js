@@ -74,6 +74,9 @@ function LineupCreate({ user, event }) {
     _activePlayerFormationCodeFromPitch,
     setActivePlayerFormationCodeFromPitch,
   ] = useState(null);
+  const [_isActivePitchPlayerCaptain, setIsActivePitchPlayerCaptain] = useState(
+    false
+  );
   /* 
     lineups state will handle all lineup formations (current and future)
     and player positions in array - like commented below.
@@ -193,6 +196,9 @@ function LineupCreate({ user, event }) {
     // unset active player from list and pitch
     setActiveAvailablePlayerIdFromList(null);
     setActivePlayerFormationCodeFromPitch(null);
+
+    // unset active player captain flag
+    setIsActivePitchPlayerCaptain(false);
   };
 
   const handleAvailablePlayerListItemClick = (playerId) => {
@@ -219,6 +225,12 @@ function LineupCreate({ user, event }) {
         _activeAvailablePlayerIdFromList,
         formationCode
       );
+
+    // check if player with formationCode is captain
+    const foundCaptain = _activeLineup?.players?.find(
+      (x) => x?.captain === true && x?.position === formationCode
+    );
+    setIsActivePitchPlayerCaptain(foundCaptain ? true : false);
   };
 
   const resetPitchFormation = () => {
@@ -232,6 +244,40 @@ function LineupCreate({ user, event }) {
           return Object.assign({}, x);
         })
         .flat(),
+    ];
+    setLineups([..._newLineups]);
+  };
+
+  const changeCaptainStatusForPitchPosition = (isCaptain, pitchPosition) => {
+    const _currentLineupNew = _activeLineup;
+
+    // remove captain from current players lineup
+    _currentLineupNew.players = _currentLineupNew?.players?.map((x) => {
+      return { ...x, captain: false };
+    });
+
+    // find player at pitchPosition
+    const foundPlayerAtPitchPosition = _currentLineupNew?.players?.find(
+      (x) => x?.position === pitchPosition
+    );
+
+    // set new captain status from foundPlayer
+    foundPlayerAtPitchPosition.captain = isCaptain;
+
+    // update active lineup
+    setActiveLineup(Object.assign({}, _currentLineupNew));
+
+    // update active player captain status
+    setIsActivePitchPlayerCaptain(isCaptain);
+
+    // update current lineup in lineups list
+    const _newLineups = [
+      ...(lineups?.filter((x) => x?.formation !== _formation) || [])
+        .map((x) => {
+          return Object.assign({}, x);
+        })
+        .flat(),
+      Object.assign({}, _currentLineupNew),
     ];
     setLineups([..._newLineups]);
   };
@@ -307,7 +353,7 @@ function LineupCreate({ user, event }) {
             />
           </div>
           <div className={styles.eventLineupPitchActionButtons}>
-            <span
+            <div
               className={cn(
                 styles.eventPitchResetButton,
                 (!_activeLineup || _activeLineup?.players?.length === 0) &&
@@ -317,7 +363,25 @@ function LineupCreate({ user, event }) {
             >
               <ResetSVG />
               Reset
-            </span>
+            </div>
+            {_activePlayerFormationCodeFromPitch && (
+              <div>
+                <Button
+                  className={styles.eventManageCaptainButton}
+                  variant={!_isActivePitchPlayerCaptain ? "success" : "danger"}
+                  onClick={() =>
+                    changeCaptainStatusForPitchPosition(
+                      !_isActivePitchPlayerCaptain ? true : false,
+                      _activePlayerFormationCodeFromPitch
+                    )
+                  }
+                >
+                  {!_isActivePitchPlayerCaptain
+                    ? "Set as Captain"
+                    : "Remove as Captain"}
+                </Button>
+              </div>
+            )}
           </div>
           <div className={styles.eventPitchWrapper}>
             <Pitch

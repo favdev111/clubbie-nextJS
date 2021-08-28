@@ -78,8 +78,11 @@
 }
 .eventLineupPitchActionButtons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
   margin-top: var(--space-50);
+  width: 35%;
+  min-height: 32px;
 }
 .eventPitchResetButton {
   display: flex;
@@ -90,6 +93,10 @@
   font-weight: bold;
   font-size: var(--fs-h3);
   cursor: pointer;
+}
+.eventManageCaptainButton {
+  padding: var(--space-8) var(--space-24);
+  font-size: var(--fs-small);
 }
 .eventPitchResetButtonDisabled {
   cursor: not-allowed;
