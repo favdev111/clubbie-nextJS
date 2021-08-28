@@ -11,6 +11,8 @@ function Pitch({
   playerShirtColor,
   goalKeeperShirtColor,
   lineup,
+  activePlayer,
+  onPlayerClick,
 }) {
   const [_editMode, setEditMode] = useState(false);
   const [_formation, setFormation] = useState(matchFormationTypes["442"]);
@@ -40,7 +42,7 @@ function Pitch({
   }, [goalKeeperShirtColor]);
 
   useEffect(() => {
-    lineup && setLineup([...lineup]);
+    setLineup(lineup ? [...lineup] : null);
   }, [lineup]);
 
   return (
@@ -52,6 +54,8 @@ function Pitch({
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
+          activePlayer={activePlayer}
+          onPlayerClick={onPlayerClick}
         />
       )}
       {_formation === matchFormationTypes["442"] && (
@@ -60,6 +64,8 @@ function Pitch({
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
+          activePlayer={activePlayer}
+          onPlayerClick={onPlayerClick}
         />
       )}
       {_formation === matchFormationTypes["451"] && (
@@ -68,6 +74,8 @@ function Pitch({
           playerShirtColor={_playerShirtColor}
           goalKeeperShirtColor={_goalKeeperShirtColor}
           lineup={_lineup}
+          activePlayer={activePlayer}
+          onPlayerClick={onPlayerClick}
         />
       )}
     </div>
