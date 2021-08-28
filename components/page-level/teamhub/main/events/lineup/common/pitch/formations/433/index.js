@@ -7,6 +7,8 @@ const Formation433 = ({
   playerShirtColor,
   goalKeeperShirtColor,
   lineup,
+  activePlayer,
+  onPlayerClick,
 }) => {
   const _defaultLineup = [
     { position: "A1" },
@@ -33,6 +35,8 @@ const Formation433 = ({
       defaultLineup={_defaultLineup}
       lineup={lineup}
       styleSheet={styles}
+      activePlayer={activePlayer}
+      onPlayerClick={onPlayerClick}
     />
   );
 };

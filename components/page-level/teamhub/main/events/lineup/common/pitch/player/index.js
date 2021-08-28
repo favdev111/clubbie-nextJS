@@ -9,8 +9,7 @@ const Player = ({
   name,
   selected,
   isCaptain,
-  onSelect,
-  onUnSelect,
+  onClick,
   onCaptionSet,
   shirtColor,
   formationCode,
@@ -43,14 +42,16 @@ const Player = ({
   }, [name]);
 
   useEffect(() => {
+    setSelected(selected);
+  }, [selected]);
+
+  useEffect(() => {
     setIsCaptain(isCaptain);
   }, [isCaptain]);
 
   const handlePlayerBodyClick = async () => {
     if (!_editMode) return;
-    !_selected && onSelect && (await onSelect(formation));
-    _selected && onUnSelect && (await onUnSelect(formation));
-    setSelected(!_selected);
+    onClick && (await onClick(formationCode));
   };
 
   const handleSetCaptainClick = async () => {

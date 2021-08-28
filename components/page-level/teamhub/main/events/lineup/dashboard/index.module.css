@@ -39,3 +39,12 @@
 .eventSubstituesListItem:hover {
   font-weight: bold;
 }
+.eventOptionsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+  margin-top: var(--space-16);
+}

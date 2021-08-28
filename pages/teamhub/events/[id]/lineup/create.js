@@ -1,24 +1,24 @@
 import React from "react";
 import Layout from "@layout/index";
 import Seo from "@layout/seo";
-import DashboardContent from "@page/teamhub/main";
+import CreateEventLineup from "@page/teamhub/main/events/lineup/create";
 import Users from "@api/services/Users";
 import Events from "@api/services/Events";
 import eventTypes from "@utils/fixedValues/eventTypes";
 import { requiresPageAuth } from "@utils/middlewares/requiresPageAuth";
 
-function MatchEventLineupPage({ user, event }) {
+function MatchEventLineupCreatePage({ user, event }) {
   return (
     <Layout>
-      <Seo title="Event Lineup" desc="Lorem ipsum dolor sit amet" />
+      <Seo title="Event Lineup Create" desc="Lorem ipsum dolor sit amet" />
       <main>
-        <DashboardContent user={user} event={event} />
+        <CreateEventLineup user={user} event={event} />
       </main>
     </Layout>
   );
 }
 
-export default MatchEventLineupPage;
+export default MatchEventLineupCreatePage;
 
 export const getServerSideProps = requiresPageAuth(async (ctx) => {
   const eventId = ctx.params.id;

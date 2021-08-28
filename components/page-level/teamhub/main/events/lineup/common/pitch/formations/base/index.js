@@ -8,11 +8,14 @@ const FormationBase = ({
   defaultLineup,
   lineup,
   styleSheet,
+  activePlayer,
+  onPlayerClick,
 }) => {
   const [_editMode, setEditMode] = useState(false);
   const [_playerShirtColor, setPlayerShirtColor] = useState(null);
   const [_goalKeeperShirtColor, setGoalKeeperShirtColor] = useState(null);
   const [_lineup, setLineup] = useState([...defaultLineup]);
+  const [_activePlayer, setActivePlayer] = useState(null);
 
   const findAndSetLineup = (defaultLineup, playerLineup) => {
     const _temp = defaultLineup?.map((x) => {
@@ -35,6 +38,7 @@ const FormationBase = ({
   useEffect(() => {
     editMode && setEditMode(editMode);
     lineup && findAndSetLineup(defaultLineup, lineup);
+    setActivePlayer(activePlayer);
   }, []);
 
   useEffect(() => {
@@ -52,6 +56,10 @@ const FormationBase = ({
   useEffect(() => {
     lineup && findAndSetLineup(defaultLineup, lineup);
   }, [lineup]);
+
+  useEffect(() => {
+    setActivePlayer(activePlayer);
+  }, [activePlayer]);
 
   return (
     <div>
@@ -71,6 +79,8 @@ const FormationBase = ({
               }
               name={player?.name}
               isCaptain={player?.isCaptain}
+              selected={_activePlayer === player?.position}
+              onClick={onPlayerClick}
             />
           </div>
         );
