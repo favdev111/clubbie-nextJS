@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@sub/button";
 import useNotification from "@sub/hook-notification";
@@ -288,7 +289,11 @@ function LineupCreate({ user, event }) {
           />
         </div>
         <div className={styles.eventLineupFormactionButton}>
-          <Button variant="transparent">Cancel</Button>
+          <Link href={`/teamhub/events/${_event?.id}`}>
+            <a>
+              <Button variant="transparent">Cancel</Button>
+            </a>
+          </Link>
           <Button loading={_loading} onClick={handleSaveButtonClick}>
             Save
           </Button>
