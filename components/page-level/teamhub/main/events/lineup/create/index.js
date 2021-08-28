@@ -285,7 +285,13 @@ function LineupCreate({ user, event }) {
             editMode={true}
             activePlayer={_activePlayerFormationCodeFromPitch}
             onPlayerClick={handlePitchPlayerClick}
-            lineup={_activeLineup?.players}
+            lineup={_activeLineup?.players?.map((x) => {
+              return {
+                name: x?.user?.profile?.fullName || x?.user?.id,
+                captain: x?.captain,
+                position: x?.position,
+              };
+            })}
           />
         </div>
         <div className={styles.eventLineupFormactionButton}>
