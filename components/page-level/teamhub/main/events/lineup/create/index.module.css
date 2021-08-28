@@ -81,3 +81,9 @@
   display: block;
   width: 100%;
 }
+.eventLineupFormactionButton {
+  display: flex;
+  width: 85%;
+  justify-content: flex-end;
+  margin-top: var(--space-50);
+}

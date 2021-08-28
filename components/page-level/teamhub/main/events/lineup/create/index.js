@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import { useRouter } from "next/router";
+import Button from "@sub/button";
+import useNotification from "@sub/hook-notification";
+import Events from "@api/services/Events";
 import matchFormations from "@utils/fixedValues/matchFormations";
 import playerRoles from "@utils/fixedValues/playerRoles";
 import FormationList from "../common/formationList";
@@ -51,6 +55,8 @@ function PlayersList({
 }
 
 function LineupCreate({ user, event }) {
+  const router = useRouter();
+
   const [_event, setEvent] = useState(null);
   const [_eventTitle, setEventTitle] = useState(null);
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
@@ -76,6 +82,9 @@ function LineupCreate({ user, event }) {
     // },
   ]);
   const [_activeLineup, setActiveLineup] = useState(null);
+  const [_loading, setLoading] = useState(false);
+
+  const { showNotificationMsg } = useNotification();
 
   useEffect(() => {
     setEvent({ ...event });
@@ -208,6 +217,51 @@ function LineupCreate({ user, event }) {
       );
   };
 
+  const handleSaveButtonClick = async () => {
+    setLoading(true);
+
+    // request body
+    const payload = {
+      teamId: _eventHomeTeam?.team?.id,
+      formation: _formation,
+      playersLineup: (() => {
+        const _temp = _activeLineup?.players?.map((x) => {
+          return {
+            id: x?.user?.id,
+            role: x?.role,
+            position: x?.position,
+            captain: x?.captain,
+          };
+        });
+        return _temp;
+      })(),
+    };
+
+    // make api req
+    const responseEventLineupCreate = await Events.CreateLineup(
+      _event?.id,
+      payload
+    ).catch(() => null);
+
+    // show error
+    if (!responseEventLineupCreate) {
+      showNotificationMsg("Could Not Create Lineup..!", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    // show success
+    showNotificationMsg("Lineup Created Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setLoading(false);
+    router.push(`/teamhub/events/${_event?.id}`);
+  };
+
   return (
     <div className={styles.eventLineupWrapper}>
       <PlayersList
@@ -232,6 +286,12 @@ function LineupCreate({ user, event }) {
             onPlayerClick={handlePitchPlayerClick}
             lineup={_activeLineup?.players}
           />
+        </div>
+        <div className={styles.eventLineupFormactionButton}>
+          <Button variant="transparent">Cancel</Button>
+          <Button loading={_loading} onClick={handleSaveButtonClick}>
+            Save
+          </Button>
         </div>
       </div>
       <PlayersList unAvailablePlayers={_unAvailablePlayers} />
