@@ -58,6 +58,10 @@ function LineupCreate({ user, event }) {
     _activeAvailablePlayerIdFromList,
     setActiveAvailablePlayerIdFromList,
   ] = useState(null);
+  const [
+    _activePlayerFormationCodeFromPitch,
+    setActivePlayerFormationCodeFromPitch,
+  ] = useState(null);
 
   useEffect(() => {
     setEvent({ ...event });
@@ -96,6 +100,13 @@ function LineupCreate({ user, event }) {
       : setActiveAvailablePlayerIdFromList(playerId);
   };
 
+  const handlePitchPlayerClick = (formationCode) => {
+    if (!formationCode) return;
+    formationCode === _activePlayerFormationCodeFromPitch
+      ? setActivePlayerFormationCodeFromPitch(null)
+      : setActivePlayerFormationCodeFromPitch(formationCode);
+  };
+
   return (
     <div className={styles.eventLineupWrapper}>
       <PlayersList
@@ -109,7 +120,11 @@ function LineupCreate({ user, event }) {
           <FormationList selectMode={true} />
         </div>
         <div className={styles.eventPitchWrapper}>
-          <Pitch editMode={true} />
+          <Pitch
+            editMode={true}
+            activePlayer={_activePlayerFormationCodeFromPitch}
+            onPlayerClick={handlePitchPlayerClick}
+          />
         </div>
       </div>
       <PlayersList unAvailablePlayers={_unAvailablePlayers} />
