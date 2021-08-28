@@ -10,7 +10,6 @@ const Player = ({
   selected,
   isCaptain,
   onClick,
-  onCaptionSet,
   shirtColor,
   formationCode,
   editMode,
@@ -54,12 +53,6 @@ const Player = ({
     onClick && (await onClick(formationCode));
   };
 
-  const handleSetCaptainClick = async () => {
-    if (!_editMode) return;
-    setIsCaptain(true);
-    onCaptionSet && (await onCaptainSet(formationCode));
-  };
-
   return (
     <div className={styles.playerWrapper}>
       <div
@@ -79,21 +72,10 @@ const Player = ({
           <div className={styles.playerNameWrapper}>
             <span className={styles.playerName}>{_name}</span>
           </div>
-          {_isCaptain ? (
+          {_isCaptain && (
             <div className={styles.playerIsCaptainWrapper}>
               <span className={styles.playerIsCaptain}>C</span>
             </div>
-          ) : (
-            _editMode && (
-              <div className={styles.playerSetCaptainWrapper}>
-                <span
-                  className={styles.playerSetCaptain}
-                  onClick={handleSetCaptainClick}
-                >
-                  Set Captain
-                </span>
-              </div>
-            )
           )}
         </>
       ) : _editMode ? (
