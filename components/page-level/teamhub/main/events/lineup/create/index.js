@@ -65,6 +65,16 @@ function LineupCreate({ user, event }) {
     _activePlayerFormationCodeFromPitch,
     setActivePlayerFormationCodeFromPitch,
   ] = useState(null);
+  /* 
+    lineups state will handle all lineup formations (current and future)
+    and player positions in array - like commented below.
+  */
+  const [lineups, setLineups] = useState([
+    // {
+    //   formationCode: null,
+    //   players: [],
+    // },
+  ]);
   const [_activeLineup, setActiveLineup] = useState(null);
 
   useEffect(() => {
@@ -114,6 +124,7 @@ function LineupCreate({ user, event }) {
         players: _players,
       };
     })();
+    setLineups([_lineup]);
 
     // set active lineup
     setActiveLineup({ ..._lineup });
@@ -123,11 +134,63 @@ function LineupCreate({ user, event }) {
     setFormation(formation);
   };
 
+  const assignPitchPositionToListPlayer = (listPlayerId, pitchPosition) => {
+    // find player and set new position
+    const _player = (() => {
+      const tempPlayer = _eventHomeTeam?.attendees?.find(
+        (x) => x?.user?.id === listPlayerId
+      );
+      return {
+        ...tempPlayer,
+        position: pitchPosition,
+      };
+    })();
+
+    // add player to current lineup and set it active
+    const _currentLineupOld =
+      lineups?.find((x) => x?.formation === _formation) || [];
+    const _currentLineupNew = {
+      formation: _formation,
+      ..._currentLineupOld,
+      players: Object.assign(
+        [],
+        [
+          ...(_currentLineupOld?.players || [])
+            ?.filter((x) => x?.user?.id !== listPlayerId)
+            ?.filter((x) => x?.position !== pitchPosition),
+          _player,
+        ]
+      ),
+    };
+    setActiveLineup(Object.assign({}, _currentLineupNew));
+
+    // update current lineup in lineups list
+    const _newLineups = [
+      ...(lineups?.filter((x) => x?.formation !== _formation) || [])
+        .map((x) => {
+          return Object.assign({}, x);
+        })
+        .flat(),
+      Object.assign({}, _currentLineupNew),
+    ];
+    setLineups([..._newLineups]);
+
+    // unset active player from list and pitch
+    setActiveAvailablePlayerIdFromList(null);
+    setActivePlayerFormationCodeFromPitch(null);
+  };
+
   const handleAvailablePlayerListItemClick = (playerId) => {
     if (!playerId) return;
     _activeAvailablePlayerIdFromList === playerId
       ? setActiveAvailablePlayerIdFromList(null)
       : setActiveAvailablePlayerIdFromList(playerId);
+
+    _activePlayerFormationCodeFromPitch &&
+      assignPitchPositionToListPlayer(
+        playerId,
+        _activePlayerFormationCodeFromPitch
+      );
   };
 
   const handlePitchPlayerClick = (formationCode) => {
@@ -135,6 +198,12 @@ function LineupCreate({ user, event }) {
     formationCode === _activePlayerFormationCodeFromPitch
       ? setActivePlayerFormationCodeFromPitch(null)
       : setActivePlayerFormationCodeFromPitch(formationCode);
+
+    _activeAvailablePlayerIdFromList &&
+      assignPitchPositionToListPlayer(
+        _activeAvailablePlayerIdFromList,
+        formationCode
+      );
   };
 
   return (
