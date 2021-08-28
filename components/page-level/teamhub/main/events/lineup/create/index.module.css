@@ -76,12 +76,27 @@
   width: 100%;
   max-width: 500px;
 }
+.eventLineupPitchActionButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-50);
+}
+.eventPitchResetButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-turk);
+  font-weight: bold;
+  font-size: var(--fs-h3);
+  cursor: pointer;
+}
 .eventPitchWrapper {
   margin-top: var(--space-50);
   display: block;
   width: 100%;
 }
-.eventLineupFormactionButton {
+.eventLineupFormActionButton {
   display: flex;
   width: 85%;
   justify-content: flex-end;

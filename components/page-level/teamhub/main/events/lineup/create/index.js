@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "@sub/button";
 import useNotification from "@sub/hook-notification";
+import ResetSVG from "@svg/undo";
 import Events from "@api/services/Events";
 import matchFormations from "@utils/fixedValues/matchFormations";
 import playerRoles from "@utils/fixedValues/playerRoles";
@@ -218,6 +219,21 @@ function LineupCreate({ user, event }) {
       );
   };
 
+  const resetPitchFormation = () => {
+    // remove active lineup if same formation
+    if (_activeLineup?.formation === _formation) setActiveLineup(null);
+
+    // remove current lineup from lineups list
+    const _newLineups = [
+      ...(lineups?.filter((x) => x?.formation !== _formation) || [])
+        .map((x) => {
+          return Object.assign({}, x);
+        })
+        .flat(),
+    ];
+    setLineups([..._newLineups]);
+  };
+
   const handleSaveButtonClick = async () => {
     setLoading(true);
 
@@ -279,6 +295,15 @@ function LineupCreate({ user, event }) {
             onFormationSet={handleFormationSet}
           />
         </div>
+        <div className={styles.eventLineupPitchActionButtons}>
+          <span
+            className={styles.eventPitchResetButton}
+            onClick={resetPitchFormation}
+          >
+            <ResetSVG />
+            Reset
+          </span>
+        </div>
         <div className={styles.eventPitchWrapper}>
           <Pitch
             formation={_formation}
@@ -294,7 +319,7 @@ function LineupCreate({ user, event }) {
             })}
           />
         </div>
-        <div className={styles.eventLineupFormactionButton}>
+        <div className={styles.eventLineupFormActionButton}>
           <Link href={`/teamhub/events/${_event?.id}`}>
             <a>
               <Button variant="transparent">Cancel</Button>
