@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import matchFormations from "@utils/fixedValues/matchFormations";
+import playerRoles from "@utils/fixedValues/playerRoles";
 import FormationList from "../common/formationList";
 import Pitch from "../common/pitch";
 import styles from "./index.module.css";
@@ -63,6 +65,7 @@ function LineupCreate({ user, event }) {
     _activePlayerFormationCodeFromPitch,
     setActivePlayerFormationCodeFromPitch,
   ] = useState(null);
+  const [_activeLineup, setActiveLineup] = useState(null);
 
   useEffect(() => {
     setEvent({ ...event });
@@ -95,6 +98,25 @@ function LineupCreate({ user, event }) {
     );
     setAvailablePlayers([...availablePlayers]);
     setUnAvailablePlayers([...unAvailablePlayers]);
+
+    // set home team lineup
+    const _lineup = (() => {
+      const uniquePlayerPositions = new Set();
+      const _players = homeTeam?.attendees?.filter(
+        (x) =>
+          (x?.role === playerRoles?.PLAYER ||
+            x?.role === playerRoles?.GOAL_KEEPER) &&
+          !uniquePlayerPositions.has(x?.position) &&
+          uniquePlayerPositions.add(x?.position)
+      );
+      return {
+        formation: homeTeam?.formation,
+        players: _players,
+      };
+    })();
+
+    // set active lineup
+    setActiveLineup({ ..._lineup });
   }, []);
 
   const handleFormationSet = (formation) => {
@@ -137,6 +159,7 @@ function LineupCreate({ user, event }) {
             editMode={true}
             activePlayer={_activePlayerFormationCodeFromPitch}
             onPlayerClick={handlePitchPlayerClick}
+            lineup={_activeLineup?.players}
           />
         </div>
       </div>
