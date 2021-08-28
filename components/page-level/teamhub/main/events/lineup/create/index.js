@@ -52,6 +52,7 @@ function LineupCreate({ user, event }) {
   const [_event, setEvent] = useState(null);
   const [_eventTitle, setEventTitle] = useState(null);
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
+  const [_formation, setFormation] = useState(null);
   const [_availablePlayers, setAvailablePlayers] = useState(null);
   const [_unAvailablePlayers, setUnAvailablePlayers] = useState(null);
   const [
@@ -83,6 +84,9 @@ function LineupCreate({ user, event }) {
     })();
     setEventHomeTeam({ ...homeTeam });
 
+    // set home team formation
+    setFormation(homeTeam?.formation || matchFormations?.NO_FORMATION);
+
     // set home team available/non-available players
     const availablePlayers = [];
     const unAvailablePlayers = [];
@@ -92,6 +96,10 @@ function LineupCreate({ user, event }) {
     setAvailablePlayers([...availablePlayers]);
     setUnAvailablePlayers([...unAvailablePlayers]);
   }, []);
+
+  const handleFormationSet = (formation) => {
+    setFormation(formation);
+  };
 
   const handleAvailablePlayerListItemClick = (playerId) => {
     if (!playerId) return;
@@ -117,10 +125,15 @@ function LineupCreate({ user, event }) {
       <div className={styles.eventPitchAndFormationWrappper}>
         <h1>{_eventTitle}</h1>
         <div className={styles.eventFormationsListWrapper}>
-          <FormationList selectMode={true} />
+          <FormationList
+            selectMode={true}
+            selected={_formation}
+            onFormationSet={handleFormationSet}
+          />
         </div>
         <div className={styles.eventPitchWrapper}>
           <Pitch
+            formation={_formation}
             editMode={true}
             activePlayer={_activePlayerFormationCodeFromPitch}
             onPlayerClick={handlePitchPlayerClick}
