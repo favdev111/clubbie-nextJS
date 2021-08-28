@@ -308,7 +308,10 @@ function LineupCreate({ user, event }) {
         const _temp = _activeLineup?.players?.map((x) => {
           return {
             id: x?.user?.id,
-            role: x?.role,
+            role:
+              x?.position === "GK"
+                ? playerRoles.GOAL_KEEPER
+                : playerRoles.PLAYER,
             position: x?.position,
             captain: x?.captain,
           };
@@ -339,6 +342,8 @@ function LineupCreate({ user, event }) {
       displayIcon: true,
     });
     setLoading(false);
+
+    // redirect to details page
     router.push(`/teamhub/events/${_event?.id}`);
   };
 
