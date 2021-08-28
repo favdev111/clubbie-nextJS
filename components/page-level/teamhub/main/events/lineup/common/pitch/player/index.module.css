@@ -48,6 +48,10 @@
   font-size: 22px;
   text-align: center;
   color: #fff;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
 }
 
 @media only screen and (max-width: 600px) {
