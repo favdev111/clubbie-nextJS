@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Button from "@sub/button";
+import useNotification from "@sub/hook-notification";
+import ConfirmDialog from "@sub/confirm-dialog";
+import ResetSVG from "@svg/undo";
+import Events from "@api/services/Events";
 import matchFormations from "@utils/fixedValues/matchFormations";
 import playerRoles from "@utils/fixedValues/playerRoles";
 import FormationList from "../common/formationList";
@@ -51,6 +58,8 @@ function PlayersList({
 }
 
 function LineupCreate({ user, event }) {
+  const router = useRouter();
+
   const [_event, setEvent] = useState(null);
   const [_eventTitle, setEventTitle] = useState(null);
   const [_eventHomeTeam, setEventHomeTeam] = useState(null);
@@ -65,6 +74,13 @@ function LineupCreate({ user, event }) {
     _activePlayerFormationCodeFromPitch,
     setActivePlayerFormationCodeFromPitch,
   ] = useState(null);
+  const [_isActivePitchPlayerCaptain, setIsActivePitchPlayerCaptain] = useState(
+    false
+  );
+  const [
+    _isActivePitchPlayerAssigned,
+    setIsActivePitchPlayerAssigned,
+  ] = useState(false);
   /* 
     lineups state will handle all lineup formations (current and future)
     and player positions in array - like commented below.
@@ -76,6 +92,10 @@ function LineupCreate({ user, event }) {
     // },
   ]);
   const [_activeLineup, setActiveLineup] = useState(null);
+  const [_loading, setLoading] = useState(false);
+  const [_resetPitch, setResetPitch] = useState(false);
+
+  const { showNotificationMsg } = useNotification();
 
   useEffect(() => {
     setEvent({ ...event });
@@ -134,6 +154,8 @@ function LineupCreate({ user, event }) {
     setFormation(formation);
     const activeLineup = lineups?.find((x) => x?.formation === formation);
     setActiveLineup(activeLineup ? { ...activeLineup } : null);
+    setActivePlayerFormationCodeFromPitch(null);
+    setIsActivePitchPlayerCaptain(false);
   };
 
   const assignPitchPositionToListPlayer = (listPlayerId, pitchPosition) => {
@@ -177,9 +199,11 @@ function LineupCreate({ user, event }) {
     ];
     setLineups([..._newLineups]);
 
-    // unset active player from list and pitch
+    // unset state values
     setActiveAvailablePlayerIdFromList(null);
     setActivePlayerFormationCodeFromPitch(null);
+    setIsActivePitchPlayerCaptain(false);
+    setIsActivePitchPlayerAssigned(false);
   };
 
   const handleAvailablePlayerListItemClick = (playerId) => {
@@ -197,45 +221,226 @@ function LineupCreate({ user, event }) {
 
   const handlePitchPlayerClick = (formationCode) => {
     if (!formationCode) return;
-    formationCode === _activePlayerFormationCodeFromPitch
-      ? setActivePlayerFormationCodeFromPitch(null)
-      : setActivePlayerFormationCodeFromPitch(formationCode);
+    if (formationCode === _activePlayerFormationCodeFromPitch) {
+      setIsActivePitchPlayerAssigned(false);
+      setActivePlayerFormationCodeFromPitch(null);
+      return;
+    }
+    // update active formation code
+    setActivePlayerFormationCodeFromPitch(formationCode);
 
-    _activeAvailablePlayerIdFromList &&
+    // assign player to position if position and player both are selected
+    if (_activeAvailablePlayerIdFromList) {
       assignPitchPositionToListPlayer(
         _activeAvailablePlayerIdFromList,
         formationCode
       );
+      return;
+    }
+
+    // find player at current position(formationCode)
+    const foundPlayer = _activeLineup?.players?.find(
+      (x) => x?.position === formationCode
+    );
+
+    // update state values
+    setIsActivePitchPlayerAssigned(foundPlayer ? true : false);
+    setIsActivePitchPlayerCaptain(!!foundPlayer?.captain);
+  };
+
+  const resetPitchFormation = () => {
+    // remove active lineup if same formation
+    if (_activeLineup?.formation === _formation) setActiveLineup(null);
+
+    // remove current lineup from lineups list
+    const _newLineups = [
+      ...(lineups?.filter((x) => x?.formation !== _formation) || [])
+        .map((x) => {
+          return Object.assign({}, x);
+        })
+        .flat(),
+    ];
+    setLineups([..._newLineups]);
+  };
+
+  const changeCaptainStatusForPitchPosition = (isCaptain, pitchPosition) => {
+    const _currentLineupNew = _activeLineup;
+
+    // remove captain from current players lineup
+    _currentLineupNew.players = _currentLineupNew?.players?.map((x) => {
+      return { ...x, captain: false };
+    });
+
+    // find player at pitchPosition
+    const foundPlayerAtPitchPosition = _currentLineupNew?.players?.find(
+      (x) => x?.position === pitchPosition
+    );
+
+    // set new captain status from foundPlayer
+    foundPlayerAtPitchPosition.captain = isCaptain;
+
+    // update active lineup
+    setActiveLineup(Object.assign({}, _currentLineupNew));
+
+    // update active player captain status
+    setIsActivePitchPlayerCaptain(isCaptain);
+
+    // update current lineup in lineups list
+    const _newLineups = [
+      ...(lineups?.filter((x) => x?.formation !== _formation) || [])
+        .map((x) => {
+          return Object.assign({}, x);
+        })
+        .flat(),
+      Object.assign({}, _currentLineupNew),
+    ];
+    setLineups([..._newLineups]);
+
+    // update state values
+    setIsActivePitchPlayerCaptain(false);
+    setIsActivePitchPlayerAssigned(false);
+    setActivePlayerFormationCodeFromPitch(null);
+  };
+
+  const handleSaveButtonClick = async () => {
+    setLoading(true);
+
+    // request body
+    const payload = {
+      teamId: _eventHomeTeam?.team?.id,
+      formation: _formation,
+      playersLineup: (() => {
+        const _temp = _activeLineup?.players?.map((x) => {
+          return {
+            id: x?.user?.id,
+            role:
+              x?.position === "GK"
+                ? playerRoles.GOAL_KEEPER
+                : playerRoles.PLAYER,
+            position: x?.position,
+            captain: x?.captain,
+          };
+        });
+        return _temp;
+      })(),
+    };
+
+    // make api req
+    const responseEventLineupCreate = await Events.CreateLineup(
+      _event?.id,
+      payload
+    ).catch(() => null);
+
+    // show error
+    if (!responseEventLineupCreate) {
+      showNotificationMsg("Could Not Create Lineup..!", {
+        variant: "error",
+        displayIcon: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    // show success
+    showNotificationMsg("Lineup Created Successfully..!", {
+      variant: "success",
+      displayIcon: true,
+    });
+    setLoading(false);
+
+    // redirect to details page
+    router.push(`/teamhub/events/${_event?.id}`);
   };
 
   return (
-    <div className={styles.eventLineupWrapper}>
-      <PlayersList
-        availablePlayers={_availablePlayers}
-        activePlayerId={_activeAvailablePlayerIdFromList}
-        setActivePlayerId={handleAvailablePlayerListItemClick}
+    <>
+      <ConfirmDialog
+        open={_resetPitch}
+        setOpen={setResetPitch}
+        message={`Are you sure to reset the pitch lineup for ${_formation}`}
+        confirmText={"Yes"}
+        onConfirm={resetPitchFormation}
+        type={"danger"}
       />
-      <div className={styles.eventPitchAndFormationWrappper}>
-        <h1>{_eventTitle}</h1>
-        <div className={styles.eventFormationsListWrapper}>
-          <FormationList
-            selectMode={true}
-            selected={_formation}
-            onFormationSet={handleFormationSet}
+      <div className={styles.eventLineupWrapper}>
+        {_availablePlayers?.length > 0 && (
+          <PlayersList
+            availablePlayers={_availablePlayers}
+            activePlayerId={_activeAvailablePlayerIdFromList}
+            setActivePlayerId={handleAvailablePlayerListItemClick}
           />
+        )}
+        <div className={styles.eventPitchAndFormationWrappper}>
+          <h1>{_eventTitle}</h1>
+          <div className={styles.eventFormationsListWrapper}>
+            <FormationList
+              selectMode={true}
+              selected={_formation}
+              onFormationSet={handleFormationSet}
+            />
+          </div>
+          <div className={styles.eventLineupPitchActionButtons}>
+            <div
+              className={cn(
+                styles.eventPitchResetButton,
+                (!_activeLineup || _activeLineup?.players?.length === 0) &&
+                  styles.eventPitchResetButtonDisabled
+              )}
+              onClick={() => _activeLineup && setResetPitch(true)}
+            >
+              <ResetSVG />
+              Reset
+            </div>
+            {_isActivePitchPlayerAssigned && (
+              <div>
+                <Button
+                  className={styles.eventManageCaptainButton}
+                  variant={!_isActivePitchPlayerCaptain ? "success" : "danger"}
+                  onClick={() =>
+                    changeCaptainStatusForPitchPosition(
+                      !_isActivePitchPlayerCaptain ? true : false,
+                      _activePlayerFormationCodeFromPitch
+                    )
+                  }
+                >
+                  {!_isActivePitchPlayerCaptain
+                    ? "Set as Captain"
+                    : "Remove as Captain"}
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className={styles.eventPitchWrapper}>
+            <Pitch
+              formation={_formation}
+              editMode={true}
+              activePlayer={_activePlayerFormationCodeFromPitch}
+              onPlayerClick={handlePitchPlayerClick}
+              lineup={_activeLineup?.players?.map((x) => {
+                return {
+                  name: x?.user?.profile?.fullName || x?.user?.id,
+                  captain: x?.captain,
+                  position: x?.position,
+                };
+              })}
+            />
+          </div>
+          <div className={styles.eventLineupFormActionButton}>
+            <Link href={`/teamhub/events/${_event?.id}`}>
+              <a>
+                <Button variant="transparent">Cancel</Button>
+              </a>
+            </Link>
+            <Button loading={_loading} onClick={handleSaveButtonClick}>
+              Save
+            </Button>
+          </div>
         </div>
-        <div className={styles.eventPitchWrapper}>
-          <Pitch
-            formation={_formation}
-            editMode={true}
-            activePlayer={_activePlayerFormationCodeFromPitch}
-            onPlayerClick={handlePitchPlayerClick}
-            lineup={_activeLineup?.players}
-          />
-        </div>
+        {_unAvailablePlayers?.length > 0 && (
+          <PlayersList unAvailablePlayers={_unAvailablePlayers} />
+        )}
       </div>
-      <PlayersList unAvailablePlayers={_unAvailablePlayers} />
-    </div>
+    </>
   );
 }
 

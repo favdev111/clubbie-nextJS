@@ -22,13 +22,7 @@ const FormationBase = ({
       const foundPlayer = playerLineup?.find(
         (y) => y?.position?.toLowerCase() === x?.position?.toLowerCase()
       );
-      if (foundPlayer) {
-        return {
-          name: foundPlayer?.user?.profile?.fullName || foundPlayer?.user?.id,
-          isCaptain: !!foundPlayer?.captain,
-          position: x?.position,
-        };
-      }
+      if (foundPlayer) return foundPlayer;
       return x;
     });
 
@@ -54,7 +48,7 @@ const FormationBase = ({
   }, [goalKeeperShirtColor]);
 
   useEffect(() => {
-    lineup && findAndSetLineup(defaultLineup, lineup);
+    findAndSetLineup(defaultLineup, lineup);
   }, [lineup]);
 
   useEffect(() => {
@@ -78,7 +72,7 @@ const FormationBase = ({
                   : _playerShirtColor
               }
               name={player?.name}
-              isCaptain={player?.isCaptain}
+              isCaptain={player?.captain}
               selected={_activePlayer === player?.position}
               onClick={onPlayerClick}
             />
